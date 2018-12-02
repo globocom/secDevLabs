@@ -3,7 +3,7 @@
 
 This blog is a simple PHP web application that contains an example of an XML External Entity (XXE) vulnerability.
 
-<img src="images/blog-fe.jpg" align="center"/>
+<img src="images/blog-fe.png" align="center"/>
 
 ## What is XXE?
 
