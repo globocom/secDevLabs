@@ -10,12 +10,12 @@
   version = "v3.2.0"
 
 [[projects]]
-  digest = "1:a7a55aa6c1c3a06f9694957995001d915f7708a5cb300a9ce6f7f5f54855fcc3"
-  name = "github.com/globocom/glbgelf"
+  digest = "1:236d7e1bdb50d8f68559af37dbcf9d142d56b431c9b2176d41e2a009b664cda8"
+  name = "github.com/google/uuid"
   packages = ["."]
   pruneopts = "UT"
-  revision = "eda2a164a9d3f248b06487e8b2adca1f6d38f9df"
-  version = "2.0.0"
+  revision = "9b3b1e0f5f99ae461456d768e7d301a7acdaa2d8"
+  version = "v1.1.0"
 
 [[projects]]
   digest = "1:73c5062c19c602b4d279b581b0ee3ffe43f61bfc37e91885b89190154bb5e909"
@@ -75,11 +75,13 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:e3d2db9bc633f4635e6418caf0b0734c43821ecd59105d1798458c6ae4d227fd"
+  digest = "1:64cbf54de6183132e134a9c38a95e6c06c43f0031a3140cc6a86d441f4fbecbb"
   name = "golang.org/x/crypto"
   packages = [
     "acme",
     "acme/autocert",
+    "bcrypt",
+    "blowfish",
   ]
   pruneopts = "UT"
   revision = "505ab145d0a99da450461ae2c1a9f6cd10d1f447"
@@ -91,14 +93,6 @@
   packages = ["unix"]
   pruneopts = "UT"
   revision = "4ed8d59d0b35e1e29334a206d1b3f38b1e5dfb31"
-
-[[projects]]
-  branch = "v2"
-  digest = "1:c4d761c08662e6ad6cae23ccbc4f607638ae55b08dba2f15aceac91683f0f87c"
-  name = "gopkg.in/Graylog2/go-gelf.v2"
-  packages = ["gelf"]
-  pruneopts = "UT"
-  revision = "4dbb9d7213480a8484c02610e3f51ecd9c506a71"
 
 [[projects]]
   branch = "v2"
@@ -118,9 +112,11 @@
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
-    "github.com/globocom/glbgelf",
+    "github.com/dgrijalva/jwt-go",
+    "github.com/google/uuid",
     "github.com/labstack/echo",
     "github.com/labstack/echo/middleware",
+    "golang.org/x/crypto/bcrypt",
     "gopkg.in/mgo.v2",
     "gopkg.in/mgo.v2/bson",
   ]

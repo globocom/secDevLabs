@@ -4,16 +4,13 @@ import (
 	"os"
 	"time"
 
-	"github.com/globocom/glbgelf"
 	mgo "gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
 
 // Collections names used in MongoDB.
 var (
-	RepositoryCollection   = "repository"
-	SecurityTestCollection = "securityTest"
-	AnalysisCollection     = "analysis"
+	UserCollection = "users"
 )
 
 // DB is the struct that represents mongo session.
@@ -60,17 +57,11 @@ func Connect() (*DB, error) {
 	}
 	session, err := mgo.DialWithInfo(dialInfo)
 	if err != nil {
-		glbgelf.Logger.SendLog(map[string]interface{}{
-			"action": "Connect",
-			"info":   "DB"}, "ERROR", "Error connecting to Mongo:", err)
 		return nil, err
 	}
 	session.SetSafe(&mgo.Safe{WMode: "majority"})
 
 	if err := session.Ping(); err != nil {
-		glbgelf.Logger.SendLog(map[string]interface{}{
-			"action": "Connect",
-			"info":   "DB"}, "ERROR", "Error pinging Mongo after connection:", err)
 		return nil, err
 	}
 
@@ -85,19 +76,10 @@ func autoReconnect(session *mgo.Session) {
 	for {
 		err = session.Ping()
 		if err != nil {
-			glbgelf.Logger.SendLog(map[string]interface{}{
-				"action": "autoReconnect",
-				"info":   "DB"}, "ERROR", "Error pinging Mongo in autoReconnect:", err)
 			session.Refresh()
 			err = session.Ping()
 			if err == nil {
-				glbgelf.Logger.SendLog(map[string]interface{}{
-					"action": "autoReconnect",
-					"info":   "DB"}, "ERROR", "Reconnect to MongoDB successful.")
 			} else {
-				glbgelf.Logger.SendLog(map[string]interface{}{
-					"action": "autoReconnect",
-					"info":   "DB"}, "ERROR", "Reconnect to MongoDB failed:", err)
 			}
 		}
 		time.Sleep(time.Second * 1)
