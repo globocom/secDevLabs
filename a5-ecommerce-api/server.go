@@ -17,9 +17,6 @@ func main() {
 	configAPI := apiContext.GetAPIConfig()
 
 	if err := checkRequirements(configAPI); err != nil {
-		// glbgelf.Logger.SendLog(map[string]interface{}{
-		// 	"action": "main",
-		// 	"info":   "SERVER"}, "ERROR", "Error starting Husky:", err)
 		os.Exit(1)
 	}
 
@@ -31,6 +28,9 @@ func main() {
 	echoInstance.Use(middleware.RequestID())
 
 	echoInstance.GET("/healthcheck", handlers.HealthCheck)
+	echoInstance.GET("/ticket/:id", handlers.GetTicket)
+	echoInstance.POST("/register", handlers.RegisterUser)
+	echoInstance.POST("/login", handlers.Login)
 
 	APIport := fmt.Sprintf(":%d", configAPI.APIPort)
 	echoInstance.Logger.Fatal(echoInstance.Start(APIport))
@@ -44,18 +44,10 @@ func checkRequirements(configAPI *apiContext.APIConfig) error {
 		return err
 	}
 
-	// glbgelf.Logger.SendLog(map[string]interface{}{
-	// 	"action": "checkRequirements",
-	// 	"info":   "SERVER"}, "INFO", "Environment Variables: OK!")
-
 	// check if MongoDB is acessible and credentials received are working.
 	if err := checkMongoDB(); err != nil {
 		return err
 	}
-
-	// glbgelf.Logger.SendLog(map[string]interface{}{
-	// 	"action": "checkRequirements",
-	// 	"info":   "SERVER"}, "INFO", "MongoDB: OK!")
 
 	return nil
 }

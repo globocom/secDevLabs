@@ -34,7 +34,7 @@ check-deps:
 
 ## Runs a security static analysis using Gosec
 check-sec:
-	$(GOSEC) ./... 2> /dev/null
+	$(GOSEC) ./... 2>/dev/null
 
 ## Checks .env file
 check-env:
