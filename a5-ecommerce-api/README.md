@@ -3,7 +3,7 @@
 
 <img src="images/example-api.png" align="center"/>
 
-## What is XXE?
+## What is Broken Access Control?
 
 Definition from [OWASP](https://www.owasp.org/index.php/Broken_Access_Control):
 
@@ -23,21 +23,25 @@ make install
 
 ## Available routes
 
+* GET /healthcheck
 ```
 $ curl http://localhost:8888/healthcheck
 WORKING
 ```
 
+* POST /register
 ```
 $ curl -s -H "Content-Type: application/json" -d '{"username":"rafael","password":"password"}' http://localhost:8888/register
 Register: success!
 ```
 
+* POST /login
 ```
 $ curl -s -H "Content-Type: application/json" -d '{"username":"rafael","password":"password"}' http://localhost:8888/login
 Hello, rafael! This is your userID: 2b53f961-85fe-4988-99b4-c90481ed54ef
 ```
 
+* GET /ticket/:id
 ```
 $ curl http://localhost:8888/ticket/2b53f961-85fe-4988-99b4-c90481ed54ef
 Hey, rafael! This is your ticket: rafael-08e8805f-422b-477b-8565-b0876b89da17
@@ -45,11 +49,11 @@ Hey, rafael! This is your ticket: rafael-08e8805f-422b-477b-8565-b0876b89da17
 
 ## Attack Narrative
 
-To understand how this vulnerability can be exploited, check this section!
+(SPOILER) To understand how this vulnerability can be exploited, check this section!
 
 ## Mitigating the vulnerability
 
-To understand how this vulnerability can be mitigated, check this other section!
+(SPOILER) To understand how this vulnerability can be mitigated, check this other section!
 
 [Docker Install]:  https://docs.docker.com/install/
 [Docker Compose Install]: https://docs.docker.com/compose/install/
