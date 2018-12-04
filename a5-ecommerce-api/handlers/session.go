@@ -80,8 +80,8 @@ func Login(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error login5."})
 	}
 
-	messageLogon := fmt.Sprintf("Hello, %s! This is your userID: %s", userDataResult.Username, userDataResult.UserID)
-	return c.JSON(http.StatusOK, messageLogon)
+	messageLogon := fmt.Sprintf("Hello, %s! This is your userID: %s\n", userDataResult.Username, userDataResult.UserID)
+	return c.String(http.StatusOK, messageLogon)
 }
 
 // RegisterUser registers a new user into MongoDB.
