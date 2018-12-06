@@ -1,0 +1,14 @@
+version: "2"
+services:
+  app:
+    container_name: app-a8 
+    build:
+      context: ../
+      dockerfile: deployments/Dockerfile
+    ports:
+      - "5000:5000"
+    networks: 
+      - a8_net
+
+networks:
+  a8_net:
