@@ -24,7 +24,7 @@ func WriteCookie(c echo.Context, jwt string) error {
 
 // ReadCookie reads a cookie from echo Context.
 func ReadCookie(c echo.Context) error {
-	cookie, err := c.Cookie("a5sessionID")
+	cookie, err := c.Cookie("sessionIDa5")
 	if err != nil {
 		return err
 	}
