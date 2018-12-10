@@ -1,5 +1,5 @@
 # Amarelo Designs
- > This is a simple web application built with Flask that contains an example of an Insecure Deserialization.
+ > This is a simple web application built with Flask that contains an example of an Insecure Deserialization vulnerability.
 
 <img src="images/Amarelo-Designs.png" align="center"/>
 
