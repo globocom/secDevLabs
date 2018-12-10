@@ -12,3 +12,9 @@ The main goal of this project is to provide a laboratory for those who are inter
 
 #### A5 - Broken Access Control 
 * [Vulnerable Ecommerce API](a5-ecommerce-api)
+
+#### A6 - Security Misconfiguration 
+* [Vulnerable Wordpress Misconfig](a6-misconfig-wordpress)
+
+#### A8 - Insecure Deserialization 
+* [Amarelo Designs](a8-amarelo-designs)
