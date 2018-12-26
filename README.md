@@ -12,7 +12,7 @@ By provisioning a local lab via docker-compose you will learn how to find, test 
 
 These are vulnerable applications! 🔥
  
-## Available apps
+## OWASP Top 10 (2017) Apps
 
 - A4 - XML External Entities (XXE) - [ViniJr Blog](a4-xxe-vinijr)
 - A5 - Broken Access Control - [Vulnerable Ecommerce API](a5-ecommerce-api)
