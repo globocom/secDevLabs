@@ -1,0 +1,4 @@
+.DS_STORE
+.env
+dockers.env
+mongo-init.js
