@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+       <meta charset="utf-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+       <meta name="description" content="">
+       <meta name="author" content="">
+
+       <title>GamesIRADOS.com</title>
+
+       <!-- Bootstrap core CSS -->
+       <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css')}}">
+
+       <!-- Custom styles for this template -->
+       <link rel="stylesheet" href="{{ url_for('static', filename='css/2-col-portfolio.css')}}">
+  </head>
+
+  <body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">GamesIRADOS.com</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/home">Home
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/coupon">Código de produto</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Sair</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+      <!-- Page Heading -->
+      <h1 class="my-4">Novos games IRADOS!</h1>
+
+      <div class="row">
+        <div class="col-lg-6 portfolio-item">
+          <div class="card h-100">
+            <a href="#"><img class="card-img-top" src="{{ url_for('static', filename='img/skyrim.jpg')}}" alt=""></a>
+            <div class="card-body">
+              <h4 class="card-title">
+                <a href="#">The Elder Scrolls V - SKYRIM</a>
+              </h4>
+              <p class="card-text">The Elder Scrolls V: Skyrim, the 2011 Game of the Year, is the next chapter in the highly anticipated Elder Scrolls saga. Developed by Bethesda Game Studios, the 2011 Studio of the Year, that brought you Oblivion and Fallout 3. Skyrim reimagines and revolutionizes the open-world fantasy epic, bringing to life a complete virtual world open for you to explore any way you choose.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 portfolio-item">
+          <div class="card h-100">
+            <a href="#"><img class="card-img-top" src="{{ url_for('static', filename='img/fifa.jpg')}}" alt=""></a>
+            <div class="card-body">
+              <h4 class="card-title">
+                <a href="#">FIFA 2019</a>
+              </h4>
+              <p class="card-text">Become a Champion through the stories of Alex Hunter, Danny Williams, and Kim Hunter. Each hero will face career-defining choices and football challenges on their Journey, as you guide these three stars to glory in either the UEFA Champions League or on the international stage.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 portfolio-item">
+          <div class="card h-100">
+            <a href="#"><img class="card-img-top" src="{{ url_for('static', filename='img/bio.jpg')}}" alt=""></a>
+            <div class="card-body">
+              <h4 class="card-title">
+                <a href="#">Bioshock</a>
+              </h4>
+              <p class="card-text">BioShock is a shooter unlike any you've ever played, loaded with weapons and tactics never seen. You'll have a complete arsenal at your disposal from simple revolvers to grenade launchers and chemical throwers, but you'll also be forced to genetically modify your DNA to create an even more deadly weapon: you. Injectable plasmids give you super human powers: blast electrical currents into water to electrocute multiple enemies, or freeze them solid and obliterate them with the swing of a wrench. </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 portfolio-item">
+          <div class="card h-100">
+            <a href="#"><img class="card-img-top" src="{{ url_for('static', filename='img/gta.jpg')}}" alt=""></a>
+            <div class="card-body">
+              <h4 class="card-title">
+                <a href="#">Grand Theft Auto 5</a>
+              </h4>
+              <p class="card-text">The biggest, most dynamic and most diverse open world ever created, Grand Theft Auto V blends storytelling and gameplay in new ways as players repeatedly jump in and out of the lives of the game’s three lead characters, playing all sides of the game’s interwoven story.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 portfolio-item">
+          <div class="card h-100">
+            <a href="#"><img class="card-img-top" src="{{ url_for('static', filename='img/portal.jpeg')}}" alt=""></a>
+            <div class="card-body">
+              <h4 class="card-title">
+                <a href="#">Portal 2</a>
+              </h4>
+              <p class="card-text">The sequel to 2007's Game of the Year, Portal 2 is a hilariously mind-bending adventure that challenges you to use wits over weaponry in a funhouse of diabolical science.
+
+
+Using a highly experimental portal device, you’ll once again face off against a lethally inventive, power-mad A.I. named GLaDOS. And this time you won’t be alone. Meet an expanded cast of characters as you think your way through dangerous, never-before-seen areas of Aperture Laboratories.
+
+
+Break the laws of spatial physics in ways you never thought possible, with a wider variety of portal puzzles and an expansive story that spans a single player and co-operative game mode.
+
+</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 portfolio-item">
+          <div class="card h-100">
+            <a href="#"><img class="card-img-top" src="{{ url_for('static', filename='img/rdr2.jpg')}}" alt=""></a>
+            <div class="card-body">
+              <h4 class="card-title">
+                <a href="#">Red Dead Redemption 2</a>
+              </h4>
+              <p class="card-text">America, 1899. The end of the Wild West era has begun. After a robbery goes badly wrong in the western town of Blackwater, Arthur Morgan and the Van der Linde gang are forced to flee. With federal agents and the best bounty hunters in the nation massing on their heels, the gang must rob, steal and fight their way across the rugged heartland of America in order to survive. As deepening internal divisions threaten to tear the gang apart, Arthur must make a choice between his own ideals and loyalty to the gang who raised him.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.row -->
+
+      <!-- Pagination -->
+      <ul class="pagination justify-content-center">
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+            <span class="sr-only">Previous</span>
+          </a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#">1</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#">2</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#">3</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+            <span class="sr-only">Next</span>
+          </a>
+        </li>
+      </ul>
+
+    </div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Games Irados 2018</p>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  </body>
+
+</html>
