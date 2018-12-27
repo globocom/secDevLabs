@@ -1,8 +1,8 @@
 package db
 
 import (
-	"github.com/rafaveira3/secDevLabs/a5-ecommerce-api/pass"
-	"github.com/rafaveira3/secDevLabs/a5-ecommerce-api/types"
+	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a5/ecommerce-api/pass"
+	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a5/ecommerce-api/types"
 	"gopkg.in/mgo.v2/bson"
 )
 

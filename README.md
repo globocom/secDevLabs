@@ -14,8 +14,8 @@ These are vulnerable applications! 🔥
  
 ## OWASP Top 10 (2017) Apps
 
-- A4 - XML External Entities (XXE) - [ViniJr Blog](a4-xxe-vinijr)
-- A5 - Broken Access Control - [Vulnerable Ecommerce API](a5-ecommerce-api)
-- A6 - Security Misconfiguration - [Vulnerable Wordpress Misconfig](a6-misconfig-wordpress)
-- A8 - Insecure Deserialization - [Amarelo Designs](a8-amarelo-designs)
+- A4 - XML External Entities (XXE) - [ViniJr Blog](owasp-top10-2017-apps/a4/vinijr-blog)
+- A5 - Broken Access Control - [Vulnerable Ecommerce API](owasp-top10-2017-apps/a5/ecommerce-api)
+- A6 - Security Misconfiguration - [Vulnerable Wordpress Misconfig](owasp-top10-2017-apps/a6/misconfig-wordpress)
+- A8 - Insecure Deserialization - [Amarelo Designs](owasp-top10-2017-apps/a8/amarelo-designs)
 

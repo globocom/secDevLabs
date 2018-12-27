@@ -6,11 +6,11 @@ import (
 	"time"
 
 	jwt "github.com/dgrijalva/jwt-go"
+	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a5/ecommerce-api/db"
+	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a5/ecommerce-api/pass"
+	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a5/ecommerce-api/types"
 	"github.com/google/uuid"
 	"github.com/labstack/echo"
-	"github.com/rafaveira3/secDevLabs/a5-ecommerce-api/db"
-	"github.com/rafaveira3/secDevLabs/a5-ecommerce-api/pass"
-	"github.com/rafaveira3/secDevLabs/a5-ecommerce-api/types"
 )
 
 // WriteCookie writes a cookie into echo Context

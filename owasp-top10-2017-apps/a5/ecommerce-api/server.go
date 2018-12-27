@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"os"
 
+	apiContext "github.com/globocom/secDevLabs/owasp-top10-2017-apps/a5/ecommerce-api/context"
+	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a5/ecommerce-api/db"
+	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a5/ecommerce-api/handlers"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
-	apiContext "github.com/rafaveira3/secDevLabs/a5-ecommerce-api/context"
-	"github.com/rafaveira3/secDevLabs/a5-ecommerce-api/db"
-	"github.com/rafaveira3/secDevLabs/a5-ecommerce-api/handlers"
 )
 
 func main() {

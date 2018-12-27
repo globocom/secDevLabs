@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a5/ecommerce-api/db"
 	"github.com/labstack/echo"
-	"github.com/rafaveira3/secDevLabs/a5-ecommerce-api/db"
 )
 
 // HealthCheck is the heath check function.
