@@ -5,9 +5,9 @@
 
 ## What is Security Misconfiguration?
 
-Definition from [OWASP](https://www.owasp.org/index.php/Top_10-2017_A6-Security_Misconfiguration):
+Definition from [OWASP](https://www.owasp.org/images/7/72/OWASP_Top_10-2017_%28en%29.pdf.pdf):
 
-Security misconfiguration can happen at any level of an application stack, including the network services, platform, web server, application server, database, frameworks, custom code, and pre-installed virtual machines, containers, or storage. Automated scanners are useful for detecting misconfigurations, use of default accounts or configurations, unnecessary services, legacy options, etc.
+Security misconfiguration is the most commonly seen issue. This is commonly a result of insecure default configurations, incomplete or ad hoc configurations, open cloud storage, misconfigured HTTP headers, and verbose error messages containing sensitive information. Not only must all operating systems, frameworks, libraries, and applications be securely configured, but they must be patched and upgraded in a timely fashion.
 
 ## Requirements
 
@@ -25,11 +25,11 @@ Then simply visit [localhost:8000][App] !
 
 ## Attack Narrative
 
-(SPOILER) To understand how this vulnerability can be exploited, check this section!
+To understand how this vulnerability can be exploited, check this section!
 
 ## Mitigating the vulnerability
 
-(SPOILER) To understand how this vulnerability can be mitigated, check this other section!
+To understand how this vulnerability can be mitigated, check this other section!
 
 [Docker Install]:  https://docs.docker.com/install/
 [Docker Compose Install]: https://docs.docker.com/compose/install/

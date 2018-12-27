@@ -5,9 +5,9 @@
 
 ## What is Broken Access Control?
 
-Definition from [OWASP](https://www.owasp.org/index.php/Broken_Access_Control):
+Definition from [OWASP](https://www.owasp.org/images/7/72/OWASP_Top_10-2017_%28en%29.pdf.pdf):
 
-Access control, sometimes called authorization, is how a web application grants access to content and functions to some users and not others. These checks are performed after authentication, and govern what ‘authorized’ users are allowed to do. Access control sounds like a simple problem but is insidiously difficult to implement correctly. A web application’s access control model is closely tied to the content and functions that the site provides. In addition, the users may fall into a number of groups or roles with different abilities or privileges.
+Restrictions on what authenticated users are allowed to do are often not properly enforced. Attackers can exploit these flaws to access unauthorized functionality and/or data, such as access other users' accounts, view sensitive files, modify other users’ data, change access rights, etc.
 
 ## Requirements
 
@@ -18,7 +18,7 @@ To build this lab you will need [Docker][Docker Install] and [Docker Compose][Do
 After cloning this repository, you can type the following command to start the vulnerable application:
 
 ```sh
-make install
+$ make install
 ```
 
 ## Available routes
