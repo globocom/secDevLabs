@@ -5,11 +5,9 @@
 
 ## What is Insecure Deserialization?
 
-Definition from [OWASP](https://www.owasp.org/index.php/Deserialization_of_untrusted_data):
+Definition from [OWASP](https://www.owasp.org/images/7/72/OWASP_Top_10-2017_%28en%29.pdf.pdf):
 
-Serialization is the process of turning some object into a data format that can be restored later. People often serialize objects in order to save them to storage, or to send as part of communications. Deserialization is the reverse of that process -- taking data structured from some format, and rebuilding it into an object.
-
-However, many programming languages offer a native capability for serializing objects. These native formats usually offer more features than JSON or XML, including customizability of the serialization process. Unfortunately, the features of these native deserialization mechanisms can be repurposed for malicious effect when operating on untrusted data. Attacks against deserializers have been found to allow denial-of-service, access control, and remote code execution attacks.
+Insecure deserialization often leads to remote code execution. Even if deserialization flaws do not result in remote code execution, they can be used to perform attacks, including replay attacks, injection attacks, and privilege escalation attacks. 
 
 ## Requirements
 
@@ -20,7 +18,7 @@ To build this lab you will need [Docker][Docker Install] and [Docker Compose][Do
 After cloning this repository, you can type the following command to start the vulnerable application:
 
 ```sh
-make install
+$ make install
 ```
 
 Then simply visit [localhost:5000][App] !

@@ -5,9 +5,9 @@
 
 ## What is XXE?
 
-Definition from [OWASP](https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Processing):
+Definition from [OWASP](https://www.owasp.org/images/7/72/OWASP_Top_10-2017_%28en%29.pdf.pdf):
 
-An XML External Entity attack is a type of attack against an application that parses XML input. This attack occurs when XML input containing a reference to an external entity is processed by a weakly configured XML parser. This attack may lead to the disclosure of confidential data, denial of service, server side request forgery, port scanning from the perspective of the machine where the parser is located, and other system impacts.
+Many older or poorly configured XML processors evaluate external entity references within XML documents. External entities can be used to disclose internal files using the file URI handler, internal file shares, internal port scanning, remote code execution, and denial of service attacks.
 
 ## Requirements
 
@@ -18,7 +18,7 @@ To build this lab you will need [Docker][Docker Install] and [Docker Compose][Do
 After cloning this repository, you can type the following command to start the vulnerable application:
 
 ```sh
-make install
+$ make install
 ```
 
 Then simply visit [localhost:10080][App] !

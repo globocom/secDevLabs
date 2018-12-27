@@ -14,6 +14,7 @@ These are vulnerable applications! 🔥
  
 ## OWASP Top 10 (2017) Apps
 
+- A3 - Sensitive Data Exposure - [Insecure Go Project](owasp-top10-2017-apps/a3/insecure-go-project)
 - A4 - XML External Entities (XXE) - [ViniJr Blog](owasp-top10-2017-apps/a4/vinijr-blog)
 - A5 - Broken Access Control - [Vulnerable Ecommerce API](owasp-top10-2017-apps/a5/ecommerce-api)
 - A6 - Security Misconfiguration - [Vulnerable Wordpress Misconfig](owasp-top10-2017-apps/a6/misconfig-wordpress)
