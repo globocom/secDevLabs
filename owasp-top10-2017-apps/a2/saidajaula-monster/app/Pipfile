@@ -1,0 +1,19 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+flask = "*"
+flask-sqlalchemy = "*"
+MySQL-python = "*"
+ipdb = "*"
+mysql-connector-python-rf = "*"
+mysql-connector-repackaged = "*"
+flask-mysql = "*"
+mysql-connector-python = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.7"
