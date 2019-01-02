@@ -18,21 +18,21 @@ class DataBase:
 
     def get_user_password(self, username):
         try:
-			self.c.execute("SELECT password FROM users WHERE user = %s", [username])
-			user_password = self.c.fetchone()
+            self.c.execute("SELECT password FROM users WHERE user = %s", [username])
+            user_password = self.c.fetchone()
 
         except (AttributeError, MySQLdb.OperationalError):
-			self.connect()
-			self.c.execute("SELECT password FROM users WHERE username = %s", [username])
-			user_password = self.c.fetchone()
+            self.connect()
+            self.c.execute("SELECT password FROM users WHERE username = %s", [username])
+            user_password = self.c.fetchone()
 
-        except MySQLdb.Error, e:
+        except MySQLdb.Error as e:
             try:
-				message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
-				return message , 0
+                message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
+                return message , 0
             except IndexError:
-				message = "MySQL Error: %s" % str(e)
-				return message , 0
+                message = "MySQL Error: %s" % str(e)
+                return message , 0
 
         return user_password, 1
 
@@ -42,9 +42,9 @@ class DataBase:
             self.db.commit()
         except (AttributeError, MySQLdb.OperationalError):
             self.connect()
-            self.c.execute("INSERT INTO users (user, pasword) VALUES (%s, %s);",(user, password))
+            self.c.execute("INSERT INTO users (user, password) VALUES (%s, %s);",(user, password))
             self.db.commit()
-        except MySQLdb.Error, e:
+        except MySQLdb.Error as e:
         	try:
         		message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
         		return message , 0
@@ -62,7 +62,7 @@ class DataBase:
             self.connect()
             self.c.execute("SELECT id, text, author, title, subtitle, date FROM gossips LIMIT %s,%s", [limit, offset])
             gossips = self.c.fetchall()
-        except MySQLdb.Error, e:
+        except MySQLdb.Error as e:
             try:
                 message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
                 return message , 0
@@ -80,7 +80,7 @@ class DataBase:
             self.connect()
             self.c.execute("SELECT id, text, author, title, subtitle, date FROM gossips WHERE title  LIKE %s LIMIT %s,%s", ["%"+ search_str + "%", limit, offset])
             gossips = self.c.fetchall()
-        except MySQLdb.Error, e:
+        except MySQLdb.Error as e:
             try:
                 message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
                 return message , 0
@@ -98,7 +98,7 @@ class DataBase:
             self.connect()
             self.c.execute("SELECT id, text, author, title, subtitle, date FROM gossips WHERE id = %s", [id])
             gossips = self.c.fetchone()
-        except MySQLdb.Error, e:
+        except MySQLdb.Error as e:
             try:
                 message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
                 return message , 0
@@ -116,7 +116,7 @@ class DataBase:
             self.connect()
             self.c.execute("SELECT author, comment, date FROM comments WHERE gossip_id = %s", [id])
             comments = self.c.fetchall()
-        except MySQLdb.Error, e:
+        except MySQLdb.Error as e:
             try:
                 message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
                 return message , 0
@@ -135,7 +135,7 @@ class DataBase:
             self.connect()
             self.c.execute("INSERT INTO comments (author, comment, gossip_id, date) VALUES (%s, %s, %s, %s);",(author, comment, gossip_id, date))
             self.db.commit()
-        except MySQLdb.Error, e:
+        except MySQLdb.Error as e:
             try:
             	message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
             	return message , 0
@@ -152,7 +152,7 @@ class DataBase:
             self.connect()
             self.c.execute("INSERT INTO gossips (author, text, title, subtitle, date) VALUES (%s, %s, %s, %s, %s);",(author, text, title, subtitle, date))
             self.db.commit()
-        except MySQLdb.Error, e:
+        except MySQLdb.Error as e:
         	try:
         		message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
         		return message , 0
@@ -160,3 +160,45 @@ class DataBase:
         		message = "MySQL Error: %s" % str(e)
         		return message , 0
         return "" , 1
+
+    def init_table_user(self):
+            try:
+                self.c.execute("CREATE TABLE user (user VARCHAR(100) NOT NULL, password VARCHAR(100) NOT NULL)")
+                self.db.commit()
+            except (AttributeError, MySQLdb.OperationalError, MySQLdb.Error) as e:
+                self.connect()
+                try:
+                    message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
+                    return message , 0
+                except IndexError:
+                    message = "MySQL Error: %s" % str(e)
+                    return message , 0
+            return "", 1
+
+    def init_table_gossips(self):
+            try:
+                self.c.execute("CREATE TABLE gossips (id INT NOT NULL, author VARCHAR(100) NOT NULL, text VARCHAR(100) NOT NULL, title VARCHAR(100) NOT NULL, subtitle VARCHAR(100), date DATE) NOT NULL, PRIMARY KEY (id)")
+                self.db.commit()
+            except (AttributeError, MySQLdb.OperationalError, MySQLdb.Error) as e:
+                self.connect()
+                try:
+                    message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
+                    return message , 0
+                except IndexError:
+                    message = "MySQL Error: %s" % str(e)
+                    return message , 0
+            return "", 
+
+    def init_table_comments(self):
+            try:
+                self.c.execute("CREATE TABLE comments (author VARCHAR(100) NOT NULL, comment VARCHAR(100) NOT NULL, gossip_id INT NOT NULL, date DATE NOT NULL")
+                self.db.commit()
+            except (AttributeError, MySQLdb.OperationalError, MySQLdb.Error) as e:
+                self.connect()
+                try:
+                    message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
+                    return message , 0
+                except IndexError:
+                    message = "MySQL Error: %s" % str(e)
+                    return message , 0
+            return "", 

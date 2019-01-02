@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from model.log import error
-
 from functools import wraps
+
+import os
 import uuid
 import datetime
 
@@ -18,6 +19,7 @@ from flask import (
 from flask_bootstrap import Bootstrap
 from model.password import Password
 from model.db import DataBase
+from util.init_db import init_db
 
 from flask_cors import CORS, cross_origin
 
@@ -25,9 +27,7 @@ app = Flask(__name__)
 bootstrap = Bootstrap(app)
 
 app.config.from_pyfile('config.py')
-database = DataBase(app.config['MYSQL_ENDPOINT'], app.config['MYSQL_USER'],
-			app.config['MYSQL_PASSWORD'], app.config['MYSQL_DB'])
-
+database = DataBase(app.config['MYSQL_ENDPOINT'], app.config['MYSQL_USER'],app.config['MYSQL_PASSWORD'], app.config['MYSQL_DB'])
 
 def generate_csrf_token():
     '''
@@ -36,7 +36,6 @@ def generate_csrf_token():
     if '_csrf_token' not in session:
         session['_csrf_token'] = str(uuid.uuid4())
     return session.get('_csrf_token')
-
 
 app.jinja_env.globals['csrf_token'] = generate_csrf_token
 
@@ -197,4 +196,12 @@ def newgossip():
 
 
 if __name__ == '__main__':
-    app.run(port=8080, debug=False)
+   
+    dbEndpoint = os.environ.get('MYSQL_ENDPOINT')
+    dbUser = os.environ.get('MYSQL_USER')
+    dbPassword = os.environ.get('MYSQL_PASSWORD')
+    dbName = os.environ.get('MYSQL_DB')
+    database = DataBase(dbEndpoint, dbUser, dbPassword, dbName)
+    init_db(database)
+
+    app.run(host='0.0.0.0',port=3001, debug=False)
