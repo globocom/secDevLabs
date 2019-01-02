@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+    # a1api:
+    #     links:
+    #       - mysqldb
+    #     container_name: a1api
+    #     environment:
+    #         GOPATH: /go/
+    #     env_file:
+    #       - dockers.env
+    #     build:
+    #         context: ../
+    #         dockerfile: deployments/a1inj.Dockerfile
+    #     command: "go run server.go"
+    #     ports:
+    #       - "3000:3000"
+    #     depends_on:
+    #         - mysqldb
+    #     networks:
+    #         - a1net
+
+    mysqldb:
+        image: mysql:5.7
+        volumes:
+            - db_data:/var/lib/mysql
+        container_name: mysqldb
+        restart: always
+        env_file:
+          - dockers.env
+        networks:
+            - a1net
+        ports:
+          - "3306:3306"
+
+networks:
+    a1net:
+
+volumes:
+    db_data:
