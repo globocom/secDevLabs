@@ -6,7 +6,7 @@ The main goal of this project is to provide a laboratory for those who are inter
 
 ## Build your own lab!
 
-By provisioning a local lab via docker-compose you will learn how to find, test and mitigate the most critical web application security risks.
+By provisioning a local lab via docker-compose, you will learn how to find, test and mitigate the most critical web application security risks.
 
 ## Disclaimer
 
