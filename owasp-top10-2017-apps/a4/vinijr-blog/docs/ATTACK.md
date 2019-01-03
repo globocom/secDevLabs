@@ -37,7 +37,7 @@ As no validation is being used to avoid [ENTITIES](https://www.w3schools.com/xml
 </contact>
 ```
 
-And, as the following picture shows, it is possible to realize that the attack succeeds and sentivie information is retreived from the server that is hosting the vulnerable app: 
+And, as the following picture shows, it is possible to realize that the attack succeeds and sensitive information is retrieved from the server that is hosting the vulnerable app: 
 
 ```sh
 curl -d @evilxml.xt localhost:10080/contact.php ; echo
