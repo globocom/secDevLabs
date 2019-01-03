@@ -3,9 +3,11 @@
 from model.log import error
 from functools import wraps
 
+
 import os
 import uuid
 import datetime
+import sys
 
 from flask import (
     Flask,
@@ -72,10 +74,11 @@ def root():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        username = request.form.get('username')
-        psw = Password(str(request.form.get('password')))
+        username = request.form.get('username').encode('utf-8')
+        psw = Password(request.form.get('password').encode('utf-8'))
+        print(username, psw)
         user_password, success = database.get_user_password(username)
-        if not success or user_password == None or not psw.validate_password(str(user_password[0])):
+        if not success or user_password == None or not psw.validate_password(user_password[0]):
             error("gossip", "User not found or wrong password", session.get('username'))
             flash("User not found or wrong password", "danger")
             return render_template('login.html')
@@ -95,20 +98,21 @@ def logout():
 @app.route('/register', methods=['GET', 'POST'])
 def newuser():
     if request.method == 'POST':
-        username = request.form.get('username')
-        psw1 = request.form.get('password1')
-        psw2 = request.form.get('password2')
+        username = request.form.get('username').encode('utf-8')
+        psw1 = request.form.get('password1').encode('utf-8')
+        psw2 = request.form.get('password2').encode('utf-8')
 
         if psw1 == psw2:
-            psw = Password(str(psw1))
+            psw = Password(psw1)
             hashed_psw = psw.get_hashed_password()
-            message, success = database.insert_user(str(username), hashed_psw)
+            message, success = database.insert_user(username, hashed_psw)
             if success == 1:
                 flash("New user added!", "primary")
                 return redirect('/login')
             else:
                 error("newuser", message, session.get('username'))
-                return render_template('error.html')
+                flash("Error!", "primary")
+                return redirect('/register')
 
         flash("Passwords must be the same!", "danger")
         return redirect('/register')
@@ -135,9 +139,7 @@ def all_gossips():
         gossips, success = database.get_latest_gossips(offset, 10)
     if not success:
         error("all_gossips", gossips, session.get('username'))
-        flash('Oops, something wrong happened!', "danger")
-        return render_template('error.html')
-
+        return 'Oops, error!'
 
     r = make_response(render_template('gossips.html', posts = gossips,search_text=search, search=search_flag))
     return r
@@ -154,21 +156,17 @@ def gossip(id):
         if not success:
             error("gossip", message, session.get('username'))
             flash('Oops, something wrong happened', "danger")
-            return render_template('error.html')
+            return redirect('/gossip/{}'.format(id))
         flash('New comment added', "primary")
         return redirect('/gossip/{}'.format(id))
     else:
         gossip, success = database.get_gossip(id)
         if not success:
             error("gossip", gossip, session.get('username'))
-            flash('Oops, something wrong happened!', "danger")
-            return render_template('error.html')
+            flash('Oops, error!', "danger")
+            return redirect('/gossip')
 
         comments, success = database.get_comments(id)
-        if not success:
-            error("gossip", comments, session.get('username'))
-            flash('Oops, something wrong happened!', "danger")
-            return render_template('error.html')
 
         if comments == None:
             comments = []
@@ -178,25 +176,28 @@ def gossip(id):
 @login_required
 def newgossip():
     if request.method == 'POST':
-        text = request.form.get('text', "").encode('utf-8')
-        subtitle = request.form.get('subtitle', "").encode('utf-8')
-        title = request.form.get('title', "").encode('utf-8')
+        text = request.form.get('text', "")
+        subtitle = request.form.get('subtitle', "")
+        title = request.form.get('title', "")
         author = session.get('username', "")
         date = datetime.datetime.now()
         if author == '' or text == '' or subtitle == '' or title == '':
             error("gossip", "invalid parameters", session.get('username'))
             flash('Todos os campos devem ser preenchidos', "danger")
             return render_template('newgossip.html', title=title, subtitle=subtitle, text=text)
-        database.post_gossip(author, text, title, subtitle, date)
-        flash('New gossip added', "primary")
-        return redirect('/gossip')
+        message, success = database.post_gossip(author, text.encode('utf-8'), title.encode('utf-8'), subtitle.encode('utf-8'), date)
+        if success == 0:
+            flash('Coulnd\'t add gossip', "danger")
+        else:
+            flash('New gossip added', "primary")
+        return redirect('/newgossip')
 
     else:
         return render_template('newgossip.html')
 
 
 if __name__ == '__main__':
-   
+
     dbEndpoint = os.environ.get('MYSQL_ENDPOINT')
     dbUser = os.environ.get('MYSQL_USER')
     dbPassword = os.environ.get('MYSQL_PASSWORD')
