@@ -3,28 +3,27 @@
 # CopyNPaste API
 > Copiei, Colei, Compilou e Rodou.
 
-#### Requirements:
+<img src="images/CopyNPaste.png" align="center"/>
 
-* Golang
-* Docker
-* Docker Compose
+## What is Injection?
 
-#### Installing: 
+Definition from [OWASP](https://www.owasp.org/images/7/72/OWASP_Top_10-2017_%28en%29.pdf.pdf):
 
-```sh
-make install
-```
+Injection flaws, such as SQL, NoSQL, OS, and LDAP injection, occur when untrusted data is sent to an interpreter as part of a command or query. The attacker’s hostile data can trick the interpreter into executing unintended commands or accessing data without proper authorization.
 
+## Requirements
 
-#### Running: 
+To build this lab you will need [Docker][Docker Install] and [Docker Compose][Docker Compose Install].
 
-```sh
-. .env
-```
+## Deploy and Run
+
+After cloning this repository, you can type the following command to start the vulnerable application:
 
 ```sh
-go run server.go
+$ make install
 ```
+
+Then you can send the following requests:
 
 ##### Registering a new user:
 
@@ -49,3 +48,18 @@ curl -s -H "Content-Type: application/json" -d '{"user":"Roberto", "pass":"oi"}'
 ```
 Bem vindo(a), Roberto!
 ```
+
+## Attack Narrative
+
+To understand how this vulnerability can be exploited, check this other section!
+
+## Mitigating the vulnerability
+
+To understand how this vulnerability can be mitigated, check this other section!
+
+[Docker Install]:  https://docs.docker.com/install/
+[Docker Compose Install]: https://docs.docker.com/compose/install/
+
+## Contributing
+
+Yes, please. :zap:
