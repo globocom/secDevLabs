@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import MySQLdb
-
 class DataBase:
     def __init__ (self, host, user, password, database):
         self.host = host
@@ -163,7 +162,7 @@ class DataBase:
 
     def init_table_user(self):
             try:
-                self.c.execute("CREATE TABLE user (user VARCHAR(100) NOT NULL, password VARCHAR(100) NOT NULL)")
+                self.c.execute("CREATE TABLE users (user VARCHAR(100) NOT NULL, password VARCHAR(100) NOT NULL)")
                 self.db.commit()
             except (AttributeError, MySQLdb.OperationalError, MySQLdb.Error) as e:
                 self.connect()
@@ -177,7 +176,7 @@ class DataBase:
 
     def init_table_gossips(self):
             try:
-                self.c.execute("CREATE TABLE gossips (id INT NOT NULL, author VARCHAR(100) NOT NULL, text VARCHAR(100) NOT NULL, title VARCHAR(100) NOT NULL, subtitle VARCHAR(100), date DATE) NOT NULL, PRIMARY KEY (id)")
+                self.c.execute("CREATE TABLE gossips (id INT(10) NOT NULL AUTO_INCREMENT, author VARCHAR(100) NOT NULL, text VARCHAR(100) NOT NULL, title VARCHAR(100) NOT NULL, subtitle VARCHAR(100), date DATE NOT NULL, PRIMARY KEY (id))")
                 self.db.commit()
             except (AttributeError, MySQLdb.OperationalError, MySQLdb.Error) as e:
                 self.connect()
@@ -187,11 +186,11 @@ class DataBase:
                 except IndexError:
                     message = "MySQL Error: %s" % str(e)
                     return message , 0
-            return "", 
+            return "",
 
     def init_table_comments(self):
             try:
-                self.c.execute("CREATE TABLE comments (author VARCHAR(100) NOT NULL, comment VARCHAR(100) NOT NULL, gossip_id INT NOT NULL, date DATE NOT NULL")
+                self.c.execute("CREATE TABLE comments (author VARCHAR(100) NOT NULL, comment VARCHAR(100) NOT NULL, gossip_id INT NOT NULL, date DATE NOT NULL)")
                 self.db.commit()
             except (AttributeError, MySQLdb.OperationalError, MySQLdb.Error) as e:
                 self.connect()
@@ -201,4 +200,4 @@ class DataBase:
                 except IndexError:
                     message = "MySQL Error: %s" % str(e)
                     return message , 0
-            return "", 
+            return "",
