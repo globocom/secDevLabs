@@ -1,7 +1,5 @@
-<img src="images/a1-logo.png" align="right" height="120" />
-
 # CopyNPaste API
-> Copiei, Colei, Compilou e Rodou.
+> Copy, Paste, Compile, Run.
 
 <img src="images/CopyNPaste.png" align="center"/>
 
