@@ -14,6 +14,7 @@ These are vulnerable applications! 🔥
  
 ## OWASP Top 10 (2017) Apps
 
+- A1 - Injection - [CopyNPaste](owasp-top10-2017-apps/a1/copy-n-paste)
 - A2 - Broken Authentication - [Saidajaula Monster Fit](owasp-top10-2017-apps/a2/saidajaula-monster)
 - A3 - Sensitive Data Exposure - [Insecure Go Project](owasp-top10-2017-apps/a3/insecure-go-project)
 - A4 - XML External Entities (XXE) - [ViniJr Blog](owasp-top10-2017-apps/a4/vinijr-blog)
