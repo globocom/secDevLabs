@@ -5,8 +5,9 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo"
-	"gitlab.globoi.com/supseg/a1-sqli/types"
-	"gitlab.globoi.com/supseg/a1-sqli/util"
+
+	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a1/copy-n-paste/app/types"
+	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a1/copy-n-paste/app/util"
 )
 
 //HealthCheck is de health check function

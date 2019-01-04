@@ -6,8 +6,8 @@ import (
 	"log"
 	"os"
 
-	"gitlab.globoi.com/supseg/a1-sqli/handlers"
-	"gitlab.globoi.com/supseg/a1-sqli/util"
+	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a1/copy-n-paste/app/handlers"
+	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a1/copy-n-paste/app/util"
 
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
@@ -58,7 +58,7 @@ func checkAPIrequirements() error {
 
 func loadViper() error {
 	viper.SetConfigName("config")
-	viper.AddConfigPath(".")
+	viper.AddConfigPath("./app/")
 	err := viper.ReadInConfig()
 	return err
 }
