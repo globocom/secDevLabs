@@ -14,6 +14,7 @@ These are vulnerable applications! 🔥
  
 ## OWASP Top 10 (2017) Apps
 
+- A1 - Injection - [CopyNPaste API](owasp-top10-2017-apps/a1/copy-n-paste) 
 - A2 - Broken Authentication - [Saidajaula Monster Fit](owasp-top10-2017-apps/a2/saidajaula-monster)
 - A3 - Sensitive Data Exposure - [Insecure Go Project](owasp-top10-2017-apps/a3/insecure-go-project)
 - A4 - XML External Entities (XXE) - [ViniJr Blog](owasp-top10-2017-apps/a4/vinijr-blog)
@@ -23,3 +24,6 @@ These are vulnerable applications! 🔥
 - A8 - Insecure Deserialization - [Amarelo Designs](owasp-top10-2017-apps/a8/amarelo-designs)
 - A10 - Insufficient Logging&Monitoring - [GamesIrados.com](owasp-top10-2017-apps/a10/games-irados)
 
+## License
+
+This project is licensed under the BSD 3-Clause "New" or "Revised" License - read [LICENSE.md](LICENSE.md) file for details.

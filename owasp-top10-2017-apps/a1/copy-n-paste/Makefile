@@ -20,48 +20,13 @@ COLOR_RED = \033[31m
 PROJECT := A1
 
 ## Installs a development environment using docker-compose
-install: generate-passwords compose check-env 
-
-## Gets all go test dependencies
-get-deps:
-	$(GO) get -u github.com/golang/dep/cmd/dep
-	$(GO) get -u golang.org/x/lint/golint
-	$(GO) get -u github.com/securego/gosec/cmd/gosec
-
-## Checks depencies of the project
-check-deps:
-	$(GODEP) ensure -v
-
-## Runs a security static analysis using Gosec
-check-sec:
-	$(GOSEC) ./... 2> /dev/null
-
-## Perfoms all make tests
-test: get-deps lint security-check
-
-## Runs lint
-lint:
-	$(GOLINT) $(shell $(GO) list ./...)
-
-## Builds Go project to the executable file huskyci
-build:
-	$(GO) build -o "$(A1BIN)"
+install: compose
 
 ## Run project using docker-compose
 compose:
-	docker-compose -f deployments/docker-compose.yml build
 	docker-compose -f deployments/docker-compose.yml down -v
-	docker-compose -f deployments/docker-compose.yml up -d --force-recreate	
+	docker-compose -f deployments/docker-compose.yml up -d --build --force-recreate
 	
-## Generates passwords and set them as environment variables
-generate-passwords:
-	chmod +x scripts/generate-env-pass.sh
-	./scripts/generate-env-pass.sh
-
-## Checks dockers.env file
-check-env:
-	cat deployments/dockers.env
-
 ## Prints help message
 help:
 	printf "\n${COLOR_YELLOW}${PROJECT}\n------\n${COLOR_RESET}"

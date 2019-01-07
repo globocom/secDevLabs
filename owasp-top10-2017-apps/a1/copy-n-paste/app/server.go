@@ -5,9 +5,10 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"time"
 
-	"gitlab.globoi.com/supseg/a1-sqli/handlers"
-	"gitlab.globoi.com/supseg/a1-sqli/util"
+	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a1/copy-n-paste/app/handlers"
+	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a1/copy-n-paste/app/util"
 
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
@@ -26,11 +27,6 @@ func main() {
 		fmt.Println("[x]", err)
 		os.Exit(1)
 	}
-
-	if err := initDB(); err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println("[*] MySQL: Init DB OK!")
 
 	echoInstance := echo.New()
 	echoInstance.HideBanner = true
@@ -53,19 +49,41 @@ func checkAPIrequirements() error {
 	}
 	fmt.Println("[*] Environment Variables: OK!")
 
+	if err := initDB(); err != nil {
+		return err
+	}
+	fmt.Println("[*] MySQL: Init DB OK!")
+
 	return nil
 }
 
 func loadViper() error {
 	viper.SetConfigName("config")
-	viper.AddConfigPath(".")
+	viper.AddConfigPath("./app/")
 	err := viper.ReadInConfig()
 	return err
 }
 
 func initDB() error {
-	err := util.InitDatabase()
-	return err
+
+	timeout := time.After(1 * time.Minute)
+	retryTick := time.Tick(15 * time.Second)
+
+	fmt.Println("[*] Initiating DB...")
+
+	for {
+		select {
+		case <-timeout:
+			return errors.New("Error InitDB: timed out")
+		case <-retryTick:
+			err := util.InitDatabase()
+			if err != nil {
+				fmt.Println("Error InitDB: not ready yet")
+			} else {
+				return nil
+			}
+		}
+	}
 }
 
 func checkEnvVars() error {

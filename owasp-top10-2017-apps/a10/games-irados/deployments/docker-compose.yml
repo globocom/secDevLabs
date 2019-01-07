@@ -1,46 +1,45 @@
-version: '3'
+version: "2"
 
 services:
-    # a10app:
-    #     container_name: a10app
-    #     build:
-    #         context: ../
-    #         dockerfile: deployments/a10app.Dockerfile
-    #     environment:
-    #         MYSQL_ENDPOINT: mysqldb
-    #         MYSQL_PASSWORD: pass
-    #         MYSQL_USERT: user
-    #         MYSQL_DB: A10
-    #     links:
-    #         - mysqldb
-    #     depends_on:
-    #         - mysqldb
-    #     ports:
-    #       - "8081:8081"
-    #     networks:
-    #         - a10net
-    #     command: python routes.py
-    #     restart: unless-stopped
-    
-    mysqldb:
-        container_name: mysqldb
-        image: mysql:5.7
-        ports:
-          - "3306:3306"
-        environment:
-            MYSQL_ROOT_PASSWORD: root
-            MYSQL_DATABASE: A10
-            MYSQL_USER: user
-            MYSQL_PASSWORD: pass
-        networks:
-            - a10net
-        volumes:
-           - storage-a10-database:/var/lib/mysql
-           - ../db:/docker-entrypoint-initdb.d
-        restart: always
-        
-networks:
-    a10net:
+   app:
+      container_name: app-a10
+      build:
+         context: ../
+         dockerfile: deployments/Dockerfile
+      ports:
+         - "3001:3001"
+      environment:
+         SECRET_KEY: secretkey
+         MYSQL_ENDPOINT: mysqldb-a10
+         MYSQL_PASSWORD: pass
+         MYSQL_USER: user
+         MYSQL_DB: A10
+      networks:
+         - a10_net
+      depends_on:
+         - mysqldb-a10
+      external_links:
+         - mysqldb-a10:mysqldb-10
+      restart: unless-stopped
+
+   mysqldb-a10:
+      container_name: mysqldb-a10
+      image: mysql:5.7
+      ports:
+         - "3307:3307"
+      environment:
+         MYSQL_ROOT_PASSWORD: root
+         MYSQL_DATABASE: A10
+         MYSQL_USER: user
+         MYSQL_PASSWORD: pass
+      networks:
+         - a10_net
+      volumes:
+         - storage-a10-database:/var/lib/mysql
+      restart: unless-stopped
 
 volumes:
-    storage-a10-database:
+   storage-a10-database:
+
+networks:
+   a10_net:

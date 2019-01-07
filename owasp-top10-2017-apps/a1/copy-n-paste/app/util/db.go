@@ -2,11 +2,12 @@ package util
 
 import (
 	"database/sql"
+	"errors"
 	"fmt"
 	"os"
 
-	"gitlab.globoi.com/supseg/a1-sqli/hash"
-	"gitlab.globoi.com/supseg/a1-sqli/types"
+	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a1/copy-n-paste/app/hash"
+	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a1/copy-n-paste/app/types"
 
 	"github.com/spf13/viper"
 
@@ -119,14 +120,17 @@ func InitDatabase() error {
 
 	dbConn, err := OpenDBConnection()
 	if err != nil {
-		return err
+		errOpenDBConnection := fmt.Sprintf("OpenDBConnection error: %s", err)
+		return errors.New(errOpenDBConnection)
 	}
+
 	defer dbConn.Close()
 
 	queryCreate := fmt.Sprint("CREATE TABLE Users (ID int NOT NULL AUTO_INCREMENT, Username varchar(20), Password varchar(80), PRIMARY KEY (ID))")
 	_, err = dbConn.Exec(queryCreate)
 	if err != nil {
-		fmt.Println("Já criada! ", err)
+		errInitDB := fmt.Sprintf("InitDatabase error: %s", err)
+		return errors.New(errInitDB)
 	}
 
 	return nil
