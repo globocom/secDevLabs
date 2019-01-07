@@ -64,31 +64,31 @@ class DataBase:
             self.c.execute("INSERT INTO users (user, pasword) VALUES (%s, %s);",(user, password))
             self.db.commit()
         except MySQLdb.Error as e:
-        	try:
-        		message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
-        		return message , 0
-        	except IndexError:
-        		message = "MySQL Error: %s" % str(e)
-        		return message , 0
+            try:
+                message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
+                return message , 0
+            except IndexError:
+                message = "MySQL Error: %s" % str(e)
+                return message , 0
         return "" , 1
 
     def get_user_password(self, username):
         try:
-			self.c.execute("SELECT password FROM users WHERE user = %s", [username])
-			user_password = self.c.fetchone()
+            self.c.execute("SELECT password FROM users WHERE user = %s", [username])
+            user_password = self.c.fetchone()
 
         except (AttributeError, MySQLdb.OperationalError):
-			self.connect()
-			self.c.execute("SELECT password FROM users WHERE username = %s", [username])
-			user_password = self.c.fetchone()
+            self.connect()
+            self.c.execute("SELECT password FROM users WHERE username = %s", [username])
+            user_password = self.c.fetchone()
 
         except MySQLdb.Error as e:
             try:
-				message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
-				return message , 0
+                message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
+                return message , 0
             except IndexError:
-				message = "MySQL Error: %s" % str(e)
-				return message , 0
+                message = "MySQL Error: %s" % str(e)
+                return message , 0
 
         return user_password, 1
 
@@ -99,11 +99,11 @@ class DataBase:
         except (AttributeError, MySQLdb.OperationalError, MySQLdb.Error) as e:
             self.connect()
             try:
-				message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
-				return message , 0
+                message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
+                return message , 0
             except IndexError:
-				message = "MySQL Error: %s" % str(e)
-				return message , 0
+                message = "MySQL Error: %s" % str(e)
+                return message , 0
         return "", 1
 
     def init_table_coupons(self):
@@ -113,11 +113,11 @@ class DataBase:
         except (AttributeError, MySQLdb.OperationalError, MySQLdb.Error) as e:
             self.connect()
             try:
-				message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
-				return message , 0
+                message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
+                return message , 0
             except IndexError:
-				message = "MySQL Error: %s" % str(e)
-				return message , 0
+                message = "MySQL Error: %s" % str(e)
+                return message , 0
         return "", 1
 
     def insert_coupon(self, coupon, game):
@@ -129,10 +129,10 @@ class DataBase:
             self.c.execute("INSERT INTO coupons (coupon, game, valid) VALUES (%s, %s, %s);",(coupon, game, 1))
             self.db.commit()
         except MySQLdb.Error as e:
-        	try:
-        		message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
-        		return message , 0
-        	except IndexError:
-        		message = "MySQL Error: %s" % str(e)
-        		return message , 0
+            try:
+                message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
+                return message , 0
+            except IndexError:
+                message = "MySQL Error: %s" % str(e)
+                return message , 0
         return "" , 1

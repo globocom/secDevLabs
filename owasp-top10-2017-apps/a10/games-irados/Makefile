@@ -17,15 +17,6 @@ compose:
 	docker-compose -f deployments/docker-compose.yml down -v
 	docker-compose -f deployments/docker-compose.yml up -d --force-recreate
 
-## Generates passwords and set them as environment variables
-generate-passwords:
-	chmod +x scripts/generate_env_password.sh
-	./scripts/generate_env_password.sh
-
-## Checks dockers.env file
-check-env:
-	cat deployments/dockers.env
-
 ## Prints help message
 help:
 	printf "\n${COLOR_YELLOW}${PROJECT}\n------\n${COLOR_RESET}"

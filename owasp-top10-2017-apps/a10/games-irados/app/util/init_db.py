@@ -6,9 +6,7 @@ import os
 def init_db(db):
     message, success = db.init_table_user()
     message, success = db.init_table_coupons()
-    coupons = os.environ.get('COUPONS', '')
-    coupons = coupons.split(',')
-    print(coupons)
+    coupons = ["ah5s6:Bioshock", "9ac4d:FIFA 2019"]
     if len(coupons) > 0:
         for coupon in coupons:
             coupon_info = coupon.split(':')

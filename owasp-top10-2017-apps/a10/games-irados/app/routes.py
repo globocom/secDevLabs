@@ -18,6 +18,7 @@ from flask_bootstrap import Bootstrap
 from model.password import Password
 from model.db import DataBase
 import logging
+import os
 
 from flask_cors import CORS, cross_origin
 from model.db import DataBase
@@ -72,8 +73,8 @@ def logout():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        username = request.form.get('username')
-        psw = Password(str(request.form.get('password')))
+        username = request.form.get('username').encode('utf-8')
+        psw = Password(request.form.get('password').encode('utf-8'))
         user_password, success = database.get_user_password(username)
         if not success or user_password == None or not psw.validate_password(str(user_password[0])):
             flash("Usuario ou senha incorretos", "danger")
@@ -86,18 +87,19 @@ def login():
 @app.route('/register', methods=['GET', 'POST'])
 def newuser():
     if request.method == 'POST':
-        username = request.form.get('username')
-        psw1 = request.form.get('password1')
-        psw2 = request.form.get('password2')
+        username = request.form.get('username').encode('utf-8')
+        psw1 = request.form.get('password1').encode('utf-8')
+        psw2 = request.form.get('password2').encode('utf-8')
 
         if psw1 == psw2:
-            psw = Password(str(psw1))
+            psw = Password(psw1)
             hashed_psw = psw.get_hashed_password()
-            message, success = database.insert_user(str(username), hashed_psw)
+            message, success = database.insert_user(username, hashed_psw)
             if success == 1:
                 flash("Novo usuario adicionado!", "primary")
                 return redirect('/login')
             else:
+                flash(message, "danger")
                 return redirect('/register')
 
         flash("Passwords must be the same!", "danger")
@@ -123,16 +125,16 @@ def cupom():
         if not success or game == None:
             flash("Cupom invalido", "danger")
             return render_template('coupon.html')
-        flash("Voce ganhou {}".format(game[0].encode('utf-8')), "primary")
+        flash("Voce ganhou {}".format(game[0]), "primary")
         return render_template('coupon.html')
     else:
         return render_template('coupon.html')
 
 if __name__ == '__main__':
-    database = DataBase("127.0.0.1", "user", "pass", "A10")
-    # init_db(database)
-    app.logger.removeHandler(default_handler)
-    log = logging.getLogger('werkzeug')
-    log.disabled = True
-    app.logger.disabled = True
-    app.run(port=8081, debug=False)
+    dbEndpoint = os.environ.get('MYSQL_ENDPOINT')
+    dbUser = os.environ.get('MYSQL_USER')
+    dbPassword = os.environ.get('MYSQL_PASSWORD')
+    dbName = os.environ.get('MYSQL_DB')
+    database = DataBase(dbEndpoint, dbUser, dbPassword, dbName)
+    init_db(database)
+    app.run(host='0.0.0.0',port=3001, debug=False)
