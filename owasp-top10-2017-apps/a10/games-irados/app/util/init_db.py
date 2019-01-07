@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 import os
 
-# a variável de ambiente COUPONS deve conter as informações no formato: coupon1:game1,coupon2:game2,...,couponN:gameN
 def init_db(db):
     message, success = db.init_table_user()
     message, success = db.init_table_coupons()
