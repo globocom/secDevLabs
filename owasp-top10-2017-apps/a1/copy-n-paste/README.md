@@ -1,5 +1,5 @@
 # CopyNPaste API
-> Copy, Paste, Compile, Run.
+> This is a simple Golang API that contains an example of an Injection vulnerability.
 
 <img src="images/CopyNPaste.png" align="center"/>
 
