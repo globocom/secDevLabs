@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"time"
 
 	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a1/copy-n-paste/app/handlers"
 	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a1/copy-n-paste/app/util"
@@ -27,11 +28,6 @@ func main() {
 		os.Exit(1)
 	}
 
-	if err := initDB(); err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println("[*] MySQL: Init DB OK!")
-
 	echoInstance := echo.New()
 	echoInstance.HideBanner = true
 
@@ -53,6 +49,11 @@ func checkAPIrequirements() error {
 	}
 	fmt.Println("[*] Environment Variables: OK!")
 
+	if err := initDB(); err != nil {
+		return err
+	}
+	fmt.Println("[*] MySQL: Init DB OK!")
+
 	return nil
 }
 
@@ -64,8 +65,25 @@ func loadViper() error {
 }
 
 func initDB() error {
-	err := util.InitDatabase()
-	return err
+
+	timeout := time.After(1 * time.Minute)
+	retryTick := time.Tick(15 * time.Second)
+
+	fmt.Println("[*] Initiating DB...")
+
+	for {
+		select {
+		case <-timeout:
+			return errors.New("Error InitDB: timed out")
+		case <-retryTick:
+			err := util.InitDatabase()
+			if err != nil {
+				fmt.Println("Error InitDB: not ready yet")
+			} else {
+				return nil
+			}
+		}
+	}
 }
 
 func checkEnvVars() error {

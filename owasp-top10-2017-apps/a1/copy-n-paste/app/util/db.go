@@ -2,6 +2,7 @@ package util
 
 import (
 	"database/sql"
+	"errors"
 	"fmt"
 	"os"
 
@@ -119,14 +120,17 @@ func InitDatabase() error {
 
 	dbConn, err := OpenDBConnection()
 	if err != nil {
-		return err
+		errOpenDBConnection := fmt.Sprintf("OpenDBConnection error: %s", err)
+		return errors.New(errOpenDBConnection)
 	}
+
 	defer dbConn.Close()
 
 	queryCreate := fmt.Sprint("CREATE TABLE Users (ID int NOT NULL AUTO_INCREMENT, Username varchar(20), Password varchar(80), PRIMARY KEY (ID))")
 	_, err = dbConn.Exec(queryCreate)
 	if err != nil {
-		fmt.Println("Já criada! ", err)
+		errInitDB := fmt.Sprintf("InitDatabase error: %s", err)
+		return errors.New(errInitDB)
 	}
 
 	return nil
