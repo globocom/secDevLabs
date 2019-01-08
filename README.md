@@ -22,6 +22,7 @@ These are vulnerable applications! 🔥
 - A6 - Security Misconfiguration - [Vulnerable Wordpress Misconfig](owasp-top10-2017-apps/a6/misconfig-wordpress)
 - A7 - Cross-Site Scripting (XSS) - [Fofocando](owasp-top10-2017-apps/a7/fofocando)
 - A8 - Insecure Deserialization - [Amarelo Designs](owasp-top10-2017-apps/a8/amarelo-designs)
+- A9 - Using Components With Known Vulnerabilities - [Cimentech](owasp-top10-2017-apps/a9/cimentech)
 - A10 - Insufficient Logging&Monitoring - [GamesIrados.com](owasp-top10-2017-apps/a10/games-irados)
 
 ## License
