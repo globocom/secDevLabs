@@ -6,6 +6,8 @@ If you don't know [secDevLabs](https://github.com/globocom/secDevLabs) or this [
 
 ----
 
+## Note: This attack narrative works best in Mozilla Firefox.
+
 ## 👀
 
 After inspecting the application, it is possible to identify that some entries are not sanitized and can be  executed on web browser. It occurs on *search*, *comment* and *post* fields. The following images show this behavior when the text  **\<script>alert(1)\</script>** is used as an input on these fields.
