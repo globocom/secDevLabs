@@ -2,7 +2,7 @@
  > This is a simple web application built with Drupal that contains an example of a component with a known vulnerabilty.
 
 <p align="center">
- <img width="460" height="300" src="docs/attack1.gif">
+ <img width="860" height="700" src="docs/attack1.gif">
 </p>
 
 ## What does it mean to use a component with known vulnerabilities?
