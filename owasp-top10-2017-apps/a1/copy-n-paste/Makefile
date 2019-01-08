@@ -24,7 +24,7 @@ install: compose
 
 ## Run project using docker-compose
 compose:
-	docker-compose -f deployments/docker-compose.yml down
+	docker-compose -f deployments/docker-compose.yml down -v
 	docker-compose -f deployments/docker-compose.yml up -d --build --force-recreate
 	
 ## Prints help message

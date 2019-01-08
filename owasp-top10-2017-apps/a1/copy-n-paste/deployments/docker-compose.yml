@@ -21,6 +21,7 @@ services:
             - mysqldb
         external_links:
             - mysqldb:mysqldb
+        restart: unless-stopped 
 
     mysqldb:
         container_name: mysqldb

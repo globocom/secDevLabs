@@ -1,0 +1,32 @@
+version: '3.3'
+
+services:
+  drupal:
+    image: drupal:7.57
+    container_name: drupal
+    build:
+      context: ../
+      dockerfile: deployments/drupal.Dockerfile
+    ports:
+      - 80:80
+    volumes:
+      - ../app/html:/var/www/html
+    restart: always
+    networks: 
+      - a9_net
+
+  db:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    networks: 
+      - a9_net
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ../app/dump.db:/docker-entrypoint-initdb.d/dump.sql
+
+volumes:
+  db_data:
+
+networks: 
+  a9_net:

@@ -16,6 +16,25 @@ Using [Burp Suite](https://portswigger.net/burp) proxy to intercept this request
 
 <img src="attack-2.png" align="center"/>
 
+
+To replicate this POST using [curl](https://curl.haxx.se/), create the following file `payload.xml`:
+
+```XML
+<?xml version="1.0" encoding="UTF-8"?>
+<contact>
+    <name>RAFAEL</name>
+    <email>RAFAEL@EXAMPLE.com</email>
+    <subject>YOU ROCK</subject>
+    <message>I LOVE WATCHING YOUR SKILLS, MAN</message>
+</contact>
+```
+
+And run:
+
+```sh
+curl -d @payload.txt localhost:10080/contact.php ; echo
+```
+
 By checking the source code of the [file](../app/contact.php), it is possible to see how this XML is loaded on the server side:
 
 <img src="attack-3.png" align="center"/>
@@ -40,7 +59,7 @@ As no validation is being used to avoid [ENTITIES](https://www.w3schools.com/xml
 And, as the following picture shows, it is possible to realize that the attack succeeds and sensitive information is retrieved from the server that is hosting the vulnerable app: 
 
 ```sh
-curl -d @evilxml.xt localhost:10080/contact.php ; echo
+curl -d @evilxml.txt localhost:10080/contact.php ; echo
 ```
 
 <img src="attack-4.png" align="center"/>
