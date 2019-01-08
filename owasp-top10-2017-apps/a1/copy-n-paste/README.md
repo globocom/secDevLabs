@@ -26,30 +26,30 @@ Then you can send the following requests:
 ##### Registering a new user:
 
 ```sh
-curl -s -H "Content-Type: application/json" -d '{"user":"Roberto", "pass":"oi", "passcheck":"oi"}' http://127.0.0.1:3000/register
+curl -s -H "Content-Type: application/json" -d '{"user":"bob", "pass":"password", "passcheck":"password"}' http://127.0.0.1:3000/register
 ```
 
 #### Result:
 
 ```
-Usuario Roberto criado com sucesso!
+Usuario bob criado com sucesso!
 ```
 
 #### Login: 
 
 ```sh
-curl -s -H "Content-Type: application/json" -d '{"user":"Roberto", "pass":"oi"}' http://127.0.0.1:3000/login
+curl -s -H "Content-Type: application/json" -d '{"user":"bob", "pass":"password"}' http://127.0.0.1:3000/login
 ```
 
 #### Result:
 
 ```
-Bem vindo(a), Roberto!
+Bem vindo(a), bob!
 ```
 
 ## Attack Narrative
 
-To understand how this vulnerability can be exploited, check this other section!
+To understand how this vulnerability can be exploited, check [this section](docs/ATTACK.md)!
 
 ## Mitigating the vulnerability
 
