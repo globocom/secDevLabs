@@ -1,7 +1,9 @@
 # Cimentech
  > This is a simple web application built with Drupal that contains an example of a component with a known vulnerabilty.
 
-<img src="docs/attack1.gif" align="center"/>
+<p align="center">
+ <img width="460" height="300" src="docs/attack1.gif">
+</p>
 
 ## What does it mean to use a component with known vulnerabilities?
 
