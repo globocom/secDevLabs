@@ -16,7 +16,8 @@ from flask import (
     redirect,
     flash,
     make_response,
-    session
+    session,
+    escape
 )
 from flask_bootstrap import Bootstrap
 from model.password import Password
@@ -133,6 +134,7 @@ def all_gossips():
     offset = 10*(page - 1)
     search_flag = 0
     if search != None:
+        search = escape(search)
         gossips, success = database.search_gossips(offset, 10, search)
         search_flag = 1
     else:
@@ -149,7 +151,7 @@ def all_gossips():
 @login_required
 def gossip(id):
     if request.method == 'POST':
-        comment = request.form.get('comment').encode('utf-8')
+        comment = escape(request.form.get('comment')).encode('utf-8')
         user = session.get('username')
         date = datetime.datetime.now()
         message, success = database.post_comment(user, comment, id, date)
@@ -176,9 +178,9 @@ def gossip(id):
 @login_required
 def newgossip():
     if request.method == 'POST':
-        text = request.form.get('text', "")
-        subtitle = request.form.get('subtitle', "")
-        title = request.form.get('title', "")
+        text = escape(request.form.get('text', ""))
+        subtitle = escape(request.form.get('subtitle', ""))
+        title = escape(request.form.get('title', ""))
         author = session.get('username', "")
         date = datetime.datetime.now()
         if author == '' or text == '' or subtitle == '' or title == '':
