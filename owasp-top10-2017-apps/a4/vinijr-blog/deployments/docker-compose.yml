@@ -5,5 +5,7 @@ services:
     build:
       context: ../
       dockerfile: deployments/Dockerfile
+    volumes:
+      - "../app/:/var/www/html"
     ports:
       - 10080:80
