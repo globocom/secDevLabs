@@ -25,7 +25,7 @@ Then simply visit [localhost:5000][App] !
 
 ## Attack Narrative
 
-To understand how this vulnerability can be exploited, check this other section!
+To understand how this vulnerability can be exploited, check [this] other section!
 
 ## Mitigating the vulnerability
 
@@ -34,6 +34,7 @@ To understand how this vulnerability can be mitigated, check this other section!
 [Docker Install]:  https://docs.docker.com/install/
 [Docker Compose Install]: https://docs.docker.com/compose/install/
 [App]: http://127.0.0.1:5000
+[this]: https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2017-apps/a8/amarelo-designs/docs/ATTACK.md
 
 ## Contributing
 
