@@ -16,6 +16,25 @@ Using [Burp Suite](https://portswigger.net/burp) proxy to intercept this request
 
 <img src="attack-2.png" align="center"/>
 
+
+To replicate this POST using [curl](https://curl.haxx.se/), create the following file `payload.xml`:
+
+```XML
+<?xml version="1.0" encoding="UTF-8"?>
+<contact>
+    <name>RAFAEL</name>
+    <email>RAFAEL@EXAMPLE.com</email>
+    <subject>YOU ROCK</subject>
+    <message>I LOVE WATCHING YOUR SKILLS, MAN</message>
+</contact>
+```
+
+And run:
+
+```sh
+curl -d @payload.xt localhost:10080/contact.php ; echo
+```
+
 By checking the source code of the [file](../app/contact.php), it is possible to see how this XML is loaded on the server side:
 
 <img src="attack-3.png" align="center"/>
