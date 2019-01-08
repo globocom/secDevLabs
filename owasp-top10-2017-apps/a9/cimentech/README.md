@@ -1,13 +1,13 @@
-# Amarelo Designs
- > This is a simple web application built with Flask that contains an example of an Insecure Deserialization vulnerability.
+# Cimentech
+ > This is a simple web application built with Drupal that contains an example of a component with a known vulnerabilty.
 
-<img src="images/Amarelo-Designs.png" align="center"/>
+<img src="docs/attack1.gif" align="center"/>
 
-## What is Insecure Deserialization?
+## What does it mean to use a component with known vulnerabilities?
 
 Definition from [OWASP](https://www.owasp.org/images/7/72/OWASP_Top_10-2017_%28en%29.pdf.pdf):
 
-Insecure deserialization often leads to remote code execution. Even if deserialization flaws do not result in remote code execution, they can be used to perform attacks, including replay attacks, injection attacks, and privilege escalation attacks. 
+Components, such as libraries, frameworks, and other software modules, run with the same privileges as the application. If a vulnerable component is exploited, such an attack can facilitate serious data loss or server takeover. Applications and APIs using components with known vulnerabilities may undermine application defenses and enable various attacks and impacts. 
 
 ## Requirements
 
@@ -21,11 +21,11 @@ After cloning this repository, you can type the following command to start the v
 make install
 ```
 
-Then simply visit [localhost:5000][App] !
+Then simply visit [localhost:80/][App] !
 
 ## Attack Narrative
 
-To understand how this vulnerability can be exploited, check this other section!
+To understand how this vulnerability can be exploited, check this [other][Narrative] section!
 
 ## Mitigating the vulnerability
 
@@ -33,7 +33,8 @@ To understand how this vulnerability can be mitigated, check this other section!
 
 [Docker Install]:  https://docs.docker.com/install/
 [Docker Compose Install]: https://docs.docker.com/compose/install/
-[App]: http://127.0.0.1:5000
+[App]: http://127.0.0.1:80/
+[Narrative]: docs/ATTACK.md
 
 ## Contributing
 
