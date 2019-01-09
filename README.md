@@ -1,6 +1,6 @@
 # secDevLabs
 
-<img src="images/panda-icon.png" align="" height="120" />
+<img src="images/blinking-panda.gif" align="" height="120" />
 
 The main goal of this project is to provide a laboratory for those who are interested in learning about web security development in a practical manner. 
 
