@@ -55,8 +55,8 @@ compose:
 
 ## Generates passwords and set them as environment variables
 generate-passwords:
-	chmod +x scripts/generate-passwords.sh
-	./scripts/generate-passwords.sh
+	chmod +x app/scripts/generate-passwords.sh
+	./app/scripts/generate-passwords.sh
 
 ## Prints help message
 help:
