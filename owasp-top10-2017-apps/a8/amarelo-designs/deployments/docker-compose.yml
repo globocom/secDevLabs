@@ -7,6 +7,7 @@ services:
       dockerfile: deployments/Dockerfile
     ports:
       - "5000:5000"
+      - "9051:9051"
     networks: 
       - a8_net
 
