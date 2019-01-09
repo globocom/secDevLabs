@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+
+    api:
+        container_name: a1_api
+        build: 
+            context: ../
+            dockerfile: deployments/a1inj.Dockerfile
+        ports: 
+            - "3000:3000"
+        networks: 
+            - a1net
+        command: "go run app/server.go"
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_USER: user
+            MYSQL_PASSWORD: pass
+            MYSQL_DATABASE: a1db
+        depends_on:
+            - mysqldb
+        external_links:
+            - mysqldb:mysqldb
+        restart: unless-stopped 
+
+    mysqldb:
+        container_name: mysqldb
+        image: mysql:5.7
+        ports:
+          - "3306:3306"
+        volumes:
+            - db_data:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_USER: user
+            MYSQL_PASSWORD: pass
+            MYSQL_DATABASE: a1db
+        networks:
+            - a1net
+
+networks:
+    a1net:
+
+volumes:
+    db_data:

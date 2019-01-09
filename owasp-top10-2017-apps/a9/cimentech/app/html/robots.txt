@@ -1,0 +1,3 @@
+User-agent: *
+# Files
+Disallow: /CHANGELOG.txt
