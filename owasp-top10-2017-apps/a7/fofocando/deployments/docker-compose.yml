@@ -8,6 +8,8 @@ services:
       dockerfile: deployments/Dockerfile
     ports:
       - "3001:3001"
+    volumes:
+      - "../app/:/app"
     environment:
       SECRET_KEY: secretkey
       MYSQL_ENDPOINT: mysqldb-a7
@@ -20,7 +22,7 @@ services:
       - mysqldb-a7
     external_links:
       - mysqldb-a7:mysqldb-a7
-    restart: unless-stopped
+    restart: always
     
   mysqldb-a7:
     container_name: mysqldb-a7
