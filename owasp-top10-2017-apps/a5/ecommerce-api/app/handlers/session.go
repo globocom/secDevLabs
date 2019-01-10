@@ -6,9 +6,9 @@ import (
 	"time"
 
 	jwt "github.com/dgrijalva/jwt-go"
-	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a5/ecommerce-api/db"
-	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a5/ecommerce-api/pass"
-	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a5/ecommerce-api/types"
+	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a5/ecommerce-api/app/db"
+	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a5/ecommerce-api/app/pass"
+	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a5/ecommerce-api/app/types"
 	"github.com/google/uuid"
 	"github.com/labstack/echo"
 )

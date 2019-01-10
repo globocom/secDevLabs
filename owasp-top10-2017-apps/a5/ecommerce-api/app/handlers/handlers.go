@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a5/ecommerce-api/db"
+	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a5/ecommerce-api/app/db"
 	"github.com/labstack/echo"
 )
 
