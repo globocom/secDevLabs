@@ -19,7 +19,7 @@ $ curl -s -H "Content-Type: application/json" -d '{"username":"user2","password"
     <img src="attack1.png"/>
 </p>
 
-The users created above are registered on MongoDB and we can get their `userID` through the curl command:
+The users created above are registered on MongoDB and we can get their `userID` through the following curl commands:
 
 ```sh
 $ curl -s -H "Content-Type: application/json" -d '{"username":"user1","password":"pass"}' http://localhost:8888/login
