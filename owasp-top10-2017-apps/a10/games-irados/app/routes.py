@@ -135,14 +135,37 @@ def home():
 def cupom():
     if request.method == 'POST':
         coupon = request.form.get('coupon')
-        rows, success = database.get_game_coupon(coupon, session.get('username'))
+        username = session.get('username')
+
+        rows, success = database.get_game_coupon(coupon, username)
         if not success or rows == None or rows == 0:
+            logger.error(dict(user=username,
+                error='Invalid coupon',
+                action='Insert Coupon',
+                request=dict(route=request.path,
+                    method=request.method),
+                datetime=str(datetime.datetime.now())))
+
             flash("Cupom invalido", "danger")
             return render_template('coupon.html')
-        game, success = database.get_game(coupon, session.get('username'))
+        game, success = database.get_game(coupon, username)
         if not success or game == None:
+            logger.error(dict(user=username,
+                error='Invalid coupon',
+                action='Insert Coupon',
+                request=dict(route=request.path,
+                    method=request.method),
+                datetime=str(datetime.datetime.now())))
+
             flash("Cupom invalido", "danger")
             return render_template('coupon.html')
+
+        logger.error(dict(user=username,
+                error='Coupon claimed successfully',
+                action='Insert Coupon',
+                request=dict(route=request.path,
+                    method=request.method),
+                datetime=str(datetime.datetime.now())))
         flash("Voce ganhou {}".format(game[0]), "primary")
         return render_template('coupon.html')
     else:
