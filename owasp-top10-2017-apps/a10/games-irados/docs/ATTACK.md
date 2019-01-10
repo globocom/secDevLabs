@@ -10,7 +10,7 @@ With the goal of verifying how an application handles events that are considered
 * Brute forcing the login screen
 * Brute forcing the coupon validation screen
 
-Initially, we begin by performing a wrong login attempt to see what the application does in that case, as shown by the image below:
+Initially, we begin the first attack by sending an intentionally wrong login attempt, as shown by the image below:
 
 <p align="center">
     <img src="attack1.png"/>
@@ -18,17 +18,19 @@ Initially, we begin by performing a wrong login attempt to see what the applicat
 
 ## 🔥
 
-Now, using [Burp Suite] as a proxy, we can use it to fire as many requests as we want, only changing the content of the `password` field at every request, as depicted by the images below:
+Now, using [Burp Suite] as a proxy, we can use it to send as many requests as we want, only changing the content of the `password` field at every request, as depicted by the images below:
 
 <p align="center">
     <img src="attack2.png"/>
 </p>
 
+As we can see from the results of the requests, the application handles successfull and unsuccessfull requests differently by responding different status codes. As shown below, when the payload is correct the application responds a status code `302 FOUND`, otherwise it responds with a `202 OK`.
+
 <p align="center">
     <img src="attack3.png"/>
 </p>
 
-By having a look at the application on the server side, it's possible to see how little it logs our attack attempt, as shown below:
+By having a look at the application on the server side, it's possible to see that the logs provide little information regarding the attack, as shown below:
 
 <p align="center">
     <img src="attack4.png"/>
@@ -40,17 +42,19 @@ Further more, if we try the `/coupon` route, instead of the `/login`, we can see
     <img src="attack5.png"/>
 </p>
 
-Next, the value of the coupon field is selected so it will be changed at every request and then fired at the server.
+Using Burp Suite again, we could send multiple requests to the application to simulate the second brute force attack, changing only `coupon` field:
 
 <p align="center">
     <img src="attack6.png"/>
 </p>
 
+As we can see from the image below, the requests seem to have been handled properly by the server.
+
 <p align="center">
     <img src="attack7.png"/>
 </p>
 
-As we can see from the last image, the requests seem to have been accepted by the server. We can confirm that by having another look at the server side, as shown by the image below:
+ We can confirm that by having another look at the server side, as shown by the image below:
 
 <p align="center">
     <img src="attack8.png"/>
