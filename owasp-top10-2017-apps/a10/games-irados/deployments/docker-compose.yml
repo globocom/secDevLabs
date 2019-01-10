@@ -20,7 +20,9 @@ services:
          - mysqldb-a10
       external_links:
          - mysqldb-a10:mysqldb-10
-      restart: unless-stopped
+      volumes:
+         - "../app/:/app"
+      restart: always
 
    mysqldb-a10:
       container_name: mysqldb-a10
