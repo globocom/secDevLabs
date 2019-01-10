@@ -1,12 +1,12 @@
-# Attack Narrative - Ecommerce API
-The main goal of this document is to describe how a malicious user could exploit a lack of access control to obtain tokens that he should not have access to.
+# Attack Narrative - Vulnerable Ecommerce API
+The main goal of this documentation is to describe how a malicious user could exploit a Broken Access Control vulnerability intentionally installed on Vulnerable Ecommerce API from secDevLabs.
 
 If you don't know [secDevLabs] or this [intended vulnerable web application][2] yet, you should check them before reading this narrative.
 
 ---
 ## 👀
 
-In order to better understand how this API works, two users were created, `user1` and `user2`, as shown below: 
+In order to better understand how this API works, two users, `user1` and `user2`, were created as shown below: 
 
 ```sh
 $ curl -s H "Content-Type: application/json" -d '{"username":"user1","password":"pass"}' http://localhost:8888/register  
