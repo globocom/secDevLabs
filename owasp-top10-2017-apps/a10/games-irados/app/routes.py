@@ -28,6 +28,9 @@ bootstrap = Bootstrap(app)
 
 app.config.from_pyfile('config.py')
 
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger('games-irados')
+
 
 def generate_csrf_token():
     '''
@@ -77,10 +80,25 @@ def login():
         psw = Password(request.form.get('password').encode('utf-8'))
         user_password, success = database.get_user_password(username)
         if not success or user_password == None or not psw.validate_password(str(user_password[0])):
+            error = 'User not found' if not success else 'Wrong password'
+
+            logger.error(dict(user=username,
+                error=error,
+                action='Login attempt',
+                request=dict(route=request.path,
+                    method=request.method),
+                datetime=str(datetime.datetime.now())))
+
             flash("Usuario ou senha incorretos", "danger")
             return render_template('login.html')
-        session['username'] = username
-        return redirect('/home')
+        else:
+            logger.info(dict(user=username,
+                action='Login successful',
+                request=dict(route=request.path,
+                    method=request.method),
+                datetime=str(datetime.datetime.now())))
+            session['username'] = username
+            return redirect('/home')
     else:
         return render_template('login.html')
 
