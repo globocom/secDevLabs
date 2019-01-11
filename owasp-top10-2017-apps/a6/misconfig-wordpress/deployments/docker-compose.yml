@@ -1,11 +1,9 @@
 version: '3.3'
 
 services:
-  db:
-    container_name: db_wordpress
-    image: mysql:5.7
-    volumes:
-      - db_data:/var/lib/mysql
+   db:
+    container_name: a6db
+    image: secdevlabs/a6-the-mistery:db-version-2
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: somewordpress
@@ -13,11 +11,11 @@ services:
       MYSQL_USER: wordpress
       MYSQL_PASSWORD: wordpress
 
-  wordpress:
-    container_name: wordpress-vuln
+   wordpress:
+    container_name: a6-wordpress
     depends_on:
       - db
-    image: vuln-wordpress:latest
+    image: secdevlabs/a6-the-mistery:wp-version-2
     ports:
       - "8000:80"
     restart: always
@@ -25,5 +23,3 @@ services:
       WORDPRESS_DB_HOST: db:3306
       WORDPRESS_DB_USER: wordpress
       WORDPRESS_DB_PASSWORD: wordpress
-volumes:
-    db_data:
