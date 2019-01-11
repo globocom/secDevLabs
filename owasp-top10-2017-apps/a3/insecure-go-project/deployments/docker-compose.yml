@@ -22,10 +22,10 @@ services:
         external_links:
             - mongodb:mongodb
         environment:
-            - MONGO_DB_NAME=insecure_go_project
-            - MONGO_HOST=mongodb
-            - MONGO_USER=u_insecure_go_project
-            - MONGO_PASSWORD=svGX8SViufvYYNu6m3Kv
+            - MONGO_DB_NAME=${MONGO_DB_NAME}
+            - MONGO_HOST=${MONGO_HOST}
+            - MONGO_USER=${MONGO_USER}
+            - MONGO_PASSWORD=${MONGO_PASSWORD}
 
     mongodb:
         container_name: mongodb
@@ -40,7 +40,7 @@ services:
         networks:
             - insecure_net
         environment:
-            - MONGO_DB_NAME=insecure_go_project
-            - MONGO_HOST=mongodb
-            - MONGO_USER=u_insecure_go_project
-            - MONGO_PASSWORD=svGX8SViufvYYNu6m3Kv
+            - MONGO_DB_NAME=${MONGO_DB_NAME}
+            - MONGO_HOST=${MONGO_HOST}
+            - MONGO_USER=${MONGO_USER}
+            - MONGO_PASSWORD=${MONGO_PASSWORD}
