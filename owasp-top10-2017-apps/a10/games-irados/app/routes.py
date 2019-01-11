@@ -83,6 +83,7 @@ def login():
             error = 'User not found' if not success else 'Wrong password'
 
             logger.error(dict(user=username,
+                ip=request.remote_addr,
                 error=error,
                 action='Login attempt',
                 request=dict(route=request.path,
@@ -93,6 +94,7 @@ def login():
             return render_template('login.html')
         else:
             logger.info(dict(user=username,
+                ip=request.remote_addr,
                 action='Login successful',
                 request=dict(route=request.path,
                     method=request.method),
@@ -140,6 +142,7 @@ def cupom():
         rows, success = database.get_game_coupon(coupon, username)
         if not success or rows == None or rows == 0:
             logger.error(dict(user=username,
+                ip=request.remote_addr,
                 error='Invalid coupon',
                 action='Insert Coupon',
                 request=dict(route=request.path,
@@ -151,6 +154,7 @@ def cupom():
         game, success = database.get_game(coupon, username)
         if not success or game == None:
             logger.error(dict(user=username,
+                ip=request.remote_addr,
                 error='Invalid coupon',
                 action='Insert Coupon',
                 request=dict(route=request.path,
@@ -161,6 +165,7 @@ def cupom():
             return render_template('coupon.html')
 
         logger.error(dict(user=username,
+                ip=request.remote_addr,
                 error='Coupon claimed successfully',
                 action='Insert Coupon',
                 request=dict(route=request.path,
