@@ -90,7 +90,7 @@ class DataBase:
                 message = "MySQL Error: %s" % str(e)
                 return message , 0
 
-        return user_password, 1
+        return user_password, bool(user_password)
 
     def init_table_user(self):
         try:
