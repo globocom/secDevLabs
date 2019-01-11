@@ -7,7 +7,7 @@ COLOR_YELLOW = \033[33m
 COLOR_GREEN = \033[32m
 COLOR_RED = \033[31m
 
-PROJECT := A6 Wordpress Misconfig
+PROJECT := A6 SECWEB
 
 ## Installs a development environment using docker-compose
 install:compose
