@@ -16,6 +16,8 @@ This issue can also be found on [`mongo-init.js`](../deployments/mongo-init.js) 
 
 <img src="attack-2.png" align="center"/>
 
+## 🔥
+
 Using this credentials to access local MongoDB, it was possible to check that they are indeed valid: 
 
 <img src="attack-3.png" align="center"/>
