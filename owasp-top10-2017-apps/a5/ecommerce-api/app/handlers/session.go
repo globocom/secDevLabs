@@ -82,7 +82,7 @@ func Login(c echo.Context) error {
 
 	format := c.QueryParam("format")
 	if format == "json" {
-		return c.JSON(http.StatusBadRequest, map[string]string{
+		return c.JSON(http.StatusOK, map[string]string{
 			"result":   "success",
 			"username": userDataResult.Username,
 			"user_id":  userDataResult.UserID,
