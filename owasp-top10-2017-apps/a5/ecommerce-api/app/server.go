@@ -3,6 +3,8 @@ package main
 import (
 	"errors"
 	"fmt"
+	"html/template"
+	"io"
 	"os"
 
 	apiContext "github.com/globocom/secDevLabs/owasp-top10-2017-apps/a5/ecommerce-api/app/context"
@@ -11,6 +13,23 @@ import (
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 )
+
+// TemplateRegistry defines the template registry struct
+// Ref: https://medium.freecodecamp.org/how-to-setup-a-nested-html-template-in-the-go-echo-web-framework-670f16244bb4
+type TemplateRegistry struct {
+	templates map[string]*template.Template
+}
+
+// Render implement e.Renderer interface
+// Ref: https://medium.freecodecamp.org/how-to-setup-a-nested-html-template-in-the-go-echo-web-framework-670f16244bb4
+func (t *TemplateRegistry) Render(w io.Writer, name string, data interface{}, c echo.Context) error {
+	tmpl, ok := t.templates[name]
+	if !ok {
+		err := errors.New("Template not found -> " + name)
+		return err
+	}
+	return tmpl.ExecuteTemplate(w, "base.html", data)
+}
 
 func main() {
 
@@ -23,10 +42,19 @@ func main() {
 	echoInstance := echo.New()
 	echoInstance.HideBanner = true
 
+	// Instantiate a template registry with an array of template set
+	// Ref: https://medium.freecodecamp.org/how-to-setup-a-nested-html-template-in-the-go-echo-web-framework-670f16244bb4
+	templates := make(map[string]*template.Template)
+	templates["form.html"] = template.Must(template.ParseFiles("app/views/form.html", "app/views/base.html"))
+	echoInstance.Renderer = &TemplateRegistry{
+		templates: templates,
+	}
+
 	echoInstance.Use(middleware.Logger())
 	echoInstance.Use(middleware.Recover())
 	echoInstance.Use(middleware.RequestID())
 
+	echoInstance.GET("/", handlers.FormPage)
 	echoInstance.GET("/healthcheck", handlers.HealthCheck)
 	echoInstance.GET("/ticket/:id", handlers.GetTicket)
 	echoInstance.POST("/register", handlers.RegisterUser)
