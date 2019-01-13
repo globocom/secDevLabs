@@ -22,6 +22,16 @@ func GetTicket(c echo.Context) error {
 		// could not find this user in MongoDB (or MongoDB err connection)
 		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error finding this UserID."})
 	}
+
+	format := c.QueryParam("format")
+	if format == "json" {
+		return c.JSON(http.StatusOK, map[string]string{
+			"result":   "success",
+			"username": userDataResult.Username,
+			"ticket":   userDataResult.Ticket,
+		})
+	}
+
 	msgTicket := fmt.Sprintf("Hey, %s! This is your ticket: %s\n", userDataResult.Username, userDataResult.Ticket)
 	return c.String(http.StatusOK, msgTicket)
 }
