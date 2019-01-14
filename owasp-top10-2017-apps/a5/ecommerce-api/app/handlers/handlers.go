@@ -20,8 +20,8 @@ func HealthCheck(c echo.Context) error {
 	return c.String(http.StatusOK, "WORKING\n")
 }
 
-func ErrorMessage(c echo.Context) error {
-	return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error finding this UserID."})
+func PermissionDeniedErrorMessage(c echo.Context) error {
+	return c.JSON(http.StatusForbidden, map[string]string{"result": "error", "details": "Error: Permission Denied. You are not allowed to view this ticket."})
 }
 
 // GetTicket returns the userID ticket.
@@ -30,7 +30,7 @@ func GetTicket(c echo.Context) error {
 	cookie, err := ReadCookie(c)
 
 	if err != nil {
-		return ErrorMessage(c)
+		return PermissionDeniedErrorMessage(c)
 	}
 
 	token, err := jwt.ParseWithClaims(cookie, &UserClaims{}, func(token *jwt.Token) (interface{}, error) {
@@ -38,13 +38,13 @@ func GetTicket(c echo.Context) error {
 	})
 
 	if err != nil {
-		return ErrorMessage(c)
+		return PermissionDeniedErrorMessage(c)
 	}
 
 	claims, ok := token.Claims.(*UserClaims)
 
 	if !token.Valid && !ok {
-		return ErrorMessage(c)
+		return PermissionDeniedErrorMessage(c)
 	}
 
 	id := c.Param("id")
@@ -52,7 +52,7 @@ func GetTicket(c echo.Context) error {
 	userDataResult, err := db.GetUserData(userDataQuery)
 	if err != nil {
 		// could not find this user in MongoDB (or MongoDB err connection)
-		return ErrorMessage(c)
+		return PermissionDeniedErrorMessage(c)
 	}
 	msgTicket := fmt.Sprintf("Hey, %s! This is your ticket: %s\n", userDataResult.Username, userDataResult.Ticket)
 	return c.String(http.StatusOK, msgTicket)
