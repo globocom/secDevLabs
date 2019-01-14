@@ -25,15 +25,13 @@ def login_admin_required(f):
         cookie = base64.b64decode(cookie).decode("utf-8")
         cookie_separado = cookie.split('.')
         if(len(cookie_separado) != 2 ):
-            return "Cookie Inválido!"
+            return "Invalid cookie!"
         hash_cookie = hashlib.sha256(cookie_separado[0].encode('utf-8')).hexdigest()
         if (hash_cookie != cookie_separado[1]):
             return redirect("/login")
         j = json.loads(cookie_separado[0])
         if j.get("permissao") != 1:
-            return "Você é um user!"
-        else:
-            return "Você é um admin!"
+            return "You don't have permission to access this route. You are not an admin."
         return f(*args, **kwargs)
     return decorated_function
 
@@ -44,70 +42,73 @@ def login_required(f):
         cookie = base64.b64decode(cookie).decode("utf-8")
         cookie_separado = cookie.split('.')
         if(len(cookie_separado) != 2 ):
-            return "Cookie Inválido!"
+            return "Invalid cookie!"
         hash_cookie = hashlib.sha256(cookie_separado[0].encode('utf-8')).hexdigest()
         if (hash_cookie != cookie_separado[1]):
             return redirect("/login")
         return f(*args, **kwargs)
     return decorated_function
 
-@app.route("/")
-def ola():
-    return "ola"
-
-@app.route("/register", methods=['GET','POST'])
+@app.route("/register", methods=['POST'])
 def register():
     if request.method == 'POST':
-        form_username = request.form.get('username')
-        form_password = request.form.get('password')
+        form_username = request.form.get('username', "")
+        form_password = request.form.get('password', "")
+        form_password2 = request.form.get('password2', "")
+
+        if form_username == "" or form_password == "":
+            return "Error! You have to pass username and password!"
+        elif form_password != form_password2:
+            return "Error! Passwords must be the same!"
+
         guid = str(uuid.uuid4())
         password = Password(form_password, form_username, guid)
         hashed_password = password.get_hashed_password()
         message, success = database.insert_user(guid, form_username, hashed_password)
-        # return render_template('login.html')
         if success:
-            return "Registrado com sucesso"
-        return "Registro falhou!"
-    else:
-        return "register"
-    # return render_template('register.html')
+            return "New account created!"
+        return "Error: account creation failed"
 
-@app.route("/login", methods=['GET','POST'])
+
+@app.route("/login", methods=['POST'])
 def login():
     if request.method == 'POST':
-        form_username = request.form.get('username')
-        form_password = request.form.get('password')
+        form_username = request.form.get('username', "")
+        form_password = request.form.get('password', "")
+        if form_username == "" or form_password == "":
+            return "Error! You have to pass username and password!"
+
         result, success = database.get_user(form_username)
         if not success:
-            return "Login falhou!"
+            return "Login failed!"
 
         if result == None:
-            return "Login falhou!"
+            return "Login failed!"
 
         password = Password(form_password, form_username, result[2])
         if not password.validate_password(result[0]):
-            return "Login falhou!"
+            return "Login failed!"
 
         cookie_dic = {"permissao": result[1], "username": form_username}
         cookie = json.dumps(cookie_dic)
         hash_cookie = hashlib.sha256(cookie.encode('utf-8')).hexdigest()
         cookie_done = '.'.join([cookie,hash_cookie])
         cookie_done = base64.b64encode(str(cookie_done).encode("utf-8"))
-        resp = make_response(redirect("/user"))
+        resp = make_response()
         resp.set_cookie("sessionId", cookie_done)
         return resp
 
 
 
-@app.route("/admin", methods=['GET', 'POST'])
+@app.route("/admin", methods=['GET'])
 @login_admin_required
 def admin():
-    return "aqui"
+    return "You are an admin!"
 
-@app.route("/user", methods=['GET', 'POST'])
+@app.route("/user", methods=['GET'])
 @login_required
 def userInfo():
-    return "Voce é um user!"
+    return "You are an user!"
 
 if __name__ == '__main__':
     app.run(debug=False, host='0.0.0.0', port=10082)
