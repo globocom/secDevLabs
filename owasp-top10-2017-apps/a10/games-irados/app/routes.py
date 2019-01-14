@@ -82,8 +82,7 @@ def login():
         if not success or user_password == None or not psw.validate_password(str(user_password[0])):
             error = 'User not found' if not success else 'Wrong password'
 
-            logger.error(dict(user=username,
-                ip=request.remote_addr,
+            logger.error(dict(ip=request.remote_addr,
                 error=error,
                 action='Login attempt',
                 request=dict(route=request.path,
