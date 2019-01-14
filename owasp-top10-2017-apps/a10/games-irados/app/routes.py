@@ -164,7 +164,7 @@ def cupom():
             flash("Cupom invalido", "danger")
             return render_template('coupon.html')
 
-        logger.error(dict(user=username,
+        logger.info(dict(user=username,
                 ip=request.remote_addr,
                 error='Coupon claimed successfully',
                 action='Insert Coupon',
