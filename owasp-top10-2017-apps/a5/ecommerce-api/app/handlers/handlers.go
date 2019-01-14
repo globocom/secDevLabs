@@ -10,6 +10,11 @@ import (
 	"github.com/labstack/echo"
 )
 
+type UserClaims struct {
+	Name string `json:"name"`
+	jwt.StandardClaims
+}
+
 // HealthCheck is the heath check function.
 func HealthCheck(c echo.Context) error {
 	return c.String(http.StatusOK, "WORKING\n")
@@ -26,11 +31,6 @@ func GetTicket(c echo.Context) error {
 
 	if err != nil {
 		return ErrorMessage(c)
-	}
-
-	type UserClaims struct {
-		Name string `json:"name"`
-		jwt.StandardClaims
 	}
 
 	token, err := jwt.ParseWithClaims(cookie, &UserClaims{}, func(token *jwt.Token) (interface{}, error) {
