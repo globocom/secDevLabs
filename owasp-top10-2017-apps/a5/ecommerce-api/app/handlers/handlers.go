@@ -37,9 +37,13 @@ func GetTicket(c echo.Context) error {
 		return []byte(os.Getenv("JWT_SECRET")), nil
 	})
 
-	claims, _ := token.Claims.(*UserClaims)
+	if err != nil {
+		return ErrorMessage(c)
+	}
 
-	if !token.Valid {
+	claims, ok := token.Claims.(*UserClaims)
+
+	if !token.Valid && !ok {
 		return ErrorMessage(c)
 	}
 
