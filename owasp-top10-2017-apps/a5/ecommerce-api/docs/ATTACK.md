@@ -16,8 +16,16 @@ $ curl -s -H "Content-Type: application/json" -d '{"username":"user2","password"
 ```
 
 <p align="center">
+    <img src="attack0.png"/>
+</p>
+
+
+Or using web interface:
+
+<p align="center">
     <img src="attack1.png"/>
 </p>
+
 
 The users created above are registered on MongoDB and we can get their `userID` through the following curl commands:
 
@@ -32,12 +40,18 @@ $ curl -s -H "Content-Type: application/json" -d '{"username":"user2","password"
     <img src="attack2.png"/>
 </p>
 
+This can also be observed via the web interface. In the web interface it is possible to verify that after completing the login form, two requests are made to the API.
+
+<p align="center">
+    <img src="attack3.png"/>
+</p>
+
 ## 🔥
 
 Having both `userID`, we can verify that the route "`GET /ticket/:userID`" does not validade if the request was made by the same user or someone else without the proper permission, as shown by the image:
 
 <p align="center">
-    <img src="attack3.png"/>
+    <img src="attack4.png"/>
 </p>
 
 [secDevLabs]: https://github.com/globocom/secDevLabs
