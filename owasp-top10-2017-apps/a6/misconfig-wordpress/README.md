@@ -1,7 +1,9 @@
 # Vulnerable Wordpress Misconfig
 > This is a simple Wordpress web application that contains an example of a Security Misconfiguration vulnerability.
 
-<!-- <img src="images/example-wordpress.png" align="center"/> -->
+<p align="center">
+    <img src="images/banner.png"/>
+</p>
 
 ## What is Security Misconfiguration?
 
