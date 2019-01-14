@@ -27,7 +27,7 @@ func Login(c echo.Context) error {
 	validUser, err := util.AuthenticateUser(loginAttempt.User, loginAttempt.Pass)
 	if err != nil {
 		msgUser := err.Error() + "\n"
-		return c.JSON(http.StatusOK, msgUser)
+		return c.JSON(http.StatusBadRequest, msgUser)
 	}
 
 	if validUser {
@@ -36,7 +36,7 @@ func Login(c echo.Context) error {
 	}
 
 	msgUser := fmt.Sprintf("Usuário ou senha errados!\n")
-	return c.String(http.StatusOK, msgUser)
+	return c.String(http.StatusBadRequest, msgUser)
 }
 
 //Register is the function to register a new user on bd
