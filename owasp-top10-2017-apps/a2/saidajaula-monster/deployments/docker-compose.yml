@@ -5,11 +5,8 @@ services:
     build:
       context: ../
       dockerfile: deployments/Dockerfile
-    environment:
-      A2_DATABASE_USER: user
-      A2_DATABASE_PASSWORD: pass
-      A2_DATABASE_HOST: db
-      A2_DATABASE_NAME: A2
+    env_file:
+      - dockers.env
     links:
       - db:db
     depends_on:
@@ -25,11 +22,8 @@ services:
     image: mysql:5.7
     ports:
       - "3307:3307"
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: A2
-      MYSQL_USER: user
-      MYSQL_PASSWORD: pass
+    env_file:
+      - dockers.env
     networks:
       - a2_net
     volumes:
