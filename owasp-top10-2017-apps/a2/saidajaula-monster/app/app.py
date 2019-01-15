@@ -1,16 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from flask import Flask, request, make_response, render_template, redirect, Markup
+from flask import Flask, request, make_response, redirect
 from model.password import Password
 from model.db import DataBase
-import base64
 import os
-import json
-import hashlib, binascii
-import time
 import uuid
 from functools import wraps
-import uuid
 import jwt
 from jwt import InvalidSignatureError
 
