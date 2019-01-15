@@ -11,6 +11,8 @@ import time
 import uuid
 from functools import wraps
 import uuid
+import jwt
+from jwt import InvalidSignatureError
 
 
 
@@ -22,15 +24,13 @@ def login_admin_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         cookie = request.cookies.get("sessionId", "")
-        cookie = base64.b64decode(cookie).decode("utf-8")
-        cookie_separado = cookie.split('.')
-        if(len(cookie_separado) != 2 ):
-            return "Invalid cookie!"
-        hash_cookie = hashlib.sha256(cookie_separado[0].encode('utf-8')).hexdigest()
-        if (hash_cookie != cookie_separado[1]):
+
+        try:
+            payload = jwt.decode(cookie, os.environ.get('JWT_SECRET'), algorithm='HS256')
+        except InvalidSignatureError as e:
             return redirect("/login")
-        j = json.loads(cookie_separado[0])
-        if j.get("permissao") != 1:
+
+        if payload.get("permissao") != 1:
             return "You don't have permission to access this route. You are not an admin."
         return f(*args, **kwargs)
     return decorated_function
@@ -39,12 +39,10 @@ def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         cookie = request.cookies.get("sessionId", "")
-        cookie = base64.b64decode(cookie).decode("utf-8")
-        cookie_separado = cookie.split('.')
-        if(len(cookie_separado) != 2 ):
-            return "Invalid cookie!"
-        hash_cookie = hashlib.sha256(cookie_separado[0].encode('utf-8')).hexdigest()
-        if (hash_cookie != cookie_separado[1]):
+
+        try:
+            payload = jwt.decode(cookie, os.environ.get('JWT_SECRET'), algorithm='HS256')
+        except InvalidSignatureError as e:
             return redirect("/login")
         return f(*args, **kwargs)
     return decorated_function
@@ -89,13 +87,12 @@ def login():
         if not password.validate_password(result[0]):
             return "Login failed!"
 
-        cookie_dic = {"permissao": result[1], "username": form_username}
-        cookie = json.dumps(cookie_dic)
-        hash_cookie = hashlib.sha256(cookie.encode('utf-8')).hexdigest()
-        cookie_done = '.'.join([cookie,hash_cookie])
-        cookie_done = base64.b64encode(str(cookie_done).encode("utf-8"))
+        payload = {"permissao": result[1], "username": form_username}
+        cookie_done = jwt.encode(payload, os.environ.get('JWT_SECRET'), algorithm='HS256')
+
         resp = make_response()
         resp.set_cookie("sessionId", cookie_done)
+
         return resp
 
 
