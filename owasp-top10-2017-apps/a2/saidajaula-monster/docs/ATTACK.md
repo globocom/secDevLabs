@@ -30,7 +30,7 @@ $ curl -i -L localhost:10082/login -F "username=daniel" -F "password=daniel" -X 
     <img src="attack2.png"/>
 </p>
 
-As we can see from the image above, the application sets an cookie for the user, `sessionId`. By having a better look at this cookie, we find out that it is actually base64 encoded, and it's content are as following:
+As we can see from the image above, the application sets a cookie for the user, `sessionId`. By having a better look at this cookie, we find out that it is actually base64 encoded, and it's content are as following:
 
 <p align="center">
     <img src="attack3.png"/>
@@ -44,7 +44,7 @@ Now, by having a look at the app's code, it's possible to see that all the infor
 
 ## 🔥
 
-Knowing how the cookie is being generated, an malicious user could create his own to gain access to pages he shouldn't have. An attacker could obtain admin privileges by changing the cookie's `permission` field, as depicted by the image below:
+Knowing how the cookie is being generated, a malicious user could create his own to gain access to pages he shouldn't have. An attacker could obtain admin privileges by changing the cookie's `permission` field, as depicted by the image below:
 
 <p align="center">
     <img src="attack5.png"/>
