@@ -18,7 +18,9 @@ services:
       - "10082:10082"
     networks:
       - a2_net
-    restart: unless-stopped
+    volumes:
+      - "../app/:/app"
+    restart: always
 
   db:
     container_name: db-a2
