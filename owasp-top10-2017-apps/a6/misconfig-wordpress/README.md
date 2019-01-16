@@ -27,7 +27,7 @@ Then simply visit [localhost:8000][App] !
 
 ## Attack Narrative
 
-To understand how this vulnerability can be exploited, check [this](docs/ATTACK.md) section!
+To understand how this vulnerability can be exploited, check [this section](docs/ATTACK.md)!
 
 ## Mitigating the vulnerability
 

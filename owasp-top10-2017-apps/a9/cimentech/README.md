@@ -27,7 +27,7 @@ Then simply visit [localhost:80/][App] !
 
 ## Attack Narrative
 
-To understand how this vulnerability can be exploited, check this [other][Narrative] section!
+To understand how this vulnerability can be exploited, check [this section]!
 
 ## Mitigating the vulnerability
 
@@ -36,7 +36,7 @@ To understand how this vulnerability can be mitigated, check this other section!
 [Docker Install]:  https://docs.docker.com/install/
 [Docker Compose Install]: https://docs.docker.com/compose/install/
 [App]: http://127.0.0.1:80/
-[Narrative]: docs/ATTACK.md
+[this section]: docs/ATTACK.md
 
 ## Contributing
 

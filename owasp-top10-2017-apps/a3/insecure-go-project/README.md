@@ -30,7 +30,7 @@ WORKING!
 
 ## Attack Narrative
 
-To understand how this vulnerability can be exploited, check this section!
+To understand how this vulnerability can be exploited, check [this section]!
 
 ## Mitigating the vulnerability
 
@@ -42,3 +42,5 @@ To understand how this vulnerability can be mitigated, check this other section!
 ## Contributing
 
 Yes, please. :zap:
+
+[this section]: https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2017-apps/a3/insecure-go-project/docs/ATTACK.md
