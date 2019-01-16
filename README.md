@@ -25,8 +25,8 @@ These are vulnerable applications! 🔥
 - A9 - Using Components With Known Vulnerabilities - [Cimentech](owasp-top10-2017-apps/a9/cimentech)
 - A10 - Insufficient Logging&Monitoring - [GamesIrados.com](owasp-top10-2017-apps/a10/games-irados)
 
-## Want to add your contribution?
-Be sure to check [this](/docs/Contribute.md) section!
+## Contributing
+We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](/docs/CONTRIBUTING.md) guide for guidelines on how to proceed! 
 
 ## License
 
