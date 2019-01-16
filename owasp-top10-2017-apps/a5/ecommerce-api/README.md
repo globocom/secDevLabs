@@ -49,7 +49,7 @@ Hey, rafael! This is your ticket: rafael-08e8805f-422b-477b-8565-b0876b89da17
 
 ## Attack Narrative
 
-To understand how this vulnerability can be exploited, check [this] section!
+To understand how this vulnerability can be exploited, check [this section]!
 
 ## Mitigating the vulnerability
 
@@ -62,4 +62,4 @@ To understand how this vulnerability can be mitigated, check this other section!
 
 Yes, please. :zap:
 
-[this]: https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2017-apps/a5/ecommerce-api/docs/ATTACK.md
+[this section]: https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2017-apps/a5/ecommerce-api/docs/ATTACK.md
