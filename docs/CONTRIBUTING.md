@@ -22,4 +22,3 @@ Please let us know! Send a Pull Request with the `bug 🕷 ` label or create an 
 
 [1]:/docs/Makefile
 [2]:/docs/Attack_Narrative_Template.md
-[3]:https://github.com/globocom/secDevLabs/labels/review%20requested%20%F0%9F%91%80
