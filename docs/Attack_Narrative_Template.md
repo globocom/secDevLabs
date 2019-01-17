@@ -1,12 +1,12 @@
 # Attack Narrative - The Template
-The main goal of this document is to describe how a malicious user could exploit a vulnerability, intentionally installed on `your app's name` from secDevLabs, to `add here the vulnerability`.
+The main goal of this document is to describe how a malicious user could exploit a %NAME_OF_THE_OWASP_TOP_10_VULN% vulnerability, intentionally installed on `your app's name` from secDevLabs, to `add here the vulnerability`.
 
 If you don't know [secDevLabs] or this `intended vulnerable web application` (be sure to leave a link here!) yet, you should check them before reading this narrative.
 
 ---
 ## 👀
 
-This first part should be about how the vulnerability was found, you should explain all the steps needed for someone to be able to replicate this vulnerability.
+This first part, 👀, is dedicated to describing all the steps needed to identify the vulnerability installed on your app so that anyone following ATTACK.md is able to replicate it.
 
 Usually, some nice steps to include are:
 * What's the app main page? How can you access it?
@@ -18,25 +18,39 @@ Usually, some nice steps to include are:
     ```
 ```
 
-Add as many images as you can! A picture is worth more than a thousand words!
+A nice example of images to have on an attack narrative could be as follows:
 
-To add an image, simply add this code:
-```
 <p align="center">
-    <img src="yourimage.png"/>
+    <img src="https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2017-apps/a4/vinijr-blog/images/blog-fe.png"/>
 </p>
-```
+
+<p align="center">
+    <img src="https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2017-apps/a2/saidajaula-monster/images/img1.png"/>
+</p>
+
+
+Add as many images as you can! A picture is worth more than a thousand words!
 
 ## 🔥
 
-Now that we know how an attacker could go from the app's main page to the vulnerability, it's time to exploit it!
+This second part, 🔥, is dedicated to describing all the steps needed to exploit the vulnerability found previously.
 
 In this section, your goal should be on how to exploit the app and it's steps. A good guideline to follow is:
 * Include all the steps to reproduce the exploit.
 * If you used the command line, be sure to add the command here!
-* If you use an external exploit, such as those found in [ExploitDB], be sure to include the link to it and how you were able to find it!
+* It would be great if you added references to your narrative, such as used tools, exploits (preferably from [ExploitDB]) , a RFC, or any other text.
 
 And as always, images!!! 😃
+
+Some good examples of images are as follows:
+
+<p align="center">
+    <img src="https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2017-apps/a2/saidajaula-monster/docs/attack2.png"/>
+</p>
+
+<p align="center">
+    <img src="https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2017-apps/a2/saidajaula-monster/docs/attack4.png"/>
+</p>
 
 
 [secDevLabs]: https://github.com/globocom/secDevLabs
