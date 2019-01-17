@@ -1,6 +1,6 @@
 # Attack Narrative - CopyNPaste API (Injection)
 
-The main goal of this documentation is to describe how a malicious user could exploit an Injection vulnerability intentionally intalled on CopyNPaster API from secDevLabs.
+The main goal of this documentation is to describe how a malicious user could exploit an Injection vulnerability intentionally intalled on CopyNPaste API from secDevLabs.
 
 If you don't know [secDevLabs](https://github.com/globocom/secDevLabs) or this [intended vulnerable web application](https://github.com/globocom/secDevLabs/tree/master/owasp-top10-2017-apps/a1/copy-n-paste) yet, you should check them before reading this narrative. 
 
