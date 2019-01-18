@@ -38,7 +38,7 @@ To understand how this vulnerability can be exploited, check [this section]!
 To understand how this vulnerability can be mitigated, check this other section!
 
 [App]: http://127.0.0.1
-[this section]: https://github.com/globocom/secDevLabs/docs/Attack_Narrative_Template.md
+[this section]: https://github.com/globocom/secDevLabs/blob/master/docs/Attack_Narrative_Template.md
 
 ## Contributing
 
