@@ -25,6 +25,15 @@ These are vulnerable applications! 🔥
 - A9 - Using Components With Known Vulnerabilities - [Cimentech](owasp-top10-2017-apps/a9/cimentech)
 - A10 - Insufficient Logging&Monitoring - [GamesIrados.com](owasp-top10-2017-apps/a10/games-irados)
 
+## So you think you know how to solve a vulnerability?
+
+Nice! You can send us your mitigation of the vulnerability directly through a Pull Request, using the [review requested 👀](https://github.com/globocom/secDevLabs/labels/review%20requested%20%F0%9F%91%80) label.
+
+We expect your mitigation proposal to have all the changes needed to completely fix the vulnerability and a short explanation on what you are doing. If you're feeling a bit lost, try having a look at [this mitigation solution](https://github.com/globocom/secDevLabs/pull/29), it might help!
+
+## Contributing
+We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](/docs/CONTRIBUTING.md) guide for guidelines on how to proceed! 
+
 ## License
 
 This project is licensed under the BSD 3-Clause "New" or "Revised" License - read [LICENSE.md](LICENSE.md) file for details.
