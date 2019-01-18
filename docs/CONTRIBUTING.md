@@ -14,11 +14,16 @@ So your app can be deployed with Docker-Compose, nice job! But wait, does it hav
 
 Do you have an attack narrative? Well, if you don't, worry not, we got you! Have a look at this [attack narrative template][2] and you will be able to write your own in no time! ✓
 
+Do you have a README file? If you don't, have a look at our [README template][3]!
+
 Just be sure to add some pictures! A picture is worth a thousand words! 👍
 
 ## I've found an error on one of the apps!
 
-Please let us know! Send a Pull Request with the `bug 🕷 ` label or create an Issue!
+Please let us know! Send a Pull Request with the `bug 🕷 ` label or create an Issue! We have a [PR][4] and [issue][5] template to help you!
 
 [1]:/docs/Makefile
 [2]:/docs/Attack_Narrative_Template.md
+[3]:/docs/README_Template.md
+[4]:/docs/PR_Template.md
+[5]:/docs/Issue_Template.md
