@@ -9,8 +9,11 @@ If you don't know [secDevLabs] or this `intended vulnerable web application` (be
 This first part, 👀, is dedicated to describing all the steps needed to identify the vulnerability installed on your app so that anyone following ATTACK.md is able to replicate it.
 
 Usually, some nice steps to include are:
-* What's the app main page? How can you access it?
-* How did you discover the vulnerability? If you used the command line, be sure to include the command used! You can include the command by doing this:
+* What's the app main page?
+* How can you access it?
+* How did you discover the vulnerability?
+* If you used the command line, be sure to include the command used! You can include the command by doing this:
+
 ```sh
     ```sh
     $ My awesome command here
@@ -18,16 +21,31 @@ Usually, some nice steps to include are:
     ```
 ```
 
-A nice example of images to have on an attack narrative could be as follows:
+A nice example of images to have on an attack narrative in the discovery section is:
+
+First time acessing the app:
 
 <p align="center">
-    <img src="https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2017-apps/a4/vinijr-blog/images/blog-fe.png"/>
+    <img src="https://raw.githubusercontent.com/globocom/secDevLabs/master/owasp-top10-2017-apps/a2/saidajaula-monster/images/img1.png"/>
 </p>
+
+Found an interesting page:
 
 <p align="center">
-    <img src="https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2017-apps/a2/saidajaula-monster/images/img1.png"/>
+    <img src="https://raw.githubusercontent.com/globocom/secDevLabs/master/owasp-top10-2017-apps/a2/saidajaula-monster/docs/attack1.png"/>
 </p>
 
+Started the analysis on how the app handles cookies:
+
+<p align="center">
+    <img src="https://raw.githubusercontent.com/globocom/secDevLabs/master/owasp-top10-2017-apps/a2/saidajaula-monster/docs/attack4.png"/>
+</p>
+
+Confirmed the suspicion by having a look at the code!
+
+<p align="center">
+    <img src="https://raw.githubusercontent.com/globocom/secDevLabs/master/owasp-top10-2017-apps/a1/copy-n-paste/docs/attack-0.png"/>
+</p>
 
 Add as many images as you can! A picture is worth more than a thousand words!
 
@@ -44,12 +62,16 @@ And as always, images!!! 😃
 
 Some good examples of images are as follows:
 
-<p align="center">
-    <img src="https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2017-apps/a2/saidajaula-monster/docs/attack2.png"/>
-</p>
+Creating a payload:
 
 <p align="center">
-    <img src="https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2017-apps/a2/saidajaula-monster/docs/attack4.png"/>
+    <img src="https://raw.githubusercontent.com/globocom/secDevLabs/master/owasp-top10-2017-apps/a1/copy-n-paste/docs/attack-0.png"/>
+</p>
+
+Delivering a payload, and results!
+
+<p align="center">
+    <img src="https://raw.githubusercontent.com/globocom/secDevLabs/master/owasp-top10-2017-apps/a2/saidajaula-monster/docs/attack8.png"/>
 </p>
 
 
