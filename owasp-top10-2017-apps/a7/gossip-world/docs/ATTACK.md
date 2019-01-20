@@ -1,4 +1,4 @@
-# Attack Narrative - Fofocando Blog (XSS)
+# Attack Narrative - Gossip World (XSS)
 
 The main goal of this documentation is to describe how a malicious user could exploit a Cross-Site Scripting vulnerability intentionally installed on Fofocando Blog from secDevLabs.
 
