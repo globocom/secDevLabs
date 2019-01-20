@@ -1,4 +1,4 @@
-# Fofocando
+# Gossip World
  > This is a simple Flask app that contains an example of a Cross-site Scripting vulnerability.
 
 <img src="images/banner.png" align="center"/>
