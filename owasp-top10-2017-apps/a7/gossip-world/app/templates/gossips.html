@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Fofocando</title>
+    <title>Gossip World</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css')}}">
@@ -23,7 +23,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
-        <a class="navbar-brand" href="#">Fofocando</a>
+        <a class="navbar-brand" href="#">Gossip World</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -35,10 +35,10 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/newgossip">Nova postagem</a>
+              <a class="nav-link" href="/newgossip">New gossip</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/logout">Sair</a>
+              <a class="nav-link" href="/logout">Logout</a>
             </li>
           </ul>
         </div>
@@ -57,7 +57,7 @@
          {% if search %}
          <h1>Resultados para {{search_text | safe}} </h1>
          {% else %}
-          <h1 class="my-4">Fofocas quentes</h1>
+          <h1 class="my-4">Last gossips</h1>
          {% endif %}
          <div class="container">
             {% with messages = get_flashed_messages(with_categories=true) %}
@@ -79,7 +79,7 @@
             <div class="card-body">
               <h2 class="card-title">{{post[3]}}</h2>
               <h5> {{post[4]}} </h5>
-              <a href="/gossip/{{post[0]}}" class="btn btn-primary">Leia mais &rarr;</a>
+              <a href="/gossip/{{post[0]}}" class="btn btn-primary">Read more &rarr;</a>
             </div>
             <div class="card-footer text-muted">
               Posted on {{post[5]}} by {{post[2]}}
@@ -129,7 +129,7 @@
     <!-- Footer -->
     <footer class="py-5 bg-dark">
       <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Fofocando 2018</p>
+        <p class="m-0 text-center text-white">Copyright &copy; Gossip World 2018</p>
       </div>
       <!-- /.container -->
     </footer>

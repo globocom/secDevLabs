@@ -46,21 +46,21 @@ def csrf_protect():
     '''
         CSRF PROTECION
     '''
-    if request.method == "POST":
+    if request.method == 'POST':
         token_csrf = session.get('_csrf_token')
         form_token = request.form.get('_csrf_token')
         if not token_csrf or str(token_csrf) != str(form_token):
-            error("csrf_protect",
-                  "wrong value for csrf_token",
-                  session.get("username"))
-            return "ERROR: Wrong value for csrf_token"
+            error('csrf_protect',
+                  'wrong value for csrf_token',
+                  session.get('username'))
+            return 'ERROR: Wrong value for csrf_token'
 
 
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if 'username' not in session:
-            flash('oops, session expired', "danger")
+            flash('oops, session expired', 'danger')
             return redirect('/login')
         return f(*args, **kwargs)
     return decorated_function
@@ -74,13 +74,12 @@ def root():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        username = request.form.get('username').encode('utf-8')
+        username = request.form.get('username')
         psw = Password(request.form.get('password').encode('utf-8'))
-        print(username, psw)
         user_password, success = database.get_user_password(username)
         if not success or user_password == None or not psw.validate_password(user_password[0]):
-            error("gossip", "User not found or wrong password", session.get('username'))
-            flash("User not found or wrong password", "danger")
+            error('gossip', 'User not found or wrong password', session.get('username'))
+            flash('User not found or wrong password', 'danger')
             return render_template('login.html')
         session['username'] = username
         return redirect('/gossip')
@@ -98,23 +97,31 @@ def logout():
 @app.route('/register', methods=['GET', 'POST'])
 def newuser():
     if request.method == 'POST':
-        username = request.form.get('username').encode('utf-8')
-        psw1 = request.form.get('password1').encode('utf-8')
-        psw2 = request.form.get('password2').encode('utf-8')
+        username = request.form.get('username')
+        psw1 = request.form.get('password1')
+        psw2 = request.form.get('password2')
+
+        if username == '' or psw1 == '' or psw2 == '':
+            flash('All fields are required', 'danger')
+            return redirect('/register')
+
+        # username = username.encode('utf-8')
+        psw1 = psw1.encode('utf-8')
+        psw2 = psw2.encode('utf-8')
 
         if psw1 == psw2:
             psw = Password(psw1)
             hashed_psw = psw.get_hashed_password()
             message, success = database.insert_user(username, hashed_psw)
             if success == 1:
-                flash("New user added!", "primary")
+                flash('New user added!', 'primary')
                 return redirect('/login')
             else:
-                error("newuser", message, session.get('username'))
-                flash("Error!", "primary")
+                error('newuser', message, session.get('username'))
+                flash('Internal error!', 'danger')
                 return redirect('/register')
 
-        flash("Passwords must be the same!", "danger")
+        flash('Passwords must be the same!', 'danger')
         return redirect('/register')
     else:
         return render_template('register.html')
@@ -122,24 +129,16 @@ def newuser():
 @app.route('/gossip', methods=['GET'])
 @login_required
 def all_gossips():
-    try:
-        page = int(request.args.get('page'))
-        if page < 1:
-            raise TypeError
-    except (TypeError, ValueError):
-        page = 1
-
     search = request.args.get('search')
-    offset = 10*(page - 1)
     search_flag = 0
     if search != None:
-        gossips, success = database.search_gossips(offset, 10, search)
+        gossips, success = database.search_gossips(search)
         search_flag = 1
     else:
-        gossips, success = database.get_latest_gossips(offset, 10)
+        gossips, success = database.get_latest_gossips()
     if not success:
-        error("all_gossips", gossips, session.get('username'))
-        return 'Oops, error!'
+        error('all_gossips', gossips, session.get('username'))
+        return 'Internal error!'
 
     r = make_response(render_template('gossips.html', posts = gossips,search_text=search, search=search_flag))
     return r
@@ -149,21 +148,25 @@ def all_gossips():
 @login_required
 def gossip(id):
     if request.method == 'POST':
-        comment = request.form.get('comment').encode('utf-8')
+        comment = request.form.get('comment')
         user = session.get('username')
         date = datetime.datetime.now()
+        if comment == '':
+            flash('All fields are required', 'danger')
+            return redirect('/gossip/{}'.format(id))
+
         message, success = database.post_comment(user, comment, id, date)
         if not success:
-            error("gossip", message, session.get('username'))
-            flash('Oops, something wrong happened', "danger")
+            error('gossip', message, session.get('username'))
+            flash('Couldn\'t add comment, please try again', 'danger')
             return redirect('/gossip/{}'.format(id))
-        flash('New comment added', "primary")
+        flash('New comment added', 'primary')
         return redirect('/gossip/{}'.format(id))
     else:
         gossip, success = database.get_gossip(id)
         if not success:
-            error("gossip", gossip, session.get('username'))
-            flash('Oops, error!', "danger")
+            error('gossip', gossip, session.get('username'))
+            flash('Couldn\'t get gossip, please try again', 'danger')
             return redirect('/gossip')
 
         comments, success = database.get_comments(id)
@@ -176,20 +179,20 @@ def gossip(id):
 @login_required
 def newgossip():
     if request.method == 'POST':
-        text = request.form.get('text', "")
-        subtitle = request.form.get('subtitle', "")
-        title = request.form.get('title', "")
-        author = session.get('username', "")
+        text = request.form.get('text')
+        subtitle = request.form.get('subtitle')
+        title = request.form.get('title')
+        author = session.get('username')
         date = datetime.datetime.now()
-        if author == '' or text == '' or subtitle == '' or title == '':
-            error("gossip", "invalid parameters", session.get('username'))
-            flash('Todos os campos devem ser preenchidos', "danger")
+        if author == None or text == None or subtitle == None or title == None:
+            error('gossip', 'Invalid parameters', session.get('username'))
+            flash('All fields are required', 'danger')
             return render_template('newgossip.html', title=title, subtitle=subtitle, text=text)
         message, success = database.post_gossip(author, text.encode('utf-8'), title.encode('utf-8'), subtitle.encode('utf-8'), date)
         if success == 0:
-            flash('Coulnd\'t add gossip', "danger")
+            flash('Coulnd\'t add gossip, please try again', 'danger')
         else:
-            flash('New gossip added', "primary")
+            flash('New gossip added', 'primary')
         return redirect('/newgossip')
 
     else:
@@ -205,4 +208,4 @@ if __name__ == '__main__':
     database = DataBase(dbEndpoint, dbUser, dbPassword, dbName)
     init_db(database)
 
-    app.run(host='0.0.0.0',port=3001, debug=True)
+    app.run(host='0.0.0.0',port=3001, debug=False)
