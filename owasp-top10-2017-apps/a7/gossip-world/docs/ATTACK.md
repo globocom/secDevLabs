@@ -1,8 +1,8 @@
-# Attack Narrative - Fofocando Blog (XSS)
+# Attack Narrative - Gossip World Blog (XSS)
 
-The main goal of this documentation is to describe how a malicious user could exploit a Cross-Site Scripting vulnerability intentionally installed on Fofocando Blog from secDevLabs.
+The main goal of this documentation is to describe how a malicious user could exploit a Cross-Site Scripting vulnerability intentionally installed on Gossip World Blog from secDevLabs.
 
-If you don't know [secDevLabs](https://github.com/globocom/secDevLabs) or this [intended vulnerable web application](https://github.com/globocom/secDevLabs/tree/master/owasp-top10-2017-apps/a7/fofocando) yet, you should check them before reading this narrative.
+If you don't know [secDevLabs](https://github.com/globocom/secDevLabs) or this [intended vulnerable web application](https://github.com/globocom/secDevLabs/tree/master/owasp-top10-2017-apps/a7/gossip-world) yet, you should check them before reading this narrative.
 
 ----
 
