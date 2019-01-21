@@ -188,7 +188,7 @@ def newgossip():
             error('gossip', 'Invalid parameters', session.get('username'))
             flash('All fields are required', 'danger')
             return render_template('newgossip.html', title=title, subtitle=subtitle, text=text)
-        message, success = database.post_gossip(author, text.encode('utf-8'), title.encode('utf-8'), subtitle.encode('utf-8'), date)
+        message, success = database.post_gossip(author, text, title, subtitle, date)
         if success == 0:
             flash('Coulnd\'t add gossip, please try again', 'danger')
         else:

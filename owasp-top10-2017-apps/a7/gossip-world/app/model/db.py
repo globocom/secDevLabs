@@ -176,7 +176,7 @@ class DataBase:
 
     def init_table_gossips(self):
             try:
-                self.c.execute('CREATE TABLE gossips (id INT(10) NOT NULL AUTO_INCREMENT, author VARCHAR(100) NOT NULL, text VARCHAR(100) NOT NULL, title VARCHAR(100) NOT NULL, subtitle VARCHAR(100), date DATE NOT NULL, PRIMARY KEY (id))')
+                self.c.execute('CREATE TABLE gossips (id INT(10) NOT NULL AUTO_INCREMENT, author VARCHAR(100) NOT NULL, text VARCHAR(2000) NOT NULL, title VARCHAR(100) NOT NULL, subtitle VARCHAR(200), date DATE NOT NULL, PRIMARY KEY (id))')
                 self.db.commit()
             except (AttributeError, MySQLdb.OperationalError, MySQLdb.Error) as e:
                 self.connect()
