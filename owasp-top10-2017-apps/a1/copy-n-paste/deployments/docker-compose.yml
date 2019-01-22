@@ -4,12 +4,12 @@ services:
 
     api:
         container_name: a1_api
-        build: 
+        build:
             context: ../
             dockerfile: deployments/a1inj.Dockerfile
-        ports: 
+        ports:
             - "3000:3000"
-        networks: 
+        networks:
             - a1net
         command: "go run app/server.go"
         environment:
@@ -21,13 +21,13 @@ services:
             - mysqldb
         external_links:
             - mysqldb:mysqldb
-        restart: unless-stopped 
+        restart: unless-stopped
 
     mysqldb:
         container_name: mysqldb
         image: mysql:5.7
         ports:
-          - "3306:3306"
+          - "3307:3307"
         volumes:
             - db_data:/var/lib/mysql
         environment:
