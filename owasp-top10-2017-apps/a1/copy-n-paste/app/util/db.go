@@ -36,6 +36,9 @@ func OpenDBConnection() (*sql.DB, error) {
 
 //AuthenticateUser is the function that checks if the given user and password are valid or not
 func AuthenticateUser(user string, pass string) (bool, error) {
+	if user == "" || pass == "" {
+		return false, errors.New("All fields are required")
+	}
 
 	dbConn, err := OpenDBConnection()
 	if err != nil {
@@ -64,6 +67,9 @@ func AuthenticateUser(user string, pass string) (bool, error) {
 
 //NewUser registers a new user to the db
 func NewUser(user string, pass string, passcheck string) (bool, error) {
+	if user == "" || pass == "" || passcheck == "" {
+		return false, errors.New("All fields are required")
+	}
 	userExists, err := CheckIfUserExists(user)
 	if userExists {
 		return false, err //user already exists
@@ -93,7 +99,7 @@ func NewUser(user string, pass string, passcheck string) (bool, error) {
 	return true, nil //user created
 }
 
-//CheckIfUserExists check if exists a user with the given username on db
+//CheckIfUserExists checks if there is an user with the given username on db
 func CheckIfUserExists(username string) (bool, error) {
 
 	dbConn, err := OpenDBConnection()
