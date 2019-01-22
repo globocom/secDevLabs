@@ -21,7 +21,9 @@ After cloning this repository, you can type the following command to start the v
 $ make install
 ```
 
-Then you can send the following requests:
+Then simply visit [localhost:3000][App] !
+
+## Manual requests to the API (if you prefer using a CLI)
 
 ##### Registering a new user:
 
@@ -57,6 +59,7 @@ To understand how this vulnerability can be mitigated, check this other section!
 
 [Docker Install]:  https://docs.docker.com/install/
 [Docker Compose Install]: https://docs.docker.com/compose/install/
+[App]: http://127.0.0.1:3000
 
 ## Contributing
 
