@@ -32,7 +32,7 @@ To replicate this POST using [curl](https://curl.haxx.se/), create the following
 And run:
 
 ```sh
-curl -d @payload.txt localhost:10080/contact.php ; echo
+curl -d @payload.xml localhost:10080/contact.php ; echo
 ```
 
 By checking the source code of the [file](../app/contact.php), it is possible to see how this XML is loaded on the server side:
@@ -41,7 +41,7 @@ By checking the source code of the [file](../app/contact.php), it is possible to
 
 ## 🔥
 
-As no validation is being used to avoid [ENTITIES](https://www.w3schools.com/xml/xml_dtd_entities.asp) being sent to the PHP file, an attacker could create the following `evilxml.txt` to perform a XXE:
+As no validation is being used to avoid [ENTITIES](https://www.w3schools.com/xml/xml_dtd_entities.asp) being sent to the PHP file, an attacker could create the following `evilxml.xml` to perform a XXE:
 
 ```XML
 <?xml version="1.0" encoding="ISO-8859-1"?>
@@ -59,7 +59,7 @@ As no validation is being used to avoid [ENTITIES](https://www.w3schools.com/xml
 And, as the following picture shows, it is possible to realize that the attack succeeds and sensitive information is retrieved from the server that is hosting the vulnerable app:
 
 ```sh
-curl -d @evilxml.txt localhost:10080/contact.php ; echo
+curl -d @evilxml.xml localhost:10080/contact.php ; echo
 ```
 
 <img src="attack-4.png" align="center"/>
