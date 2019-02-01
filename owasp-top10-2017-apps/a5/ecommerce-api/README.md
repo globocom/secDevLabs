@@ -1,7 +1,7 @@
 # Vulnerable Ecommerce API
 > This is a simple Golang web application that contains an example of a Broken Access Control vulnerability.
 
-<img src="images/example-api.png" align="center"/>
+<img src="images/a5-banner.png" align="center"/>
 
 ## What is Broken Access Control?
 
@@ -21,31 +21,7 @@ After cloning this repository, you can type the following command to start the v
 $ make install
 ```
 
-## Available routes
-
-* GET /healthcheck
-```
-$ curl http://localhost:8888/healthcheck
-WORKING
-```
-
-* POST /register
-```
-$ curl -s -H "Content-Type: application/json" -d '{"username":"rafael","password":"password"}' http://localhost:8888/register
-Register: success!
-```
-
-* POST /login
-```
-$ curl -s -H "Content-Type: application/json" -d '{"username":"rafael","password":"password"}' http://localhost:8888/login
-Hello, rafael! This is your userID: 2b53f961-85fe-4988-99b4-c90481ed54ef
-```
-
-* GET /ticket/:id
-```
-$ curl http://localhost:8888/ticket/2b53f961-85fe-4988-99b4-c90481ed54ef
-Hey, rafael! This is your ticket: rafael-08e8805f-422b-477b-8565-b0876b89da17
-```
+Then simply visit [localhost:8888][App] ! 
 
 ## Attack Narrative
 
@@ -63,3 +39,5 @@ To understand how this vulnerability can be mitigated, check this other section!
 Yes, please. :zap:
 
 [this section]: https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2017-apps/a5/ecommerce-api/docs/ATTACK.md
+
+[App]: http://127.0.0.1:8888
