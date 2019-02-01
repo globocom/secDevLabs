@@ -38,13 +38,13 @@ Found an interesting page:
 Started the analysis on how the app handles cookies:
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/globocom/secDevLabs/master/owasp-top10-2017-apps/a2/saidajaula-monster/docs/attack4.png"/>
+    <img src="https://raw.githubusercontent.com/globocom/secDevLabs/master/owasp-top10-2017-apps/a2/saidajaula-monster/docs/attack3.png"/>
 </p>
 
 Confirmed the suspicion by having a look at the code!
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/globocom/secDevLabs/master/owasp-top10-2017-apps/a1/copy-n-paste/docs/attack-0.png"/>
+    <img src="https://raw.githubusercontent.com/globocom/secDevLabs/master/owasp-top10-2017-apps/a2/saidajaula-monster/docs/attack4.png"/>
 </p>
 
 Add as many images as you can! A picture is worth more than a thousand words!

@@ -12,7 +12,7 @@ import (
 
 //HealthCheck is de health check function
 func HealthCheck(c echo.Context) error {
-	return c.String(http.StatusOK, "WORKING!\n")
+	return c.String(http.StatusOK, "WORKING!")
 }
 
 //Login is the login function
@@ -26,16 +26,16 @@ func Login(c echo.Context) error {
 
 	validUser, err := util.AuthenticateUser(loginAttempt.User, loginAttempt.Pass)
 	if err != nil {
-		msgUser := err.Error() + "\n"
+		msgUser := err.Error()
 		return c.JSON(http.StatusBadRequest, msgUser)
 	}
 
 	if validUser {
-		msgUser := fmt.Sprintf("Bem vindo(a), %s!\n", loginAttempt.User)
+		msgUser := fmt.Sprintf("Welcome, %s!", loginAttempt.User)
 		return c.String(http.StatusOK, msgUser)
 	}
 
-	msgUser := fmt.Sprintf("Usuário ou senha errados!\n")
+	msgUser := fmt.Sprintf("User not found or wrong password!")
 	return c.String(http.StatusBadRequest, msgUser)
 }
 
@@ -50,15 +50,15 @@ func Register(c echo.Context) error {
 
 	userCreated, err := util.NewUser(RegisterAttempt.User, RegisterAttempt.Pass, RegisterAttempt.PassCheck)
 	if err != nil {
-		msgUser := err.Error() + "\n"
+		msgUser := err.Error()
 		return c.JSON(http.StatusOK, msgUser)
 	}
 
 	if userCreated {
-		msgUser := fmt.Sprintf("Usuario " + RegisterAttempt.User + " criado com sucesso!\n")
+		msgUser := fmt.Sprintf("User %s created!", RegisterAttempt.User)
 		return c.String(http.StatusOK, msgUser)
 	}
 
-	msgUser := fmt.Sprintf("De duas uma: usuário já existe ou as senhas estao diferentes!\n")
+	msgUser := fmt.Sprintf("User already exists or passwords don't match!")
 	return c.String(http.StatusOK, msgUser)
 }

@@ -1,4 +1,4 @@
-# Fofocando
+# Gossip World
  > This is a simple Flask app that contains an example of a Cross-site Scripting vulnerability.
 
 <img src="images/banner.png" align="center"/>
@@ -34,7 +34,7 @@ To understand how this vulnerability can be mitigated, check this other section!
 [Docker Install]:  https://docs.docker.com/install/
 [Docker Compose Install]: https://docs.docker.com/compose/install/
 [App]: http://127.0.0.1:3001
-[this]: https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2017-apps/a7/fofocando/docs/ATTACK.md
+[this]: https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2017-apps/a7/gossip-world/docs/ATTACK.md
 
 ## Contributing
 
