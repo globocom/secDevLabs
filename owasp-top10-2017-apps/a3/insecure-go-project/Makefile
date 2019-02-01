@@ -9,7 +9,7 @@ GODEP ?= $(GOBIN)/dep
 GOLINT ?= $(GOBIN)/golint
 GOSEC ?= $(GOBIN)/gosec
 
-INSECUREBIN ?= insecure
+INSECUREBIN ?= insecureA3
 
 COLOR_RESET = \033[0m
 COLOR_COMMAND = \033[36m
@@ -17,10 +17,23 @@ COLOR_YELLOW = \033[33m
 COLOR_GREEN = \033[32m
 COLOR_RED = \033[31m
 
-PROJECT := Insecure Go Project
+PROJECT := A3 - Insecure Go Project
+PORT := 9999
+SLEEPUNTILAPPSTARTS := 10
 
-## Installs a development environment using docker-compose
-install: compose 
+## Installs a development environment
+install: compose msg
+
+## Composes project using docker-compose
+compose:
+	docker-compose -f deployments/docker-compose.yml down -v --remove-orphans
+	docker-compose -f deployments/docker-compose.yml up -d --build --force-recreate
+
+msg:
+	printf "${COLOR_YELLOW}SecDevLabs: 👀  Your app is still starting...\n${COLOR_RESET}"
+	sleep ${SLEEPUNTILAPPSTARTS}
+	printf "${COLOR_GREEN}SecDevLabs: ☕️  Hmmm... Sounds good!\n"
+	printf "SecDevLabs: 🔥  ${PROJECT} may be running at ${COLOR_RESET}${COLOR_RED}http://127.0.0.1:${PORT}/healthcheck${COLOR_RESET}\n"
 
 ## Gets all go test dependencies
 get-deps:
@@ -46,12 +59,6 @@ lint:
 ## Builds Go project to the executable fil
 build:
 	$(GO) build -o "$(INSECUREBIN)"
-
-## Run project using docker-compose
-compose:
-	docker-compose -f deployments/docker-compose.yml down -v
-	docker-compose -f deployments/docker-compose.yml up -d --build --force-recreate
-
 
 ## Prints help message
 help:

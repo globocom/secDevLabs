@@ -7,15 +7,23 @@ COLOR_YELLOW = \033[33m
 COLOR_GREEN = \033[32m
 COLOR_RED = \033[31m
 
-PROJECT := A9
+PROJECT := A9 - Cimentech
+PORT := 80
+SLEEPUNTILAPPSTARTS := 30
 
 ## Installs a development environment
-install: deploy
+install: compose msg
 
 ## Composes project using docker-compose
-deploy:
-	docker-compose -f deployments/docker-compose.yml down -v
-	docker-compose -f deployments/docker-compose.yml up --build -d
+compose:
+	docker-compose -f deployments/docker-compose.yml down -v --remove-orphans
+	docker-compose -f deployments/docker-compose.yml up -d --build --force-recreate
+
+msg:
+	printf "${COLOR_YELLOW}SecDevLabs: 👀  Your app is still starting...\n${COLOR_RESET}"
+	sleep ${SLEEPUNTILAPPSTARTS}
+	printf "${COLOR_GREEN}SecDevLabs: ☕️  Hmmm... Sounds good!\n"
+	printf "SecDevLabs: 🔥  ${PROJECT} may be running at ${COLOR_RESET}${COLOR_RED}http://127.0.0.1:${PORT}${COLOR_RESET}\n"
 
 ## Prints help message
 help:
