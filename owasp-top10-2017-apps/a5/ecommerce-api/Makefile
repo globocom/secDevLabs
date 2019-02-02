@@ -17,10 +17,12 @@ COLOR_YELLOW = \033[33m
 COLOR_GREEN = \033[32m
 COLOR_RED = \033[31m
 
-PROJECT := A5 Ecommerce API
+PROJECT := A5 Vulnerable Ecommerce API
+PORT := 8888
+SLEEPUNTILAPPSTARTS := 10
 
-## Installs a development environment using docker-compose
-install: generate-passwords compose check-env
+## Installs a development environment
+install: generate-passwords compose msg
 
 ## Gets all go test dependencies
 get-deps:
@@ -36,10 +38,6 @@ check-deps:
 check-sec:
 	$(GOSEC) ./... 2>/dev/null
 
-## Checks .env file
-check-env:
-	cat .env
-
 ## Perfoms all make tests
 test: get-deps lint security-check
 
@@ -47,16 +45,22 @@ test: get-deps lint security-check
 lint:
 	$(GOLINT) $(shell $(GO) list ./...)
 
-## Run project using docker-compose
+## Runs project using docker-compose
 compose:
-	docker-compose -f deployments/docker-compose.yml build
-	docker-compose -f deployments/docker-compose.yml down -v
-	docker-compose -f deployments/docker-compose.yml up -d --force-recreate
+	docker-compose -f deployments/docker-compose.yml down -v --remove-orphans
+	docker-compose -f deployments/docker-compose.yml up -d --build --force-recreate
 
 ## Generates passwords and set them as environment variables
 generate-passwords:
 	chmod +x app/scripts/generate-passwords.sh
 	./app/scripts/generate-passwords.sh
+
+msg:
+	printf "${COLOR_YELLOW}SecDevLabs: 👀  Your app is still starting...\n${COLOR_RESET}"
+	sleep ${SLEEPUNTILAPPSTARTS}
+	printf "${COLOR_GREEN}SecDevLabs: ☕️  Hmmm... Sounds good!\n"
+	printf "SecDevLabs: 🔥  ${PROJECT} may be running at ${COLOR_RESET}${COLOR_RED}http://127.0.0.1:${PORT}${COLOR_RESET}\n"
+
 
 ## Prints help message
 help:

@@ -7,15 +7,23 @@ COLOR_YELLOW = \033[33m
 COLOR_GREEN = \033[32m
 COLOR_RED = \033[31m
 
+PROJECT := A10 - GamesIRADOS
+PORT := 3001
+SLEEPUNTILAPPSTARTS := 45
 
 ## Installs a development environment using docker-compose
-install: compose
+install: compose msg
 
 ## Run project using docker-compose
 compose:
-	docker-compose -f deployments/docker-compose.yml build
-	docker-compose -f deployments/docker-compose.yml down -v
-	docker-compose -f deployments/docker-compose.yml up -d --force-recreate
+	docker-compose -f deployments/docker-compose.yml down -v --remove-orphans
+	docker-compose -f deployments/docker-compose.yml up -d --build --force-recreate
+
+msg:
+	printf "${COLOR_YELLOW}SecDevLabs: 👀  Your app is still starting...\n${COLOR_RESET}"
+	sleep ${SLEEPUNTILAPPSTARTS}
+	printf "${COLOR_GREEN}SecDevLabs: ☕️  Hmmm... Sounds good!\n"
+	printf "SecDevLabs: 🔥  ${PROJECT} may be running at ${COLOR_RESET}${COLOR_RED}http://127.0.0.1:${PORT}${COLOR_RESET}\n"
 
 ## Prints help message
 help:
