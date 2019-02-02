@@ -14,7 +14,7 @@ COLOR_RED = \033[31m
 
 PROJECT := A1 - CopyNPaste API
 PORT := 3000
-SLEEPUNTILAPPSTARTS := 60
+SLEEPUNTILAPPSTARTS := 45
 
 ## Installs a development environment using docker-compose
 install: compose msg

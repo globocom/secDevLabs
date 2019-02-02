@@ -9,7 +9,7 @@ COLOR_RED = \033[31m
 
 PROJECT := A8 - Amarelo Designs
 PORT := 5000
-SLEEPUNTILAPPSTARTS := 60
+SLEEPUNTILAPPSTARTS := 10
 
 ## Installs a development environment
 install: compose msg

@@ -9,7 +9,7 @@ COLOR_RED = \033[31m
 
 PROJECT := A2 - Saidajaula Monster Fit
 PORT := 10082
-SLEEPUNTILAPPSTARTS := 60
+SLEEPUNTILAPPSTARTS := 45
 
 ## Installs a development environment
 install: compose msg

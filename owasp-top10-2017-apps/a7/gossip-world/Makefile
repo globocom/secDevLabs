@@ -9,7 +9,7 @@ COLOR_RED = \033[31m
 
 PROJECT := A7 Gossip World
 PORT := 3001
-SLEEPUNTILAPPSTARTS := 60
+SLEEPUNTILAPPSTARTS := 45
 
 ## Installs a development environment using docker-compose
 install: compose msg 
