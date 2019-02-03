@@ -33,10 +33,10 @@ To understand how this vulnerability can be exploited, check [this section](docs
 
 To understand how this vulnerability can be mitigated, check this other section!
 
-[Docker Install]:  https://docs.docker.com/install/
-[Docker Compose Install]: https://docs.docker.com/compose/install/
-[App]: http://127.0.0.1:8000
-
 ## Contributing
 
 Yes, please. :zap:
+
+[Docker Install]:  https://docs.docker.com/install/
+[Docker Compose Install]: https://docs.docker.com/compose/install/
+[App]: http://127.0.0.1:8000
