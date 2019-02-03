@@ -66,7 +66,13 @@ Content-Length: 31
 {"user":"user", "pass":"password"}
 ```
 
-Then we could use `-r` option and wait sqlmap perform multiples malicious requests until it finds the vulnerable parameter:
+Before executing the attack, you can open a new tab in your terminal and type the following command to observe how the malicious requests will come to the app: 
+
+```sh
+docker logs a1_api -f
+```
+
+After that, we could now use `-r` option and wait sqlmap perform multiples malicious requests until it finds the vulnerable parameter:
 
 ```sh
 $ sqlmap -r postRequest.txt
