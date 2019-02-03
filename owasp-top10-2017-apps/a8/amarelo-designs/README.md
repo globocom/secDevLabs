@@ -7,7 +7,7 @@
 
 Definition from [OWASP](https://www.owasp.org/images/7/72/OWASP_Top_10-2017_%28en%29.pdf.pdf):
 
-Insecure deserialization often leads to remote code execution. Even if deserialization flaws do not result in remote code execution, they can be used to perform attacks, including replay attacks, injection attacks, and privilege escalation attacks. 
+Insecure deserialization often leads to remote code execution. Even if deserialization flaws do not result in remote code execution, they can be used to perform attacks, including replay attacks, injection attacks, and privilege escalation attacks.
 
 ## Requirements
 
@@ -31,11 +31,11 @@ To understand how this vulnerability can be exploited, check [this section]!
 
 To understand how this vulnerability can be mitigated, check this other section!
 
+## Contributing
+
+Yes, please. :zap:
+
 [Docker Install]:  https://docs.docker.com/install/
 [Docker Compose Install]: https://docs.docker.com/compose/install/
 [App]: http://127.0.0.1:5000
 [this section]: https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2017-apps/a8/amarelo-designs/docs/ATTACK.md
-
-## Contributing
-
-Yes, please. :zap:

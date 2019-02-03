@@ -1,7 +1,7 @@
 # Insecure Go Project
  > This is a simple Golang API that contains an example of a Sensitive Data Exposure vulnerability.
 
-<img src="images/banner.png" align="center"/>
+<img src="docs/attack-1.png" align="center"/>
 
 ## What is Sensitive Data Exposure?
 
@@ -21,7 +21,7 @@ After cloning this repository, you can type the following command to start the v
 $ make install
 ```
 
-You can check if the app is running by checking its healthcheck:
+Then simply check `/healthcheck` route:
 
 ```sh
 $ curl localhost:9999/healthcheck
@@ -36,11 +36,10 @@ To understand how this vulnerability can be exploited, check [this section]!
 
 To understand how this vulnerability can be mitigated, check this other section!
 
-[Docker Install]:  https://docs.docker.com/install/
-[Docker Compose Install]: https://docs.docker.com/compose/install/
-
 ## Contributing
 
 Yes, please. :zap:
 
+[Docker Install]:  https://docs.docker.com/install/
+[Docker Compose Install]: https://docs.docker.com/compose/install/
 [this section]: https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2017-apps/a3/insecure-go-project/docs/ATTACK.md

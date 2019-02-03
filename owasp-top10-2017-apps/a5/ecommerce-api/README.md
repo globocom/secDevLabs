@@ -21,7 +21,7 @@ After cloning this repository, you can type the following command to start the v
 $ make install
 ```
 
-Then simply visit [localhost:8888][App] ! 
+Then simply visit [localhost:8888][App] !
 
 ## Attack Narrative
 
@@ -31,13 +31,11 @@ To understand how this vulnerability can be exploited, check [this section]!
 
 To understand how this vulnerability can be mitigated, check this other section!
 
-[Docker Install]:  https://docs.docker.com/install/
-[Docker Compose Install]: https://docs.docker.com/compose/install/
-
 ## Contributing
 
 Yes, please. :zap:
 
 [this section]: https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2017-apps/a5/ecommerce-api/docs/ATTACK.md
-
+[Docker Install]:  https://docs.docker.com/install/
+[Docker Compose Install]: https://docs.docker.com/compose/install/
 [App]: http://127.0.0.1:8888

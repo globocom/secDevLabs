@@ -9,7 +9,7 @@
 
 Definition from [OWASP](https://www.owasp.org/images/7/72/OWASP_Top_10-2017_%28en%29.pdf.pdf):
 
-Components, such as libraries, frameworks, and other software modules, run with the same privileges as the application. If a vulnerable component is exploited, such an attack can facilitate serious data loss or server takeover. Applications and APIs using components with known vulnerabilities may undermine application defenses and enable various attacks and impacts. 
+Components, such as libraries, frameworks, and other software modules, run with the same privileges as the application. If a vulnerable component is exploited, such an attack can facilitate serious data loss or server takeover. Applications and APIs using components with known vulnerabilities may undermine application defenses and enable various attacks and impacts.
 
 ## Requirements
 
@@ -33,11 +33,11 @@ To understand how this vulnerability can be exploited, check [this section]!
 
 To understand how this vulnerability can be mitigated, check this other section!
 
+## Contributing
+
+Yes, please. :zap:
+
 [Docker Install]:  https://docs.docker.com/install/
 [Docker Compose Install]: https://docs.docker.com/compose/install/
 [App]: http://127.0.0.1:80/
 [this section]: docs/ATTACK.md
-
-## Contributing
-
-Yes, please. :zap:
