@@ -23,7 +23,7 @@ We can sign-up for a new account by clicking the `SIGN UP` button on the top rig
 After creating an account, we are redirected to the `/login` page and, to better understand how the application is handling the requests, we will perform a login using the following `curl` command. As shown by the image:
 
 ```sh
-$ curl -i -L localhost:10082/login -F "username=daniel" -F "password=daniel" -X POST
+curl -i -L localhost:10082/login -F "username=daniel" -F "password=daniel" -X POST
 ```
 
 <p align="center">
@@ -50,6 +50,12 @@ Knowing how the cookie is being generated, a malicious user could create his own
     <img src="attack5.png"/>
 </p>
 
+It is also possible to generate this cookie using from terminal using `base64` command: 
+
+```sh
+echo '{"permissao": 1, "username": "daniel"}' | base64
+```
+
 After that, the attacker needs to concatenate the cookie's fields and the hash, separated by a dot. As shown by the following image:
 
 <p align="center">
@@ -59,7 +65,7 @@ After that, the attacker needs to concatenate the cookie's fields and the hash, 
 The server expects the cookie to be in base64 format, so the attacker needs to encode his cookie. As we can see from the image below using the command:
 
 ```sh
-$ echo -n '{"permissao": 1, "username": "daniel"}.35771d6998cf216aa3297d1fb54462e04d85443be6092a02961b52b24c2d3250' | base64
+echo -n '{"permissao": 1, "username": "daniel"}.35771d6998cf216aa3297d1fb54462e04d85443be6092a02961b52b24c2d3250' | base64
 ```
 
 <p align="center">
