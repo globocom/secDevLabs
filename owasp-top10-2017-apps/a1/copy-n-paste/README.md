@@ -23,32 +23,6 @@ $ make install
 
 Then simply visit [localhost:3000][App] !
 
-## Manual requests to the API (if you prefer using a CLI)
-
-##### Registering a new user:
-
-```sh
-curl -s -H "Content-Type: application/json" -d '{"user":"bob", "pass":"password", "passcheck":"password"}' http://127.0.0.1:3000/register
-```
-
-#### Result:
-
-```
-Usuario bob criado com sucesso!
-```
-
-#### Login: 
-
-```sh
-curl -s -H "Content-Type: application/json" -d '{"user":"bob", "pass":"password"}' http://127.0.0.1:3000/login
-```
-
-#### Result:
-
-```
-Bem vindo(a), bob!
-```
-
 ## Attack Narrative
 
 To understand how this vulnerability can be exploited, check [this section](docs/ATTACK.md)!
@@ -57,10 +31,10 @@ To understand how this vulnerability can be exploited, check [this section](docs
 
 To understand how this vulnerability can be mitigated, check this other section!
 
-[Docker Install]:  https://docs.docker.com/install/
-[Docker Compose Install]: https://docs.docker.com/compose/install/
-[App]: http://127.0.0.1:3000
-
 ## Contributing
 
 Yes, please. :zap:
+
+[Docker Install]:  https://docs.docker.com/install/
+[Docker Compose Install]: https://docs.docker.com/compose/install/
+[App]: http://127.0.0.1:3000
