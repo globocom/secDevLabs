@@ -1,37 +1,43 @@
 # secDevLabs
 
-<img src="images/blinking-panda.gif" align="" height="120" />
+<img src="images/secDevLabs-logo.png" align="" height="" />
 
-The main goal of this project is to provide a laboratory for those who are interested in learning about web security development in a practical manner. 
+The main goal of this project is to provide a laboratory for those who are interested in learning about web security development in a practical manner.
 
-## Build your own lab!
+## Build your own lab
 
-By provisioning a local lab via docker-compose, you will learn how to find, test and mitigate the most critical web application security risks.
+By provisioning local environments via docker-compose, you will learn how the most critical web application security risks are exploited and how these vulnerable code can be fixed to mitigate them. 👩‍💻
 
-## Disclaimer
+## How do I start?
 
-These are vulnerable applications! 🔥
- 
-## OWASP Top 10 (2017) Apps
+After cloning this repository, you will find multiple intended vulnerable apps based on real life cenarios in various languages such as Golang, Python and PHP. A good start would be installing the ones you are most familiar with. 💡
 
-- A1 - Injection - [CopyNPaste API](owasp-top10-2017-apps/a1/copy-n-paste) 
-- A2 - Broken Authentication - [Saidajaula Monster Fit](owasp-top10-2017-apps/a2/saidajaula-monster)
-- A3 - Sensitive Data Exposure - [Insecure Go Project](owasp-top10-2017-apps/a3/insecure-go-project)
-- A4 - XML External Entities (XXE) - [ViniJr Blog](owasp-top10-2017-apps/a4/vinijr-blog)
-- A5 - Broken Access Control - [Vulnerable Ecommerce API](owasp-top10-2017-apps/a5/ecommerce-api)
-- A6 - Security Misconfiguration - [Vulnerable Wordpress Misconfig](owasp-top10-2017-apps/a6/misconfig-wordpress)
-- A7 - Cross-Site Scripting (XSS) - [Gossip World](owasp-top10-2017-apps/a7/gossip-world)
-- A8 - Insecure Deserialization - [Amarelo Designs](owasp-top10-2017-apps/a8/amarelo-designs)
-- A9 - Using Components With Known Vulnerabilities - [Cimentech](owasp-top10-2017-apps/a9/cimentech)
-- A10 - Insufficient Logging&Monitoring - [GamesIrados.com](owasp-top10-2017-apps/a10/games-irados)
+Each of them has an `Attack Narrative` section that describes how an attacker would exploit the corresponding vulnerability.  Before reading any code, it may be a good idea following these steps so you can better understand the attack itself. 💉
 
-## So you think you know how to solve a vulnerability?
+Now it's time to shield the application up! Imagine that this is your application and you need to fix these flaws! Your mission is writing new code that mitigates them and sending a new Pull Request to deploy a secure app! 🔐
 
-Nice! You can send us your mitigation of the vulnerability directly through a Pull Request, using the [review requested 👀](https://github.com/globocom/secDevLabs/issues?utf8=%E2%9C%93&q=label%3A%22review+requested+%F0%9F%91%80%22+) label. We expect your mitigation proposal to have all the changes needed to completely fix the vulnerability and a short explanation on what you are doing. If you're feeling a bit lost, try having a look at [this mitigation solution](https://github.com/globocom/secDevLabs/pull/29), it might help!
+## How secure is my new code?
+
+After mitigating a vulnerability, you can send a Pull Request using the [review requested](https://github.com/globocom/secDevLabs/issues?utf8=%E2%9C%93&q=label%3A%22review+requested+%F0%9F%91%80%22+) label to gently ask secDevLabs community to review your new secure code. If you're feeling a bit lost, try having a look at [this mitigation solution](https://github.com/globocom/secDevLabs/pull/29), it might help! 🚀
+
+##  OWASP Top 10 (2017) apps:
+
+Disclaimer: You are about to install vulnerable apps in your machine! 🔥
+
+- A1 - Injection :  (Golang) [CopyNPaste API](owasp-top10-2017-apps/a1/copy-n-paste)
+- A2 - Broken Authentication : (Python) [Saidajaula Monster Fit](owasp-top10-2017-apps/a2/saidajaula-monster)
+- A3 - Sensitive Data Exposure : (Golang) [Insecure Go Project](owasp-top10-2017-apps/a3/insecure-go-project)
+- A4 - XML External Entities (XXE) :  (PHP) [ViniJr Blog](owasp-top10-2017-apps/a4/vinijr-blog)
+- A5 - Broken Access Control : (Golang) [Vulnerable Ecommerce API](owasp-top10-2017-apps/a5/ecommerce-api)
+- A6 - Security Misconfiguration : (PHP) [Vulnerable Wordpress Misconfig](owasp-top10-2017-apps/a6/misconfig-wordpress)
+- A7 - Cross-Site Scripting (XSS) : (Python) [Gossip World](owasp-top10-2017-apps/a7/gossip-world)
+- A8 - Insecure Deserialization : (Python) [Amarelo Designs](owasp-top10-2017-apps/a8/amarelo-designs)
+- A9 - Using Components With Known Vulnerabilities : (PHP) [Cimentech](owasp-top10-2017-apps/a9/cimentech)
+- A10 - Insufficient Logging&Monitoring : (Python) [GamesIrados.com](owasp-top10-2017-apps/a10/games-irados)
 
 ## Contributing
-We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](/docs/CONTRIBUTING.md) guide for guidelines on how to proceed! 
+We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](/docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉
 
 ## License
 
-This project is licensed under the BSD 3-Clause "New" or "Revised" License - read [LICENSE.md](LICENSE.md) file for details.
+This project is licensed under the BSD 3-Clause "New" or "Revised" License - read [LICENSE.md](LICENSE.md) file for details. 📖
