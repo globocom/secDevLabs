@@ -12,9 +12,10 @@ After reviewing the inputs from the app, it is possible to identify that the sec
 
 <img src="attack-1.png" align="center"/>
 
-Using [Burp Suite](https://portswigger.net/burp) proxy to intercept this request (POST to contact.php) reveals that the message is being build using an XML:
+Using [Burp Suite](https://portswigger.net/burp) proxy to intercept this request (POST to contact.php) reveals that the message is being build using an XML (if you need any help setting up your proxy you should check this [guide](https://support.portswigger.net/customer/portal/articles/1783066-configuring-firefox-to-work-with-burp).):
 
 <img src="attack-2.png" align="center"/>
+
 
 
 To replicate this POST using [curl](https://curl.haxx.se/), create the following file `payload.xml`:
