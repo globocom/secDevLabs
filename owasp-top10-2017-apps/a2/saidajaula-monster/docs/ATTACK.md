@@ -50,10 +50,10 @@ Knowing how the cookie is being generated, a malicious user could create his own
     <img src="attack5.png"/>
 </p>
 
-It is also possible to generate this cookie from terminal using `base64` command: 
+It is also possible to generate this cookie from terminal using `shasum` command: 
 
 ```sh
-echo '{"permissao": 1, "username": "daniel"}' | base64
+echo -n '{"permissao": 1, "username": "daniel"}' | shasum -a 256
 ```
 
 After that, the attacker needs to concatenate the cookie's fields and the hash, separated by a dot. As shown by the following image:
