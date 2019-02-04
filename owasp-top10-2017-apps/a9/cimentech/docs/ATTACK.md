@@ -18,13 +18,29 @@ When accessed, an indication of the version of the Content Management System (Dr
 
 <img src="attack3.png" align="center"/>
 
-Having the CMS version, it's possible to check on [exploit-db][3] if there are any exploits associated to that version, in this case, version Drupal 7.57. The results of the search are depicted on the image below:
+Having the CMS version, it's possible to check on [exploit-db][3] if there are any exploits associated to that version, in this case, Drupal 7.57. The results of the search are depicted on the image below:
 
 <img src="attack4.png" align="center"/>
 
+By using [searchsploit](https://www.exploit-db.com/searchsploit) tool, an attacker could also find this same result via terminal. To install it, simply type the following in your OSX terminal:
+
+```sh
+brew install exploitdb
+```
+
+Then simply search for the version of the CMS found:
+
+```sh
+searchsploit drupal 7.
+```
+
 ## 🔥
 
-Running the malicious Ruby code, we have evidence that a remote code execution is possible on the web server, as shown below:
+Running the malicious Ruby code, we have evidence that a remote code execution is possible on the web server, using the following commands as shown below:
+
+```sh
+ruby 44449.rb http://localhost
+```
 
 <img src="attack5.png" align="center"/>
 
