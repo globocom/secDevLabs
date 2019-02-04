@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from model.log import error
 from functools import wraps
+from flask import escape
 
 
 import os
@@ -132,7 +133,7 @@ def all_gossips():
     search = request.args.get('search')
     search_flag = 0
     if search != None:
-        gossips, success = database.search_gossips(search)
+        gossips, success = database.search_gossips(escape(search))
         search_flag = 1
     else:
         gossips, success = database.get_latest_gossips()
@@ -140,7 +141,7 @@ def all_gossips():
         error('all_gossips', gossips, session.get('username'))
         return 'Internal error!'
 
-    r = make_response(render_template('gossips.html', posts = gossips,search_text=search, search=search_flag))
+    r = make_response(render_template('gossips.html', posts = gossips,search_text=escape(search), search=search_flag))
     return r
 
 
@@ -148,7 +149,7 @@ def all_gossips():
 @login_required
 def gossip(id):
     if request.method == 'POST':
-        comment = request.form.get('comment')
+        comment = escape(request.form.get('comment'))
         user = session.get('username')
         date = datetime.datetime.now()
         if comment == '':
@@ -179,9 +180,9 @@ def gossip(id):
 @login_required
 def newgossip():
     if request.method == 'POST':
-        text = request.form.get('text')
-        subtitle = request.form.get('subtitle')
-        title = request.form.get('title')
+        text = escape(request.form.get('text'))
+        subtitle = escape(request.form.get('subtitle'))
+        title = escape(request.form.get('title'))
         author = session.get('username')
         date = datetime.datetime.now()
         if author == None or text == None or subtitle == None or title == None:
