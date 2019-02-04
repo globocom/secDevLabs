@@ -23,7 +23,7 @@ After cloning this repository, you can type the following command to start the v
 make install
 ```
 
-Then simply visit [localhost:80/][App] !
+Then simply visit [localhost:80][App] !
 
 ## Attack Narrative
 
