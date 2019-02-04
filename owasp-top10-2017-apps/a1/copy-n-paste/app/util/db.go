@@ -46,8 +46,7 @@ func AuthenticateUser(user string, pass string) (bool, error) {
 	}
 	defer dbConn.Close()
 
-	query := fmt.Sprint("select * from Users where username = '" + user + "'")
-	rows, err := dbConn.Query(query)
+	rows, err := dbConn.Query("select * from Users where username = ?",user)
 	if err != nil {
 		return false, err
 	}
@@ -88,8 +87,7 @@ func NewUser(user string, pass string, passcheck string) (bool, error) {
 	}
 	defer dbConn.Close()
 
-	query := fmt.Sprint("insert into Users (username, password) values ('" + user + "', '" + passHash + "')")
-	rows, err := dbConn.Query(query)
+	rows, err := dbConn.Query("insert into Users (username, password) values (?, ?)", user, passHash)
 	if err != nil {
 		return false, err
 	}
@@ -108,8 +106,7 @@ func CheckIfUserExists(username string) (bool, error) {
 	}
 	defer dbConn.Close()
 
-	query := fmt.Sprint("select username from Users where username = '" + username + "'")
-	rows, err := dbConn.Query(query)
+	rows, err := dbConn.Query("select username from Users where username = ?", username)
 	if err != nil {
 		return false, err
 	}
@@ -132,8 +129,7 @@ func InitDatabase() error {
 
 	defer dbConn.Close()
 
-	queryCreate := fmt.Sprint("CREATE TABLE Users (ID int NOT NULL AUTO_INCREMENT, Username varchar(20), Password varchar(80), PRIMARY KEY (ID))")
-	_, err = dbConn.Exec(queryCreate)
+	_, err = dbConn.Exec("CREATE TABLE Users (ID int NOT NULL AUTO_INCREMENT, Username varchar(20), Password varchar(80), PRIMARY KEY (ID))")
 	if err != nil {
 		errInitDB := fmt.Sprintf("InitDatabase error: %s", err)
 		return errors.New(errInitDB)
