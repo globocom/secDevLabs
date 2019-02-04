@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+	"log"
 	"os"
 
 	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a1/copy-n-paste/app/hash"
@@ -46,8 +47,13 @@ func AuthenticateUser(user string, pass string) (bool, error) {
 	}
 	defer dbConn.Close()
 
-	query := fmt.Sprint("select * from Users where username = '" + user + "'")
-	rows, err := dbConn.Query(query)
+	stmt, err := dbConn.Prepare("select * from Users where username = ?")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer stmt.Close()
+
+	rows, err := stmt.Query(user)
 	if err != nil {
 		return false, err
 	}
@@ -88,8 +94,13 @@ func NewUser(user string, pass string, passcheck string) (bool, error) {
 	}
 	defer dbConn.Close()
 
-	query := fmt.Sprint("insert into Users (username, password) values ('" + user + "', '" + passHash + "')")
-	rows, err := dbConn.Query(query)
+	stmt, err := dbConn.Prepare("insert into Users (username, password) values ( ?, ? )")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer stmt.Close()
+
+	rows, err := stmt.Query(user, passHash)
 	if err != nil {
 		return false, err
 	}
@@ -108,8 +119,13 @@ func CheckIfUserExists(username string) (bool, error) {
 	}
 	defer dbConn.Close()
 
-	query := fmt.Sprint("select username from Users where username = '" + username + "'")
-	rows, err := dbConn.Query(query)
+	stmt, err := dbConn.Prepare("select username from Users where username = ?")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer stmt.Close()
+
+	rows, err := stmt.Query(username)
 	if err != nil {
 		return false, err
 	}
