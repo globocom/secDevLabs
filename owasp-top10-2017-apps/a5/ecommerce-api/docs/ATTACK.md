@@ -9,10 +9,10 @@ If you don't know [secDevLabs] or this [intended vulnerable web application][2] 
 In order to better understand how this API works, two users, `user1` and `user2`, were created as shown below: 
 
 ```sh
-$ curl -s -H "Content-Type: application/json" -d '{"username":"user1","password":"pass"}' http://localhost:8888/register  
+curl -s -H "Content-Type: application/json" -d '{"username":"user1","password":"pass"}' http://localhost:8888/register  
 ```
 ```sh
-$ curl -s -H "Content-Type: application/json" -d '{"username":"user2","password":"pass"}' http://localhost:8888/register
+curl -s -H "Content-Type: application/json" -d '{"username":"user2","password":"pass"}' http://localhost:8888/register
 ```
 
 <p align="center">
@@ -30,10 +30,10 @@ Or using web interface:
 The users created above are registered on MongoDB and we can get their `userID` through the following curl commands:
 
 ```sh
-$ curl -s -H "Content-Type: application/json" -d '{"username":"user1","password":"pass"}' http://localhost:8888/login
+curl -s -H "Content-Type: application/json" -d '{"username":"user1","password":"pass"}' http://localhost:8888/login
 ```
 ```sh
-$ curl -s -H "Content-Type: application/json" -d '{"username":"user2","password":"pass"}' http://localhost:8888/login
+curl -s -H "Content-Type: application/json" -d '{"username":"user2","password":"pass"}' http://localhost:8888/login
 ```
 
 <p align="center">
@@ -49,6 +49,10 @@ This can also be observed via the web interface. In the web interface it is poss
 ## 🔥
 
 Having both `userID`, we can verify that the route "`GET /ticket/:userID`" does not validade if the request was made by the same user or someone else without the proper permission, as shown by the image:
+
+```sh
+curl -vvv http://localhost:8888/ticket/GUID
+```
 
 <p align="center">
     <img src="attack4.png"/>
