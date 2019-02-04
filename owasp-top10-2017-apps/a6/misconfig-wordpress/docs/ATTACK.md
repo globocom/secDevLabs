@@ -30,7 +30,33 @@ An attacker could try to log in with the username: `admin` and realize, through 
 
 ## 🔥
 
-Now, using Burp Suite to perform a brute force attack using this [wordlist], we were able to perform 200 requests to try and obtain a valid admin password. As we can see from the image below, the site redirected us when the password `password` was used, thus giving us evidence that it might be the `admin` password. 
+At this moment, an attacker could use [Burp Suite](https://portswigger.net/burp) to perform a brute force attack using this [wordlist] (if you need any help setting up your proxy you should check this [guide](https://support.portswigger.net/customer/portal/articles/1783066-configuring-firefox-to-work-with-burp)). To do so, after finding the login POST request, right click and send to Intruder, as shown bellow:
+
+ <p align="center">
+    <img src="attack10.png"/>
+</p>
+
+In `Positions` tab, all fields must be cleared first via `Clear §` button. To set `pwd` to change acording to each password from our dictionary wordlist, simply click on `Add §` button after selecting it:
+
+ <p align="center">
+    <img src="attack11.png"/>
+</p>
+
+If a valid password is found, the application may process new cookies and eventually redirect the flow to other pages. To guarantee that the brute force attack follows this behavior, set `Always` into `Follow Redirections` options in `Options` tab, as shown bellow:
+
+<p align="center">
+    <img src="attack13.png"/>
+</p>
+
+In `Payloads` tab, simply choose the wordlist from `Load...` option and then the attack may be performed via `Start attack` button:
+
+ <p align="center">
+    <img src="attack12.png"/>
+</p>
+
+
+
+After sending at around 200 requests to try and obtain a valid admin password, it is possible to see from the image below that the app redirected us when the password `password` was used, thus giving us evidence that it might be the `admin` password.
 
  <p align="center">
     <img src="attack3.png"/>
@@ -46,7 +72,17 @@ The suspicion was confirmed when trying to log in with these credentials. As sho
 
 ## 👀
 
-Now that we know we're dealing with a WordPress, we can use the [WPScan] tool to perform a sweep in the app in search for known vulnerabilities:
+Now that we know we're dealing with a WordPress, we can use the [WPScan] tool to perform a sweep in the app in search for known vulnerabilities. The following command can be used to install it:
+
+```sh
+brew install wpscan
+```
+
+And then use this command to start a new simple scan:
+
+```sh
+wpscan -u localhost:8000
+```
 
  <p align="center">
     <img src="attack4.png"/>
@@ -54,8 +90,19 @@ Now that we know we're dealing with a WordPress, we can use the [WPScan] tool to
 
 ## 🔥
 
-As seen from the image above, the tool found out that the CMS version is outdated and vulnerable to an Authenticated Arbitrary File Deletion. By using [searchsploit] tool, as shown in the following picture, an attacker could find a [malicious code] to exploit this vulnerability.
+As seen from the image above, the tool found out that the CMS version is outdated and vulnerable to an Authenticated Arbitrary File Deletion. By using [searchsploit] tool an attacker could find a [malicious code] to exploit this vulnerability.
 
+To install this tool, simply type the following in your OSX terminal:
+
+```sh
+brew install exploitdb
+```
+
+Then simply search for the version of the CMS found:
+
+```sh
+searchsploit wordpress 4.9.6
+```
  <p align="center">
     <img src="attack5.png"/>
 </p>
@@ -72,7 +119,7 @@ By having another look at the results from [WPScan], it's possible to see that t
 
 ## 🔥
 
-We can confirm that the directory is browseable by accessing it through a web browser, as confirmed by the following image:
+We can confirm that the directory is browseable by accessing it through a web browser, as shown by the following image:
 
  <p align="center">
     <img src="attack7.png"/>
@@ -82,13 +129,25 @@ We can confirm that the directory is browseable by accessing it through a web br
 
 ## 👀
 
-Using [Nikto] tool to perform a security check scan, it's possible to see that there are multiple points of attention regarging security headers, as we can see from the image below:
+Using [Nikto] tool to perform a security check scan, it's possible to see that there are multiple points of attention regarging security headers.
+
+To install it, you can use the following command in your OSX terminal:
+
+```sh
+brew install nikto
+```
+
+Then scan the web app using:
+
+```sh
+nikto -h http://localhost:8000/
+```
 
  <p align="center">
     <img src="attack8.png"/>
 </p>
 
-Now, by doing the following curl command to check the HTTP headers of the application, we can see that it exposes the PHP version installed, as shown by the image below:
+Now, by doing the following curl command to check the HTTP headers of the application, we can confirm that it indeed exposes the PHP version installed, as shown by the image below:
 
  <p align="center">
     <img src="attack9.png"/>
@@ -99,5 +158,3 @@ Now, by doing the following curl command to check the HTTP headers of the applic
 [malicious code]: https://www.exploit-db.com/exploits/44949
 [nikto]: https://cirt.net/Nikto2
 [searchsploit]: https://www.exploit-db.com/searchsploit
-
-
