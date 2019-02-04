@@ -3,11 +3,11 @@
 from model.log import error
 from functools import wraps
 
-
 import os
 import uuid
 import datetime
 import sys
+import bleach
 
 from flask import (
     Flask,
@@ -29,7 +29,12 @@ app = Flask(__name__)
 bootstrap = Bootstrap(app)
 
 app.config.from_pyfile('config.py')
-database = DataBase(app.config['MYSQL_ENDPOINT'], app.config['MYSQL_USER'],app.config['MYSQL_PASSWORD'], app.config['MYSQL_DB'])
+database = DataBase(
+    app.config['MYSQL_ENDPOINT'],
+    app.config['MYSQL_USER'],
+    app.config['MYSQL_PASSWORD'],
+    app.config['MYSQL_DB'])
+
 
 def generate_csrf_token():
     '''
@@ -39,7 +44,9 @@ def generate_csrf_token():
         session['_csrf_token'] = str(uuid.uuid4())
     return session.get('_csrf_token')
 
+
 app.jinja_env.globals['csrf_token'] = generate_csrf_token
+
 
 @app.before_request
 def csrf_protect():
@@ -75,6 +82,7 @@ def root():
 def login():
     if request.method == 'POST':
         username = request.form.get('username')
+        username = bleach.clean(username)
         psw = Password(request.form.get('password').encode('utf-8'))
         user_password, success = database.get_user_password(username)
         if not success or user_password == None or not psw.validate_password(user_password[0]):
@@ -98,8 +106,11 @@ def logout():
 def newuser():
     if request.method == 'POST':
         username = request.form.get('username')
+        username = bleach.clean(username)
         psw1 = request.form.get('password1')
+        psw1 = bleach.clean(psw1)
         psw2 = request.form.get('password2')
+        psw2 = bleach.clean(psw2)
 
         if username == '' or psw1 == '' or psw2 == '':
             flash('All fields are required', 'danger')
@@ -126,12 +137,14 @@ def newuser():
     else:
         return render_template('register.html')
 
+
 @app.route('/gossip', methods=['GET'])
 @login_required
 def all_gossips():
     search = request.args.get('search')
     search_flag = 0
-    if search != None:
+    if search is not None:
+        search = bleach.clean(search)
         gossips, success = database.search_gossips(search)
         search_flag = 1
     else:
@@ -140,7 +153,12 @@ def all_gossips():
         error('all_gossips', gossips, session.get('username'))
         return 'Internal error!'
 
-    r = make_response(render_template('gossips.html', posts = gossips,search_text=search, search=search_flag))
+    r = make_response(
+        render_template('gossips.html',
+                        posts=gossips,
+                        search_text=search,
+                        search=search_flag)
+    )
     return r
 
 
@@ -149,6 +167,7 @@ def all_gossips():
 def gossip(id):
     if request.method == 'POST':
         comment = request.form.get('comment')
+        comment = bleach.clean(comment)
         user = session.get('username')
         date = datetime.datetime.now()
         if comment == '':
@@ -171,23 +190,38 @@ def gossip(id):
 
         comments, success = database.get_comments(id)
 
-        if comments == None:
+        if comments is None:
             comments = []
-        return render_template('gossip.html', post = gossip, comments = comments, id= id)
+        return render_template('gossip.html',
+                               post=gossip,
+                               comments=comments,
+                               id=id)
+
 
 @app.route('/newgossip', methods=['GET', 'POST'])
 @login_required
 def newgossip():
     if request.method == 'POST':
         text = request.form.get('text')
+        text = bleach.clean(text)
+
         subtitle = request.form.get('subtitle')
+        subtitle = bleach.clean(subtitle)
+
         title = request.form.get('title')
+        title = bleach.clean(title)
+
         author = session.get('username')
         date = datetime.datetime.now()
-        if author == None or text == None or subtitle == None or title == None:
+
+        if author is None or text is None or subtitle is None or title is None:
             error('gossip', 'Invalid parameters', session.get('username'))
             flash('All fields are required', 'danger')
-            return render_template('newgossip.html', title=title, subtitle=subtitle, text=text)
+            return render_template('newgossip.html',
+                                   title=title,
+                                   subtitle=subtitle,
+                                   text=text)
+
         message, success = database.post_gossip(author, text, title, subtitle, date)
         if success == 0:
             flash('Coulnd\'t add gossip, please try again', 'danger')
@@ -208,4 +242,4 @@ if __name__ == '__main__':
     database = DataBase(dbEndpoint, dbUser, dbPassword, dbName)
     init_db(database)
 
-    app.run(host='0.0.0.0',port=3001, debug=False)
+    app.run(host='0.0.0.0', port=3001, debug=False)

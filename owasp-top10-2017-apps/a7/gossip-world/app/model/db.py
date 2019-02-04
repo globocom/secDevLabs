@@ -2,82 +2,99 @@
 # -*- coding: utf-8 -*-
 
 import MySQLdb
+
+
 class DataBase:
-    def __init__ (self, host, user, password, database):
+    def __init__(self, host, user, password, database):
         self.host = host
         self.user = user
         self.password = password
         self.database = database
-        self.db = MySQLdb.connect(host=self.host,user=self.user,passwd=self.password,db=self.database,charset='utf8')
+        self.db = MySQLdb.connect(host=self.host,
+                                  user=self.user,
+                                  passwd=self.password,
+                                  db=self.database,
+                                  charset='utf8')
         self.c = self.db.cursor()
 
     def connect(self):
-        self.db = MySQLdb.connect(host=self.host,user=self.user,passwd=self.password,db=self.database)
+        self.db = MySQLdb.connect(host=self.host,
+                                  user=self.user,
+                                  passwd=self.password,
+                                  db=self.database)
         self.c = self.db.cursor()
 
     def get_user_password(self, username):
         try:
-            self.c.execute('SELECT password FROM users WHERE user = %s', [username])
+            self.c.execute(
+                'SELECT password FROM users WHERE user = %s', [username])
             user_password = self.c.fetchone()
 
         except (AttributeError, MySQLdb.OperationalError):
             self.connect()
-            self.c.execute('SELECT password FROM users WHERE username = %s', [username])
+            self.c.execute(
+                'SELECT password FROM users WHERE username = %s', [username])
             user_password = self.c.fetchone()
 
         except MySQLdb.Error as e:
             try:
                 message = 'MySQL Error [%d]: %s' % (e.args[0], e.args[1])
-                return message , 0
+                return message, 0
             except IndexError:
                 message = 'MySQL Error: %s' % str(e)
-                return message , 0
+                return message, 0
 
         return user_password, 1
 
     def insert_user(self, user, password):
         try:
-            self.c.execute('INSERT INTO users (user, password) VALUES (%s, %s);',(user, password))
+            self.c.execute(
+                'INSERT INTO users (user, password) VALUES (%s, %s);', (user, password))
             self.db.commit()
         except (AttributeError, MySQLdb.OperationalError):
             self.connect()
-            self.c.execute('INSERT INTO users (user, password) VALUES (%s, %s);',(user, password))
+            self.c.execute(
+                'INSERT INTO users (user, password) VALUES (%s, %s);', (user, password))
             self.db.commit()
         except MySQLdb.Error as e:
-        	try:
-        		message = 'MySQL Error [%d]: %s' % (e.args[0], e.args[1])
-        		return message , 0
-        	except IndexError:
-        		message = 'MySQL Error: %s' % str(e)
-        		return message , 0
-        return '' , 1
+            try:
+                message = 'MySQL Error [%d]: %s' % (e.args[0], e.args[1])
+                return message, 0
+            except IndexError:
+                message = 'MySQL Error: %s' % str(e)
+                return message, 0
+        return '', 1
 
 
     def get_latest_gossips(self):
         try:
-            self.c.execute('SELECT id, text, author, title, subtitle, date FROM gossips')
+            self.c.execute(
+                'SELECT id, text, author, title, subtitle, date FROM gossips')
             gossips = self.c.fetchall()
         except (AttributeError, MySQLdb.OperationalError):
             self.connect()
-            self.c.execute('SELECT id, text, author, title, subtitle, date FROM gossips LIMIT')
+            self.c.execute(
+                'SELECT id, text, author, title, subtitle, date FROM gossips LIMIT')
             gossips = self.c.fetchall()
         except MySQLdb.Error as e:
             try:
                 message = 'MySQL Error [%d]: %s' % (e.args[0], e.args[1])
-                return message , 0
+                return message, 0
             except IndexError:
                 message = 'MySQL Error: %s' % str(e)
-                return message , 0
+                return message, 0
 
-        return gossips , 1
+        return gossips, 1
 
     def search_gossips(self, search_str):
         try:
-            self.c.execute('SELECT id, text, author, title, subtitle, date FROM gossips WHERE title  LIKE %s', ['%'+ search_str + '%'])
+            self.c.execute(
+                'SELECT id, text, author, title, subtitle, date FROM gossips WHERE title  LIKE %s', ['%'+ search_str + '%'])
             gossips = self.c.fetchall()
         except (AttributeError, MySQLdb.OperationalError):
             self.connect()
-            self.c.execute('SELECT id, text, author, title, subtitle, date FROM gossips WHERE title  LIKE %s', ['%'+ search_str + '%'])
+            self.c.execute(
+                'SELECT id, text, author, title, subtitle, date FROM gossips WHERE title  LIKE %s', ['%'+ search_str + '%'])
             gossips = self.c.fetchall()
         except MySQLdb.Error as e:
             try:
