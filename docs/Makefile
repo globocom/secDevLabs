@@ -16,9 +16,8 @@ install: deploy
 
 ## Composes project using docker-compose
 deploy:
-	docker-compose -f deployments/docker-compose.yml build
-	docker-compose -f deployments/docker-compose.yml down -v #WARNING! The -v flag will recreate all volumes
-	docker-compose -f deployments/docker-compose.yml up -d --force-recreate
+	docker-compose -f deployments/docker-compose.yml down -v 
+	docker-compose -f deployments/docker-compose.yml up -d --build --force-recreate
 
 ## Prints help message
 help:
