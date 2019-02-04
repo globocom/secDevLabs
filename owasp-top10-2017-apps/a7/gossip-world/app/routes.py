@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from model.log import error
 from functools import wraps
+from flask import escape
 
 
 import os
@@ -74,7 +75,7 @@ def root():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        username = request.form.get('username')
+        username = escape(request.form.get('username'))
         psw = Password(request.form.get('password').encode('utf-8'))
         user_password, success = database.get_user_password(username)
         if not success or user_password == None or not psw.validate_password(user_password[0]):
@@ -97,9 +98,9 @@ def logout():
 @app.route('/register', methods=['GET', 'POST'])
 def newuser():
     if request.method == 'POST':
-        username = request.form.get('username')
-        psw1 = request.form.get('password1')
-        psw2 = request.form.get('password2')
+        username = escape(request.form.get('username'))
+        psw1 = escape(request.form.get('password1'))
+        psw2 = escape(request.form.get('password2'))
 
         if username == '' or psw1 == '' or psw2 == '':
             flash('All fields are required', 'danger')
@@ -148,7 +149,7 @@ def all_gossips():
 @login_required
 def gossip(id):
     if request.method == 'POST':
-        comment = request.form.get('comment')
+        comment = escape(request.form.get('comment'))
         user = session.get('username')
         date = datetime.datetime.now()
         if comment == '':
@@ -179,10 +180,10 @@ def gossip(id):
 @login_required
 def newgossip():
     if request.method == 'POST':
-        text = request.form.get('text')
-        subtitle = request.form.get('subtitle')
-        title = request.form.get('title')
-        author = session.get('username')
+        text = escape(request.form.get('text'))
+        subtitle = escape(request.form.get('subtitle'))
+        title = escape(request.form.get('title'))
+        author = escape(session.get('username'))
         date = datetime.datetime.now()
         if author == None or text == None or subtitle == None or title == None:
             error('gossip', 'Invalid parameters', session.get('username'))
