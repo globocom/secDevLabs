@@ -11,25 +11,39 @@ import time
 import uuid
 from functools import wraps
 import uuid
-
+import jwt
 
 
 app = Flask(__name__)
 database = DataBase(os.environ.get('A2_DATABASE_HOST'), os.environ.get('A2_DATABASE_USER'),
 			os.environ.get('A2_DATABASE_PASSWORD'), os.environ.get('A2_DATABASE_NAME'))
 
+
+def get_cookie():
+    cookie = request.cookies.get("sessionId", "")
+    cookie = base64.b64decode(cookie).decode("utf-8")
+    cookie_separado = cookie.split('.')
+    if(len(cookie_separado) != 2):
+        return None, "Invalid cookie!"
+    jwt_decoded = jwt.decode(cookie_separado[1], 'secret', algorithms=['HS256'])
+    if (json.dumps(jwt_decoded) != cookie_separado[0]):
+        return None, "different_cookie"
+    return cookie_separado[0], None
+
+
+def prepare_cookie(value):
+    encoded_jwt = jwt.encode(value, 'secret', algorithm='HS256')
+    cookie_done = '.'.join([json.dumps(value), encoded_jwt])
+    return base64.b64encode(str(cookie_done).encode("utf-8"))
+
+
 def login_admin_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        cookie = request.cookies.get("sessionId", "")
-        cookie = base64.b64decode(cookie).decode("utf-8")
-        cookie_separado = cookie.split('.')
-        if(len(cookie_separado) != 2 ):
-            return "Invalid cookie!"
-        hash_cookie = hashlib.sha256(cookie_separado[0].encode('utf-8')).hexdigest()
-        if (hash_cookie != cookie_separado[1]):
+        cookie_json, error = get_cookie()
+        if error == 'different_cookie':
             return redirect("/login")
-        j = json.loads(cookie_separado[0])
+        j = json.loads(cookie_json)
         if j.get("permissao") != 1:
             return "You don't have permission to access this route. You are not an admin. \n"
         return f(*args, **kwargs)
@@ -38,13 +52,8 @@ def login_admin_required(f):
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        cookie = request.cookies.get("sessionId", "")
-        cookie = base64.b64decode(cookie).decode("utf-8")
-        cookie_separado = cookie.split('.')
-        if(len(cookie_separado) != 2 ):
-            return "Invalid cookie! \n"
-        hash_cookie = hashlib.sha256(cookie_separado[0].encode('utf-8')).hexdigest()
-        if (hash_cookie != cookie_separado[1]):
+        cookie_json, error = get_cookie()
+        if error == 'different_cookie':        
             return redirect("/login")
         return f(*args, **kwargs)
     return decorated_function
@@ -100,15 +109,11 @@ def login():
             return "Login failed! \n"
 
         cookie_dic = {"permissao": result[1], "username": form_username}
-        cookie = json.dumps(cookie_dic)
-        hash_cookie = hashlib.sha256(cookie.encode('utf-8')).hexdigest()
-        cookie_done = '.'.join([cookie,hash_cookie])
-        cookie_done = base64.b64encode(str(cookie_done).encode("utf-8"))
+        cookie_done = prepare_cookie(cookie_dic)
+
         resp = make_response()
         resp.set_cookie("sessionId", cookie_done)
         return resp
-
-
 
 @app.route("/admin", methods=['GET'])
 @login_admin_required
