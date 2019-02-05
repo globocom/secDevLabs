@@ -99,7 +99,7 @@ As we can see from the image below, the requests seem to have been handled prope
     <img src="attack7.png"/>
 </p>
 
-However, we can also confirm that liltte information is being logged at the server side, as shown by the image below:
+However, we can also confirm that little information is being logged at the server side, as shown by the image below:
 
 <p align="center">
     <img src="attack8.png"/>
