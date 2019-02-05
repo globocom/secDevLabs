@@ -3,6 +3,7 @@ package handlers
 import (
 	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a5/ecommerce-api/app/db"
 	"github.com/labstack/echo"
@@ -15,11 +16,17 @@ func HealthCheck(c echo.Context) error {
 
 // GetTicket returns the userID ticket.
 func GetTicket(c echo.Context) error {
+	userName, err := ReadCookie(c)
+
 	id := c.Param("id")
 	userDataQuery := map[string]interface{}{"userID": id}
 	userDataResult, err := db.GetUserData(userDataQuery)
 	if err != nil {
 		// could not find this user in MongoDB (or MongoDB err connection)
+		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error finding this UserID."})
+	}
+
+	if strings.ToLower(userName) != strings.ToLower(userDataResult.Username) {
 		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error finding this UserID."})
 	}
 

@@ -23,14 +23,28 @@ func WriteCookie(c echo.Context, jwt string) error {
 }
 
 // ReadCookie reads a cookie from echo Context.
-func ReadCookie(c echo.Context) error {
+func ReadCookie(c echo.Context) (string, error) {
 	cookie, err := c.Cookie("sessionIDa5")
 	if err != nil {
-		return err
+		return "error", err
 	}
-	fmt.Println(cookie.Name)
-	fmt.Println(cookie.Value)
-	return c.String(http.StatusOK, "")
+
+	tokenString := cookie.Value
+
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		// Don't forget to validate the alg is what you expect:
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
+		}
+		return []byte("secret"), nil
+	})
+
+	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+		return claims["name"].(string), nil
+	}
+
+	return "", err
+
 }
 
 // Login checks MongoDB if this user exists and then returns a JWT session cookie.
