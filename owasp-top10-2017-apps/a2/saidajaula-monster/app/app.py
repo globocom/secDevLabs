@@ -6,17 +6,17 @@ from model.db import DataBase
 import base64
 import os
 import json
-import hashlib, binascii
-import time
+import hashlib
 import uuid
 from functools import wraps
-import uuid
-
 
 
 app = Flask(__name__)
-database = DataBase(os.environ.get('A2_DATABASE_HOST'), os.environ.get('A2_DATABASE_USER'),
-			os.environ.get('A2_DATABASE_PASSWORD'), os.environ.get('A2_DATABASE_NAME'))
+database = DataBase(os.environ.get('A2_DATABASE_HOST'),
+                    os.environ.get('A2_DATABASE_USER'),
+                    os.environ.get('A2_DATABASE_PASSWORD'),
+                    os.environ.get('A2_DATABASE_NAME'))
+
 
 def login_admin_required(f):
     @wraps(f)
@@ -24,7 +24,7 @@ def login_admin_required(f):
         cookie = request.cookies.get("sessionId", "")
         cookie = base64.b64decode(cookie).decode("utf-8")
         cookie_separado = cookie.split('.')
-        if(len(cookie_separado) != 2 ):
+        if(len(cookie_separado) != 2):
             return "Invalid cookie!"
         hash_cookie = hashlib.sha256(cookie_separado[0].encode('utf-8')).hexdigest()
         if (hash_cookie != cookie_separado[1]):
@@ -35,13 +35,14 @@ def login_admin_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         cookie = request.cookies.get("sessionId", "")
         cookie = base64.b64decode(cookie).decode("utf-8")
         cookie_separado = cookie.split('.')
-        if(len(cookie_separado) != 2 ):
+        if(len(cookie_separado) != 2):
             return "Invalid cookie! \n"
         hash_cookie = hashlib.sha256(cookie_separado[0].encode('utf-8')).hexdigest()
         if (hash_cookie != cookie_separado[1]):
@@ -49,9 +50,11 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+
 @app.route("/", methods=['GET'])
 def home():
     return render_template('index.html')
+
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
@@ -77,7 +80,7 @@ def register():
         return "Error: account creation failed \n"
 
 
-@app.route("/login", methods=['GET','POST'])
+@app.route("/login", methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
         return render_template('login.html')
@@ -92,7 +95,7 @@ def login():
         if not success:
             return "Login failed! \n"
 
-        if result == None:
+        if result is None:
             return "Login failed! \n"
 
         password = Password(form_password, form_username, result[2])
@@ -109,16 +112,17 @@ def login():
         return resp
 
 
-
 @app.route("/admin", methods=['GET'])
 @login_admin_required
 def admin():
     return "You are an admin! \n"
 
+
 @app.route("/user", methods=['GET'])
 @login_required
 def userInfo():
     return "You are an user! \n"
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=10082)
