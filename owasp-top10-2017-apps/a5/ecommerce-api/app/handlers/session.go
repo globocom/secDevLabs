@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"os"
 	"fmt"
 	"net/http"
 	"time"
@@ -66,11 +67,11 @@ func Login(c echo.Context) error {
 
 	// Set claims
 	claims := token.Claims.(jwt.MapClaims)
-	claims["name"] = userDataResult.Username
+	claims["username"] = userDataResult.Username
 	claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
 
 	// Generate encoded token and send it as response.
-	t, err := token.SignedString([]byte("secret"))
+	t, err := token.SignedString([]byte(os.Getenv("COOKIE_SECRET")))
 	if err != nil {
 		return err
 	}

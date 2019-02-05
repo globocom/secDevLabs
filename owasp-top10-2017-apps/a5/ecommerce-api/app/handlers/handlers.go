@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
+	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a5/ecommerce-api/app/db"
 	"github.com/labstack/echo"
 )
@@ -15,8 +16,24 @@ func HealthCheck(c echo.Context) error {
 
 // GetTicket returns the userID ticket.
 func GetTicket(c echo.Context) error {
-	id := c.Param("id")
-	userDataQuery := map[string]interface{}{"userID": id}
+	cookie, err := c.Cookie("sessionIDa5")
+	if err != nil {
+		return c.Redirect(302, "/login")
+	}
+
+	token, err := jwt.Parse(string(cookie.Value), nil)
+	if token == nil {
+		error := fmt.Errorf("malformed token: %v", err)
+		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": error.Error()})
+	}
+
+	claims, ok := token.Claims.(jwt.MapClaims)
+
+	if !ok {
+		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error finding this UserID."})
+	}
+
+	userDataQuery := map[string]interface{}{"username": claims["username"]}
 	userDataResult, err := db.GetUserData(userDataQuery)
 	if err != nil {
 		// could not find this user in MongoDB (or MongoDB err connection)
