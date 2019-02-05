@@ -10,6 +10,7 @@ services:
       A2_DATABASE_PASSWORD: pass
       A2_DATABASE_HOST: db
       A2_DATABASE_NAME: A2
+      SECRET: EcLvnoca(z~IKOcb{Q"s!d9DbO!oM@AtFS#M48EaidR1?!<*)-Ukc06i("k-}j!
     links:
       - db:db
     depends_on:
