@@ -10,6 +10,7 @@ import (
 	apiContext "github.com/globocom/secDevLabs/owasp-top10-2017-apps/a5/ecommerce-api/app/context"
 	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a5/ecommerce-api/app/db"
 	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a5/ecommerce-api/app/handlers"
+	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a5/ecommerce-api/app/middlewares"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 )
@@ -56,7 +57,7 @@ func main() {
 
 	echoInstance.GET("/", handlers.FormPage)
 	echoInstance.GET("/healthcheck", handlers.HealthCheck)
-	echoInstance.GET("/ticket/:id", handlers.GetTicket)
+	echoInstance.GET("/ticket/:id", handlers.GetTicket, middlewares.RequireLogin)
 	echoInstance.POST("/register", handlers.RegisterUser)
 	echoInstance.POST("/login", handlers.Login)
 

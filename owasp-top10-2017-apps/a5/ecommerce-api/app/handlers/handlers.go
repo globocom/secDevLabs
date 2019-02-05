@@ -23,6 +23,17 @@ func GetTicket(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error finding this UserID."})
 	}
 
+	username := c.Get("username")
+	if username == "" {
+		// could not retrieve the username from context (be sure to apply the right middlewares)
+		return c.JSON(http.StatusInternalServerError, map[string]string{"result": "error", "details": "Error retrieving username from context."})
+	}
+
+	if username != userDataResult.Username {
+		// the user is not the owner of this ticket
+		return c.JSON(http.StatusForbidden, map[string]string{"result": "error", "details": "You are not the owner of this userID."})
+	}
+
 	format := c.QueryParam("format")
 	if format == "json" {
 		return c.JSON(http.StatusOK, map[string]string{
