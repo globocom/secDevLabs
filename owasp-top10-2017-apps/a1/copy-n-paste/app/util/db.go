@@ -46,7 +46,7 @@ func AuthenticateUser(user string, pass string) (bool, error) {
 	}
 	defer dbConn.Close()
 
-	rows, err := dbConn.Query("select * from Users where username =?", username)
+	rows, err := dbConn.Query("select * from Users where username =?", user)
 	if err != nil {
 		return false, err
 	}
@@ -107,7 +107,7 @@ func CheckIfUserExists(username string) (bool, error) {
 	}
 	defer dbConn.Close()
 
-	rows, err := dbConn.Query("select username from Users where username =?", query, username)
+	rows, err := dbConn.Query("select username from Users where username =?", user)
 	if err != nil {
 		return false, err
 	}
