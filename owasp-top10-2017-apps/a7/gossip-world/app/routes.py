@@ -108,9 +108,7 @@ def newuser():
         username = request.form.get('username')
         username = bleach.clean(username)
         psw1 = request.form.get('password1')
-        psw1 = bleach.clean(psw1)
         psw2 = request.form.get('password2')
-        psw2 = bleach.clean(psw2)
 
         if username == '' or psw1 == '' or psw2 == '':
             flash('All fields are required', 'danger')
