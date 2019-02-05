@@ -10,6 +10,7 @@ services:
       A2_DATABASE_PASSWORD: pass
       A2_DATABASE_HOST: db
       A2_DATABASE_NAME: A2
+      A2_COOKIE_SECRET: mysupercookiesecret4321@globo.com!
     links:
       - db:db
     depends_on:

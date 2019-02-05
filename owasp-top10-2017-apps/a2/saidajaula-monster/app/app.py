@@ -6,52 +6,57 @@ from model.db import DataBase
 import base64
 import os
 import json
-import hashlib, binascii
-import time
+import hashlib
 import uuid
+import jwt
 from functools import wraps
-import uuid
-
-
 
 app = Flask(__name__)
-database = DataBase(os.environ.get('A2_DATABASE_HOST'), os.environ.get('A2_DATABASE_USER'),
-			os.environ.get('A2_DATABASE_PASSWORD'), os.environ.get('A2_DATABASE_NAME'))
+database = DataBase(os.environ.get('A2_DATABASE_HOST'),
+                    os.environ.get('A2_DATABASE_USER'),
+                    os.environ.get('A2_DATABASE_PASSWORD'),
+                    os.environ.get('A2_DATABASE_NAME'))
+
+COOKIE_SECRET = os.environ.get('A2_COOKIE_SECRET')
+
 
 def login_admin_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        cookie = request.cookies.get("sessionId", "")
-        cookie = base64.b64decode(cookie).decode("utf-8")
-        cookie_separado = cookie.split('.')
-        if(len(cookie_separado) != 2 ):
-            return "Invalid cookie!"
-        hash_cookie = hashlib.sha256(cookie_separado[0].encode('utf-8')).hexdigest()
-        if (hash_cookie != cookie_separado[1]):
+        session_id = request.cookies.get("sessionId", None)
+        if not session_id:
+            return "Invalid cookie! \n"
+
+        try:
+            cookie = jwt.decode(session_id, COOKIE_SECRET, algorithms=['HS256'])
+            if cookie.get('permissao') != 1:
+                return "You don't have permission to access this route. You are not an admin. \n"
+        except:
             return redirect("/login")
-        j = json.loads(cookie_separado[0])
-        if j.get("permissao") != 1:
-            return "You don't have permission to access this route. You are not an admin. \n"
+
         return f(*args, **kwargs)
     return decorated_function
+
 
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        cookie = request.cookies.get("sessionId", "")
-        cookie = base64.b64decode(cookie).decode("utf-8")
-        cookie_separado = cookie.split('.')
-        if(len(cookie_separado) != 2 ):
+        session_id = request.cookies.get("sessionId", None)
+        if not session_id:
             return "Invalid cookie! \n"
-        hash_cookie = hashlib.sha256(cookie_separado[0].encode('utf-8')).hexdigest()
-        if (hash_cookie != cookie_separado[1]):
+
+        try:
+            cookie = jwt.decode(session_id, COOKIE_SECRET, algorithms=['HS256'])
+        except:
             return redirect("/login")
         return f(*args, **kwargs)
     return decorated_function
 
+
 @app.route("/", methods=['GET'])
 def home():
     return render_template('index.html')
+
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
@@ -77,7 +82,7 @@ def register():
         return "Error: account creation failed \n"
 
 
-@app.route("/login", methods=['GET','POST'])
+@app.route("/login", methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
         return render_template('login.html')
@@ -92,22 +97,18 @@ def login():
         if not success:
             return "Login failed! \n"
 
-        if result == None:
+        if result is None:
             return "Login failed! \n"
 
         password = Password(form_password, form_username, result[2])
         if not password.validate_password(result[0]):
             return "Login failed! \n"
 
-        cookie_dic = {"permissao": result[1], "username": form_username}
-        cookie = json.dumps(cookie_dic)
-        hash_cookie = hashlib.sha256(cookie.encode('utf-8')).hexdigest()
-        cookie_done = '.'.join([cookie,hash_cookie])
-        cookie_done = base64.b64encode(str(cookie_done).encode("utf-8"))
+        cookie_data = {"permissao": result[1], "username": form_username}
+        cookie = jwt.encode(cookie_data, COOKIE_SECRET, algorithm='HS256')
         resp = make_response()
-        resp.set_cookie("sessionId", cookie_done)
+        resp.set_cookie("sessionId", cookie)
         return resp
-
 
 
 @app.route("/admin", methods=['GET'])
@@ -115,10 +116,12 @@ def login():
 def admin():
     return "You are an admin! \n"
 
+
 @app.route("/user", methods=['GET'])
 @login_required
 def userInfo():
     return "You are an user! \n"
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=10082)
