@@ -11,12 +11,18 @@ import time
 import uuid
 from functools import wraps
 import uuid
+import hmac
 
 
 
 app = Flask(__name__)
 database = DataBase(os.environ.get('A2_DATABASE_HOST'), os.environ.get('A2_DATABASE_USER'),
 			os.environ.get('A2_DATABASE_PASSWORD'), os.environ.get('A2_DATABASE_NAME'))
+
+def get_hash_cookie(cookie):
+    hash_key = os.environ.get('A2_COOKIE_HASH_KEY')
+    secret = bytes(hash_key).encode('utf-8')
+    return hmac.new(secret, cookie.encode('utf-8'), digestmod=hashlib.sha256).hexdigest()
 
 def login_admin_required(f):
     @wraps(f)
@@ -26,12 +32,15 @@ def login_admin_required(f):
         cookie_separado = cookie.split('.')
         if(len(cookie_separado) != 2 ):
             return "Invalid cookie!"
-        hash_cookie = hashlib.sha256(cookie_separado[0].encode('utf-8')).hexdigest()
+
+        hash_cookie = get_hash_cookie(cookie_separado[0])
         if (hash_cookie != cookie_separado[1]):
             return redirect("/login")
+
         j = json.loads(cookie_separado[0])
         if j.get("permissao") != 1:
             return "You don't have permission to access this route. You are not an admin. \n"
+
         return f(*args, **kwargs)
     return decorated_function
 
@@ -43,7 +52,8 @@ def login_required(f):
         cookie_separado = cookie.split('.')
         if(len(cookie_separado) != 2 ):
             return "Invalid cookie! \n"
-        hash_cookie = hashlib.sha256(cookie_separado[0].encode('utf-8')).hexdigest()
+
+        hash_cookie = get_hash_cookie(cookie_separado[0])
         if (hash_cookie != cookie_separado[1]):
             return redirect("/login")
         return f(*args, **kwargs)
@@ -101,7 +111,7 @@ def login():
 
         cookie_dic = {"permissao": result[1], "username": form_username}
         cookie = json.dumps(cookie_dic)
-        hash_cookie = hashlib.sha256(cookie.encode('utf-8')).hexdigest()
+        hash_cookie = get_hash_cookie(cookie)
         cookie_done = '.'.join([cookie,hash_cookie])
         cookie_done = base64.b64encode(str(cookie_done).encode("utf-8"))
         resp = make_response()
