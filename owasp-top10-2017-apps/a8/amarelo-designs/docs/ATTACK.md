@@ -10,7 +10,7 @@ It's possible to reach the server's web application from the HTTP port 5000, as 
 
 <img src="attack1.png" align="center"/>
 
-Making use of the [Dirb] tool to search for webpages, we were able to find `/user`, `/admin` and `/console`, as shown by the picture below:
+Making use of the [Dirb] tool to search for webpages, we were able to find `/user`, `/admin` and `/console`, as shown by the picture below: (If you want to install Dirb for Mac OS, be sure to click [here][4])
 
 ```sh
 $ dirb http://localhost:5000 /usr/share/wordlists/dirb/common.txt
@@ -113,3 +113,4 @@ $ nc localhost 9051
 [3]: https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2017-apps/a8/amarelo-designs/app/app.py
 [Pickle]: https://docs.python.org/2/library/pickle.html
 [netcat]: https://en.wikipedia.org/wiki/Netcat
+[4]: ../../../../docs/dirb.md
