@@ -23,6 +23,12 @@ func GetTicket(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error finding this UserID."})
 	}
 
+	username := c.Get("username")
+
+	if username != userDataResult.Username {
+		return c.JSON(http.StatusForbidden, map[string]string{"result": "error", "details": "Invalid authorization."})
+	}
+
 	format := c.QueryParam("format")
 	if format == "json" {
 		return c.JSON(http.StatusOK, map[string]string{
