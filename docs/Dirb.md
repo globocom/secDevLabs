@@ -7,11 +7,10 @@ All you need to do is follow the commands below, and Dirb will be installed in n
 
 First, we need to download the installer from [SourceForge]:
 ```sh
-curl -L https://sourceforge.net/projects/dirb/files/dirb/2.22/dirb222.tar.gz/download -o 
+curl -L https://sourceforge.net/projects/dirb/files/dirb/2.22/dirb222.tar.gz/download -o dirb222.tar.gz
 ```
 Now we need to tar extract the files, which can be done through the commands:
 ```sh
-dirb222.tar.gz
 tar xvzf dirb222.tar.gz
 ```
 In order to properly install Dirb, the installer needs to have `write` and `read` permissions, which is granted through the recursive command:
@@ -38,9 +37,9 @@ make && make install
 
 For this course, we are providing you with a wordlist of common URL directories from [SecLists], which can be found [here][1], to be used with Dirb. Feel free to use your own though 😉 !
 
-To use Dirb, we need an URL and a wordlist. What the tool does now is try to access each and every URL directory present in the wordlist to see which ones are available. This is done by having a look at the response Status Code and we can confirm that by having a look at the image below, in which only the pages that returned a status code of 200 (OK) are shown.
+To use Dirb, we need an URL and a wordlist. What the tool does now is try to access each and every URL directory present in the wordlist to see which ones are available. This is done by having a look at the response Status Code and we can confirm that by having a look at Figure 1, in which only the pages that returned a status code of 200 (OK) are shown.
 
-#### Be sure to only use Dirb with SecDevLabs machines and for educational purposes.
+#### Be sure to only use Dirb on SecDevLabs apps and on systems you have proper authorization
 
 An example on how to use it would be as follows:
 
@@ -48,9 +47,10 @@ An example on how to use it would be as follows:
 dirb http://localhost:5000 ./docs/common.txt
 ```
 
-<p align="center">
+<figure align="center">
     <img src="../owasp-top10-2017-apps/a8/amarelo-designs/docs/attack2.png"/>
-</p>
+    <figcaption>Fig.1 - Dirb demonstration</figcaption>
+</figure>
 
 [SecLists]:https://github.com/danielmiessler/SecLists/blob/master/Discovery/Web-Content/common.txt
 [SourceForge]: https://sourceforge.net/
