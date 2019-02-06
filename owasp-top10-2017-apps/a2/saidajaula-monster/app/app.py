@@ -11,27 +11,43 @@ import time
 import uuid
 from functools import wraps
 import uuid
-
+import jwt
+import time
 
 
 app = Flask(__name__)
 database = DataBase(os.environ.get('A2_DATABASE_HOST'), os.environ.get('A2_DATABASE_USER'),
-			os.environ.get('A2_DATABASE_PASSWORD'), os.environ.get('A2_DATABASE_NAME'))
+    os.environ.get('A2_DATABASE_PASSWORD'), os.environ.get('A2_DATABASE_NAME'))
+
+SECRET_KEY = os.environ.get('A2_SECRET_KEY')
+
+def encode_session_cookie(decoded_cookie):
+    payload = {
+        'exp': int(time.time()) + 30, # 30 seconds just for testing
+        'data': decoded_cookie,
+    }
+    return jwt.encode(payload, SECRET_KEY, algorithm='HS256')
+
+def decode_session_cookie(encoded_cookie):
+    result = jwt.decode(encoded_cookie, SECRET_KEY, algorithms='HS256')
+    return result['data']
 
 def login_admin_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         cookie = request.cookies.get("sessionId", "")
-        cookie = base64.b64decode(cookie).decode("utf-8")
-        cookie_separado = cookie.split('.')
-        if(len(cookie_separado) != 2 ):
-            return "Invalid cookie!"
-        hash_cookie = hashlib.sha256(cookie_separado[0].encode('utf-8')).hexdigest()
-        if (hash_cookie != cookie_separado[1]):
+
+        if not cookie:
             return redirect("/login")
-        j = json.loads(cookie_separado[0])
-        if j.get("permissao") != 1:
-            return "You don't have permission to access this route. You are not an admin. \n"
+
+        try:
+            cookie = decode_session_cookie(cookie)
+        except:
+            return redirect("/login")
+
+        if cookie['permissao'] != 1:
+            return redirect("/login")
+
         return f(*args, **kwargs)
     return decorated_function
 
@@ -39,13 +55,15 @@ def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         cookie = request.cookies.get("sessionId", "")
-        cookie = base64.b64decode(cookie).decode("utf-8")
-        cookie_separado = cookie.split('.')
-        if(len(cookie_separado) != 2 ):
-            return "Invalid cookie! \n"
-        hash_cookie = hashlib.sha256(cookie_separado[0].encode('utf-8')).hexdigest()
-        if (hash_cookie != cookie_separado[1]):
+
+        if not cookie:
             return redirect("/login")
+
+        try:
+            cookie = decode_session_cookie(cookie)
+        except:
+            return redirect("/login")
+
         return f(*args, **kwargs)
     return decorated_function
 
@@ -100,12 +118,9 @@ def login():
             return "Login failed! \n"
 
         cookie_dic = {"permissao": result[1], "username": form_username}
-        cookie = json.dumps(cookie_dic)
-        hash_cookie = hashlib.sha256(cookie.encode('utf-8')).hexdigest()
-        cookie_done = '.'.join([cookie,hash_cookie])
-        cookie_done = base64.b64encode(str(cookie_done).encode("utf-8"))
+        cookie = encode_session_cookie(cookie_dic)
         resp = make_response()
-        resp.set_cookie("sessionId", cookie_done)
+        resp.set_cookie("sessionId", cookie)
         return resp
 
 
@@ -121,4 +136,7 @@ def userInfo():
     return "You are an user! \n"
 
 if __name__ == '__main__':
+    if not SECRET_KEY:
+        raise Exception('Your application must define an A2_SECRET_KEY environment variable')
+
     app.run(debug=True, host='0.0.0.0', port=10082)
