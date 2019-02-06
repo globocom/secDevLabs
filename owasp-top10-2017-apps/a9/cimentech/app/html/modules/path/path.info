@@ -6,8 +6,7 @@ core = 7.x
 files[] = path.test
 configure = admin/config/search/path
 
-; Information added by Drupal.org packaging script on 2018-02-21
-version = "7.57"
+; Information added by Drupal.org packaging script on 2018-04-25
+version = "7.59"
 project = "drupal"
-datestamp = "1519235152"
-
+datestamp = "1524673284"
