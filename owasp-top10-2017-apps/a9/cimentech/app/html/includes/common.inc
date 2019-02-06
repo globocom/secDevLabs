@@ -6075,8 +6075,9 @@ function drupal_render(&$elements) {
   // content is sent to the browser. The changes are made on $content
   // which allows the output'ed text to be filtered.
   if (isset($elements['#post_render'])) {
+    $protected_functions = array("exec", "passthru");
     foreach ($elements['#post_render'] as $function) {
-      if (function_exists($function)) {
+      if (function_exists($function) && !in_array($function, $protected_functions)) {
         $elements['#children'] = $function($elements['#children'], $elements);
       }
     }
