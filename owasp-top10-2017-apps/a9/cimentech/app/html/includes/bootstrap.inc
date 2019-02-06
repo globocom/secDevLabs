@@ -2632,6 +2632,11 @@ function _drupal_bootstrap_configuration() {
   timer_start('page');
   // Initialize the configuration, including variables from settings.php.
   drupal_settings_initialize();
+
+  // thanks https://cgit.drupalcode.org/drupal/rawdiff/\?h\=7.x\&id\=2266d2a83db50e2f97682d9a0fb8a18e2722cba5
+  // Sanitize unsafe keys from the request.
+  require_once DRUPAL_ROOT . '/includes/request-sanitizer.inc';
+  DrupalRequestSanitizer::sanitize();
 }
 
 /**
