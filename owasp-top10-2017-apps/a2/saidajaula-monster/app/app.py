@@ -18,31 +18,29 @@ app = Flask(__name__)
 database = DataBase(os.environ.get('A2_DATABASE_HOST'), os.environ.get('A2_DATABASE_USER'),
 			os.environ.get('A2_DATABASE_PASSWORD'), os.environ.get('A2_DATABASE_NAME'))
 
+def jwt_secret():
+    return os.environ['JWT_SECRET']
 
 def get_cookie():
     cookie = request.cookies.get("sessionId", "")
-    cookie = base64.b64decode(cookie).decode("utf-8")
-    cookie_separado = cookie.split('.')
-    if(len(cookie_separado) != 2):
-        return None, "Invalid cookie!"
-    jwt_decoded = jwt.decode(cookie_separado[1], 'secret', algorithms=['HS256'])
-    if (json.dumps(jwt_decoded) != cookie_separado[0]):
+    try:
+        return jwt.decode(cookie, jwt_secret(), algorithms=['HS256']), None
+    except :
         return None, "different_cookie"
-    return cookie_separado[0], None
 
 
 def prepare_cookie(value):
-    encoded_jwt = jwt.encode(value, 'secret', algorithm='HS256')
-    cookie_done = '.'.join([json.dumps(value), encoded_jwt])
-    return base64.b64encode(str(cookie_done).encode("utf-8"))
+    encoded_jwt = jwt.encode(value, jwt_secret(), algorithm='HS256')
+    return encoded_jwt
 
 
 def login_admin_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         cookie_json, error = get_cookie()
-        if error == 'different_cookie':
+        if error:
             return redirect("/login")
+        
         j = json.loads(cookie_json)
         if j.get("permissao") != 1:
             return "You don't have permission to access this route. You are not an admin. \n"
