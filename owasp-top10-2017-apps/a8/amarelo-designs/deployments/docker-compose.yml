@@ -1,7 +1,7 @@
 version: "2"
 services:
   app:
-    container_name: app-a8 
+    container_name: app-a8
     build:
       context: ../
       dockerfile: deployments/Dockerfile
@@ -10,9 +10,11 @@ services:
     ports:
       - "5000:5000"
       - "9051:9051"
-    networks: 
+    networks:
       - a8_net
     restart: always
+    environment:
+      COOKIE_SECRET: superSecretCookie@1234!globo.com
 
 networks:
   a8_net:
