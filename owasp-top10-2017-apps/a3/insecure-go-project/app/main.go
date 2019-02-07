@@ -10,22 +10,21 @@ import (
 	db "github.com/globocom/secDevLabs/owasp-top10-2017-apps/a3/insecure-go-project/app/db/mongo"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
-	"github.com/spf13/viper"
 )
 
 func main() {
 
-	fmt.Println("[*] Starting Insecure Go Project...")
+	fmt.Println("[*] Starting (now) Secure Go Project...")
 
-	// loading viper
-	viper.SetConfigName("config")
-	viper.AddConfigPath(".")
-	if err := viper.ReadInConfig(); err != nil {
-		errorAPI(err)
-	}
-	if err := viper.Unmarshal(&config.APIconfiguration); err != nil {
-		errorAPI(err)
-	}
+	MONGO_PASSWORD := os.Getenv("MONGO_PASSWORD")
+	MONGO_USER := os.Getenv("MONGO_USER")
+	MONGO_DB_NAME := os.Getenv("MONGO_DB_NAME")
+	MONGO_HOST := os.Getenv("MONGO_HOST")
+
+	config.APIconfiguration.MongoConf.MongoPassword = MONGO_PASSWORD
+	config.APIconfiguration.MongoConf.MongoUser = MONGO_USER
+	config.APIconfiguration.MongoConf.MongoDBName = MONGO_DB_NAME
+	config.APIconfiguration.MongoConf.MongoHost = MONGO_HOST
 
 	// check if MongoDB is acessible and credentials received are working.
 	if _, err := checkMongoDB(); err != nil {
@@ -34,7 +33,6 @@ func main() {
 	}
 
 	fmt.Println("[*] MongoDB: OK!")
-	fmt.Println("[*] Viper loaded: OK!")
 
 	echoInstance := echo.New()
 	echoInstance.HideBanner = true

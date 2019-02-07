@@ -19,14 +19,6 @@ type DB struct {
 	Session *mgo.Session
 }
 
-// mongoConfig is the struct that represents mongo configuration.
-type mongoConfig struct {
-	Address      string
-	DatabaseName string
-	UserName     string
-	Password     string
-}
-
 // Database is the interface's database.
 type Database interface {
 	Insert(obj interface{}, collection string) error

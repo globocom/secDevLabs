@@ -1,0 +1,10 @@
+conn = new Mongo('localhost');
+db = conn.getDB(MONGO_DB_NAME);
+
+db.createUser(
+    {
+        user: MONGO_USER,
+        pwd: MONGO_PASSWORD,
+        roles: [{ role: "userAdminAnyDatabase", db: "admin" }]
+    }
+);

@@ -9,16 +9,21 @@ volumes:
 services:
     api:
         container_name: a3_api
-        build: 
+        build:
             context: ../
             dockerfile: deployments/api.Dockerfile
-        ports: 
+        ports:
             - "9999:9999"
-        networks: 
+        networks:
             - insecure_net
         command: "go run main.go"
         depends_on:
             - mongodb
+        environment:
+            MONGO_PASSWORD: ${A3_MONGO_PASSWORD}
+            MONGO_USER: ${A3_MONGO_USER}
+            MONGO_DB_NAME: ${A3_MONGO_DB_NAME}
+            MONGO_HOST: ${A3_MONGO_HOST}
         external_links:
             - mongodb:mongodb
 
@@ -34,3 +39,7 @@ services:
             - mongo_vol:/data/db
         networks:
             - insecure_net
+        environment:
+            MONGO_PASSWORD: ${A3_MONGO_PASSWORD}
+            MONGO_USER: ${A3_MONGO_USER}
+            MONGO_DB_NAME: ${A3_MONGO_DB_NAME}
