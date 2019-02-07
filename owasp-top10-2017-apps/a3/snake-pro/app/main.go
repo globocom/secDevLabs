@@ -44,6 +44,9 @@ func main() {
 	echoInstance.Use(middleware.RequestID())
 
 	echoInstance.GET("/healthcheck", api.HealthCheck)
+	echoInstance.POST("/register", api.Register)
+	echoInstance.POST("/login", api.Login)
+
 	APIport := fmt.Sprintf(":%d", getAPIPort())
 	echoInstance.Logger.Fatal(echoInstance.Start(APIport))
 }

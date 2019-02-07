@@ -5,13 +5,14 @@ import (
 	"time"
 
 	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a3/snake-pro/app/config"
+	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a3/snake-pro/app/types"
 	mgo "gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
 
 // Collections names used in MongoDB.
 var (
-	RepositoryCollection = "hello"
+	UserCollection = "users"
 )
 
 // DB is the struct that represents mongo session.
@@ -158,4 +159,37 @@ func (db *DB) Upsert(query bson.M, obj interface{}, collection string) (*mgo.Cha
 	c := session.DB("").C(collection)
 	defer session.Close()
 	return c.Upsert(query, obj)
+}
+
+// GetUserData queries MongoDB and returns user's data based on its username.
+func GetUserData(mapParams map[string]interface{}) (types.UserData, error) {
+	userDataResponse := types.UserData{}
+	session, err := Connect()
+	if err != nil {
+		return userDataResponse, err
+	}
+	userDataQuery := []bson.M{}
+	for k, v := range mapParams {
+		userDataQuery = append(userDataQuery, bson.M{k: v})
+	}
+	userDataFinalQuery := bson.M{"$and": userDataQuery}
+	err = session.SearchOne(userDataFinalQuery, nil, UserCollection, &userDataResponse)
+	return userDataResponse, err
+}
+
+// RegisterUser regisiter into MongoDB a new user and returns an error.
+func RegisterUser(userData types.UserData) error {
+	session, err := Connect()
+	if err != nil {
+		return err
+	}
+
+	newUserData := bson.M{
+		"username": userData.Username,
+		"password": userData.Password,
+		"userID":   userData.UserID,
+	}
+	err = session.Insert(newUserData, UserCollection)
+	return err
+
 }
