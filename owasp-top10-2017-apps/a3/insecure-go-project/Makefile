@@ -60,6 +60,10 @@ lint:
 build:
 	$(GO) build -o "$(INSECUREBIN)"
 
+generate-passwords:
+	chmod +x scripts/generate-env-pass.sh
+	./scripts/generate-env-pass.sh
+
 ## Prints help message
 help:
 	printf "\n${COLOR_YELLOW}${PROJECT}\n------\n${COLOR_RESET}"
