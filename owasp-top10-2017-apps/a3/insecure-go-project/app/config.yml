@@ -1,3 +1,5 @@
 mongoConf:
+  mongoPassword: huskyPass31979227
+  mongoUser: huskyUser2613311233
   mongoDBName: insecure_go_project
   mongoHost: mongodb
