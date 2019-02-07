@@ -9,12 +9,14 @@ volumes:
 services:
     api:
         container_name: snake_pro_a3
-        build: 
+        build:
             context: ../
             dockerfile: deployments/api.Dockerfile
-        ports: 
+        ports:
             - "10033:10033"
-        networks: 
+        environment:
+          SECRET_KEY: secret-key
+        networks:
             - insecure_net
         command: "go run main.go"
         depends_on:

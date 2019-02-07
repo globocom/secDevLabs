@@ -1,8 +1,8 @@
 package api
 
 import (
-	"fmt"
 	"net/http"
+	"os"
 	"time"
 
 	jwt "github.com/dgrijalva/jwt-go"
@@ -28,14 +28,12 @@ func WriteCookie(c echo.Context, jwt string) error {
 }
 
 // ReadCookie reads a cookie from echo Context.
-func ReadCookie(c echo.Context) error {
+func ReadCookie(c echo.Context) (string, error) {
 	cookie, err := c.Cookie("sessionIDsnake")
 	if err != nil {
-		return err
+		return "", err
 	}
-	fmt.Println(cookie.Name)
-	fmt.Println(cookie.Value)
-	return c.String(http.StatusOK, "")
+	return cookie.Value, err
 }
 
 // Register registers a new user into MongoDB.
@@ -62,7 +60,10 @@ func Register(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"result": "error", "details": "Error user data2."})
 	}
 
-	return c.String(http.StatusOK, "Register: success!\n")
+	return c.Render(http.StatusOK, "form.html", map[string]interface{}{
+		"name": "Welcome to SnakePro!",
+	})
+
 }
 
 // Login checks MongoDB if this user exists and then returns a JWT session cookie.
@@ -97,7 +98,7 @@ func Login(c echo.Context) error {
 	claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
 
 	// Generate encoded token and send it as response.
-	t, err := token.SignedString([]byte("secret"))
+	t, err := token.SignedString([]byte(os.Getenv("SECRET_KEY")))
 	if err != nil {
 		return err
 	}
@@ -107,15 +108,7 @@ func Login(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error login5."})
 	}
 
-	format := c.QueryParam("format")
-	if format == "json" {
-		return c.JSON(http.StatusOK, map[string]string{
-			"result":   "success",
-			"username": userDataResult.Username,
-			"user_id":  userDataResult.UserID,
-		})
-	}
+	// messageLogon := fmt.Sprintf("Hello, %s! This is your highest score: %d\n", userDataResult.Username, userDataResult.HighestScore)
 
-	messageLogon := fmt.Sprintf("Hello, %s! This is your highest score: %d\n", userDataResult.Username, userDataResult.HighestScore)
-	return c.String(http.StatusOK, messageLogon)
+	return c.Render(http.StatusOK, "ranking.html", map[string]interface{}{})
 }
