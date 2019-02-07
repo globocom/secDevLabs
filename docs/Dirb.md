@@ -1,4 +1,4 @@
-# How to install and use Dirb for OSX
+# How to install and use Dirb on OSX
 The main goal of this document is to describe how Dirb can be installed, configured and used on a OSX environment. This tool must only be used in SecDevLabs apps and on systems you have proper authorization.
 
 ## Installation 🔧
