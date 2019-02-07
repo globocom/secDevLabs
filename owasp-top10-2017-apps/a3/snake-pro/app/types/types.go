@@ -12,4 +12,5 @@ type UserData struct {
 	Password       string `json:"pass" bson:"password"`
 	RepeatPassword string `json:"passcheck"`
 	UserID         string `bson:"userID"`
+	HighestScore   int    `bson:"highest-score"`
 }

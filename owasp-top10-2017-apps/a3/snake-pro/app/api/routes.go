@@ -54,6 +54,7 @@ func Register(c echo.Context) error {
 
 	newGUID1 := uuid.Must(uuid.NewRandom())
 	userData.UserID = newGUID1.String()
+	userData.HighestScore = 0
 
 	err = db.RegisterUser(userData)
 	if err != nil {
@@ -115,6 +116,6 @@ func Login(c echo.Context) error {
 		})
 	}
 
-	messageLogon := fmt.Sprintf("Hello, %s! This is your userID: %s\n", userDataResult.Username, userDataResult.UserID)
+	messageLogon := fmt.Sprintf("Hello, %s! This is your highest score: %d\n", userDataResult.Username, userDataResult.HighestScore)
 	return c.String(http.StatusOK, messageLogon)
 }
