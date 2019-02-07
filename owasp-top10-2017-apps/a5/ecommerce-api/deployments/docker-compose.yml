@@ -12,6 +12,7 @@ services:
             MONGO_TIMEOUT: 60
             MONGO_PORT: 27017
             MONGO_TIMEOUT: 60
+            A5-JWT-SECRET: secret
         env_file:
             - dockers.env
         build:

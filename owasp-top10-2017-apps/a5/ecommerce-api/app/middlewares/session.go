@@ -3,6 +3,7 @@ package middlewares
 import (
 	"fmt"
 	"net/http"
+	"os"
 
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo"
@@ -20,7 +21,7 @@ func RequireLogin(next echo.HandlerFunc) echo.HandlerFunc {
 			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 				return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
 			}
-			return []byte("secret"), nil
+			return []byte(os.Getenv("A5-JWT-SECRET")), nil
 		})
 		if err != nil {
 			return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": err.Error()})
