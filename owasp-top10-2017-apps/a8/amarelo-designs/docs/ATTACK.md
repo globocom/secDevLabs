@@ -113,4 +113,4 @@ $ nc localhost 9051
 [3]: https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2017-apps/a8/amarelo-designs/app/app.py
 [Pickle]: https://docs.python.org/2/library/pickle.html
 [netcat]: https://en.wikipedia.org/wiki/Netcat
-[4]: ../../../../docs/dirb.md
+[4]: https://github.com/globocom/secDevLabs/blob/master/docs/Dirb.md
