@@ -16,7 +16,6 @@ from util.init_db import init_db
 from flask.logging import default_handler
 from flask_bootstrap import Bootstrap
 from model.password import Password
-from model.db import DataBase
 import logging
 import os
 
@@ -29,7 +28,7 @@ bootstrap = Bootstrap(app)
 app.config.from_pyfile('config.py')
 
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger('a10-games-irados')
+logger = logging.getLogger('a10-games-irados-routes')
 
 
 def generate_csrf_token():
