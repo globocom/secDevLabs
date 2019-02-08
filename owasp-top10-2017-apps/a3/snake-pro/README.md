@@ -1,7 +1,7 @@
 # Snake Pro
  > This is a simple Golang Web App that contains an example of a Sensitive Data Exposure vulnerability.
 
-<!-- <img src="images/banner.png" align="center"/> -->
+<img src="images/banner.png" align="center"/>
 
 ## What is Sensitive Data Exposure?
 
@@ -25,7 +25,7 @@ Then simply visit [localhost:10033][App] !
 
 ## Attack Narrative
 
-To understand how this vulnerability can be exploited, check this section!
+To understand how this vulnerability can be exploited, check [this section]!
 
 ## Mitigating the vulnerability
 
@@ -36,5 +36,6 @@ To understand how this vulnerability can be mitigated, check this other section!
 Yes, please. :zap:
 
 [Docker Install]:  https://docs.docker.com/install/
-[Docker Compose Install]: https://docs.docker.com/compose/install/ 
+[Docker Compose Install]: https://docs.docker.com/compose/install/
 [App]: http://127.0.0.1:10033
+[this section]: docs/ATTACK.md
