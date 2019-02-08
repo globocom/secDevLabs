@@ -45,7 +45,7 @@ The structure found is very similar to the ones created with the [Pickle] functi
 
 <img src="attack7.png" align="center"/>
 
-If an attacker knew that the app uses `Pickle` as the serialisation method, he/she could create a malicious cookie to take advantage of it and execute code remotely. An example of an exploit in Python 3 that could produce this cookie could be:
+If an attacker knew that the app uses `Pickle` as the serialisation method, he/she could create a malicious cookie to take advantage of it and execute code remotely. An example of an exploit (serializaPickle.py) in Python 3 that could produce this cookie could be:
 
 ```python
 import pickle
@@ -81,7 +81,7 @@ r = requests.get(url, cookies=cookie)
 In order to be certain that the app is exploitable, we will send a sleep command to make the app unresposive for 10 seconds. If the app takes 10 seconds to return our request, than it's confirmed, the app is exploitable. As we can see from the image below, the app takes some time to return our request, thus confirming that it is exploitable and confirming the remote code execution:
 
 ```sh
-$ python serializaPickle.py "sleep 10" http://localhost:5000/user
+$ python3 serializaPickle.py "sleep 10" http://localhost:5000/user
 ```
 
 <img src="attack9.png" align="center"/>
