@@ -1,13 +1,15 @@
 # Insecure Go Project
- > This is a simple Golang API that contains an example of a Sensitive Data Exposure vulnerability.
+ > This is a simple Golang API that contains an example of a Broken Authentication vulnerability.
 
 <img src="docs/attack-1.png" align="center"/>
 
-## What is Sensitive Data Exposure?
+## What is Broken Authentication?
 
 Definition from [OWASP](https://www.owasp.org/images/7/72/OWASP_Top_10-2017_%28en%29.pdf.pdf):
 
-Many web applications and APIs do not properly protect sensitive data, such as financial, healthcare, and PII. Attackers may steal or modify such weakly protected data to conduct credit card fraud, identity theft, or other crimes. Sensitive data may be compromised without extra protection, such as encryption at rest or in transit, and requires special precautions when exchanged with the browser.
+Application functions related to authentication and session management are often implemented
+incorrectly, allowing attackers to compromise passwords, keys, or session tokens, or to exploit
+other implementation flaws to assume other users’ identities temporarily or permanently.
 
 ## Requirements
 
