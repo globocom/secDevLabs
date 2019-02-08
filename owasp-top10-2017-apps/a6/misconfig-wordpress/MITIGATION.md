@@ -9,4 +9,7 @@ Another problem we need to fix change the message when user type his/her credent
 - Change the message “The password you entered for the email ADDRESS %s is incorrect.” To “The username or password you entered is incorrect.”
 
 
+
 In .htaccess file, you must add “Options -Indexes” in the end of file in order to prevent fold browsing in your WordPress website.
+
+I would recommend users change their password to a new and stronger one. 
