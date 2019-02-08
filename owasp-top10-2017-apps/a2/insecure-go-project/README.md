@@ -44,4 +44,4 @@ Yes, please. :zap:
 
 [Docker Install]:  https://docs.docker.com/install/
 [Docker Compose Install]: https://docs.docker.com/compose/install/
-[this section]: https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2017-apps/a3/insecure-go-project/docs/ATTACK.md
+[this section]: https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2017-apps/a2/insecure-go-project/docs/ATTACK.md
