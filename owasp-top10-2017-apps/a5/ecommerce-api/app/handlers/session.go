@@ -3,6 +3,7 @@ package handlers
 import (
 	"fmt"
 	"net/http"
+	"os"
 	"time"
 
 	jwt "github.com/dgrijalva/jwt-go"
@@ -12,6 +13,10 @@ import (
 	"github.com/google/uuid"
 	"github.com/labstack/echo"
 )
+
+func getJwtSecret() string {
+	return os.Getenv("JWT_SECRET")
+}
 
 // WriteCookie writes a cookie into echo Context
 func WriteCookie(c echo.Context, jwt string) error {
@@ -36,7 +41,7 @@ func ReadCookie(c echo.Context) (string, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
 		}
-		return []byte("secret"), nil
+		return []byte(getJwtSecret()), nil
 	})
 
 	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
@@ -84,7 +89,7 @@ func Login(c echo.Context) error {
 	claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
 
 	// Generate encoded token and send it as response.
-	t, err := token.SignedString([]byte("secret"))
+	t, err := token.SignedString([]byte(getJwtSecret()))
 	if err != nil {
 		return err
 	}
