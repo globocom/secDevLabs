@@ -51,6 +51,13 @@ func Register(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Passwords do not match."})
 	}
 
+	passHash, err := pass.HashPassword(userData.Password)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Something went wrong creating the user."})
+	}
+
+	userData.Password = passHash
+
 	newGUID1 := uuid.Must(uuid.NewRandom())
 	userData.UserID = newGUID1.String()
 	userData.HighestScore = 0
@@ -82,8 +89,7 @@ func Login(c echo.Context) error {
 		return c.JSON(http.StatusForbidden, map[string]string{"result": "error", "details": "Error login."})
 	}
 
-	validPass := pass.CheckPass(userDataResult.Password, loginAttempt.Password)
-	if !validPass {
+	if pass.CheckPasswordHash(userDataResult.Password, loginAttempt.Password) {
 		// wrong password
 		return c.JSON(http.StatusForbidden, map[string]string{"result": "error", "details": "Error login."})
 	}
