@@ -78,8 +78,22 @@ def login():
         user_password, success = database.get_user_password(username)
         if not success or user_password == None or not psw.validate_password(str(user_password[0])):
             flash("Usuario ou senha incorretos", "danger")
+            app.logger.warning('remote_addr=%s path=%s method=%s message=%s' % (
+                request.remote_addr,
+                request.path,
+                request.method,
+                'Login Failed',
+            ))
             return render_template('login.html')
+
         session['username'] = username
+        app.logger.info('remote_addr=%s path=%s method=%s message=%s' % (
+            request.remote_addr,
+            request.path,
+            request.method,
+            'Logged in',
+        ))
+
         return redirect('/home')
     else:
         return render_template('login.html')
@@ -97,14 +111,38 @@ def newuser():
             message, success = database.insert_user(username, hashed_psw)
             if success == 1:
                 flash("Novo usuario adicionado!", "primary")
+                app.logger.info('remote_addr=%s path=%s method=%s message=%s' % (
+                    request.remote_addr,
+                    request.path,
+                    request.method,
+                    'User Registered',
+                ))
                 return redirect('/login')
             else:
                 flash(message, "danger")
+                app.logger.warning('remote_addr=%s path=%s method=%s message=%s' % (
+                    request.remote_addr,
+                    request.path,
+                    request.method,
+                    'Registration Failed',
+                ))
                 return redirect('/register')
 
         flash("Passwords must be the same!", "danger")
+        app.logger.warning('remote_addr=%s path=%s method=%s message=%s' % (
+            request.remote_addr,
+            request.path,
+            request.method,
+            'Registration Invalid Password',
+        ))
         return redirect('/register')
     else:
+        app.logger.warning('remote_addr=%s path=%s method=%s message=%s' % (
+            request.remote_addr,
+            request.path,
+            request.method,
+            'Registration Bad Access',
+        ))
         return render_template('register.html')
 
 @app.route('/home', methods=['GET'])
@@ -120,12 +158,30 @@ def cupom():
         rows, success = database.get_game_coupon(coupon, session.get('username'))
         if not success or rows == None or rows == 0:
             flash("Cupom invalido", "danger")
+            app.logger.warning('remote_addr=%s path=%s method=%s message=%s' % (
+                request.remote_addr,
+                request.path,
+                request.method,
+                'Invalid Cupom',
+            ))
             return render_template('coupon.html')
         game, success = database.get_game(coupon, session.get('username'))
         if not success or game == None:
             flash("Cupom invalido", "danger")
+            app.logger.warning('remote_addr=%s path=%s method=%s message=%s' % (
+                request.remote_addr,
+                request.path,
+                request.method,
+                'Invalid Cupom',
+            ))
             return render_template('coupon.html')
         flash("Voce ganhou {}".format(game[0]), "primary")
+        app.logger.info('remote_addr=%s path=%s method=%s message=%s' % (
+            request.remote_addr,
+            request.path,
+            request.method,
+            'Valid Cupom',
+        ))
         return render_template('coupon.html')
     else:
         return render_template('coupon.html')
