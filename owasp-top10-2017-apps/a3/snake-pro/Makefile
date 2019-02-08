@@ -19,7 +19,7 @@ COLOR_RED = \033[31m
 
 PROJECT := A3 - Snake Pro
 PORT := 10033
-SLEEPUNTILAPPSTARTS := 10
+SLEEPUNTILAPPSTARTS := 30
 
 ## Installs a development environment
 install: compose msg
@@ -33,7 +33,7 @@ msg:
 	printf "${COLOR_YELLOW}SecDevLabs: 👀  Your app is still starting...\n${COLOR_RESET}"
 	sleep ${SLEEPUNTILAPPSTARTS}
 	printf "${COLOR_GREEN}SecDevLabs: ☕️  Hmmm... Sounds good!\n"
-	printf "SecDevLabs: 🔥  ${PROJECT} may be running at ${COLOR_RESET}${COLOR_RED}http://127.0.0.1:${PORT}${COLOR_RESET}\n"
+	printf "SecDevLabs: 🔥  ${PROJECT} may be running at ${COLOR_RESET}${COLOR_RED}http://localhost:${PORT}/login${COLOR_RESET}\n"
 
 ## Gets all go test dependencies
 get-deps:
