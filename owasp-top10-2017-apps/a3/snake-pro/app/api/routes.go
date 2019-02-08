@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"net/http"
 	"os"
 	"time"
@@ -60,10 +61,8 @@ func Register(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"result": "error", "details": "Error user data2."})
 	}
 
-	return c.Render(http.StatusOK, "form.html", map[string]interface{}{
-		"name": "Welcome to SnakePro!",
-	})
-
+	msgUser := fmt.Sprintf("User %s created!", userData.Username)
+	return c.String(http.StatusOK, msgUser)
 }
 
 // Login checks MongoDB if this user exists and then returns a JWT session cookie.
@@ -107,8 +106,8 @@ func Login(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error login5."})
 	}
-
-	// messageLogon := fmt.Sprintf("Hello, %s! This is your highest score: %d\n", userDataResult.Username, userDataResult.HighestScore)
-
-	return c.Render(http.StatusOK, "ranking.html", map[string]interface{}{})
+	c.Response().Header().Set("Content-type", "text/html")
+	messageLogon := fmt.Sprintf("Hello, %s! Welcome to SnakePro", userDataResult.Username)
+	// err = c.Redirect(http.StatusFound, "http://www.localhost:10033/game/ranking")
+	return c.String(http.StatusOK, messageLogon)
 }
