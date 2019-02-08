@@ -1,0 +1,5 @@
+mongoConf:
+  mongoPassword: svGX8SViufvYYNu6m3Kv
+  mongoUser: u_snake_pro
+  mongoDBName: snake_pro
+  mongoHost: mongodb
