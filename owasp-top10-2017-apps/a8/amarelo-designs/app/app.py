@@ -6,6 +6,9 @@ import pickle
 import hmac
 import hashlib
 import base64
+import jwt
+import os
+
 app = Flask(__name__)
 
 
@@ -13,26 +16,19 @@ app = Flask(__name__)
 def ola():
     return render_template('index.html')
 
-def prepare_cookie(value):
-    pickle_resultado = pickle.dumps(value)
-    encodedSessionCookie =  hmac.new('shared-key', pickle_resultado, hashlib.sha1).hexdigest()
-    prepared_cookie = '%s.%s' % (pickle_resultado, encodedSessionCookie)
-    return prepared_cookie
+def jwt_secret():
+    return os.environ['JWT_SECRET']
 
 def get_cookie():
-    cookie = request.cookies.get("sessionId")
-    if cookie == None:
+    cookie = request.cookies.get("sessionId", "")
+    try:
+        return jwt.decode(cookie, jwt_secret(), algorithms=['HS256']), None
+    except :
         return None,'Não Autorizado!'
 
-    pickled_data, recvd_digest  = cookie.split('.')
-    new_digest = hmac.new('shared-key', pickled_data, hashlib.sha1).hexdigest()
-    if recvd_digest != new_digest:
-        return None, 'Integrity check failed'
-    else:
-        unpickled_data = pickle.loads(pickled_data)        
-        cookie = pickle.loads(base64.b64decode(cookie))
-        return cookie, None
-
+def prepare_cookie(value):
+    encoded_jwt = jwt.encode(value, jwt_secret(), algorithm='HS256')
+    return encoded_jwt
 
 @app.route("/admin", methods=['GET','POST'])
 def login():

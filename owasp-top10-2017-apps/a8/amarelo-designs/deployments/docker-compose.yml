@@ -2,6 +2,8 @@ version: "2"
 services:
   app:
     container_name: app-a8 
+    environment:
+      JWT_SECRET: secret
     build:
       context: ../
       dockerfile: deployments/Dockerfile
