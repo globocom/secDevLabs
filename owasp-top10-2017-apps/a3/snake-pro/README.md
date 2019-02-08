@@ -21,7 +21,7 @@ After cloning this repository, you can type the following command to start the v
 $ make install
 ```
 
-Then simply visit [localhost:10033][App] !
+Then simply visit [localhost:10033/login][App] !
 
 ## Attack Narrative
 
@@ -36,5 +36,5 @@ Yes, please. :zap:
 
 [Docker Install]:  https://docs.docker.com/install/
 [Docker Compose Install]: https://docs.docker.com/compose/install/
-[App]: http://127.0.0.1:10033
+[App]: http://127.0.0.1:10033/login
 [this section]: docs/ATTACK.md
