@@ -140,9 +140,10 @@ def newuser():
 @app.route('/gossip', methods=['GET'])
 @login_required
 def all_gossips():
-    search = escape(request.args.get('search'))
+    search = request.args.get('search')
     search_flag = 0
     if search is not None:
+        search = escape(search)
         gossips, success = database.search_gossips(search)
         search_flag = 1
     else:
