@@ -29,7 +29,7 @@ To understand how this vulnerability can be exploited, check [this section](docs
 
 ## Mitigating the vulnerability
 
-(Spoiler alert 🧐) To understand how this vulnerability can be mitigated, check [this other section](https://github.com/globocom/secDevLabs/pulls?q=is%3Apr+label%3AA10-OWASP-2017+label%3A%22mitigation+solution+%F0%9F%94%92%22)!
+(Spoiler alert 🧐) To understand how this vulnerability can be mitigated, check [this other section](https://github.com/globocom/secDevLabs/pulls?q=is%3Apr+label%3A%22mitigation+solution+%F0%9F%94%92%22+label%3AGamesIrados.com)!
 
 ## Contributing
 
