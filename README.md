@@ -26,7 +26,7 @@ Disclaimer: You are about to install vulnerable apps in your machine! 🔥
 
 - A1 - Injection :  (Golang) [CopyNPaste API](owasp-top10-2017-apps/a1/copy-n-paste)
 - A2 - Broken Authentication : (Python) [Saidajaula Monster Fit](owasp-top10-2017-apps/a2/saidajaula-monster)
-- A3 - Sensitive Data Exposure : (Golang) [Insecure Go Project](owasp-top10-2017-apps/a3/insecure-go-project)
+- A3 - Sensitive Data Exposure : (Golang) [SnakePro](owasp-top10-2017-apps/a3/snake-pro)
 - A4 - XML External Entities (XXE) :  (PHP) [ViniJr Blog](owasp-top10-2017-apps/a4/vinijr-blog)
 - A5 - Broken Access Control : (Golang) [Vulnerable Ecommerce API](owasp-top10-2017-apps/a5/ecommerce-api)
 - A6 - Security Misconfiguration : (PHP) [Vulnerable Wordpress Misconfig](owasp-top10-2017-apps/a6/misconfig-wordpress)
