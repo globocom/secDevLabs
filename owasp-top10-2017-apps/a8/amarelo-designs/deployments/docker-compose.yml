@@ -1,7 +1,7 @@
 version: "2"
 services:
   app:
-    container_name: app-a8 
+    container_name: app-a8
     build:
       context: ../
       dockerfile: deployments/Dockerfile
@@ -10,7 +10,9 @@ services:
     ports:
       - "5000:5000"
       - "9051:9051"
-    networks: 
+    environment:
+      CREDENTIAL: loremipsum123
+    networks:
       - a8_net
     restart: always
 
