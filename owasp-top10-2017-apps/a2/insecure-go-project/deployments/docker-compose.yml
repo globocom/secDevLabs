@@ -9,12 +9,12 @@ volumes:
 services:
     api:
         container_name: a3_api
-        build: 
+        build:
             context: ../
             dockerfile: deployments/api.Dockerfile
-        ports: 
+        ports:
             - "9999:9999"
-        networks: 
+        networks:
             - insecure_net
         command: "go run main.go"
         depends_on:
