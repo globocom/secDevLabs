@@ -5,7 +5,7 @@ If you don't know [secDevLabs] or this [intended vulnerable web application][2] 
 
 ---
 ## 👀
-
+ 
 It's possible to reach the server's web application from the HTTP port 5000, as shown by the image below:
 
 <img src="attack1.png" align="center"/>
@@ -27,7 +27,7 @@ When accessed, the `/admin` page exposes an authentication screen, as depicted b
 </p>
 
 ## 🔥
-
+ 
 A quick test utilizing `admin` as the credentials for the `Username` and `Password` fields gives us acess to an Admin Dashboard, as shown below:
 
 <img src="attack4.png" align="center"/>
@@ -45,7 +45,7 @@ The structure found is very similar to the ones created with the [Pickle] functi
 
 <img src="attack7.png" align="center"/>
 
-If an atacker knew that the app is using Pickle as the serialization method, he could create a malicious cookie to take advantage of it and execute code remotely. An example of the cookie is as shown:
+If an attacker knew that the app uses `Pickle` as the serialisation method, he/she could create a malicious cookie to take advantage of it and execute code remotely. An example of an exploit in Python 3 that could produce this cookie could be:
 
 ```python
 import pickle
