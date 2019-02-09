@@ -19,7 +19,6 @@ COLOR_RED = \033[31m
 
 PROJECT := A2 - Insecure Go Project
 PORT := 9999
-SLEEPUNTILAPPSTARTS := 10
 
 ## Installs a development environment
 install: compose msg

@@ -9,15 +9,15 @@ COLOR_GREEN='\033[32m'
 COLOR_BLUE='\033[1;34m'
 COLOR_RESET='\033[0m'
 
-PROJECT='A2 - Saidajaula Monster Fit'
-PORT=10082
+PROJECT='A2 - Insecure Go Project'
+PORT=9999
 TRIES=480
 LOADING=0
 
 printf "${COLOR_YELLOW}SecDevLabs: 👀  Your app is starting!\n${COLOR_RESET}"
 
 while : ; do
-    `curl -s -f http://localhost:$PORT > /dev/null`
+    `curl -s -f http://localhost:$PORT/healthcheck > /dev/null`
     if [ $? == 0 ] ; then
         break
     fi

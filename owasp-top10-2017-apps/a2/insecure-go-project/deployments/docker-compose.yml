@@ -8,7 +8,7 @@ volumes:
 
 services:
     api:
-        container_name: a3_api
+        container_name: a2_insecure_api
         build:
             context: ../
             dockerfile: deployments/api.Dockerfile
