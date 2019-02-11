@@ -39,15 +39,22 @@ func CheckUserAuth(c echo.Context) (map[string]interface{}, error) {
 
 // PageLogin renders login page
 func PageLogin(c echo.Context) error {
+	return c.Render(http.StatusOK, "form.html", map[string]interface{}{
+		"name": "Welcome to SnakePro!",
+	})
+}
+
+// PageLogin renders login page
+func PageHome(c echo.Context) error {
     auth, err := CheckUserAuth(c)
     if err != nil {
         return c.Redirect(302, "/login")
     }
 
-	return c.Render(http.StatusOK, "form.html", map[string]interface{}{
-		"name": "Welcome to SnakePro!",
+    return c.Render(http.StatusOK, "home.html", map[string]interface{}{
+        "name": "Welcome to SnakePro!",
         "user": auth["user"],
-	})
+    })
 }
 
 func PageRanking(c echo.Context) error {

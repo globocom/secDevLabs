@@ -64,6 +64,7 @@ func main() {
 	echoInstance.Use(middleware.RequestID())
 
 	templates := make(map[string]*template.Template)
+	templates["home.html"] = template.Must(template.ParseFiles("views/home.html", "views/base.html"))
 	templates["form.html"] = template.Must(template.ParseFiles("views/form.html", "views/base.html"))
 	templates["game.html"] = template.Must(template.ParseFiles("views/game.html", "views/base.html"))
 	templates["ranking.html"] = template.Must(template.ParseFiles("views/ranking.html", "views/base.html"))
@@ -75,13 +76,15 @@ func main() {
 	echoInstance.POST("/register", api.Register)
 	echoInstance.POST("/login", api.Login)
 	echoInstance.GET("/login", api.PageLogin)
+	echoInstance.GET("/", api.PageHome)
+
 	r := echoInstance.Group("/game")
 	config := middleware.JWTConfig{
 		TokenLookup: "cookie:sessionIDsnake",
 		SigningKey:  []byte(os.Getenv("SECRET_KEY")),
 	}
 	r.Use(middleware.JWTWithConfig(config))
-
+	r.GET("/", api.PageHome)
 	r.GET("/play", api.PageGame)
 	r.GET("/ranking", api.PageRanking)
 
