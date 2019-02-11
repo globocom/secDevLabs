@@ -9,7 +9,7 @@ CopyNPaste is Golang web application that uses an API and a simple front end to 
 - [Definition](#what-is-injection)
 - [Setup](#setup)
 - [Attack narrative](#attack-narrative)
-- [Objectives](#secure-this-app)
+- [Objectives](#secure-this-app-)
 - [Solutions](#pr-solutions)
 - [Contributing](#contributing)
 
