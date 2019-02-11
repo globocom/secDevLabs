@@ -4,6 +4,15 @@
 
 CopyNPaste is Golang web application that uses an API and a simple front end to simulate a login page. It has both `/register` and `/login` routes that, by communicating with a MySQL database, enables users register and enter into a generic system.
 
+## Index
+
+- [Definition](#what-is-injection)
+- [Setup](#setup)
+- [Attack narrative](#attack-narrative)
+- [Objectives](#secure-this-app)
+- [Solutions](#pr-solutions)
+- [Contributing](#contributing)
+
 ## What is Injection?
 
 Injection flaws, such as SQL, NoSQL, OS, and LDAP injection, occur when untrusted data is sent to an interpreter as part of a command or query. The attacker’s hostile data can trick the interpreter into executing unintended commands or accessing data without proper authorization.
