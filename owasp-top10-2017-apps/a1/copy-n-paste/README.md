@@ -55,7 +55,7 @@ curl -s -H "Content-Type: application/json" -d '{"user":"bob", "pass":"password"
 
 Now that you know the purpose of this app, what could go wrong? The following section descrides how an attacker could identify and exploit an SQL Injection in CopyNPaste app. We encourage you follow these steps and try to reproduce the attack itself before reading any code.
 
-#### Vulnerabilituy identification  👀
+#### Vulnerability identification  👀
 
 After reviewing `NewUser()` , `CheckIfUserExists()` and `AuthenticateUser()` from [`db.go`]((https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2017-apps/a1/copy-n-paste/app/util/db.go#)) file, it was possibile to see that some input from users are concatenated with SQL queries, as shown in the following codes:
 
