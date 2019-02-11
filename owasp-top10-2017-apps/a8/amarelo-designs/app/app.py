@@ -21,7 +21,7 @@ def login():
         if username == "admin" and password == "admin":
             token = str(uuid.uuid4().hex)
             cookie = { "username":username, "admin":True, "sessionId":token }
-            cookie_resultado = jwt.encode(cookie, os.environ.get('CREDENTIAL'), algorithms=['HS256'])
+            cookie_resultado = jwt.encode(cookie, os.environ.get('CREDENTIAL'), algorithm='HS256')
 
             resp = make_response(redirect("/user"))
 
@@ -41,7 +41,7 @@ def userInfo():
         return "Não Autorizado!"
 
 
-    cookie = jwt.decode(cookie, os.environ.get('CREDENTIAL'), algorithms=['HS256'])
+    cookie = jwt.decode(cookie, os.environ.get('CREDENTIAL'), algorithm=['HS256'])
 
     return render_template('user.html')
 
