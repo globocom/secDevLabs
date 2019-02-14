@@ -15,7 +15,8 @@ from flask import (
     redirect,
     flash,
     make_response,
-    session
+    session,
+    escape
 )
 from flask_bootstrap import Bootstrap
 from model.password import Password
@@ -84,11 +85,11 @@ def login():
 
         if not success or user_password is None or \
            not psw.validate_password(user_password[0]):
-                error('gossip',
-                      'User not found or wrong password',
-                      session.get('username'))
-                flash('User not found or wrong password', 'danger')
-                return render_template('login.html')
+            error('gossip',
+                  'User not found or wrong password',
+                  session.get('username'))
+            flash('User not found or wrong password', 'danger')
+            return render_template('login.html')
 
         session['username'] = username
         return redirect('/gossip')
@@ -142,7 +143,7 @@ def all_gossips():
     search = request.args.get('search')
     search_flag = 0
     if search is not None:
-        gossips, success = database.search_gossips(search)
+        gossips, success = database.search_gossips(escape(search))
         search_flag = 1
     else:
         gossips, success = database.get_latest_gossips()
@@ -153,7 +154,7 @@ def all_gossips():
     r = make_response(
         render_template('gossips.html',
                         posts=gossips,
-                        search_text=search,
+                        search_text=escape(search),
                         search=search_flag)
     )
     return r
@@ -163,7 +164,7 @@ def all_gossips():
 @login_required
 def gossip(id):
     if request.method == 'POST':
-        comment = request.form.get('comment')
+        comment = escape(request.form.get('comment'))
         user = session.get('username')
         date = datetime.datetime.now()
         if comment == '':
@@ -198,9 +199,9 @@ def gossip(id):
 @login_required
 def newgossip():
     if request.method == 'POST':
-        text = request.form.get('text')
-        subtitle = request.form.get('subtitle')
-        title = request.form.get('title')
+        text = escape(request.form.get('text'))
+        subtitle = escape(request.form.get('subtitle'))
+        title = escape(request.form.get('title'))
         author = session.get('username')
         date = datetime.datetime.now()
         if author is None or text is None or subtitle is None or title is None:
@@ -210,7 +211,8 @@ def newgossip():
                                    title=title,
                                    subtitle=subtitle,
                                    text=text)
-        message, success = database.post_gossip(author, text, title, subtitle, date)
+        message, success = database.post_gossip(
+            author, text, title, subtitle, date)
         if success == 0:
             flash('Coulnd\'t add gossip, please try again', 'danger')
         else:
