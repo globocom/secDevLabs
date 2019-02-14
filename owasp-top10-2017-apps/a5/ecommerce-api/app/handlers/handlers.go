@@ -20,7 +20,7 @@ func GetTicket(c echo.Context) error {
 	userDataQuery := map[string]interface{}{"userID": id}
 	sessionID, err := c.Cookie("sessionIDa5")
 	if err != nil {
-		return err
+		return c.JSON(http.StatusForbidden, map[string]string{"result": "error", "details": "Error finding this UserID."})
 	}
 	token, err := jwt.Parse(sessionID.Value, func(token *jwt.Token) (interface{}, error) {
 		// Don't forget to validate the alg is what you expect:
