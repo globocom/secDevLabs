@@ -17,9 +17,6 @@ COLOR_YELLOW = \033[33m
 COLOR_GREEN = \033[32m
 COLOR_RED = \033[31m
 
-PROJECT := A3 - Snake Pro
-PORT := 10033
-SLEEPUNTILAPPSTARTS := 10
 
 ## Installs a development environment
 install: compose msg
@@ -29,11 +26,10 @@ compose:
 	docker-compose -f deployments/docker-compose.yml down -v --remove-orphans
 	docker-compose -f deployments/docker-compose.yml up -d --build --force-recreate
 
+## Prints initialization message after compose phase
 msg:
-	printf "${COLOR_YELLOW}SecDevLabs: 👀  Your app is still starting...\n${COLOR_RESET}"
-	sleep ${SLEEPUNTILAPPSTARTS}
-	printf "${COLOR_GREEN}SecDevLabs: ☕️  Hmmm... Sounds good!\n"
-	printf "SecDevLabs: 🔥  ${PROJECT} may be running at ${COLOR_RESET}${COLOR_RED}http://127.0.0.1:${PORT}${COLOR_RESET}\n"
+	chmod +x deployments/check-init.sh
+	./deployments/check-init.sh
 
 ## Gets all go test dependencies
 get-deps:

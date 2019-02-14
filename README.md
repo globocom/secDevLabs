@@ -18,7 +18,7 @@ Now it's time to shield the application up! Imagine that this is your applicatio
 
 ## How secure is my new code?
 
-After mitigating a vulnerability, you can send a Pull Request using the [review requested](https://github.com/globocom/secDevLabs/issues?utf8=%E2%9C%93&q=label%3A%22review+requested+%F0%9F%91%80%22+) label to gently ask secDevLabs community to review your new secure code. If you're feeling a bit lost, try having a look at [this mitigation solution](https://github.com/globocom/secDevLabs/pull/29), it might help! 🚀
+After mitigating a vulnerability, you can send a Pull Request using to gently ask secDevLabs community to review your new secure code. If you're feeling a bit lost, try having a look at [this mitigation solution](https://github.com/globocom/secDevLabs/pull/29), it might help! 🚀
 
 ##  OWASP Top 10 (2017) apps:
 
@@ -36,7 +36,7 @@ Disclaimer: You are about to install vulnerable apps in your machine! 🔥
 | A7 - Cross-Site Scripting (XSS) | Python | [Gossip World](owasp-top10-2017-apps/a7/gossip-world) |
 | A8 - Insecure Deserialization | Python | [Amarelo Designs](owasp-top10-2017-apps/a8/amarelo-designs) |
 | A9 - Using Components With Known Vulnerabilities | PHP | [Cimentech](owasp-top10-2017-apps/a9/cimentech) |
-| A10 - Insufficient Logging&Monitoring | Python | [GamesIrados.com](owasp-top10-2017-apps/a10/games-irados) |
+| A10 - Insufficient Logging & Monitoring | Python | [GamesIrados.com](owasp-top10-2017-apps/a10/games-irados) |
 
 ## Contributing
 We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](/docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉

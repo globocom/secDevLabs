@@ -31,7 +31,7 @@ To understand how this vulnerability can be exploited, check [this section]!
 
 ## Mitigating the vulnerability
 
-(Spoiler alert 🧐) To understand how this vulnerability can be mitigated, check [this other section](https://github.com/globocom/secDevLabs/pulls?q=is%3Apr+label%3AA2-OWASP-2017+label%3A%22mitigation+solution+%F0%9F%94%92%22)!
+(Spoiler alert 🧐) To understand how this vulnerability can be mitigated, check [this other section](https://github.com/globocom/secDevLabs/pulls?q=is%3Apr+label%3A%22mitigation+solution+%F0%9F%94%92%22+label%3A%22Saidajaula+Monster+Fit%22)!
 
 [Docker Install]:  https://docs.docker.com/install/
 [Docker Compose Install]: https://docs.docker.com/compose/install/

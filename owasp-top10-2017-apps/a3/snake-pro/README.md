@@ -21,7 +21,7 @@ After cloning this repository, you can type the following command to start the v
 $ make install
 ```
 
-Then simply visit [localhost:10033][App] !
+Then simply visit [localhost:10033/login][App] !
 
 ## Attack Narrative
 
@@ -29,12 +29,12 @@ To understand how this vulnerability can be exploited, check [this section]!
 
 ## Mitigating the vulnerability
 
-(Spoiler alert 🧐) To understand how this vulnerability can be mitigated, check [this other section](https://github.com/globocom/secDevLabs/pulls?q=is%3Apr+label%3AA3-OWASP-2017+label%3A%22mitigation+solution+%F0%9F%94%92%22)!
+(Spoiler alert 🧐) To understand how this vulnerability can be mitigated, check [this other section](https://github.com/globocom/secDevLabs/pulls?q=is%3Apr+label%3A%22mitigation+solution+%F0%9F%94%92%22+label%3ASnakePro)!
 ## Contributing
 
 Yes, please. :zap:
 
 [Docker Install]:  https://docs.docker.com/install/
 [Docker Compose Install]: https://docs.docker.com/compose/install/
-[App]: http://127.0.0.1:10033
+[App]: http://127.0.0.1:10033/login
 [this section]: docs/ATTACK.md

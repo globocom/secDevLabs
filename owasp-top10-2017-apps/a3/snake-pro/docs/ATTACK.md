@@ -26,7 +26,13 @@ Additionally, the channel is being used by users to send their sensitive data is
 
 ## 🔥
 
-If database is somehow exposed, all users' passwords  will be leaked, as shown on these MongoDB documents examples bellow:
+If database is somehow exposed, all users' passwords  will be leaked, as shown on these MongoDB documents. To view them, you can locally install [Robo 3T](https://robomongo.org/download) and use default credentials used in `docker-compose.yml`:
+
+```
+Database: snake_pro
+User name: u_snake_pro
+Password: svGX8SViufvYYNu6m3Kv
+```
 
 <p align="center">
     <img src="attack4.png"/>
