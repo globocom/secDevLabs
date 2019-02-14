@@ -2,26 +2,21 @@
 # -*- coding: utf-8 -*-
 from functools import wraps
 import uuid
-import datetime
 from flask import (
     Flask,
     render_template,
     request,
     redirect,
     flash,
-    make_response,
     session
 )
-from util.init_db import init_db
+import logging
 from flask.logging import default_handler
+from util.init_db import init_db
 from flask_bootstrap import Bootstrap
 from model.password import Password
 from model.db import DataBase
-import logging
 import os
-
-from flask_cors import CORS, cross_origin
-from model.db import DataBase
 
 app = Flask(__name__)
 bootstrap = Bootstrap(app)
@@ -40,6 +35,7 @@ def generate_csrf_token():
 
 app.jinja_env.globals['csrf_token'] = generate_csrf_token
 
+
 @app.before_request
 def csrf_protect():
     '''
@@ -51,6 +47,7 @@ def csrf_protect():
         if not token_csrf or str(token_csrf) != str(form_token):
             return "ERROR: Wrong value for csrf_token"
 
+
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -60,15 +57,18 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+
 @app.route('/', methods=['GET'])
 def root():
     return redirect('/login')
+
 
 @app.route('/logout', methods=['GET'])
 @login_required
 def logout():
     session.clear()
     return redirect('/login')
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -78,11 +78,14 @@ def login():
         user_password, success = database.get_user_password(username)
         if not success or user_password == None or not psw.validate_password(str(user_password[0])):
             flash("Usuario ou senha incorretos", "danger")
+            app.logger.info('Invalid logging attemp')
             return render_template('login.html')
+        app.logger.info('User logged in successfully')
         session['username'] = username
         return redirect('/home')
     else:
         return render_template('login.html')
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def newuser():
@@ -97,20 +100,25 @@ def newuser():
             message, success = database.insert_user(username, hashed_psw)
             if success == 1:
                 flash("Novo usuario adicionado!", "primary")
+                app.logger.info('New user added succesfully')
                 return redirect('/login')
             else:
                 flash(message, "danger")
+                app.logger.info('failed to add user in Gamesirados')
                 return redirect('/register')
 
         flash("Passwords must be the same!", "danger")
+        app.logger.info('Password mismatch for user registration')
         return redirect('/register')
     else:
         return render_template('register.html')
+
 
 @app.route('/home', methods=['GET'])
 @login_required
 def home():
     return render_template('index.html')
+
 
 @app.route('/coupon', methods=['GET', 'POST'])
 @login_required
@@ -120,15 +128,20 @@ def cupom():
         rows, success = database.get_game_coupon(coupon, session.get('username'))
         if not success or rows == None or rows == 0:
             flash("Cupom invalido", "danger")
+            app.logger.info('invalid coupon')
             return render_template('coupon.html')
         game, success = database.get_game(coupon, session.get('username'))
         if not success or game == None:
             flash("Cupom invalido", "danger")
+            app.logger.info('invalid coupon')
             return render_template('coupon.html')
+
+        app.logger.info('eValid Cupom for user')
         flash("Voce ganhou {}".format(game[0]), "primary")
         return render_template('coupon.html')
     else:
         return render_template('coupon.html')
+
 
 if __name__ == '__main__':
     dbEndpoint = os.environ.get('MYSQL_ENDPOINT')
@@ -137,4 +150,4 @@ if __name__ == '__main__':
     dbName = os.environ.get('MYSQL_DB')
     database = DataBase(dbEndpoint, dbUser, dbPassword, dbName)
     init_db(database)
-    app.run(host='0.0.0.0',port=3001, debug=True)
+    app.run(host='0.0.0.0', port=3001, debug=True)
