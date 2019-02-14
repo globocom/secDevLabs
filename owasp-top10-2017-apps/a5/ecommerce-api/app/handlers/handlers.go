@@ -20,7 +20,7 @@ func GetTicket(c echo.Context) error {
 	userDataQuery := map[string]interface{}{"userID": id}
 	sessionID, err := c.Cookie("sessionIDa5")
 	if err != nil {
-		return c.JSON(http.StatusForbidden, map[string]string{"result": "error", "details": "Error finding this UserID."})
+		return c.JSON(http.StatusForbidden, map[string]string{"result": "error", "details": "System Error – Please try again later"})
 	}
 	token, err := jwt.Parse(sessionID.Value, func(token *jwt.Token) (interface{}, error) {
 		// Don't forget to validate the alg is what you expect:
@@ -37,11 +37,11 @@ func GetTicket(c echo.Context) error {
 		userDataResult, err := db.GetUserData(userDataQuery)
 		if err != nil {
 			// could not find this user in MongoDB (or MongoDB err connection)
-			return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error finding this UserID."})
+			return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "System Error – Please try again later"})
 		}
 
 		if claims["name"] != userDataResult.Username {
-			return c.JSON(http.StatusForbidden, map[string]string{"result": "error", "details": "I wont give you any error messages so you dont have hints to access my application"})
+			return c.JSON(http.StatusForbidden, map[string]string{"result": "error", "details": "System Error – Please try again later"})
 		}
 
 		format := c.QueryParam("format")
