@@ -77,11 +77,23 @@ def login():
         psw = Password(request.form.get('password').encode('utf-8'))
         user_password, success = database.get_user_password(username)
         if not success or user_password == None or not psw.validate_password(str(user_password[0])):
+            msg = 'Invalid password for user' if not success else 'User not found'
+            logging.error("Action: Login attempt")
+            logging.error("Datetime: %s", str(datetime.datetime.now())
+            logging.error("errors: %s", msg)
+            logging.error("Response status: 400")
+            logging.error("Method: %s", request.method)
+            
             flash("Usuario ou senha incorretos", "danger")
             app.logger.info('Invalid logging attemp')
             return render_template('login.html')
         app.logger.info('User logged in successfully')
         session['username'] = username
+
+        logging.error("Action: Login")
+            logging.error("Datetime: %s", str(datetime.datetime.now())
+            logging.error("Response status: 200")
+            logging.error("Method: %s", request.method)
         return redirect('/home')
     else:
         return render_template('login.html')
@@ -127,11 +139,25 @@ def cupom():
         coupon = request.form.get('coupon')
         rows, success = database.get_game_coupon(coupon, session.get('username'))
         if not success or rows == None or rows == 0:
+            msg = 'Coupon Invalid'
+            logging.error("Action: Login attempt")
+            logging.error("Datetime: %s", str(datetime.datetime.now())
+            logging.error("errors: %s", msg)
+            logging.error("Response status: 400")
+            logging.error("Method: %s", request.method)
+
             flash("Cupom invalido", "danger")
             app.logger.info('invalid coupon')
             return render_template('coupon.html')
         game, success = database.get_game(coupon, session.get('username'))
         if not success or game == None:
+            msg = 'Coupon Invalid'
+            logging.error("Action: Login attempt")
+            logging.error("Datetime: %s", str(datetime.datetime.now())
+            logging.error("errors: %s", msg)
+            logging.error("Response status: 400")
+            logging.error("Method: %s", request.method)
+
             flash("Cupom invalido", "danger")
             app.logger.info('invalid coupon')
             return render_template('coupon.html')
