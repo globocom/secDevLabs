@@ -93,7 +93,6 @@ def login():
                 'datetime': str(datetime.datetime.now()),
                 'intended_action': 'login attempt',
                 'outcome': 'user or password are incorrect',
-                'user': username,
                 'response_status': 403,
                 'ip': request.remote_addr
             }
@@ -104,7 +103,6 @@ def login():
             'datetime': str(datetime.datetime.now()),
             'intended_action': 'login attempt',
             'outcome': 'success',
-            'user': username,
             'response_status': 200,
             'ip': request.remote_addr
         }
@@ -142,7 +140,6 @@ def newuser():
                     'datetime': str(datetime.datetime.now()),
                     'intended_action': 'register attempt',
                     'outcome': 'error while inserting into database',
-                    'user': username,
                     'response_status': 500,
                     'ip': request.remote_addr
                 }
