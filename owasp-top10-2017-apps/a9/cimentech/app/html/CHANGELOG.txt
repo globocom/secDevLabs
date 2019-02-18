@@ -1,3 +1,41 @@
+Drupal 7.63, 2019-01-16
+-----------------------
+- Fixed a fatal error for some Drush users introduced by SA-CORE-2019-002.
+
+Drupal 7.62, 2019-01-15
+-----------------------
+- Fixed security issues:
+   - SA-CORE-2019-001
+   - SA-CORE-2019-002
+
+Drupal 7.61, 2018-11-07
+-----------------------
+- File upload validation functions and hook_file_validate() implementations are
+  now always passed the correct file URI.
+- The default form cache expiration of 6 hours is now configurable (API
+  addition: https://www.drupal.org/node/2857751).
+- Allowed callers of drupal_http_request() to optionally specify an explicit
+  Host header.
+- Allowed the + character to appear in usernames.
+- PHP 7.2: Fixed Archive_Tar incompatibility.
+- PHP 7.2: Removed deprecated function each().
+- PHP 7.2: Avoid count() calls on uncountable variables.
+- PHP 7.2: Removed deprecated create_function() call.
+- PHP 7.2: Make sure variables are arrays in theme_links().
+- Fixed theme-settings.php not being loaded on cached forms
+- Fixed problem with IE11 & Chrome(PointerEvents enabled) & some Firefox scroll to the top of the page after dragging the bottom item with jquery 1.5 <-> 1.11
+
+Drupal 7.60, 2018-10-18
+------------------------
+- Fixed security issues. See SA-CORE-2018-006.
+
+Drupal 7.59, 2018-04-25
+-----------------------
+- Fixed security issues (remote code execution). See SA-CORE-2018-004.
+
+Drupal 7.58, 2018-03-28
+-----------------------
+- Fixed security issues (remote code execution). See SA-CORE-2018-002.
 
 Drupal 7.57, 2018-02-21
 -----------------------
