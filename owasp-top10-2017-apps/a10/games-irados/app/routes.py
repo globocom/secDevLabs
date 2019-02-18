@@ -28,6 +28,8 @@ bootstrap = Bootstrap(app)
 
 app.config.from_pyfile('config.py')
 
+logger = logging.getLogger('a10-application')
+logger.setLevel(logging.INFO)
 
 def generate_csrf_token():
     '''
@@ -56,6 +58,15 @@ def login_required(f):
     def decorated_function(*args, **kwargs):
         if 'username' not in session:
             flash('oops, session expired', "danger")
+            logData = {
+                'logId': uuid.uuid4(),
+                'intended_action': 'login attempt',
+                'outcome': 'session expired',
+                'user': 'unknown',
+                'response_status': 403,
+                'ip': session
+            }
+            logger.error(logData)
             return redirect('/login')
         return f(*args, **kwargs)
     return decorated_function
@@ -78,8 +89,26 @@ def login():
         user_password, success = database.get_user_password(username)
         if not success or user_password == None or not psw.validate_password(str(user_password[0])):
             flash("Usuario ou senha incorretos", "danger")
+            logData = {
+                'datetime': str(datetime.datetime.now()),
+                'intended_action': 'login attempt',
+                'outcome': 'user or password are incorrect',
+                'user': username,
+                'response_status': 403,
+                'ip': request.remote_addr
+            }
+            logger.error(logData)
             return render_template('login.html')
         session['username'] = username
+        logData = {
+            'datetime': str(datetime.datetime.now()),
+            'intended_action': 'login attempt',
+            'outcome': 'success',
+            'user': username,
+            'response_status': 200,
+            'ip': request.remote_addr
+        }
+        logger.info(logData)
         return redirect('/home')
     else:
         return render_template('login.html')
@@ -97,9 +126,27 @@ def newuser():
             message, success = database.insert_user(username, hashed_psw)
             if success == 1:
                 flash("Novo usuario adicionado!", "primary")
+                logData = {
+                    'datetime': str(datetime.datetime.now()),
+                    'intended_action': 'register attempt',
+                    'outcome': 'success',
+                    'user': username,
+                    'response_status': 200,
+                    'ip': request.remote_addr
+                }
+                logger.info(logData)
                 return redirect('/login')
             else:
                 flash(message, "danger")
+                logData = {
+                    'datetime': str(datetime.datetime.now()),
+                    'intended_action': 'register attempt',
+                    'outcome': 'error while inserting into database',
+                    'user': username,
+                    'response_status': 500,
+                    'ip': request.remote_addr
+                }
+                logger.error(logData)
                 return redirect('/register')
 
         flash("Passwords must be the same!", "danger")
@@ -119,10 +166,28 @@ def cupom():
         coupon = request.form.get('coupon')
         rows, success = database.get_game_coupon(coupon, session.get('username'))
         if not success or rows == None or rows == 0:
+            logData = {
+                'datetime': str(datetime.datetime.now()),
+                'intended_action': 'get coupon attempt',
+                'outcome': 'error / invalid coupon',
+                'user': session.get('username'),
+                'response_status': 422,
+                'ip': request.remote_addr
+            }
+            logger.error(logData)
             flash("Cupom invalido", "danger")
             return render_template('coupon.html')
         game, success = database.get_game(coupon, session.get('username'))
         if not success or game == None:
+            logData = {
+                'datetime': str(datetime.datetime.now()),
+                'intended_action': 'get coupon attempt',
+                'outcome': 'error / invalid game ',
+                'user': session.get('username'),
+                'response_status': 422,
+                'ip': request.remote_addr
+            }
+            logger.error(logData) 
             flash("Cupom invalido", "danger")
             return render_template('coupon.html')
         flash("Voce ganhou {}".format(game[0]), "primary")

@@ -3,6 +3,13 @@
 
 import MySQLdb
 
+import logging
+
+import datetime
+
+logger = logging.getLogger('a10-application')
+logger.setLevel(logging.INFO)
+
 class DataBase:
     def __init__ (self, host, user, password, database):
         self.host = host
@@ -31,9 +38,23 @@ class DataBase:
         except MySQLdb.Error as e:
             try:
                 message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
+                logData = {
+                    'datetime': str(datetime.datetime.now()),
+                    'intended_action': 'database update coupon attempt',
+                    'outcome': 'error / mysql error',
+                    'message': message,
+                }
+                logger.error(logData) 
                 return message , 0
-            except IndexError:
+            except IndexError: 
                 message = "MySQL Error: %s" % str(e)
+                logData = {
+                    'datetime': str(datetime.datetime.now()),
+                    'intended_action': 'database update coupon attempt',
+                    'outcome': 'error / mysql index error',
+                    'message': message,
+                }
+                logger.error(logData) 
                 return message , 0
         return rows, 1
 
@@ -42,6 +63,12 @@ class DataBase:
             self.c.execute('SELECT game FROM coupons WHERE coupon = %s AND user= %s', [coupon, user])
             game = self.c.fetchone()
         except (AttributeError, MySQLdb.OperationalError):
+            logData = {
+                'datetime': str(datetime.datetime.now()),
+                'intended_action': 'database get game attempt',
+                'outcome': 'error / mysql operational error',
+            }
+            logger.error(logData) 
             self.connect()
             self.c.execute('SELECT game FROM coupons WHERE coupon = %s AND user= %s', [coupon, user])
             game = self.c.fetchone()
@@ -49,9 +76,23 @@ class DataBase:
         except MySQLdb.Error as e:
             try:
                 message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
+                logData = {
+                    'datetime': str(datetime.datetime.now()),
+                    'intended_action': 'database get game attempt',
+                    'outcome': 'error / mysql error',
+                    'message': message,
+                }
+                logger.error(logData) 
                 return message , 0
             except IndexError:
                 message = "MySQL Error: %s" % str(e)
+                logData = {
+                    'datetime': str(datetime.datetime.now()),
+                    'intended_action': 'database get game attempt',
+                    'outcome': 'error / mysql index error',
+                    'message': message,
+                }
+                logger.error(logData) 
                 return message , 0
         return game, 1
 
@@ -60,15 +101,35 @@ class DataBase:
             self.c.execute("INSERT INTO users (user, password) VALUES (%s, %s);",(user, password))
             self.db.commit()
         except (AttributeError, MySQLdb.OperationalError):
+            logData = {
+                'datetime': str(datetime.datetime.now()),
+                'intended_action': 'database insert user attempt',
+                'outcome': 'error / mysql operational error',
+            }
+            logger.error(logData) 
             self.connect()
             self.c.execute("INSERT INTO users (user, pasword) VALUES (%s, %s);",(user, password))
             self.db.commit()
         except MySQLdb.Error as e:
             try:
                 message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
+                logData = {
+                    'datetime': str(datetime.datetime.now()),
+                    'intended_action': 'database insert user attempt',
+                    'outcome': 'error / mysql error',
+                    'message': message,
+                }
+                logger.error(logData) 
                 return message , 0
             except IndexError:
                 message = "MySQL Error: %s" % str(e)
+                logData = {
+                    'datetime': str(datetime.datetime.now()),
+                    'intended_action': 'database insert user attempt',
+                    'outcome': 'error / mysql index error',
+                    'message': message,
+                }
+                logger.error(logData) 
                 return message , 0
         return "" , 1
 
@@ -78,6 +139,12 @@ class DataBase:
             user_password = self.c.fetchone()
 
         except (AttributeError, MySQLdb.OperationalError):
+            logData = {
+                'datetime': str(datetime.datetime.now()),
+                'intended_action': 'database get user password attempt',
+                'outcome': 'error / mysql operational error',
+            }
+            logger.error(logData)
             self.connect()
             self.c.execute("SELECT password FROM users WHERE username = %s", [username])
             user_password = self.c.fetchone()
@@ -85,9 +152,23 @@ class DataBase:
         except MySQLdb.Error as e:
             try:
                 message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
+                logData = {
+                    'datetime': str(datetime.datetime.now()),
+                    'intended_action': 'database get user password attempt',
+                    'outcome': 'error / mysql error',
+                    'message': message,
+                }
+                logger.error(logData) 
                 return message , 0
             except IndexError:
                 message = "MySQL Error: %s" % str(e)
+                logData = {
+                    'datetime': str(datetime.datetime.now()),
+                    'intended_action': 'database get user password attempt',
+                    'outcome': 'error / mysql error',
+                    'message': message,
+                }
+                logger.error(logData) 
                 return message , 0
 
         return user_password, bool(user_password)
@@ -100,9 +181,23 @@ class DataBase:
             self.connect()
             try:
                 message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
+                logData = {
+                    'datetime': str(datetime.datetime.now()),
+                    'intended_action': 'database init table user attempt',
+                    'outcome': 'error / mysql operational error',
+                    'message': message,
+                }
+                logger.error(logData) 
                 return message , 0
             except IndexError:
                 message = "MySQL Error: %s" % str(e)
+                logData = {
+                    'datetime': str(datetime.datetime.now()),
+                    'intended_action': 'database init table user attempt',
+                    'outcome': 'error / mysql index error',
+                    'message': message,
+                }
+                logger.error(logData) 
                 return message , 0
         return "", 1
 
@@ -114,9 +209,23 @@ class DataBase:
             self.connect()
             try:
                 message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
+                logData = {
+                    'datetime': str(datetime.datetime.now()),
+                    'intended_action': 'init table user attempt',
+                    'outcome': 'error / mysql error',
+                    'message': message,
+                }
+                logger.error(logData) 
                 return message , 0
             except IndexError:
                 message = "MySQL Error: %s" % str(e)
+                logData = {
+                    'datetime': str(datetime.datetime.now()),
+                    'intended_action': 'init table user attempt',
+                    'outcome': 'error / mysql index error',
+                    'message': message,
+                }
+                logger.error(logData) 
                 return message , 0
         return "", 1
 
@@ -125,14 +234,34 @@ class DataBase:
             self.c.execute("INSERT INTO coupons (coupon, game, valid) VALUES (%s, %s, %s);",(coupon, game, 1))
             self.db.commit()
         except (AttributeError, MySQLdb.OperationalError):
+            logData = {
+                'datetime': str(datetime.datetime.now()),
+                'intended_action': 'database insert coupon attempt',
+                'outcome': 'error / mysql operational error',
+            }
+            logger.error(logData) 
             self.connect()
             self.c.execute("INSERT INTO coupons (coupon, game, valid) VALUES (%s, %s, %s);",(coupon, game, 1))
             self.db.commit()
         except MySQLdb.Error as e:
             try:
                 message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
+                logData = {
+                    'datetime': str(datetime.datetime.now()),
+                    'intended_action': 'database insert coupon attempt',
+                    'outcome': 'error / mysql error',
+                    'message': message,
+                }
+                logger.error(logData) 
                 return message , 0
             except IndexError:
                 message = "MySQL Error: %s" % str(e)
+                logData = {
+                    'datetime': str(datetime.datetime.now()),
+                    'intended_action': 'database insert coupon attempt',
+                    'outcome': 'error / mysql index error',
+                    'message': message,
+                }
+                logger.error(logData) 
                 return message , 0
         return "" , 1
