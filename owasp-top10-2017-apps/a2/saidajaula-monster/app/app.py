@@ -8,6 +8,7 @@ import os
 import json
 import hashlib
 import uuid
+import jwt
 from functools import wraps
 
 
@@ -17,20 +18,23 @@ database = DataBase(os.environ.get('A2_DATABASE_HOST'),
                     os.environ.get('A2_DATABASE_PASSWORD'),
                     os.environ.get('A2_DATABASE_NAME'))
 
+secret = os.environ.get('SECRET')
+
 
 def login_admin_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         cookie = request.cookies.get("sessionId", "")
-        cookie = base64.b64decode(cookie).decode("utf-8")
-        cookie_separado = cookie.split('.')
-        if(len(cookie_separado) != 2):
+
+        if not cookie:
             return "Invalid cookie!"
-        hash_cookie = hashlib.sha256(cookie_separado[0].encode('utf-8')).hexdigest()
-        if (hash_cookie != cookie_separado[1]):
-            return redirect("/login")
-        j = json.loads(cookie_separado[0])
-        if j.get("permissao") != 1:
+        try:
+            payload = jwt.decode(cookie, secret, algorithms=['HS256'])
+        except:
+            return "Invalid cookie!"
+        if (payload and not payload.get('username')):
+            return "Invalid cookie!"
+        if (payload.get('permission') != 1):
             return "You don't have permission to access this route. You are not an admin. \n"
         return f(*args, **kwargs)
     return decorated_function
@@ -40,13 +44,12 @@ def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         cookie = request.cookies.get("sessionId", "")
-        cookie = base64.b64decode(cookie).decode("utf-8")
-        cookie_separado = cookie.split('.')
-        if(len(cookie_separado) != 2):
-            return "Invalid cookie! \n"
-        hash_cookie = hashlib.sha256(cookie_separado[0].encode('utf-8')).hexdigest()
-        if (hash_cookie != cookie_separado[1]):
-            return redirect("/login")
+        if not cookie:
+            return "Invalid cookie!"
+        try:
+            payload = jwt.decode(cookie, secret, algorithms=['HS256'])
+        except:
+            return rediret("/login")
         return f(*args, **kwargs)
     return decorated_function
 
@@ -74,7 +77,8 @@ def register():
         guid = str(uuid.uuid4())
         password = Password(form_password, form_username, guid)
         hashed_password = password.get_hashed_password()
-        message, success = database.insert_user(guid, form_username, hashed_password)
+        message, success = database.insert_user(
+            guid, form_username, hashed_password)
         if success:
             return render_template('login.html')
         return "Error: account creation failed \n"
@@ -102,13 +106,11 @@ def login():
         if not password.validate_password(result[0]):
             return "Login failed! \n"
 
-        cookie_dic = {"permissao": result[1], "username": form_username}
-        cookie = json.dumps(cookie_dic)
-        hash_cookie = hashlib.sha256(cookie.encode('utf-8')).hexdigest()
-        cookie_done = '.'.join([cookie,hash_cookie])
-        cookie_done = base64.b64encode(str(cookie_done).encode("utf-8"))
+        payload = {"permissao": result[1], "username": form_username}
+        encodedCookie = jwt.encode(payload, secret, algorithm='HS256')
+
         resp = make_response()
-        resp.set_cookie("sessionId", cookie_done)
+        resp.set_cookie("sessionId", encodedCookie)
         return resp
 
 
