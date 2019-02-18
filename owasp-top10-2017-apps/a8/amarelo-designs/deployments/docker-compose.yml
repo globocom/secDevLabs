@@ -13,6 +13,8 @@ services:
     networks: 
       - a8_net
     restart: always
+    environment:
+      SECRET: EcLvnoca(z~IKOcb{Q"s!d9DbO!oM@AtFS#M48EaidR1?!<*)-Ukc06i("k-}j!
 
 networks:
   a8_net:
