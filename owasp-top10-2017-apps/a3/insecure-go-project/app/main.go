@@ -6,26 +6,14 @@ import (
 	"strconv"
 
 	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a3/insecure-go-project/app/api"
-	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a3/insecure-go-project/app/config"
 	db "github.com/globocom/secDevLabs/owasp-top10-2017-apps/a3/insecure-go-project/app/db/mongo"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
-	"github.com/spf13/viper"
 )
 
 func main() {
 
 	fmt.Println("[*] Starting Insecure Go Project...")
-
-	// loading viper
-	viper.SetConfigName("config")
-	viper.AddConfigPath(".")
-	if err := viper.ReadInConfig(); err != nil {
-		errorAPI(err)
-	}
-	if err := viper.Unmarshal(&config.APIconfiguration); err != nil {
-		errorAPI(err)
-	}
 
 	// check if MongoDB is acessible and credentials received are working.
 	if _, err := checkMongoDB(); err != nil {
@@ -34,7 +22,6 @@ func main() {
 	}
 
 	fmt.Println("[*] MongoDB: OK!")
-	fmt.Println("[*] Viper loaded: OK!")
 
 	echoInstance := echo.New()
 	echoInstance.HideBanner = true
@@ -46,12 +33,6 @@ func main() {
 	echoInstance.GET("/healthcheck", api.HealthCheck)
 	APIport := fmt.Sprintf(":%d", getAPIPort())
 	echoInstance.Logger.Fatal(echoInstance.Start(APIport))
-}
-
-func errorAPI(err error) {
-	fmt.Println("[x] Error starting Insecure Go Project:")
-	fmt.Println("[x]", err)
-	os.Exit(1)
 }
 
 func getAPIPort() int {
