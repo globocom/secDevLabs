@@ -80,15 +80,6 @@ func Login(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error login5."})
 	}
 
-	format := c.QueryParam("format")
-	if format == "json" {
-		return c.JSON(http.StatusOK, map[string]string{
-			"result":   "success",
-			"username": userDataResult.Username,
-			"user_id":  userDataResult.UserID,
-		})
-	}
-
 	messageLogon := fmt.Sprintf("Hello, %s! This is your userID: %s\n", userDataResult.Username, userDataResult.UserID)
 	return c.String(http.StatusOK, messageLogon)
 }
