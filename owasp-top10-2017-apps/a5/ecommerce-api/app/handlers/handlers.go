@@ -38,25 +38,16 @@ func GetTicket(c echo.Context) error {
 		userDataResult, err := db.GetUserData(userDataQuery)
 		if err != nil {
 			// could not find this user in MongoDB (or MongoDB err connection)
-			return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Username"})
+			return c.JSON(http.StatusForbidden, map[string]string{"result": "error", "details": "Request Failed"})
 		}
 
 		if claims["name"] != userDataResult.Username {
-			return c.JSON(http.StatusForbidden, map[string]string{"result": "error", "details": "You have entered an invalid username or password"})
-		}
-
-		format := c.QueryParam("format")
-		if format == "json" {
-			return c.JSON(http.StatusOK, map[string]string{
-				"result":   "success",
-				"username": userDataResult.Username,
-				"ticket":   userDataResult.Ticket,
-			})
+			return c.JSON(http.StatusForbidden, map[string]string{"result": "error", "details": "Request Failed"})
 		}
 
 		msgTicket := fmt.Sprintf("Hey, %s! This is your ticket: %s\n", userDataResult.Username, userDataResult.Ticket)
 		return c.String(http.StatusOK, msgTicket)
 	}
-	return c.JSON(http.StatusForbidden, map[string]string{"result": "error", "details": "Error"})
+	return c.JSON(http.StatusForbidden, map[string]string{"result": "error", "details": "Invalid cookie"})
 
 }
