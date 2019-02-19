@@ -22,12 +22,17 @@ PORT := 9999
 SLEEPUNTILAPPSTARTS := 10
 
 ## Installs a development environment
-install: compose msg
+install: generate-passwords compose msg
 
 ## Composes project using docker-compose
 compose:
 	docker-compose -f deployments/docker-compose.yml down -v --remove-orphans
 	docker-compose -f deployments/docker-compose.yml up -d --build --force-recreate
+
+## Generates passwords and set them as environment variables
+generate-passwords:
+	chmod +x app/scripts/generate-passwords.sh
+	./app/scripts/generate-passwords.sh
 
 msg:
 	printf "${COLOR_YELLOW}SecDevLabs: 👀  Your app is still starting...\n${COLOR_RESET}"
