@@ -2,9 +2,9 @@ package db
 
 import (
 	"fmt"
+	"os"
 	"time"
 
-	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a3/insecure-go-project/app/config"
 	mgo "gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
@@ -19,14 +19,6 @@ type DB struct {
 	Session *mgo.Session
 }
 
-// mongoConfig is the struct that represents mongo configuration.
-type mongoConfig struct {
-	Address      string
-	DatabaseName string
-	UserName     string
-	Password     string
-}
-
 // Database is the interface's database.
 type Database interface {
 	Insert(obj interface{}, collection string) error
@@ -39,14 +31,19 @@ type Database interface {
 
 // Connect connects to mongo and returns the session.
 func Connect() (*DB, error) {
-	mongoConfig := config.APIconfiguration.MongoConf
+
+	mongoHost := os.Getenv("MONGO_HOST")
+	mongoDatabaseName := os.Getenv("MONGO_DATABASE_NAME")
+	mongoUserName := os.Getenv("MONGO_DATABASE_USERNAME")
+	mongoPassword := os.Getenv("MONGO_DATABASE_PASSWORD")
+
 	dialInfo := &mgo.DialInfo{
-		Addrs:    []string{mongoConfig.MongoHost},
+		Addrs:    []string{mongoHost},
 		Timeout:  time.Second * 60,
 		FailFast: true,
-		Database: mongoConfig.MongoDBName,
-		Username: mongoConfig.MongoUser,
-		Password: mongoConfig.MongoPassword,
+		Database: mongoDatabaseName,
+		Username: mongoUserName,
+		Password: mongoPassword,
 	}
 	session, err := mgo.DialWithInfo(dialInfo)
 	if err != nil {

@@ -21,6 +21,11 @@ services:
             - mongodb
         external_links:
             - mongodb:mongodb
+        environment:
+            MONGO_HOST: mongodb
+            MONGO_DATABASE_NAME: insecure_go_project
+            MONGO_DATABASE_USERNAME: ${MONGO_DATABASE_USERNAME}
+            MONGO_DATABASE_PASSWORD: ${MONGO_DATABASE_PASSWORD}
 
     mongodb:
         container_name: mongodb
@@ -34,3 +39,8 @@ services:
             - mongo_vol:/data/db
         networks:
             - insecure_net
+        environment:
+            MONGO_HOST: mongodb
+            MONGO_DATABASE_NAME: insecure_go_project
+            MONGO_DATABASE_USERNAME: ${MONGO_DATABASE_USERNAME}
+            MONGO_DATABASE_PASSWORD: ${MONGO_DATABASE_PASSWORD}
