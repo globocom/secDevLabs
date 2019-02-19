@@ -2,8 +2,9 @@ package handlers
 
 import (
 	"fmt"
-	"os"
 	"net/http"
+	"os"
+
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a5/ecommerce-api/app/db"
 	"github.com/labstack/echo"
@@ -18,33 +19,30 @@ func HealthCheck(c echo.Context) error {
 func GetTicket(c echo.Context) error {
 	id := c.Param("id")
 	userDataQuery := map[string]interface{}{"userID": id}
-	cookieSession, err := c.Cookie("sessionIDa5")
+	sessionID, err := c.Cookie("sessionIDa5")
 	if err != nil {
-		// Cookie inválido
-		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error with this credentials."})
+		return c.JSON(http.StatusForbidden, map[string]string{"result": "error", "details": "Invalid credentials"})
 	}
-
-	token, err := jwt.Parse(cookieSession.Value, func(token *jwt.Token)(interface{}, error){
+	token, err := jwt.Parse(sessionID.Value, func(token *jwt.Token) (interface{}, error) {
 		// Don't forget to validate the alg is what you expect:
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
 		}
-		
+
 		// hmacSampleSecret is a []byte containing your secret, e.g. []byte("my_secret_key")
-		return []byte(os.Getenv("COOKIE_SECRET")), nil
+		return []byte(os.Getenv("SECRET_KEY")), nil
 	})
 
 	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
 
 		userDataResult, err := db.GetUserData(userDataQuery)
 		if err != nil {
-			// Dado não encontrado no Banco de Dados
-			return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error with credentials."})
+			// could not find this user in MongoDB (or MongoDB err connection)
+			return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Username"})
 		}
 
-		if claims["name"] != userDataResult.Username{
-			// Usuário não encontrado no Banco de Dados
-			return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "System Failure."})
+		if claims["name"] != userDataResult.Username {
+			return c.JSON(http.StatusForbidden, map[string]string{"result": "error", "details": "You have entered an invalid username or password"})
 		}
 
 		format := c.QueryParam("format")
@@ -58,7 +56,7 @@ func GetTicket(c echo.Context) error {
 
 		msgTicket := fmt.Sprintf("Hey, %s! This is your ticket: %s\n", userDataResult.Username, userDataResult.Ticket)
 		return c.String(http.StatusOK, msgTicket)
+	}
+	return c.JSON(http.StatusForbidden, map[string]string{"result": "error", "details": "Error"})
 
-	} 
-	return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error on System."})
 }
