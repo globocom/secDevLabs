@@ -23,6 +23,8 @@ bootstrap = Bootstrap(app)
 
 app.config.from_pyfile('config.py')
 
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger('a10-games-irados')
 
 def generate_csrf_token():
     '''
@@ -78,22 +80,41 @@ def login():
         user_password, success = database.get_user_password(username)
         if not success or user_password == None or not psw.validate_password(str(user_password[0])):
             msg = 'Invalid password for user' if not success else 'User not found'
-            logging.error("Action: Login attempt")
-            logging.error("Datetime: %s", str(datetime.datetime.now())
-            logging.error("errors: %s", msg)
-            logging.error("Response status: 400")
-            logging.error("Method: %s", request.method)
-            
             flash("Usuario ou senha incorretos", "danger")
             app.logger.info('Invalid logging attemp')
+
+            logger.error(dict(
+                _id=uuid.uuid4(),
+                action='Login',
+                datetime=str(datetime.datetime.now()),
+                errors=[msg],
+                request=dict(
+                    method='POST',
+                    route="/login"
+                ),
+                owner=dict(
+                    ip=request.remote_addr
+                ),
+                response_status=404
+            ))
             return render_template('login.html')
         app.logger.info('User logged in successfully')
         session['username'] = username
 
-        logging.error("Action: Login")
-            logging.error("Datetime: %s", str(datetime.datetime.now())
-            logging.error("Response status: 200")
-            logging.error("Method: %s", request.method)
+            logger.error(dict(
+                _id=uuid.uuid4(),
+                action='Login',
+                datetime=str(datetime.datetime.now()),
+                errors=[msg],
+                request=dict(
+                    method='POST',
+                    route="/login"
+                ),
+                owner=dict(
+                    ip=request.remote_addr
+                ),
+                response_status=200
+            ))
         return redirect('/home')
     else:
         return render_template('login.html')
@@ -140,11 +161,20 @@ def cupom():
         rows, success = database.get_game_coupon(coupon, session.get('username'))
         if not success or rows == None or rows == 0:
             msg = 'Coupon Invalid'
-            logging.error("Action: Login attempt")
-            logging.error("Datetime: %s", str(datetime.datetime.now())
-            logging.error("errors: %s", msg)
-            logging.error("Response status: 400")
-            logging.error("Method: %s", request.method)
+            logger.error(dict(
+                _id=uuid.uuid4(),
+                action='Coupon',
+                datetime=str(datetime.datetime.now()),
+                errors=[msg],
+                request=dict(
+                    method='POST',
+                    route="/Coupon"
+                ),
+                owner=dict(
+                    ip=request.remote_addr
+                ),
+                response_status=404
+            ))
 
             flash("Cupom invalido", "danger")
             app.logger.info('invalid coupon')
@@ -152,11 +182,20 @@ def cupom():
         game, success = database.get_game(coupon, session.get('username'))
         if not success or game == None:
             msg = 'Coupon Invalid'
-            logging.error("Action: Login attempt")
-            logging.error("Datetime: %s", str(datetime.datetime.now())
-            logging.error("errors: %s", msg)
-            logging.error("Response status: 400")
-            logging.error("Method: %s", request.method)
+            logger.error(dict(
+                _id=uuid.uuid4(),
+                action='Coupon',
+                datetime=str(datetime.datetime.now()),
+                errors=[msg],
+                request=dict(
+                    method='POST',
+                    route="/Coupon"
+                ),
+                owner=dict(
+                    ip=request.remote_addr
+                ),
+                response_status=404
+            ))
 
             flash("Cupom invalido", "danger")
             app.logger.info('invalid coupon')
