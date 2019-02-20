@@ -13,6 +13,8 @@ services:
     networks: 
       - a8_net
     restart: always
+    environment:
+      KEY: secret
 
 networks:
   a8_net:
