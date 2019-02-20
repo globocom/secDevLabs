@@ -2,7 +2,7 @@
  > This is a simple web application built with Drupal that contains an example of a component with a known vulnerabilty.
 
 <p align="center">
- <img width="560" height="400" src="docs/attack1.gif">
+ <img width="560" height="" src="docs/attack1.png">
 </p>
 
 ## What does it mean to use a component with known vulnerabilities?
@@ -23,7 +23,7 @@ After cloning this repository, you can type the following command to start the v
 make install
 ```
 
-Then simply visit [localhost:80/][App] !
+Then simply visit [localhost:80][App] !
 
 ## Attack Narrative
 
@@ -31,7 +31,7 @@ To understand how this vulnerability can be exploited, check [this section]!
 
 ## Mitigating the vulnerability
 
-To understand how this vulnerability can be mitigated, check this other section!
+(Spoiler alert 🧐) To understand how this vulnerability can be mitigated, check [this other section](https://github.com/globocom/secDevLabs/pulls?q=is%3Apr+label%3A%22mitigation+solution+%F0%9F%94%92%22+label%3ACimentech)!
 
 ## Contributing
 

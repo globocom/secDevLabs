@@ -7,7 +7,6 @@ from functools import wraps
 import os
 import uuid
 import datetime
-import sys
 
 from flask import (
     Flask,
@@ -23,13 +22,16 @@ from model.password import Password
 from model.db import DataBase
 from util.init_db import init_db
 
-from flask_cors import CORS, cross_origin
-
 app = Flask(__name__)
 bootstrap = Bootstrap(app)
 
 app.config.from_pyfile('config.py')
-database = DataBase(app.config['MYSQL_ENDPOINT'], app.config['MYSQL_USER'],app.config['MYSQL_PASSWORD'], app.config['MYSQL_DB'])
+database = DataBase(
+    app.config['MYSQL_ENDPOINT'],
+    app.config['MYSQL_USER'],
+    app.config['MYSQL_PASSWORD'],
+    app.config['MYSQL_DB'])
+
 
 def generate_csrf_token():
     '''
@@ -39,7 +41,9 @@ def generate_csrf_token():
         session['_csrf_token'] = str(uuid.uuid4())
     return session.get('_csrf_token')
 
+
 app.jinja_env.globals['csrf_token'] = generate_csrf_token
+
 
 @app.before_request
 def csrf_protect():
@@ -77,10 +81,15 @@ def login():
         username = request.form.get('username')
         psw = Password(request.form.get('password').encode('utf-8'))
         user_password, success = database.get_user_password(username)
-        if not success or user_password == None or not psw.validate_password(user_password[0]):
-            error('gossip', 'User not found or wrong password', session.get('username'))
-            flash('User not found or wrong password', 'danger')
-            return render_template('login.html')
+
+        if not success or user_password is None or \
+           not psw.validate_password(user_password[0]):
+                error('gossip',
+                      'User not found or wrong password',
+                      session.get('username'))
+                flash('User not found or wrong password', 'danger')
+                return render_template('login.html')
+
         session['username'] = username
         return redirect('/gossip')
     else:
@@ -126,12 +135,13 @@ def newuser():
     else:
         return render_template('register.html')
 
+
 @app.route('/gossip', methods=['GET'])
 @login_required
 def all_gossips():
     search = request.args.get('search')
     search_flag = 0
-    if search != None:
+    if search is not None:
         gossips, success = database.search_gossips(search)
         search_flag = 1
     else:
@@ -140,7 +150,12 @@ def all_gossips():
         error('all_gossips', gossips, session.get('username'))
         return 'Internal error!'
 
-    r = make_response(render_template('gossips.html', posts = gossips,search_text=search, search=search_flag))
+    r = make_response(
+        render_template('gossips.html',
+                        posts=gossips,
+                        search_text=search,
+                        search=search_flag)
+    )
     return r
 
 
@@ -171,9 +186,13 @@ def gossip(id):
 
         comments, success = database.get_comments(id)
 
-        if comments == None:
+        if comments is None:
             comments = []
-        return render_template('gossip.html', post = gossip, comments = comments, id= id)
+        return render_template('gossip.html',
+                               post=gossip,
+                               comments=comments,
+                               id=id)
+
 
 @app.route('/newgossip', methods=['GET', 'POST'])
 @login_required
@@ -184,10 +203,13 @@ def newgossip():
         title = request.form.get('title')
         author = session.get('username')
         date = datetime.datetime.now()
-        if author == None or text == None or subtitle == None or title == None:
+        if author is None or text is None or subtitle is None or title is None:
             error('gossip', 'Invalid parameters', session.get('username'))
             flash('All fields are required', 'danger')
-            return render_template('newgossip.html', title=title, subtitle=subtitle, text=text)
+            return render_template('newgossip.html',
+                                   title=title,
+                                   subtitle=subtitle,
+                                   text=text)
         message, success = database.post_gossip(author, text, title, subtitle, date)
         if success == 0:
             flash('Coulnd\'t add gossip, please try again', 'danger')
@@ -200,7 +222,6 @@ def newgossip():
 
 
 if __name__ == '__main__':
-
     dbEndpoint = os.environ.get('MYSQL_ENDPOINT')
     dbUser = os.environ.get('MYSQL_USER')
     dbPassword = os.environ.get('MYSQL_PASSWORD')
@@ -208,4 +229,4 @@ if __name__ == '__main__':
     database = DataBase(dbEndpoint, dbUser, dbPassword, dbName)
     init_db(database)
 
-    app.run(host='0.0.0.0',port=3001, debug=False)
+    app.run(host='0.0.0.0', port=3001, debug=False)

@@ -1,5 +1,6 @@
 import hashlib
 
+
 class Password:
 
     def __init__(self, password):
@@ -15,4 +16,4 @@ class Password:
         return hashlib.sha256(string).hexdigest()
 
     def _compare_password(self, password_1, password_2):
-        return  password_1 == password_2
+        return password_1 == password_2

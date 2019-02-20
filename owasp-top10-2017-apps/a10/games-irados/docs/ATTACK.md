@@ -18,13 +18,52 @@ Initially, we begin the first attack by sending an intentionally wrong login att
 
 ## 🔥
 
-Now, using [Burp Suite] as a proxy, we can use it to send as many requests as we want, only changing the content of the `password` field at every request, as depicted by the images below:
+After that, an attacker could use [Burp Suite] as a proxy to send as many requests as needed until a valid password is found (if you need any help setting up your proxy, you should check this [guide](https://support.portswigger.net/customer/portal/articles/1783066-configuring-firefox-to-work-with-burp)). To do so, after finding the login POST request, right click and send to `Intruder`, as shown bellow:
+
+<p align="center">
+    <img src="attack9.png"/>
+</p>
+
+In Positions tab, all fields must be cleared first via `Clear §` button. To set `password` to change acording to each password from our dictionary wordlist, simply click on `Add §` button after selecting it:
 
 <p align="center">
     <img src="attack2.png"/>
 </p>
 
-As we can see from the results of the requests, the application handles successfull and unsuccessfull requests differently by responding different status codes. As shown below, when the payload is correct the application responds a status code `302 FOUND`, otherwise it responds with a `202 OK`.
+If a valid password is found, the application may process new cookies and eventually redirect the flow to other pages. To guarantee that the brute force attack follows this behavior, set `Always` into `Follow Redirections` options in `Options` tab, as shown bellow:
+
+<p align="center">
+    <img src="attack10.png"/>
+</p>
+
+You can use the following wordlist (`poc.txt`) just for POC purposes:
+
+```
+admin
+password
+123
+qweasd
+1qaz
+123456789
+flamengo
+zxc
+asd123qwe
+YOURVALIDPASSWORD
+```
+
+Before executing the attack, you can open a new tab in your terminal and type the following command to observe how the malicious requests will come to the app:
+
+```sh
+docker logs app-a10 -f
+```
+
+In `Payloads` tab, simply choose the wordlist from `Load...` option and then the attack may be performed via `Start attack` button. 
+
+<p align="center">
+    <img src="attack11.png"/>
+</p>
+
+As we can see from the results of the requests, the application handles successfull and unsuccessfull requests differently by responding different status codes. As shown below, when the payload is correct the application responds a status code `302 FOUND`, otherwise it responds with a `200 OK`.
 
 <p align="center">
     <img src="attack3.png"/>
@@ -48,13 +87,19 @@ Using Burp Suite again, we could send multiple requests to the application to si
     <img src="attack6.png"/>
 </p>
 
+If you need to generate a simple number wordlist, you can use the following command:
+
+```sh
+seq 100 200 > coupons.txt
+```
+
 As we can see from the image below, the requests seem to have been handled properly by the server.
 
 <p align="center">
     <img src="attack7.png"/>
 </p>
 
- We can confirm that by having another look at the server side, as shown by the image below:
+However, we can also confirm that little information is being logged at the server side, as shown by the image below:
 
 <p align="center">
     <img src="attack8.png"/>
