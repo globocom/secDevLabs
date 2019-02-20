@@ -9,8 +9,8 @@ files[] = comment.test
 configure = admin/content/comment
 stylesheets[all][] = comment.css
 
-; Information added by Drupal.org packaging script on 2018-02-21
-version = "7.57"
+; Information added by Drupal.org packaging script on 2018-03-28
+version = "7.58"
 project = "drupal"
-datestamp = "1519235152"
+datestamp = "1522264019"
 
