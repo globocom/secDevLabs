@@ -2,6 +2,7 @@ package db
 
 import (
 	"fmt"
+	"os"
 	"time"
 
 	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a2/insecure-go-project/app/config"
@@ -44,9 +45,9 @@ func Connect() (*DB, error) {
 		Addrs:    []string{mongoConfig.MongoHost},
 		Timeout:  time.Second * 60,
 		FailFast: true,
-		Database: mongoConfig.MongoDBName,
-		Username: mongoConfig.MongoUser,
-		Password: mongoConfig.MongoPassword,
+		Database: os.Getenv("MONGO_DB"),
+		Username: os.Getenv("MONGO_USER"),
+		Password: os.Getenv("MONGO_PASS"),
 	}
 	session, err := mgo.DialWithInfo(dialInfo)
 	if err != nil {

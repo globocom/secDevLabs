@@ -21,6 +21,11 @@ services:
             - mongodb
         external_links:
             - mongodb:mongodb
+        environment:
+            - MONGO_USER
+            - MONGO_PASS
+            - MONGO_ROLES
+            - MONGO_DB
 
     mongodb:
         container_name: mongodb
@@ -34,3 +39,8 @@ services:
             - mongo_vol:/data/db
         networks:
             - insecure_net
+        environment:
+            MONGO_INITDB_DATABASE: ${MONGO_DB}
+            MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+            MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASS}
+            
