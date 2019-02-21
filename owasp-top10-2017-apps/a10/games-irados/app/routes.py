@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from functools import wraps
 import uuid
+import datetime
 from flask import (
     Flask,
     render_template,
@@ -79,7 +80,7 @@ def login():
         psw = Password(request.form.get('password').encode('utf-8'))
         user_password, success = database.get_user_password(username)
         if not success or user_password == None or not psw.validate_password(str(user_password[0])):
-            msg = 'Invalid password for user' if not success else 'User not found'
+            msg = 'Invalid credentials' if not success else 'User not found'
             flash("Usuario ou senha incorretos", "danger")
             app.logger.info('Invalid logging attemp')
 
@@ -101,19 +102,18 @@ def login():
         app.logger.info('User logged in successfully')
         session['username'] = username
 
-            logger.error(dict(
-                _id=uuid.uuid4(),
-                action='Login',
-                datetime=str(datetime.datetime.now()),
-                errors=[msg],
-                request=dict(
-                    method='POST',
-                    route="/login"
-                ),
-                owner=dict(
-                    ip=request.remote_addr
-                ),
-                response_status=200
+        logger.error(dict(
+            _id=uuid.uuid4(),
+            action='Login',
+            datetime=str(datetime.datetime.now()),
+            request=dict(
+                method='POST',
+                route="/login"
+            ),
+            owner=dict(
+                ip=request.remote_addr
+            ),
+            response_status=200
             ))
         return redirect('/home')
     else:

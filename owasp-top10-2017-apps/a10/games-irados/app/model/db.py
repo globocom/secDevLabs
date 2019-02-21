@@ -4,6 +4,7 @@
 import MySQLdb
 import logging
 import datetime
+import uuid
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger('a10-games-irados-db')
@@ -55,10 +56,10 @@ class DataBase:
                 )
             )
             try:
-                message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
+                message = "MySQL Error [%d]: %s" % (err.args[0], err.args[1])
                 return message , 0
             except IndexError:
-                message = "MySQL Error: %s" % str(e)
+                message = "MySQL Error: %s" % str(err)
                 return message , 0
         return rows, 1
 
@@ -93,10 +94,10 @@ class DataBase:
                 )
             )
             try:
-                message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
+                message = "MySQL Error [%d]: %s" % (err.args[0], err.args[1])
                 return message , 0
             except IndexError:
-                message = "MySQL Error: %s" % str(e)
+                message = "MySQL Error: %s" % str(err)
                 return message , 0
         return game, 1
 
@@ -130,7 +131,7 @@ class DataBase:
                 )
             )
             try:
-                message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
+                message = "MySQL Error [%d]: %s" % (err.args[0], err.args[1])
                 return message , 0
             except IndexError:
                 message = "MySQL Error: %s" % str(e)
@@ -168,12 +169,12 @@ class DataBase:
                     response_status=404
                 )
             )
-             Retrieve user password from Database
+
             try:
-                message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
+                message = "MySQL Error [%d]: %s" % (err.args[0], err.args[1])
                 return message , 0
             except IndexError:
-                message = "MySQL Error: %s" % str(e)
+                message = "MySQL Error: %s" % str(err)
                 return message , 0
 
         return user_password, bool(user_password)
@@ -195,10 +196,10 @@ class DataBase:
             )
             self.connect()
             try:
-                message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
+                message = "MySQL Error [%d]: %s" % (err.args[0], err.args[1])
                 return message , 0
             except IndexError:
-                message = "MySQL Error: %s" % str(e)
+                message = "MySQL Error: %s" % str(err)
                 return message , 0
         return "", 1
 
@@ -220,10 +221,10 @@ class DataBase:
             )
             self.connect()
             try:
-                message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
+                message = "MySQL Error [%d]: %s" % (err.args[0], err.args[1])
                 return message , 0
             except IndexError:
-                message = "MySQL Error: %s" % str(e)
+                message = "MySQL Error: %s" % str(err)
                 return message , 0
         return "", 1
 
@@ -257,9 +258,9 @@ class DataBase:
                 )
             )
             try:
-                message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
+                message = "MySQL Error [%d]: %s" % (err.args[0], err.args[1])
                 return message , 0
             except IndexError:
-                message = "MySQL Error: %s" % str(e)
+                message = "MySQL Error: %s" % str(err)
                 return message , 0
         return "" , 1
