@@ -57,6 +57,9 @@ func Register(c echo.Context) error {
 	userData.HighestScore = 0
 
 	password, err := bcrypt.GenerateFromPassword([]byte(userData.Password), 14)
+	if err != nil {
+		return err
+	}
 	userData.Password = string(password)
 
 	err = db.RegisterUser(userData)
