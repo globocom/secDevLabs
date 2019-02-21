@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"html/template"
 	"io"
+	"net/http"
 	"os"
 	"strconv"
 
@@ -71,10 +72,26 @@ func main() {
 	echoInstance.Renderer = &TemplateRegistry{
 		templates: templates,
 	}
+
+	echoInstance.GET("/safe", func(c echo.Context) error {
+		req := c.Request()
+		format := `
+			<code>
+				Protocol: %s<br>
+				Host: %s<br>
+				Remote Address: %s<br>
+				Method: %s<br>
+				Path: %s<br>
+			</code>
+		`
+		return c.HTML(http.StatusOK, fmt.Sprintf(format, req.Proto, req.Host, req.RemoteAddr, req.Method, req.URL.Path))
+	})
+
 	echoInstance.GET("/healthcheck", api.HealthCheck)
 	echoInstance.POST("/register", api.Register)
 	echoInstance.POST("/login", api.Login)
 	echoInstance.GET("/login", api.PageLogin)
+	echoInstance.Logger.Fatal(echoInstance.StartTLS(":10033", "cert.pem", "key.pem"))
 	r := echoInstance.Group("/game")
 	config := middleware.JWTConfig{
 		TokenLookup: "cookie:sessionIDsnake",
