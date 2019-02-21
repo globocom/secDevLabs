@@ -40,6 +40,7 @@ def generate_csrf_token():
 
 app.jinja_env.globals['csrf_token'] = generate_csrf_token
 
+
 @app.before_request
 def csrf_protect():
     '''
@@ -51,6 +52,7 @@ def csrf_protect():
         if not token_csrf or str(token_csrf) != str(form_token):
             return "ERROR: Wrong value for csrf_token"
 
+
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -60,15 +62,18 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+
 @app.route('/', methods=['GET'])
 def root():
     return redirect('/login')
+
 
 @app.route('/logout', methods=['GET'])
 @login_required
 def logout():
     session.clear()
     return redirect('/login')
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -77,12 +82,45 @@ def login():
         psw = Password(request.form.get('password').encode('utf-8'))
         user_password, success = database.get_user_password(username)
         if not success or user_password == None or not psw.validate_password(str(user_password[0])):
+            message = 'Failed login attempt. %s.' % (
+                'Wrong password provided' if success else 'User does not exist')
+            response_status = 401
+
+            logger.error(dict(
+                _id=uuid.uuid4(),
+                action='Login',
+                datetime=str(datetime.datetime.now()),
+                errors=[message],
+                owner=dict(
+                    ip=request.remote_addr
+                ),
+                request=dict(
+                    method='POST',
+                    route="/login"
+                ),
+                response_status=response_status
+            ))
             flash("Usuario ou senha incorretos", "danger")
-            return render_template('login.html')
+            return render_template('login.html'), response_status
         session['username'] = username
+        logger.info(dict(
+            _id=uuid.uuid4(),
+            action='Login',
+            datetime=str(datetime.datetime.now()),
+            errors=[],
+            owner=dict(
+                ip=request.remote_addr
+            ),
+            request=dict(
+                method='POST',
+                route="/login"
+            ),
+            response_status=200
+        ))
         return redirect('/home')
     else:
         return render_template('login.html')
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def newuser():
@@ -107,24 +145,63 @@ def newuser():
     else:
         return render_template('register.html')
 
+
 @app.route('/home', methods=['GET'])
 @login_required
 def home():
     return render_template('index.html')
 
+
 @app.route('/coupon', methods=['GET', 'POST'])
 @login_required
 def cupom():
-    if request.method == 'POST':
+   if request.method == 'POST':
         coupon = request.form.get('coupon')
-        rows, success = database.get_game_coupon(coupon, session.get('username'))
+        username = session.get('username')
+        rows, success = database.get_game_coupon(coupon, username)
         if not success or rows == None or rows == 0:
+            message = 'Invalid coupon provided'
+            response_status = 400
+
+            logger.error(dict(
+                _id=uuid.uuid4(),
+                action='Coupon',
+                datetime=str(datetime.datetime.now()),
+                errors=[message],
+                owner=dict(
+                    ip=request.remote_addr
+                ),
+                request=dict(
+                    method='POST',
+                    route="/coupon"
+                ),
+                response_status=response_status
+            ))
+
             flash("Cupom invalido", "danger")
-            return render_template('coupon.html')
+            return render_template('coupon.html'), response_status
         game, success = database.get_game(coupon, session.get('username'))
         if not success or game == None:
+            message = 'Invalid game for provided coupon'
+            response_status = 400
+
+            logger.error(dict(
+                _id=uuid.uuid4(),
+                action='Coupon',
+                datetime=str(datetime.datetime.now()),
+                errors=[message],
+                owner=dict(
+                    ip=request.remote_addr
+                ),
+                request=dict(
+                    method='POST',
+                    route="/coupon"
+                ),
+                response_status=response_status
+            ))
+
             flash("Cupom invalido", "danger")
-            return render_template('coupon.html')
+            return render_template('coupon.html'), response_status
         flash("Voce ganhou {}".format(game[0]), "primary")
         return render_template('coupon.html')
     else:

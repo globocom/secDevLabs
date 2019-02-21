@@ -3,25 +3,41 @@
 
 import MySQLdb
 
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger('a10-games-irados-db')
+
+
 class DataBase:
-    def __init__ (self, host, user, password, database):
+    def __init__(self, host, user, password, database):
         self.host = host
         self.user = user
         self.password = password
         self.database = database
-        self.db = MySQLdb.connect(host=self.host,user=self.user,passwd=self.password,db=self.database,charset='utf8')
+        self.db = MySQLdb.connect(host=self.host, user=self.user,
+                                  passwd=self.password, db=self.database, charset='utf8')
         self.c = self.db.cursor()
 
     def connect(self):
-        self.db = MySQLdb.connect(host=self.host,user=self.user,passwd=self.password,db=self.database)
+        self.db = MySQLdb.connect(
+            host=self.host, user=self.user, passwd=self.password, db=self.database)
         self.c = self.db.cursor()
 
     def get_game_coupon(self, coupon, user):
         try:
-            self.c.execute('UPDATE coupons  SET valid = %s, user = %s WHERE coupon = %s AND valid = %s', [ 0,user, coupon, 1])
+            self.c.execute('UPDATE coupons  SET valid = %s, user = %s WHERE coupon = %s AND valid = %s', [
+                           0, user, coupon, 1])
             rows = self.c.rowcount
             self.db.commit()
-        except (AttributeError, MySQLdb.OperationalError):
+          except (AttributeError, MySQLdb.OperationalError) as e:
+            message = e.message if hasattr(e, 'message') else 'Database error'
+            logger.error(dict(
+                _id=uuid.uuid4(),
+                action='Get game coupon',
+                datetime=str(datetime.datetime.now()),
+                errors=[message],
+
             self.connect()
             self.c.execute('UPDATE coupons  SET valid = %s, user = %s WHERE coupon = %s AND valid = %s', [ 0, user, coupon, 1])
             rows = self.c.rowcount
@@ -29,6 +45,13 @@ class DataBase:
             self.db.commit()
 
         except MySQLdb.Error as e:
+            message = e.message if hasattr(e, 'message') else 'Database error'
+            logger.error(dict(
+                _id=uuid.uuid4(),
+                action='Get game coupon',
+                datetime=str(datetime.datetime.now()),
+                errors=[message],
+            ))
             try:
                 message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
                 return message , 0
@@ -41,12 +64,27 @@ class DataBase:
         try:
             self.c.execute('SELECT game FROM coupons WHERE coupon = %s AND user= %s', [coupon, user])
             game = self.c.fetchone()
-        except (AttributeError, MySQLdb.OperationalError):
+        except (AttributeError, MySQLdb.OperationalError) as e:
+            message = e.message if hasattr(e, 'message') else 'Database error'
+            logger.error(dict(
+                _id=uuid.uuid4(),
+                action='Get game',
+                datetime=str(datetime.datetime.now()),
+                errors=[message],
+            ))
             self.connect()
             self.c.execute('SELECT game FROM coupons WHERE coupon = %s AND user= %s', [coupon, user])
             game = self.c.fetchone()
 
         except MySQLdb.Error as e:
+            message = e.message if hasattr(e, 'message') else 'Database error'
+            logger.error(dict(
+                _id=uuid.uuid4(),
+                action='Get game',
+                datetime=str(datetime.datetime.now()),
+                errors=[message],
+            ))
+
             try:
                 message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
                 return message , 0
@@ -59,11 +97,25 @@ class DataBase:
         try:
             self.c.execute("INSERT INTO users (user, password) VALUES (%s, %s);",(user, password))
             self.db.commit()
-        except (AttributeError, MySQLdb.OperationalError):
+        except (AttributeError, MySQLdb.OperationalError) as e:
+            message = e.message if hasattr(e, 'message') else 'Database error'
+            logger.error(dict(
+                _id=uuid.uuid4(),
+                action='Insert user',
+                datetime=str(datetime.datetime.now()),
+                errors=[message],
+            ))
             self.connect()
             self.c.execute("INSERT INTO users (user, pasword) VALUES (%s, %s);",(user, password))
             self.db.commit()
         except MySQLdb.Error as e:
+            message = e.message if hasattr(e, 'message') else 'Database error'
+            logger.error(dict(
+                _id=uuid.uuid4(),
+                action='Insert user',
+                datetime=str(datetime.datetime.now()),
+                errors=[message],
+            ))
             try:
                 message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
                 return message , 0
@@ -78,11 +130,27 @@ class DataBase:
             user_password = self.c.fetchone()
 
         except (AttributeError, MySQLdb.OperationalError):
+            except (AttributeError, MySQLdb.OperationalError) as e:
+            message = e.message if hasattr(e, 'message') else 'Database error'
+            logger.error(dict(
+                _id=uuid.uuid4(),
+                action='Get user password',
+                datetime=str(datetime.datetime.now()),
+                errors=[message],
+            ))
             self.connect()
             self.c.execute("SELECT password FROM users WHERE username = %s", [username])
             user_password = self.c.fetchone()
 
         except MySQLdb.Error as e:
+            message = e.message if hasattr(e, 'message') else 'Database error'
+            logger.error(dict(
+                _id=uuid.uuid4(),
+                action='Get user password',
+                datetime=str(datetime.datetime.now()),
+                errors=[message],
+            ))
+
             try:
                 message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
                 return message , 0
@@ -97,6 +165,13 @@ class DataBase:
             self.c.execute("CREATE TABLE users (user VARCHAR(100) NOT NULL, password VARCHAR(500) NOT NULL, PRIMARY KEY (user))")
             self.db.commit()
         except (AttributeError, MySQLdb.OperationalError, MySQLdb.Error) as e:
+            message = e.message if hasattr(e, 'message') else 'Database error'
+            logger.error(dict(
+                _id=uuid.uuid4(),
+                action='Init table user',
+                datetime=str(datetime.datetime.now()),
+                errors=[message],
+            ))
             self.connect()
             try:
                 message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
@@ -111,6 +186,13 @@ class DataBase:
             self.c.execute("CREATE TABLE coupons (coupon VARCHAR(10) NOT NULL, game VARCHAR(100) NOT NULL, user VARCHAR(100), valid INT(1) NOT NULL, PRIMARY KEY (coupon))")
             self.db.commit()
         except (AttributeError, MySQLdb.OperationalError, MySQLdb.Error) as e:
+            message = e.message if hasattr(e, 'message') else 'Database error'
+            logger.error(dict(
+                _id=uuid.uuid4(),
+                action='Init table coupons',
+                datetime=str(datetime.datetime.now()),
+                errors=[message],
+            ))
             self.connect()
             try:
                 message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
@@ -124,11 +206,27 @@ class DataBase:
         try:
             self.c.execute("INSERT INTO coupons (coupon, game, valid) VALUES (%s, %s, %s);",(coupon, game, 1))
             self.db.commit()
-        except (AttributeError, MySQLdb.OperationalError):
+        except (AttributeError, MySQLdb.OperationalError) as e:
+            message = e.message if hasattr(e, 'message') else 'Database error'
+            logger.error(dict(
+                _id=uuid.uuid4(),
+                action='Insert coupon',
+                datetime=str(datetime.datetime.now()),
+                errors=[message],
+            ))
+
             self.connect()
             self.c.execute("INSERT INTO coupons (coupon, game, valid) VALUES (%s, %s, %s);",(coupon, game, 1))
             self.db.commit()
         except MySQLdb.Error as e:
+            message = e.message if hasattr(e, 'message') else 'Database error'
+            logger.error(dict(
+                _id=uuid.uuid4(),
+                action='Insert coupon',
+                datetime=str(datetime.datetime.now()),
+                errors=[message],
+            ))
+
             try:
                 message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
                 return message , 0
