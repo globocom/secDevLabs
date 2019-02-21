@@ -91,7 +91,7 @@ func main() {
 	echoInstance.POST("/register", api.Register)
 	echoInstance.POST("/login", api.Login)
 	echoInstance.GET("/login", api.PageLogin)
-	echoInstance.Logger.Fatal(echoInstance.StartTLS(":10033", "cert.pem", "key.pem"))
+
 	r := echoInstance.Group("/game")
 	config := middleware.JWTConfig{
 		TokenLookup: "cookie:sessionIDsnake",
@@ -103,7 +103,7 @@ func main() {
 	r.GET("/ranking", api.PageRanking)
 
 	APIport := fmt.Sprintf(":%d", getAPIPort())
-	echoInstance.Logger.Fatal(echoInstance.Start(APIport))
+	echoInstance.Logger.Fatal(echoInstance.StartTLS(APIport, "cert.pem", "key.pem"))
 }
 
 func errorAPI(err error) {
