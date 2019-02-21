@@ -12,6 +12,7 @@ import (
 	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a3/snake-pro/app/types"
 	"github.com/google/uuid"
 	"github.com/labstack/echo"
+	"golang.org/x/crypto/bcrypt"
 )
 
 // HealthCheck is the heath check function.
@@ -54,6 +55,9 @@ func Register(c echo.Context) error {
 	newGUID1 := uuid.Must(uuid.NewRandom())
 	userData.UserID = newGUID1.String()
 	userData.HighestScore = 0
+
+	password, err := bcrypt.GenerateFromPassword([]byte(userData.Password), 14)
+	userData.Password = string(password)
 
 	err = db.RegisterUser(userData)
 	if err != nil {
