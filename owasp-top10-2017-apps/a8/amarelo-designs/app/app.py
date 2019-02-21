@@ -2,12 +2,12 @@
 
 from flask import Flask, request, make_response, render_template, redirect, flash
 import uuid
-import base64
 import jwt
 import os
+
 app = Flask(__name__)
 
-
+secret = os.environ.get('SECRET')
 key = os.environ.get('KEY')
 
 
@@ -25,10 +25,10 @@ def login():
         if username == "admin" and password == "admin":
             token = str(uuid.uuid4().hex)
             cookie = {"username": username, "admin": True, "sessionId": token}
-            base64Payload = base64.b64encode(cookie)
-            encodedCookie = jwt.encode(cookie, key, algorithm='HS256')
+            encodedSessionCookie = jwt.encode(
+                cookie, secret, algorithm='HS256')
             resp = make_response(redirect("/user"))
-            resp.set_cookie("sessionId", encodedCookie)
+            resp.set_cookie("sessionId", encodedSessionCookie)
             return resp
 
         else:
@@ -43,9 +43,7 @@ def userInfo():
     cookie = request.cookies.get("sessionId")
     if cookie == None:
         return "Não Autorizado!"
-    cookie = jwt.decode(cookie, key, algorithms=['HS256'])
-    cookie = base64.b64decode(cookie)
-
+    cookie = jwt.decode(cookie, secret, algorithms=['HS256'])
     return render_template('user.html')
 
 
