@@ -23,6 +23,9 @@ services:
             - mongodb
         external_links:
             - mongodb:mongodb
+        environment:
+            SALT: ${SALT}
+
 
     mongodb:
         container_name: mongodb

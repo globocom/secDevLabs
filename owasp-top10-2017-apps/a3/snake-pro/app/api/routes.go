@@ -1,6 +1,7 @@
 package api
 
 import (
+	"crypto/sha256"
 	"fmt"
 	"net/http"
 	"os"
@@ -54,7 +55,7 @@ func Register(c echo.Context) error {
 	newGUID1 := uuid.Must(uuid.NewRandom())
 	userData.UserID = newGUID1.String()
 	userData.HighestScore = 0
-
+	userData.Password = hashPassword(userData.Password)
 	err = db.RegisterUser(userData)
 	if err != nil {
 		// could not register this user into MongoDB (or MongoDB err connection)
@@ -82,7 +83,7 @@ func Login(c echo.Context) error {
 		return c.JSON(http.StatusForbidden, map[string]string{"result": "error", "details": "Error login."})
 	}
 
-	validPass := pass.CheckPass(userDataResult.Password, loginAttempt.Password)
+	validPass := pass.CheckPass(userDataResult.Password, hashPassword(loginAttempt.Password))
 	if !validPass {
 		// wrong password
 		return c.JSON(http.StatusForbidden, map[string]string{"result": "error", "details": "Error login."})
@@ -110,4 +111,14 @@ func Login(c echo.Context) error {
 	messageLogon := fmt.Sprintf("Hello, %s! Welcome to SnakePro", userDataResult.Username)
 	// err = c.Redirect(http.StatusFound, "http://www.localhost:10033/game/ranking")
 	return c.String(http.StatusOK, messageLogon)
+}
+
+func hashPassword(pass string) string {
+	h := sha256.New()
+	h.Write([]byte(pass))
+	salt, ok := os.LookupEnv("SALT")
+	if !ok {
+		salt = "DefaultSalt"
+	}
+	return fmt.Sprintf("%x%s", h.Sum(nil), salt)
 }
