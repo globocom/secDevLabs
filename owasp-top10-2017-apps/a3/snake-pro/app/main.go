@@ -58,6 +58,7 @@ func main() {
 
 	echoInstance := echo.New()
 	echoInstance.HideBanner = true
+	echoInstance.StartTLS(":10033", "./cert.pem", "./key.pem")
 
 	echoInstance.Use(middleware.Logger())
 	echoInstance.Use(middleware.Recover())
