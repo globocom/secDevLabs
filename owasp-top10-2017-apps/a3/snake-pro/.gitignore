@@ -1,1 +1,3 @@
 .DS_Store
+app/cert.pem
+app/key.pem
