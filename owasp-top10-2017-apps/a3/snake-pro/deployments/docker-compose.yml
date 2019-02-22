@@ -39,3 +39,19 @@ services:
             - mongo_vol:/data/db
         networks:
             - insecure_net
+
+    proxy: 
+        image: fsouza/docker-ssl-proxy
+        container_name: production_nginx
+        volumes:
+            - ./certs/:/etc/nginx/certs/
+        ports:
+            - 8080:8080
+            - 443:443
+        networks:
+            - insecure_net
+        environment:
+            DOMAIN: localhost
+            TARGET_PORT: 10033
+            TARGET_HOST: snake_pro_a3
+            SSL_PORT: 443
