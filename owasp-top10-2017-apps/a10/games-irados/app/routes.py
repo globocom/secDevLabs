@@ -80,7 +80,7 @@ def login():
         psw = Password(request.form.get('password').encode('utf-8'))
         user_password, success = database.get_user_password(username)
         if not success or user_password == None or not psw.validate_password(str(user_password[0])):
-            msg = 'Invalid credentials' if not success else 'User not found'
+            msg = 'User not found' if not success else 'Invalid credentials'
             flash("Usuario ou senha incorretos", "danger")
             app.logger.info('Invalid logging attemp')
 
