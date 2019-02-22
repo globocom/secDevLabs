@@ -41,6 +41,7 @@ func ReadCookie(c echo.Context) (string, error) {
 func Register(c echo.Context) error {
 
 	userData := types.UserData{}
+
 	err := c.Bind(&userData)
 	if err != nil {
 		// error binding JSON
@@ -49,6 +50,11 @@ func Register(c echo.Context) error {
 
 	if userData.Password != userData.RepeatPassword {
 		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Passwords do not match."})
+	}
+
+	userData.Password, err = pass.HashPassword(userData.Password)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"result": "error", "details": "Internal Server Error, please try again later."})
 	}
 
 	newGUID1 := uuid.Must(uuid.NewRandom())
