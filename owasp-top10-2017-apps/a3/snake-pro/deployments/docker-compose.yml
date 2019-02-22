@@ -55,3 +55,5 @@ services:
             TARGET_PORT: 10033
             TARGET_HOST: snake_pro_a3
             SSL_PORT: 443
+        depends_on:
+            - api
