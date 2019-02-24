@@ -16,6 +16,7 @@ from flask import (
     flash,
     make_response,
     session
+    escape
 )
 from flask_bootstrap import Bootstrap
 from model.password import Password
@@ -106,9 +107,9 @@ def logout():
 @app.route('/register', methods=['GET', 'POST'])
 def newuser():
     if request.method == 'POST':
-        username = request.form.get('username')
-        psw1 = request.form.get('password1')
-        psw2 = request.form.get('password2')
+        username = escape(request.form.get('username'))
+        psw1 = escape(request.form.get('password1'))
+        psw2 = escape(request.form.get('password2'))
 
         if username == '' or psw1 == '' or psw2 == '':
             flash('All fields are required', 'danger')
@@ -139,7 +140,7 @@ def newuser():
 @app.route('/gossip', methods=['GET'])
 @login_required
 def all_gossips():
-    search = request.args.get('search')
+    search = escape(request.args.get('search'))
     search_flag = 0
     if search is not None:
         gossips, success = database.search_gossips(search)
@@ -163,7 +164,7 @@ def all_gossips():
 @login_required
 def gossip(id):
     if request.method == 'POST':
-        comment = request.form.get('comment')
+        comment = escape(request.form.get('comment'))
         user = session.get('username')
         date = datetime.datetime.now()
         if comment == '':
@@ -198,9 +199,9 @@ def gossip(id):
 @login_required
 def newgossip():
     if request.method == 'POST':
-        text = request.form.get('text')
-        subtitle = request.form.get('subtitle')
-        title = request.form.get('title')
+        text = escape(request.form.get('text'))
+        subtitle = escape(request.form.get('subtitle'))
+        title = escape(request.form.get('title'))
         author = session.get('username')
         date = datetime.datetime.now()
         if author is None or text is None or subtitle is None or title is None:
