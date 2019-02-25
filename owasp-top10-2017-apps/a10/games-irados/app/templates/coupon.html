@@ -13,7 +13,7 @@
        <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css')}}">
 
        <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css')}}">
-
+       <script src="https://www.google.com/recaptcha/api.js"></script>
        <!-- Custom styles for this template -->
        <link rel="stylesheet" href="{{ url_for('static', filename='css/2-col-portfolio.css')}}">
   </head>
@@ -66,6 +66,7 @@
          <form action="/coupon" name="coupon" method="POST" >
             <input name="_csrf_token" type="hidden" value="{{ csrf_token() }}">
             <center><input type="text" class="input-login" name= "coupon" aria-describedby="sizing-addon1"  maxlength="10" placeholder="Cupom"></center>
+            <div class="g-recaptcha" data-sitekey="{{ sitekey }}" style="padding-left: 70px; margin-top:20px;"></div>
             <br>
             <br>
             <button type="submit" class="btn full-width" style="width: 100%; ">GO!</button>

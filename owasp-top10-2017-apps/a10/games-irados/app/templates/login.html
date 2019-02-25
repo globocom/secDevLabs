@@ -15,6 +15,8 @@
 
     <!-- Custom styles for this template -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css')}}">
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+
 
 
   </head>
@@ -51,7 +53,8 @@
    				<center><input type="text" class="input-login" name= "username" aria-describedby="sizing-addon1"  maxlength="100" placeholder="Login"></center>
    				<br>
    				<center><input type="password" class="input-login" name= "password" aria-describedby="sizing-addon1"  maxlength="200" placeholder="Senha"></center>
-   				<br>
+           <br>
+               <div class="g-recaptcha" data-sitekey="{{ sitekey }}" style="padding-left: 105px"></div>
                <center><a href="/register">Novo por aqui? Registre-se!</a></p></center>
    				<input name="_csrf_token" type="hidden" value="{{ csrf_token() }}">
    				<button type="submit" class="btn full-width" style="width: 100%; ">GO!</button>
