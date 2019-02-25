@@ -4,6 +4,8 @@
 import MySQLdb
 
 import logging
+import uuid
+import datetime
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger('a10-games-irados-db')
@@ -30,14 +32,14 @@ class DataBase:
                            0, user, coupon, 1])
             rows = self.c.rowcount
             self.db.commit()
-          except (AttributeError, MySQLdb.OperationalError) as e:
+        except (AttributeError, MySQLdb.OperationalError) as e:
             message = e.message if hasattr(e, 'message') else 'Database error'
             logger.error(dict(
                 _id=uuid.uuid4(),
                 action='Get game coupon',
                 datetime=str(datetime.datetime.now()),
                 errors=[message],
-
+            ))
             self.connect()
             self.c.execute('UPDATE coupons  SET valid = %s, user = %s WHERE coupon = %s AND valid = %s', [ 0, user, coupon, 1])
             rows = self.c.rowcount
@@ -129,8 +131,7 @@ class DataBase:
             self.c.execute("SELECT password FROM users WHERE user = %s", [username])
             user_password = self.c.fetchone()
 
-        except (AttributeError, MySQLdb.OperationalError):
-            except (AttributeError, MySQLdb.OperationalError) as e:
+        except (AttributeError, MySQLdb.OperationalError) as e:
             message = e.message if hasattr(e, 'message') else 'Database error'
             logger.error(dict(
                 _id=uuid.uuid4(),
