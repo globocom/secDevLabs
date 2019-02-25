@@ -15,7 +15,7 @@ from flask import (
     redirect,
     flash,
     make_response,
-    session
+    session,
     escape
 )
 from flask_bootstrap import Bootstrap
