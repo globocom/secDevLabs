@@ -73,7 +73,6 @@ func main() {
 		`
 		return c.HTML(http.StatusOK, fmt.Sprintf(format, req.Proto, req.Host, req.RemoteAddr, req.Method, req.URL.Path))
 	})
-	echoInstance.StartTLS(":10033", "cert.pem", "key.pem")
 
 	echoInstance.Use(middleware.Logger())
 	echoInstance.Use(middleware.Recover())
@@ -101,8 +100,7 @@ func main() {
 	r.GET("/play", api.PageGame)
 	r.GET("/ranking", api.PageRanking)
 
-	APIport := fmt.Sprintf(":%d", getAPIPort())
-	echoInstance.Logger.Fatal(echoInstance.Start(APIport))
+	echoInstance.Logger.Fatal(echoInstance.StartTLS(":10033", "cert.pem", "key.pem"))
 }
 
 func errorAPI(err error) {
