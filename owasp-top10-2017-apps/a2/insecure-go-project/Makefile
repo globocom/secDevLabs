@@ -1,3 +1,4 @@
+
 .SILENT:
 .DEFAULT_GOAL := help
 
@@ -9,7 +10,7 @@ GODEP ?= $(GOBIN)/dep
 GOLINT ?= $(GOBIN)/golint
 GOSEC ?= $(GOBIN)/gosec
 
-INSECUREBIN ?= insecureA2
+INSECUREBIN ?= insecureA3
 
 COLOR_RESET = \033[0m
 COLOR_COMMAND = \033[36m
@@ -17,21 +18,28 @@ COLOR_YELLOW = \033[33m
 COLOR_GREEN = \033[32m
 COLOR_RED = \033[31m
 
-PROJECT := A2 - Insecure Go Project
+PROJECT := A3 - Insecure Go Project
 PORT := 9999
+SLEEPUNTILAPPSTARTS := 10
 
 ## Installs a development environment
-install: compose msg
+install: generate-passwords compose msg
 
 ## Composes project using docker-compose
 compose:
 	docker-compose -f deployments/docker-compose.yml down -v --remove-orphans
 	docker-compose -f deployments/docker-compose.yml up -d --build --force-recreate
 
-## Prints initialization message after compose phase
+## Generates passwords and set them as environment variables
+generate-passwords:
+	chmod +x app/scripts/generate-passwords.sh
+	./app/scripts/generate-passwords.sh
+
 msg:
-	chmod +x deployments/check-init.sh
-	./deployments/check-init.sh
+	printf "${COLOR_YELLOW}SecDevLabs: 👀  Your app is still starting...\n${COLOR_RESET}"
+	sleep ${SLEEPUNTILAPPSTARTS}
+	printf "${COLOR_GREEN}SecDevLabs: ☕️  Hmmm... Sounds good!\n"
+	printf "SecDevLabs: 🔥  ${PROJECT} may be running at ${COLOR_RESET}${COLOR_RED}http://127.0.0.1:${PORT}/healthcheck${COLOR_RESET}\n"
 
 ## Gets all go test dependencies
 get-deps:
