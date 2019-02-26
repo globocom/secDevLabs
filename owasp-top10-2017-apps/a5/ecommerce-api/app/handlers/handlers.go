@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a5/ecommerce-api/app/db"
@@ -16,7 +17,7 @@ func HealthCheck(c echo.Context) error {
 }
 
 func extractClaims(tokenStr string) (jwt.MapClaims, bool) {
-	hmacSecretString := "secret" // Value
+	hmacSecretString := os.Getenv("SECRET_KEY")
 	hmacSecret := []byte(hmacSecretString)
 	token, err := jwt.Parse(tokenStr, func(token *jwt.Token) (interface{}, error) {
 		return hmacSecret, nil
