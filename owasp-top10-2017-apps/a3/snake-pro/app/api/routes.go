@@ -19,6 +19,10 @@ func HealthCheck(c echo.Context) error {
 	return c.String(http.StatusOK, "WORKING!\n")
 }
 
+func Root(c echo.Context) error {
+	return c.Redirect(302, "/login")
+}
+
 // WriteCookie writes a cookie into echo Context
 func WriteCookie(c echo.Context, jwt string) error {
 	cookie := new(http.Cookie)
