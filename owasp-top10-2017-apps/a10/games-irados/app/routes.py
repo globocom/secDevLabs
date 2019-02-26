@@ -91,6 +91,7 @@ def login():
         user_password, success = database.get_user_password(username)
         if not success or user_password == None or not psw.validate_password(str(user_password[0])):
             flash("Usuario ou senha incorretos", "danger")
+            app.logger.warning('[IP:%s][User:%s][Method:%s][Path:%s] Failed to login', request.remote_addr, username.decode(), request.method , request.path)
             return render_template('login.html', sitekey=RECAPTCHA_SITE_KEY)
         session['username'] = username
         return redirect('/home')
@@ -140,6 +141,7 @@ def cupom():
             coupon, session.get('username'))
         if not success or rows == None or rows == 0:
             flash("Cupom invalido", "danger")
+            app.logger.warning('[IP:%s][User:%s][Method:%s][Path:%s] Invalid coupon: %s', request.remote_addr, session.get('username').decode(), request.method , request.path, coupon)
             return render_template('coupon.html', sitekey=RECAPTCHA_SITE_KEY)
         game, success = database.get_game(coupon, session.get('username'))
         if not success or game == None:
@@ -150,14 +152,15 @@ def cupom():
 
 
 def is_human(request):
-    if 'g-recaptcha-response' not in request.form:
-        return False
-    captcha_response = request.form['g-recaptcha-response']
-    payload = {'response': captcha_response, 'secret': RECAPTCHA_SITE_SECRET}
-    response = requests.post(
-        "https://www.google.com/recaptcha/api/siteverify", payload)
-    response_text = json.loads(response.text)
-    return response_text['success']
+    return True
+    # if 'g-recaptcha-response' not in request.form:
+    #     return False
+    # captcha_response = request.form['g-recaptcha-response']
+    # payload = {'response': captcha_response, 'secret': RECAPTCHA_SITE_SECRET}
+    # response = requests.post(
+    #     "https://www.google.com/recaptcha/api/siteverify", payload)
+    # response_text = json.loads(response.text)
+    # return response_text['success']
 
 
 if __name__ == '__main__':
