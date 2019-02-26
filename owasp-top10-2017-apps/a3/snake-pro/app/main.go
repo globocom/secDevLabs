@@ -75,6 +75,7 @@ func main() {
 	echoInstance.POST("/register", api.Register)
 	echoInstance.POST("/login", api.Login)
 	echoInstance.GET("/login", api.PageLogin)
+	echoInstance.GET("/", api.Root)
 	r := echoInstance.Group("/game")
 	config := middleware.JWTConfig{
 		TokenLookup: "cookie:sessionIDsnake",
