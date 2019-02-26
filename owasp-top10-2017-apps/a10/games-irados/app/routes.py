@@ -91,7 +91,10 @@ def login():
         user_password, success = database.get_user_password(username)
         if not success or user_password == None or not psw.validate_password(str(user_password[0])):
             flash("Usuario ou senha incorretos", "danger")
-            app.logger.warning('[IP:%s][User:%s][Method:%s][Path:%s] Failed to login', request.remote_addr, username.decode(), request.method , request.path)
+            username_strip = username.decode()
+            username_strip_middle_len = int(len(username_strip)/2)
+            username_strip = username_strip[0:username_strip_middle_len]+("*"*username_strip_middle_len)
+            app.logger.warning('[IP:%s][User:%s][Method:%s][Path:%s] Failed to login', request.remote_addr, username_strip, request.method , request.path)
             return render_template('login.html', sitekey=RECAPTCHA_SITE_KEY)
         session['username'] = username
         return redirect('/home')
