@@ -16,6 +16,8 @@ services:
             - "10033:10033"
         environment:
           SECRET_KEY: secret-key
+          CERTFILE: cert.pem
+          KEY_FILE: key.pem
         networks:
             - insecure_net
         command: "go run main.go"
