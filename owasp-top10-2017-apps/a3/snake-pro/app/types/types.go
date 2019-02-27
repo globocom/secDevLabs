@@ -10,6 +10,7 @@ type LoginAttempt struct {
 type UserData struct {
 	Username       string `json:"user" bson:"username"`
 	Password       string `json:"pass" bson:"password"`
+	Salt           string `json:"salt" bson:"salt"`
 	RepeatPassword string `json:"passcheck"`
 	UserID         string `bson:"userID"`
 	HighestScore   int    `bson:"highest-score"`
