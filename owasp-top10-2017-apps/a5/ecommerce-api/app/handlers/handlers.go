@@ -16,6 +16,15 @@ func HealthCheck(c echo.Context) error {
 // GetTicket returns the userID ticket.
 func GetTicket(c echo.Context) error {
 	id := c.Param("id")
+	currentUser, err := GetCurrentUser(c)
+	if err != nil {
+		return c.String(http.StatusBadRequest, err.Error())
+	}
+
+	if currentUser != id {
+		return c.String(http.StatusForbidden, "Unauthorized access")
+	}
+
 	userDataQuery := map[string]interface{}{"userID": id}
 	userDataResult, err := db.GetUserData(userDataQuery)
 	if err != nil {
