@@ -25,7 +25,8 @@ from model.db import DataBase
 
 app = Flask(__name__)
 bootstrap = Bootstrap(app)
-
+logger = logging.getLogger('routes')
+logger.setLevel(logging.INFO)
 app.config.from_pyfile('config.py')
 
 
@@ -77,6 +78,11 @@ def login():
         psw = Password(request.form.get('password').encode('utf-8'))
         user_password, success = database.get_user_password(username)
         if not success or user_password == None or not psw.validate_password(str(user_password[0])):
+            logger.error(dict(
+                ts=str(datetime.datetime.now()),
+                action='login',
+                message='Login failed'
+            ))
             flash("Usuario ou senha incorretos", "danger")
             return render_template('login.html')
         session['username'] = username
@@ -119,10 +125,22 @@ def cupom():
         coupon = request.form.get('coupon')
         rows, success = database.get_game_coupon(coupon, session.get('username'))
         if not success or rows == None or rows == 0:
+            logger.error(dict(
+                ts=str(datetime.datetime.now()),
+                action='redeem_coupon',
+                username=session.get('username'),
+                message='Coupon not found'
+            ))
             flash("Cupom invalido", "danger")
             return render_template('coupon.html')
         game, success = database.get_game(coupon, session.get('username'))
         if not success or game == None:
+            logger.error(dict(
+                ts=str(datetime.datetime.now()),
+                action='redeem_coupon',
+                username=session.get('username'),
+                message='Game not found for provided coupon'
+            ))
             flash("Cupom invalido", "danger")
             return render_template('coupon.html')
         flash("Voce ganhou {}".format(game[0]), "primary")
