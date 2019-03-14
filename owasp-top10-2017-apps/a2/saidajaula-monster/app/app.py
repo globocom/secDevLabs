@@ -10,6 +10,7 @@ import hashlib
 import uuid
 from functools import wraps
 
+import hmac
 
 app = Flask(__name__)
 database = DataBase(os.environ.get('A2_DATABASE_HOST'),
@@ -17,6 +18,10 @@ database = DataBase(os.environ.get('A2_DATABASE_HOST'),
                     os.environ.get('A2_DATABASE_PASSWORD'),
                     os.environ.get('A2_DATABASE_NAME'))
 
+def sign_cookie(cookie):
+    secret = os.environ.get('A2_SESSION_SECRET')
+    signed_cookie = hmac.new(secret, cookie.encode('utf-8'), hashlib.sha256)
+    return signed_cookie.hexdigest()
 
 def login_admin_required(f):
     @wraps(f)
@@ -26,7 +31,7 @@ def login_admin_required(f):
         cookie_separado = cookie.split('.')
         if(len(cookie_separado) != 2):
             return "Invalid cookie!"
-        hash_cookie = hashlib.sha256(cookie_separado[0].encode('utf-8')).hexdigest()
+        hash_cookie = sign_cookie(cookie_separado[0])
         if (hash_cookie != cookie_separado[1]):
             return redirect("/login")
         j = json.loads(cookie_separado[0])
@@ -44,7 +49,7 @@ def login_required(f):
         cookie_separado = cookie.split('.')
         if(len(cookie_separado) != 2):
             return "Invalid cookie! \n"
-        hash_cookie = hashlib.sha256(cookie_separado[0].encode('utf-8')).hexdigest()
+        hash_cookie = sign_cookie(cookie_separado[0])
         if (hash_cookie != cookie_separado[1]):
             return redirect("/login")
         return f(*args, **kwargs)
@@ -104,7 +109,7 @@ def login():
 
         cookie_dic = {"permissao": result[1], "username": form_username}
         cookie = json.dumps(cookie_dic)
-        hash_cookie = hashlib.sha256(cookie.encode('utf-8')).hexdigest()
+        hash_cookie = sign_cookie(cookie)
         cookie_done = '.'.join([cookie,hash_cookie])
         cookie_done = base64.b64encode(str(cookie_done).encode("utf-8"))
         resp = make_response()
