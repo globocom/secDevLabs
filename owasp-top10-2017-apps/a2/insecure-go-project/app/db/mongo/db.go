@@ -5,7 +5,6 @@ import (
 	"os"
 	"time"
 
-	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a2/insecure-go-project/app/config"
 	mgo "gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
@@ -20,14 +19,6 @@ type DB struct {
 	Session *mgo.Session
 }
 
-// mongoConfig is the struct that represents mongo configuration.
-type mongoConfig struct {
-	Address      string
-	DatabaseName string
-	UserName     string
-	Password     string
-}
-
 // Database is the interface's database.
 type Database interface {
 	Insert(obj interface{}, collection string) error
@@ -40,9 +31,8 @@ type Database interface {
 
 // Connect connects to mongo and returns the session.
 func Connect() (*DB, error) {
-	mongoConfig := config.APIconfiguration.MongoConf
 	dialInfo := &mgo.DialInfo{
-		Addrs:    []string{mongoConfig.MongoHost},
+		Addrs:    []string{os.Getenv("A2_DATABASE_HOST")},
 		Timeout:  time.Second * 60,
 		FailFast: true,
 		Database: os.Getenv("A2_DATABASE"),

@@ -6,26 +6,14 @@ import (
 	"strconv"
 
 	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a2/insecure-go-project/app/api"
-	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a2/insecure-go-project/app/config"
 	db "github.com/globocom/secDevLabs/owasp-top10-2017-apps/a2/insecure-go-project/app/db/mongo"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
-	"github.com/spf13/viper"
 )
 
 func main() {
 
 	fmt.Println("[*] Starting Insecure Go Project...")
-
-	// loading viper
-	viper.SetConfigName("config")
-	viper.AddConfigPath(".")
-	if err := viper.ReadInConfig(); err != nil {
-		errorAPI(err)
-	}
-	if err := viper.Unmarshal(&config.APIconfiguration); err != nil {
-		errorAPI(err)
-	}
 
 	// check if MongoDB is acessible and credentials received are working.
 	if _, err := checkMongoDB(); err != nil {

@@ -25,6 +25,7 @@ services:
             - A2_DATABASE
             - A2_DATABASE_USER
             - A2_DATABASE_PASS
+            - A2_DATABASE_HOST
 
     mongodb:
         container_name: mongodb
