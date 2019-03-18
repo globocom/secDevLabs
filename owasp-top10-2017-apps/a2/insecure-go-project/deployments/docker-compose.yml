@@ -21,6 +21,10 @@ services:
             - mongodb
         external_links:
             - mongodb:mongodb
+        environment:
+            - A2_DATABASE
+            - A2_DATABASE_USER
+            - A2_DATABASE_PASS
 
     mongodb:
         container_name: mongodb
@@ -34,3 +38,7 @@ services:
             - mongo_vol:/data/db
         networks:
             - insecure_net
+        environment:
+            DATABASE: ${A2_DATABASE}
+            DATABASE_USER: ${A2_DATABASE_USER}
+            DATABASE_PASS: ${A2_DATABASE_PASS}
