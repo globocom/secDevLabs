@@ -8,7 +8,7 @@ import (
 
 	jwt "github.com/dgrijalva/jwt-go"
 	db "github.com/globocom/secDevLabs/owasp-top10-2017-apps/a3/snake-pro/app/db/mongo"
-	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a3/snake-pro/app/pass"
+	pass "github.com/globocom/secDevLabs/owasp-top10-2017-apps/a3/snake-pro/app/pass"
 	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a3/snake-pro/app/types"
 	"github.com/google/uuid"
 	"github.com/labstack/echo"
@@ -58,8 +58,11 @@ func Register(c echo.Context) error {
 	newGUID1 := uuid.Must(uuid.NewRandom())
 	userData.UserID = newGUID1.String()
 	userData.HighestScore = 0
-
-	err = db.RegisterUser(userData)
+	hashedPassword, err := pass.HashPass(userData.Password)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"result": "error", "details": "Error hashing password."})
+	}
+	err = db.RegisterUser(userData, hashedPassword)
 	if err != nil {
 		// could not register this user into MongoDB (or MongoDB err connection)
 		return c.JSON(http.StatusInternalServerError, map[string]string{"result": "error", "details": "Error user data2."})

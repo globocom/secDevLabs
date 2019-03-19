@@ -178,7 +178,7 @@ func GetUserData(mapParams map[string]interface{}) (types.UserData, error) {
 }
 
 // RegisterUser regisiter into MongoDB a new user and returns an error.
-func RegisterUser(userData types.UserData) error {
+func RegisterUser(userData types.UserData, hashedPassword string) error {
 	session, err := Connect()
 	if err != nil {
 		return err
@@ -186,7 +186,7 @@ func RegisterUser(userData types.UserData) error {
 
 	newUserData := bson.M{
 		"username": userData.Username,
-		"password": userData.Password,
+		"password": hashedPassword,
 		"userID":   userData.UserID,
 	}
 	err = session.Insert(newUserData, UserCollection)
