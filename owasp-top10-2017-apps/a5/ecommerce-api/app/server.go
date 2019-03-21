@@ -56,7 +56,7 @@ func main() {
 
 	echoInstance.GET("/", handlers.FormPage)
 	echoInstance.GET("/healthcheck", handlers.HealthCheck)
-	echoInstance.GET("/ticket/:id", handlers.GetTicket)
+	echoInstance.GET("/ticket", handlers.GetTicket)
 	echoInstance.POST("/register", handlers.RegisterUser)
 	echoInstance.POST("/login", handlers.Login)
 
@@ -87,6 +87,7 @@ func checkEnvVars() error {
 		"MONGO_DATABASE_NAME",
 		"MONGO_DATABASE_USERNAME",
 		"MONGO_DATABASE_PASSWORD",
+		"A5_SECRET",
 	}
 
 	var envIsSet bool
