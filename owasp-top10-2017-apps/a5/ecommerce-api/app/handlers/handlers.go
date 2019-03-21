@@ -49,6 +49,4 @@ func GetTicket(c echo.Context) error {
 		"username": userDataResult.Username,
 		"ticket":   userDataResult.Ticket,
 	})
-	msgTicket := fmt.Sprintf("Hey, %s! This is your ticket: %s\n", userDataResult.Username, userDataResult.Ticket)
-	return c.String(http.StatusOK, msgTicket)
 }
