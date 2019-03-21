@@ -3,6 +3,7 @@ package handlers
 import (
 	"fmt"
 	"net/http"
+	"os"
 	"time"
 
 	jwt "github.com/dgrijalva/jwt-go"
@@ -23,14 +24,13 @@ func WriteCookie(c echo.Context, jwt string) error {
 }
 
 // ReadCookie reads a cookie from echo Context.
-func ReadCookie(c echo.Context) error {
+func ReadCookie(c echo.Context) (string, error) {
 	cookie, err := c.Cookie("sessionIDa5")
 	if err != nil {
-		return err
+		return "", err
 	}
-	fmt.Println(cookie.Name)
-	fmt.Println(cookie.Value)
-	return c.String(http.StatusOK, "")
+
+	return cookie.Value, err
 }
 
 // Login checks MongoDB if this user exists and then returns a JWT session cookie.
@@ -66,11 +66,12 @@ func Login(c echo.Context) error {
 
 	// Set claims
 	claims := token.Claims.(jwt.MapClaims)
-	claims["name"] = userDataResult.Username
+	claims["username"] = userDataResult.Username
+	claims["userid"] = userDataResult.UserID
 	claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
 
 	// Generate encoded token and send it as response.
-	t, err := token.SignedString([]byte("secret"))
+	t, err := token.SignedString([]byte(os.Getenv("A5_SECRET")))
 	if err != nil {
 		return err
 	}
