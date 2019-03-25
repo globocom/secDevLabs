@@ -19,7 +19,7 @@ def login():
         username = request.values.get('username')
         password = request.values.get('password')
     
-        if username == "admin" and password == "admin":
+        if username == os.environ['A8_ADMIN_USER'] and password == os.environ['A8_ADMIN_PASS']:
             token = str(uuid.uuid4().hex)
             cookie = { "username":username, "admin":True, "sessionId":token }
             encodedSessionCookie = jwt.encode(cookie, jwt_secret, algorithm='HS256')

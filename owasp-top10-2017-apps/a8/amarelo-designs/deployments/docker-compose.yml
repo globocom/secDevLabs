@@ -13,6 +13,10 @@ services:
     networks: 
       - a8_net
     restart: always
+    environment:
+      - A8_ADMIN_USER=$A8_ADMIN_USER
+      - A8_ADMIN_PASS=$A8_ADMIN_PASS
+      - A8_SECRET="bsyE4Cav7yJc3sJCD4Lm"
 
 networks:
   a8_net:
