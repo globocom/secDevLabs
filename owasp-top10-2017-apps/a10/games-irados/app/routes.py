@@ -28,6 +28,16 @@ bootstrap = Bootstrap(app)
 
 app.config.from_pyfile('config.py')
 
+logger = logging.getLogger('games-irados')
+logger.setLevel(logging.INFO)
+
+ch = logging.StreamHandler()
+ch.setLevel(logging.INFO)
+
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+ch.setFormatter(formatter)
+
+logger.addHandler(ch)
 
 def generate_csrf_token():
     '''
@@ -77,6 +87,7 @@ def login():
         psw = Password(request.form.get('password').encode('utf-8'))
         user_password, success = database.get_user_password(username)
         if not success or user_password == None or not psw.validate_password(str(user_password[0])):
+            logger.error("Login error")
             flash("Usuario ou senha incorretos", "danger")
             return render_template('login.html')
         session['username'] = username
@@ -96,12 +107,15 @@ def newuser():
             hashed_psw = psw.get_hashed_password()
             message, success = database.insert_user(username, hashed_psw)
             if success == 1:
+                logger.info("User added")
                 flash("Novo usuario adicionado!", "primary")
                 return redirect('/login')
             else:
+                logger.error(message)
                 flash(message, "danger")
                 return redirect('/register')
-
+        
+        logger.error("Passwords don't match")
         flash("Passwords must be the same!", "danger")
         return redirect('/register')
     else:
@@ -119,12 +133,15 @@ def cupom():
         coupon = request.form.get('coupon')
         rows, success = database.get_game_coupon(coupon, session.get('username'))
         if not success or rows == None or rows == 0:
+            logger.error("Invalid cupon, no cupon found")
             flash("Cupom invalido", "danger")
             return render_template('coupon.html')
         game, success = database.get_game(coupon, session.get('username'))
         if not success or game == None:
+            logger.error("Invalid cupon, game not available")
             flash("Cupom invalido", "danger")
             return render_template('coupon.html')
+        logger.info("Cupon validated")
         flash("Voce ganhou {}".format(game[0]), "primary")
         return render_template('coupon.html')
     else:
