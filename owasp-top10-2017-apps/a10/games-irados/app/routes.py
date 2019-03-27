@@ -133,15 +133,15 @@ def cupom():
         coupon = request.form.get('coupon')
         rows, success = database.get_game_coupon(coupon, session.get('username'))
         if not success or rows == None or rows == 0:
-            logger.error("Invalid cupon, no cupon found")
+            logger.error("Invalid coupon, no coupon found")
             flash("Cupom invalido", "danger")
             return render_template('coupon.html')
         game, success = database.get_game(coupon, session.get('username'))
         if not success or game == None:
-            logger.error("Invalid cupon, game not available")
+            logger.error("Invalid coupon, game not available")
             flash("Cupom invalido", "danger")
             return render_template('coupon.html')
-        logger.info("Cupon validated")
+        logger.info("Coupon validated")
         flash("Voce ganhou {}".format(game[0]), "primary")
         return render_template('coupon.html')
     else:
