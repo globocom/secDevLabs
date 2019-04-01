@@ -18,7 +18,7 @@ Now it's time to shield the application up! Imagine that this is your applicatio
 
 ## How secure is my new code?
 
-After mitigating a vulnerability, you can send a Pull Request using to gently ask secDevLabs community to review your new secure code. If you're feeling a bit lost, try having a look at [this mitigation solution](https://github.com/globocom/secDevLabs/pull/29), it might help! 🚀
+After mitigating a vulnerability, you can send a Pull Request to gently ask secDevLabs community to review your new secure code. If you're feeling a bit lost, try having a look at [this mitigation solution](https://github.com/globocom/secDevLabs/pull/29), it might help! 🚀
 
 ##  OWASP Top 10 (2017) apps:
 
