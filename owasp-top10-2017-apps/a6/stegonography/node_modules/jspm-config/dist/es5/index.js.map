@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sourceRoot":"/@unional/jspm-config/","sources":["index.ts"],"names":[],"mappings":";;;;AACA,yCAAmC;AACnC,+BAAyB;AACzB,6BAAuB","sourcesContent":["export * from './interfaces'\nexport * from './readProjectConfig'\nexport * from './resolve'\nexport * from './error'\n"]}
