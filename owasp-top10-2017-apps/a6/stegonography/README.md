@@ -4,7 +4,7 @@
     <img src="images/stegonography.png"/>
 </p>
 
-Stegonography is a Node.js web application that uses an API and a simple front end to simulate a real steganography application. It is built with two main routes, it's home( `/` ) and `/login`, where the admin can log in to make changes to the page.
+Stegonography is a Node.js web application that uses an API and a simple front end to simulate a real steganography application. It is built with two main routes, it's home( `/` ) and (`/login`), where the admin can log in to make changes to the page.
 
 ## Index
 
@@ -89,7 +89,7 @@ After logging in to the application, it's possible to see it sets a session toke
     <img src="images/jwt_token.png"/>
 </p>
 
-Even though using verbose tokens might not pose a straight forward security vulnerability, on certain apps it might give away the hint an attacker needs tocompromise it's security. 🕵️‍
+Even though using verbose tokens might not pose a straight forward security vulnerability, on certain apps it might give away the hint an attacker needs to compromise it's security. 🕵️‍
 
 ## Secure this app 🔧
 
