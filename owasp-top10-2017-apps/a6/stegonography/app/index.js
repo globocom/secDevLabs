@@ -34,7 +34,7 @@ router.post("/login", function(req,res)  {
         var token = jwt.sign({ username }, process.env.SECRET, {
             expiresIn: 300 // Token expires in 5 minutes
         });
-        res.cookie('token', token).redirect(301, "/admin");
+        res.cookie('jwtSessionToken', token).redirect(301, "/admin");
     }
     
     res.status(500).send('Invalid username or password!').render("login.html");
@@ -42,7 +42,7 @@ router.post("/login", function(req,res)  {
 
 // Logout route to deauthorize user session tokens
 router.get("/logout", function(req, res) {
-    res.status(200).cookie("token", null).redirect(301, "/");
+    res.status(200).cookie("jwtSessionToken", null).redirect(301, "/");
 });
 
 // Admin maintenance page
@@ -72,7 +72,7 @@ app.listen(10006, () => {
 
 // Verifies the JWT token
 function verifyJWT(req, res, next){
-    var token = req.cookies.token;
+    var token = req.cookies.jwtSessionToken;
     if (!token) return res.status(401).send({auth: false, message: 'No token provided'});
 
     jwt.verify(token, process.env.SECRET, function(err, decoded) {
