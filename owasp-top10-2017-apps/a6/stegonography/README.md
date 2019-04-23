@@ -19,7 +19,7 @@ Stegonography is a Node.js web application that uses an API and a simple front e
 
 Security misconfiguration can happen at any level of an application stack, including the network services, platform, web server, application server, database, frameworks, custom code, and pre-installed virtual machines, containers, or storage. Automated scanners are useful for detecting misconfigurations, use of default accounts or configurations, unnecessary services, legacy options, etc.
 
-The main goal of this project is to discuss how **Security Misconfiguration** vulnerabilities can be exploited and to encourage developers to send secDevLabs Pull Requests  on how they would mitigate these flaws.
+The main goal of this app is to discuss how **Security Misconfiguration** vulnerabilities can be exploited and to encourage developers to send secDevLabs Pull Requests on how they would mitigate these flaws.
 
 ## Setup
 
@@ -39,27 +39,27 @@ Then simply visit [localhost:10006][App] ! 😆
 
 To properly understand how this application works, you can follow these simple steps:
 
-- Try adding an hidden message to an image.
-- Try hiding a message with a password! 
-- Decrypt a friends message!
+- Hide a message into an image.
+- Decrypt the message from this image.
+- Try using a password to better protect your image!
 
 ## Attack narrative
 
 Now that you know the purpose of this app, what could possibly go wrong? The following section describes how an attacker could identify and eventually find sensitive information about the app or it's users. We encourage you to follow these steps and try to reproduce them on your own to better understand the attack vector! 😜
 
-### Vulnerability identification  👀
+### Vulnerabilities identification  👀
 
-#### Error stack traces are output to end users
+#### Verbose error stack traces are output to end users
 
-An attacker, when trying to enumerate available pages on the application, could come across a verbose error stack trace with potentially sensitive information that could compromise the app. An example of a verbose error stack trace is as shown by the image below:
+An attacker, when trying to enumerate available pages on the application, could come across a verbose error stack trace with potentially sensitive information that could compromise the app. An example of a verbose error stack trace is as shown by the image bellow:
 
 <p align="center">
     <img src="images/stack_trace.png"/>
 </p>
 
-#### Default username and passwords are being used in a production environment 
+#### Default username and passwords are being used
 
-Using [Dirb] to enumerate existing pages on the application and hide the "Not Found" with the `-N 401` flag, it's possible to find what seems to be a login page, as pointed in the image below:
+Using [Dirb] with it's default wordlist, `common.txt`, to enumerate existing pages on the application and hide the "Not Found" with the `-N 401` flag, it's possible to find what seems to be a login page, as pointed in the image bellow:
 
 ```sh
 dirb http://localhost:10006 -N 401
@@ -75,7 +75,7 @@ By visiting `http://localhost:10006/login` we get to the following screen:
     <img src="images/login_page.png"/>
 </p>
 
-A quick guess with the credentials `admin:admin` and we can successfully log-in to the application and get to the admin's control-panel, as shown by the image below:
+A quick `admin:admin` guess revealed that we can successfully log in to the application and get to the admin's control-panel, as shown by the image bellow:
 
 <p align="center">
     <img src="images/admin_page.png"/>
@@ -96,7 +96,7 @@ Even though using verbose tokens might not pose a straight forward security vuln
 How would you migitate this vulnerability? After your changes, an attacker should not be able to:
 
 * See error stack traces
-* Log-in with default credentials
+* Log in with default credentials
 * See verbose token names
 
 ## PR solutions
