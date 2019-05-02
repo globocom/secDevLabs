@@ -97,7 +97,7 @@ After logging in to the application, it's possible to see it sets a session toke
 
 ### 🔥
 
-Having a look at the token's name, we get a strong indication that the app might be running NodeJS. By using `searchsploit` an attacker could find a malicious code to exploit this vulnerability.
+Having a look at the token's name, we get a strong indication that the app might be running NodeJS. By using `searchsploit` an attacker could find a malicious code to exploit a NodeJS vulnerability.
 
 To install this tool, simply type the following in your OSX terminal:
 
@@ -114,6 +114,8 @@ searchsploit nodejs
 <p align="center">
     <img src="images/available_exploits.png"/>
 </p>
+
+Even though we still don't know which NodeJS version is currently running, we've gained valuable information for our enumeration phase. The more an attacker knows about the app being analysed, the bigger the chances of exploiting it.
 
 ## Secure this app 🔧
 
