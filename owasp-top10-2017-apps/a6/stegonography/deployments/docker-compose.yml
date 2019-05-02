@@ -1,0 +1,29 @@
+version: '3.3'
+
+services:
+  app:
+    container_name: Stegonography_api
+    build:
+      context: ../
+      dockerfile: deployments/api.Dockerfile
+    env_file:
+      - .dockers.env
+    ports:
+      - 10006:10006
+    networks:
+      - a6_net
+    restart: always
+
+  db:
+    image: mongo
+    container_name: Stegonography_db
+    env_file:
+      - .dockers.env
+    ports:
+      - 27017:27017
+      - 27018:27018
+    networks:
+      - a6_net
+
+networks:
+    a6_net:
