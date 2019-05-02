@@ -98,7 +98,7 @@ router.post("/login", function(req,res)  {
 
 // Logout route to deauthorize user session tokens
 router.get("/logout", function(req, res) {
-    res.status(200).cookie("nodejsSessionToken", '').redirect(301, "/");
+    res.status(200).clearCookie('nodejsSessionToken').redirect(301, "/");
 });
 
 // Admin maintenance page
