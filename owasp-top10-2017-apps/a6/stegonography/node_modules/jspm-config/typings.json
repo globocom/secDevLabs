@@ -1,8 +1,0 @@
-{
-  "dependencies": {
-    "object.pick": "registry:npm/object.pick#1.0.0+20160723033700",
-    "parse-json": "registry:npm/parse-json#2.0.0+20160723033700",
-    "thenify": "registry:npm/thenify#3.1.0+20160723033700",
-    "throat": "registry:npm/throat#2.0.0+20160723033700"
-  }
-}
