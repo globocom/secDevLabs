@@ -47,19 +47,21 @@ To properly understand how this application works, you can follow these simple s
 
 Now that you know the purpose of this app, what could possibly go wrong? The following section describes how an attacker could identify and eventually find sensitive information about the app or it's users. We encourage you to follow these steps and try to reproduce them on your own to better understand the attack vector! 😜
 
-### Vulnerabilities identification  👀
+### 👀
 
 #### Verbose error stack traces are output to end users
 
-An attacker, when trying to enumerate available pages on the application, could come across a verbose error stack trace with potentially sensitive information that could compromise the app. An example of a verbose error stack trace is as shown by the image bellow:
+An attacker, when trying to enumerate available pages on the application, could come across a verbose error stack trace with potentially sensitive information that could compromise the app. An example of a verbose error stack trace is as shown by the image below:
 
 <p align="center">
     <img src="images/stack_trace.png"/>
 </p>
 
+### 👀
+
 #### Default username and passwords are being used
 
-Using [Dirb] with it's default wordlist, `common.txt`, to enumerate existing pages on the application and hide the "Not Found" with the `-N 401` flag, it's possible to find what seems to be a login page, as pointed in the image bellow:
+Using [Dirb] with it's default wordlist, `common.txt`, to enumerate existing pages on the application and hide the "Not Found" with the `-N 401` flag, it's possible to find what seems to be a login page, as pointed in the image below:
 
 ```sh
 dirb http://localhost:10006 -N 401
@@ -75,21 +77,43 @@ By visiting `http://localhost:10006/login` we get to the following screen:
     <img src="images/login_page.png"/>
 </p>
 
-A quick `admin:admin` guess revealed that we can successfully log in to the application and get to the admin's control-panel, as shown by the image bellow:
+### 🔥
+
+A quick `admin:admin` guess revealed that we can successfully log in to the application and get to the admin's control-panel, as shown by the image below:
 
 <p align="center">
     <img src="images/admin_page.png"/>
 </p>
 
+### 👀
+
 #### Verbose session token gives away unnecessary information
 
-After logging in to the application, it's possible to see it sets a session token: `jwtSessionToken`. As shown by the following image:
+After logging in to the application, it's possible to see it sets a session token: `nodejsSessionToken`. As shown by the following image:
 
 <p align="center">
-    <img src="images/jwt_token.png"/>
+    <img src="images/token.png"/>
 </p>
 
-Even though using verbose tokens might not pose a straight forward security vulnerability, on certain apps it might give away the hint an attacker needs to compromise it's security. 🕵️‍
+### 🔥
+
+Having a look at the token's name, we get a strong indication that the app might be running NodeJS. By using `searchsploit` an attacker could find a malicious code to exploit this vulnerability.
+
+To install this tool, simply type the following in your OSX terminal:
+
+```sh
+brew install exploitdb
+```
+
+Then, simply search for "NodeJS":
+
+```sh
+searchsploit nodejs
+```
+
+<p align="center">
+    <img src="images/available_exploits.png"/>
+</p>
 
 ## Secure this app 🔧
 
