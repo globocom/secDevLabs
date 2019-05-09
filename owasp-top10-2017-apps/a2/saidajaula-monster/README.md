@@ -1,43 +1,144 @@
 # Saidajaula Monster Fit
- > This is a simple web application built with Flask that contains an example of a Broken Authentication vulnerability.
 
-<img src="images/img1.png" align="center"/>
+<p align="center">
+    <img src="images/img1.png"/>
+</p>
+
+Saidajaula Monstro Fit is a Flask API built with the purpouse of demonstrating how a malicious user could exploit a Broken Authentication vulnerability and escalate his priviledges.
+
+## Index
+
+- [Definition](#what-is-broken-authentication?)
+- [Setup](#setup)
+- [Attack narrative](#attack-narrative)
+- [Objectives](#secure-this-app-🔧)
+- [Solutions](#pr-solutions)
+- [Contributing](#contributing)
 
 ## What is Broken Authentication?
 
-Definition from [OWASP](https://www.owasp.org/images/7/72/OWASP_Top_10-2017_%28en%29.pdf.pdf):
+Application functions related to authentication and session management are often implemented incorrectly, allowing attackers to compromise passwords, keys, or session tokens, or to exploit other implementation flaws to assume other users’ identities temporarily or permanently.
 
-Application functions related to authentication and session management are often implemented
-incorrectly, allowing attackers to compromise passwords, keys, or session tokens, or to exploit
-other implementation flaws to assume other users’ identities temporarily or permanently.
+The main goal of this app is to discuss how **Broken Authentication** vulnerabilities can be exploited and to encourage developers to send secDevLabs Pull Requests on how they would mitigate these flaws.
 
-## Requirements
+## Setup
 
-To build this lab you will need [Docker][Docker Install] and [Docker Compose][Docker Compose Install].
+To start this intentionally **insecure application**, you will need [Docker][Docker Install] and [Docker Compose][Docker Compose Install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
 
-## Deploy and Run
-
-After cloning this repository, you can type the following command to start the vulnerable application:
+```sh
+cd secDevLabs/owasp-top10-2017-apps/a2/saidajaula-monster
+```
 
 ```sh
 make install
 ```
 
-Then simply visit [localhost:10082][App] !
+Then simply visit [localhost:10082][App] ! 😆
 
-## Attack Narrative
+## Get to know the app 🏋️‍
 
-To understand how this vulnerability can be exploited, check [this section]!
+To properly understand how this application works, you can follow these simple steps:
 
-## Mitigating the vulnerability
+- Visit it's homepage!
+- Try registering yourself as a new user.
 
-(Spoiler alert 🧐) To understand how this vulnerability can be mitigated, check [this other section](https://github.com/globocom/secDevLabs/pulls?q=is%3Apr+label%3A%22mitigation+solution+%F0%9F%94%92%22+label%3A%22Saidajaula+Monster+Fit%22)!
+## Attack narrative
 
-[Docker Install]:  https://docs.docker.com/install/
-[Docker Compose Install]: https://docs.docker.com/compose/install/
-[App]: http://127.0.0.1:10082
-[this section]: https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2017-apps/a2/saidajaula-monster/docs/ATTACK.md
+Now that you know the purpose of this app, what could possibly go wrong? The following section describes how an attacker could identify and eventually find sensitive information about the app or it's users. We encourage you to follow these steps and try to reproduce them on your own to better understand the attack vector! 😜
+
+### 👀
+
+#### Insecure session cookie validation allows for privilege escalation
+
+It's possible to reach the server's web application through the HTTP port 10082, as we can see from the image below:
+
+<p align="center">
+    <img src="images/img1.png"/>
+</p>
+
+We can sign-up for a new account by clicking the `SIGN UP` button on the top right corner. Then, we are redirected to the `/register` page. As shown by the image below:
+
+<p align="center">
+    <img src="images/attack1.png"/>
+</p>
+
+After creating an account, we are redirected to the `/login` page and, to better understand how the application is handling the requests, we will perform a login using the following `curl` command. As shown by the image:
+
+```sh
+curl -i -L localhost:10082/login -F "username=daniel" -F "password=daniel" -X POST
+```
+
+<p align="center">
+    <img src="images/attack2.png"/>
+</p>
+
+As we can see from the image above, the application sets a cookie for the user, `sessionId`. By having a better look at this cookie, we find out that it is actually base64 encoded, and it's content are as following:
+
+<p align="center">
+    <img src="images/attack3.png"/>
+</p>
+
+Now, by having a look at the app's code, it's possible to see that all the information to generate this cookie is known to any user, as shown by the following image:
+
+<p align="center">
+    <img src="images/attack4.png"/>
+</p>
+
+### 🔥
+
+Knowing how the cookie is being generated, a malicious user could create his own to gain access to pages he shouldn't have. An attacker could obtain admin privileges by changing the cookie's `permission` field, as depicted by the image below:
+
+<p align="center">
+    <img src="images/attack5.png"/>
+</p>
+
+It is also possible to generate this cookie from terminal using `shasum` command: 
+
+```sh
+echo -n '{"permissao": 1, "username": "daniel"}' | shasum -a 256
+```
+
+After that, the attacker needs to concatenate the cookie's fields and the hash, separated by a dot. As shown by the following image:
+
+<p align="center">
+    <img src="images/attack6.png"/>
+</p>
+
+The server expects the cookie to be in base64 format, so the attacker needs to encode his cookie. As we can see from the image below using the command:
+
+```sh
+echo -n '{"permissao": 1, "username": "daniel"}.35771d6998cf216aa3297d1fb54462e04d85443be6092a02961b52b24c2d3250' | base64
+```
+
+<p align="center">
+    <img src="images/attack7.png"/>
+</p>
+
+Now, all an attacker needs to do is try to access the `/admin` only page. As shown by the image below:
+
+```sh
+curl -v --cookie "sessionId=eyJwZXJtaXNzYW8iOiAxLCAidXNlcm5hbWUiOiAiZGFuaWVsIn0uMzU3NzFkNjk5OGNmMjE2YWEzMjk3ZDFmYjU0NDYyZTA0ZDg1NDQzYmU2MDkyYTAyOTYxYjUyYjI0YzJkMzI1MA==" http://localhost:10082/admin
+```
+
+<p align="center">
+    <img src="images/attack8.png"/>
+</p>
+
+## Secure this app 🔧
+
+How would you migitate this vulnerability? After your changes, an attacker should not be able to:
+
+* Log in as admin or any other user, rather than himself, by modifying the session cookie.
+
+## PR solutions
+
+[Spoiler alert 🚨 ] To understand how this vulnerability can be mitigated, check out [these pull requests](https://github.com/globocom/secDevLabs/pulls?q=is%3Apr+label%3A%22mitigation+solution+%F0%9F%94%92%22+label%3A%22Saidajaula+Monster+Fit%22)!
 
 ## Contributing
 
-Yes, please. :zap:
+We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](../../../docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉
+
+[Docker Install]:  https://docs.docker.com/install/
+[Docker Compose Install]: https://docs.docker.com/compose/install/
+[App]: http://localhost:10082
+[Dirb]: https://tools.kali.org/web-applications/dirb
