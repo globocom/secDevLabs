@@ -107,7 +107,7 @@ def login():
         hash_cookie = hashlib.sha256(cookie.encode('utf-8')).hexdigest()
         cookie_done = '.'.join([cookie,hash_cookie])
         cookie_done = base64.b64encode(str(cookie_done).encode("utf-8"))
-        resp = make_response()
+        resp = make_response("Logged in!")
         resp.set_cookie("sessionId", cookie_done)
         return resp
 
