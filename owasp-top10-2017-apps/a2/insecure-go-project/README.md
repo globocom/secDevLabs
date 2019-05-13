@@ -11,7 +11,7 @@ Insecure Go Project is a simple Golang API that contains an example of a Broken 
 - [Definition](#what-is-broken-authentication)
 - [Setup](#setup)
 - [Attack narrative](#attack-narrative)
-- [Objectives](#secure-this-app-🔧)
+- [Objectives](#secure-this-app)
 - [Solutions](#pr-solutions)
 - [Contributing](#contributing)
 
@@ -63,7 +63,7 @@ Using this credentials to access local MongoDB, it was possible to check that th
 
 <img src="images/attack-3.png" align="center"/>
 
-## Secure this app 🔧
+## Secure this app
 
 How would you migitate this vulnerability? After your changes, an attacker should not be able to:
 
