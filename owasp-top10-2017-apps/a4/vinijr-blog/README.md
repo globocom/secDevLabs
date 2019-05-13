@@ -11,7 +11,7 @@ This is a simple PHP web application that contains an example of an XML External
 - [Definition](#what-is-xxe)
 - [Setup](#setup)
 - [Attack narrative](#attack-narrative)
-- [Objectives](#secure-this-app-🔧)
+- [Objectives](#secure-this-app)
 - [Solutions](#pr-solutions)
 - [Contributing](#contributing)
 
@@ -108,7 +108,7 @@ curl -d @evilxml.xml localhost:10080/contact.php ; echo
 <img src="images/attack-4.png" align="center"/>
 
 
-## Secure this app 🔧
+## Secure this app
 
 How would you migitate this vulnerability? After your changes, an attacker should not be able to:
 
