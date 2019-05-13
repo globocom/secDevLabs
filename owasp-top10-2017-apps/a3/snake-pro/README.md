@@ -68,12 +68,13 @@ Additionally, the channel is being used by users to send their sensitive data is
 
 ### 🔥
 
-If database is somehow exposed, all users' passwords  will be leaked, as shown on these MongoDB documents. To view them, you can locally install [Robo 3T](https://robomongo.org/download) and use default credentials used in `docker-compose.yml`:
+If database is somehow exposed, all users' passwords  will be leaked, as shown on these MongoDB documents. To view them, you can locally install [Robo 3T](https://robomongo.org/download) and use default credentials used in `config.yml`:
 
 ```
 Database: snake_pro
 User name: u_snake_pro
 Password: svGX8SViufvYYNu6m3Kv
+Adress: localhost:27017
 ```
 
 <p align="center">
