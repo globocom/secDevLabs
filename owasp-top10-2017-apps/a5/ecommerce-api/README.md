@@ -11,7 +11,7 @@ Vulnerable Ecommerce API is a simple Golang web application that contains an exa
 - [Definition](#what-is-broken-access-control)
 - [Setup](#setup)
 - [Attack narrative](#attack-narrative)
-- [Objectives](#secure-this-app-🔧)
+- [Objectives](#secure-this-app)
 - [Solutions](#pr-solutions)
 - [Contributing](#contributing)
 
@@ -101,7 +101,7 @@ curl -vvv http://localhost:8888/ticket/GUID
     <img src="images/attack4.png"/>
 </p>
 
-## Secure this app 🔧
+## Secure this app
 
 How would you migitate this vulnerability? After your changes, an attacker should not be able to:
 
