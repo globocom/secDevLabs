@@ -78,7 +78,7 @@ And run:
 curl -d @payload.xml localhost:10080/contact.php ; echo
 ```
 
-By checking the source code of the [file](../app/contact.php), it is possible to see how this XML is loaded on the server side:
+By checking the source code of the [file](../vinijr-blog/app/contact.php), it is possible to see how this XML is loaded on the server side:
 
 <img src="images/attack-3.png" align="center"/>
 
