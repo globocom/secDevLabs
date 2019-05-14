@@ -11,7 +11,7 @@ Cimentech is a simple web application built with Drupal that contains an example
 - [Definition](#what-does-it-mean-to-use-a-component-with-known-vulnerabilities)
 - [Setup](#setup)
 - [Attack narrative](#attack-narrative)
-- [Objectives](#secure-this-app-🔧)
+- [Objectives](#secure-this-app)
 - [Solutions](#pr-solutions)
 - [Contributing](#contributing)
 
@@ -104,7 +104,7 @@ Using the exploit's "fake shell", we can type a command, such as `whoami`, to ve
 
 <img src="images/attack6.png" align="center"/>
 
-## Secure this app 🔧
+## Secure this app
 
 How would you migitate this vulnerability? After your changes, an attacker should not be able to:
 
