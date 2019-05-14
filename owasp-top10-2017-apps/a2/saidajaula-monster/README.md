@@ -11,7 +11,7 @@ Saidajaula Monstro Fit is a Flask API built with the purpouse of demonstrating h
 - [Definition](#what-is-broken-authentication?)
 - [Setup](#setup)
 - [Attack narrative](#attack-narrative)
-- [Objectives](#secure-this-app-🔧)
+- [Objectives](#secure-this-app)
 - [Solutions](#pr-solutions)
 - [Contributing](#contributing)
 
@@ -124,7 +124,7 @@ curl -v --cookie "sessionId=eyJwZXJtaXNzYW8iOiAxLCAidXNlcm5hbWUiOiAiZGFuaWVsIn0u
     <img src="images/attack8.png"/>
 </p>
 
-## Secure this app 🔧
+## Secure this app
 
 How would you migitate this vulnerability? After your changes, an attacker should not be able to:
 
