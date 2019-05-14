@@ -11,7 +11,7 @@ Stegonography is a Node.js web application that uses an API and a simple front e
 - [Definition](#what-is-security-misconfiguration)
 - [Setup](#setup)
 - [Attack narrative](#attack-narrative)
-- [Objectives](#secure-this-app-🔧)
+- [Objectives](#secure-this-app)
 - [Solutions](#pr-solutions)
 - [Contributing](#contributing)
 
@@ -117,7 +117,7 @@ searchsploit nodejs
 
 Even though we still don't know which NodeJS version is currently running, we've gained valuable information for our enumeration phase. The more an attacker knows about the app being analysed, the bigger the chances of exploiting it.
 
-## Secure this app 🔧
+## Secure this app
 
 How would you migitate this vulnerability? After your changes, an attacker should not be able to:
 
