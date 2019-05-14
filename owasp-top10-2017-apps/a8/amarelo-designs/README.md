@@ -11,7 +11,7 @@ This is a simple web application built with Flask that contains an example of an
 - [Definition](#what-is-insecure-deserialization)
 - [Setup](#setup)
 - [Attack narrative](#attack-narrative)
-- [Objectives](#secure-this-app-🔧)
+- [Objectives](#secure-this-app)
 - [Solutions](#pr-solutions)
 - [Contributing](#contributing)
 
@@ -148,7 +148,7 @@ $ nc localhost 9051
     <img src="images/attack11.png"/>
 </p>
 
-## Secure this app 🔧
+## Secure this app
 
 How would you migitate this vulnerability? After your changes, an attacker should not be able to:
 
