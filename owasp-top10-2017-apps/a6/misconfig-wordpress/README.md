@@ -11,7 +11,7 @@ This is a simple Wordpress web application that contains an example of a Securit
 - [Definition](#what-is-security-misconfiguration)
 - [Setup](#setup)
 - [Attack narrative](#attack-narrative)
-- [Objectives](#secure-this-app-🔧)
+- [Objectives](#secure-this-app)
 - [Solutions](#pr-solutions)
 - [Contributing](#contributing)
 
@@ -198,7 +198,7 @@ Now, by doing the following curl command to check the HTTP headers of the applic
 
 ----
 
-## Secure this app 🔧
+## Secure this app
 
 How would you migitate this vulnerability? After your changes, an attacker should not be able to:
 
