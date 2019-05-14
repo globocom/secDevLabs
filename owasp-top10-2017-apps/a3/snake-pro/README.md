@@ -11,7 +11,7 @@ Snake Pro is a simple Golang Web App that contains an example of Sensitive Data 
 - [Definition](#what-is-sensitive-data-exposure)
 - [Setup](#setup)
 - [Attack narrative](#attack-narrative)
-- [Objectives](#secure-this-app-🔧)
+- [Objectives](#secure-this-app)
 - [Solutions](#pr-solutions)
 - [Contributing](#contributing)
 
@@ -99,7 +99,7 @@ sudo tcpdump -i lo0 -X host localhost | grep -C 2 pass --color
 </p>
 
 
-## Secure this app 🔧
+## Secure this app
 
 How would you migitate this vulnerability? After your changes, an attacker should not be able to:
 
