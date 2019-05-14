@@ -11,7 +11,7 @@ Gossip World is a simple Flask app that contains an example of multiple Cross-Si
 - [Definition](#what-is-cross-site-scripting)
 - [Setup](#setup)
 - [Attack narrative](#attack-narrative)
-- [Objectives](#secure-this-app-🔧)
+- [Objectives](#secure-this-app)
 - [Solutions](#pr-solutions)
 - [Contributing](#contributing)
 
@@ -132,7 +132,7 @@ The attacker now gets all the input on the server log, as shown below:
 
 <img src="images/attack-9.png" align="center"/>
 
-## Secure this app 🔧
+## Secure this app
 
 How would you migitate this vulnerability? After your changes, an attacker should not be able to:
 
