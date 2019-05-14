@@ -11,7 +11,7 @@ Games Irados is a simple Python web application that contains an example of an I
 - [Definition](#what-is-insufficient-logging-&-monitoring)
 - [Setup](#setup)
 - [Attack narrative](#attack-narrative)
-- [Objectives](#secure-this-app-🔧)
+- [Objectives](#secure-this-app)
 - [Solutions](#pr-solutions)
 - [Contributing](#contributing)
 
@@ -150,7 +150,7 @@ However, we can also confirm that little information is being logged at the serv
     <img src="images/attack8.png"/>
 </p>
 
-## Secure this app 🔧
+## Secure this app
 
 How would you migitate this vulnerability? After your changes, an attacker should not be able to:
 
