@@ -1,45 +1,133 @@
 <!-- This is a README Template for secDevLabs apps -->
 # Your app's name here!
- > A short description for your app here!
 
-Be sure to put a banner image of your app here!
-<img src="https://raw.githubusercontent.com/globocom/secDevLabs/master/owasp-top10-2017-apps/a8/amarelo-designs/images/Amarelo-Designs.png" align="center"/>
+> All comments on how to write a README are displayed between ( ), and should not be in the app's final version
 
-## Which is the vulnerability in this app?
-In this section, include OWASP's description of the vulnerability! In case of the A8 vulnerability, Insecure Deserialization, it's description from OWASP is:
+( Be sure to add a banner image of your app here! )
+<p align="center">
+    <img src="https://raw.githubusercontent.com/globocom/secDevLabs/master/owasp-top10-2017-apps/a2/saidajaula-monster/images/img1.png"/>
+</p>
 
-Definition from [OWASP](https://www.owasp.org/images/7/72/OWASP_Top_10-2017_%28en%29.pdf.pdf):
+( Here's a short description of your app! )
+
+## Index
+
+( Remember to fix these links when everything is done! )
+- [Definition](#what-is-the-vulnerability-?)
+- [Setup](#setup)
+- [Attack narrative](#attack-narrative)
+- [Objectives](#secure-this-app)
+- [Solutions](#pr-solutions)
+- [Contributing](#contributing)
 
 
-Insecure deserialization often leads to remote code execution. Even if deserialization flaws do not result in remote code execution, they can be used to perform attacks, including replay attacks, injection attacks, and privilege escalation attacks.
+## What is ( vulnerability being explored in this app )?
 
-## Requirements
+( OWASP vulnerability definition here )
 
-What do you need to run this app?
+The main goal of this app is to discuss how **( vulnerability being explored in this app )** vulnerabilities can be exploited and to encourage developers to send secDevLabs Pull Requests on how they would mitigate these flaws.
 
-## Deploy and Run
+## Setup
 
-After cloning this repository, what do you do to get the app up and running?
+( What do you need to do to get it up and running? Remember to add all the commands used as well! )
 
-Be sure to add the commands! An exemple would be as follows:
+## Get to know the app ( Cool emoji describing the app - Get creative! 😝 )
+
+To properly understand how this application works, you can follow these simple steps:
+
+( Add steps for an user to follow and get to know your app )
+
+## Attack narrative
+
+Now that you know the purpose of this app, what could possibly go wrong? The following section describes how an attacker could identify and eventually find sensitive information about the app or it's users. We encourage you to follow these steps and try to reproduce them on your own to better understand the attack vector! 😜
+
+### 👀
+
+#### ( Brief description of what was exploited/is vulnerable )
+
+This first part, 👀 , is dedicated to describing all the steps needed to identify the vulnerability installed on your app so that anyone following this guide is able to replicate it.
+
+Usually, some nice steps to include are:
+* What's the app main page?
+* How can you access it?
+* How did you discover the vulnerability?
+* If you used the command line, be sure to include the command used! You can include the command by doing this:
 
 ```sh
-make install
+    ```sh
+    $ My awesome command here
+
+    ```
 ```
 
-Then simply visit [localhost:][App]port !
+A nice example of images to have on an attack narrative in the discovery section is:
 
-## Attack Narrative
+First time acessing the app:
 
-To understand how this vulnerability can be exploited, check [this section]!
+<p align="center">
+    <img src="https://raw.githubusercontent.com/globocom/secDevLabs/master/owasp-top10-2017-apps/a2/saidajaula-monster/images/img1.png"/>
+</p>
 
-## Mitigating the vulnerability
+Found an interesting page:
 
-To understand how this vulnerability can be mitigated, check this other section!
+<p align="center">
+    <img src="https://raw.githubusercontent.com/globocom/secDevLabs/master/owasp-top10-2017-apps/a2/saidajaula-monster/images/attack1.png"/>
+</p>
 
-[App]: http://127.0.0.1
-[this section]: https://github.com/globocom/secDevLabs/blob/master/docs/Attack_Narrative_Template.md
+Started the analysis on how the app handles cookies:
+
+<p align="center">
+    <img src="https://raw.githubusercontent.com/globocom/secDevLabs/master/owasp-top10-2017-apps/a2/saidajaula-monster/images/attack3.png"/>
+</p>
+
+Confirmed the suspicion by having a look at the code!
+
+<p align="center">
+    <img src="https://raw.githubusercontent.com/globocom/secDevLabs/master/owasp-top10-2017-apps/a2/saidajaula-monster/images/attack4.png"/>
+</p>
+
+Add as many images as you can! A picture is worth more than a thousand words!
+
+### 🔥
+
+This second part, 🔥 , is dedicated to describing all the steps needed to exploit the vulnerability found previously.
+
+In this section, your goal should be on how to exploit the app and it's steps. A good guideline to follow is:
+* Include all the steps to reproduce the exploit.
+* If you used the command line, be sure to add the command here!
+* It would be great if you added references to your narrative, such as used tools, exploits (preferably from [ExploitDB]) , a RFC, or any other text.
+
+And as always, images!!! 😃
+
+Some good examples of images are as follows:
+
+Creating a payload:
+
+<p align="center">
+    <img src="https://raw.githubusercontent.com/globocom/secDevLabs/master/owasp-top10-2017-apps/a1/copy-n-paste/docs/attack-0.png"/>
+</p>
+
+Delivering a payload, and results!
+
+<p align="center">
+    <img src="https://raw.githubusercontent.com/globocom/secDevLabs/master/owasp-top10-2017-apps/a2/saidajaula-monster/images/attack8.png"/>
+</p>
+
+## Secure this app
+
+How would you migitate this vulnerability? After your changes, an attacker should not be able to:
+
+- ( What  needs to be done for you to consider this app's vulnerability to be mitigated? )
+
+## PR solutions
+
+[Spoiler alert 🚨 ] To understand how this vulnerability can be mitigated, check out [these pull requests]!
+
+( We know when creating a new app that there won't, probably, be any solutions yet. Open an issue to remind us to fix this link, please )
 
 ## Contributing
 
-Yes, please. :zap:
+We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](../../../docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉
+
+[secDevLabs]: https://github.com/globocom/secDevLabs
+[ExploitDB]: https://www.exploit-db.com/
