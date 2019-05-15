@@ -94,6 +94,10 @@ ruby /tmp/44449.rb http://localhost
 
 <img src="images/attack5.png" align="center"/>
 
+**NOTE**: You need to have Ruby installed on your system to run the exploit, for information on how to install it, click [here][1]!
+
+**NOTE 2**: If you are running Linux and came across an execution error when trying to run the exploit, please have a look at this [Issue][4] for information on how to proceed.
+
 The exploit works by adding into the server a malicious `s.php`, which allows remote code execution on it via following malicious content: 
 
 ```php
@@ -122,5 +126,7 @@ We encourage you to contribute to SecDevLabs! Please check out the [Contributing
 [Docker Compose Install]: https://docs.docker.com/compose/install/
 [App]: http://localhost:80
 [secDevLabs]: https://github.com/globocom/secDevLabs
+[1]: https://www.ruby-lang.org/en/documentation/installation/
 [2]: https://github.com/globocom/secDevLabs/tree/master/owasp-top10-2017-apps/a9/Cimentech
 [3]: https://www.exploit-db.com/
+[4]: https://github.com/globocom/secDevLabs/issues/212
