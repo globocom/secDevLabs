@@ -126,7 +126,7 @@ curl -v --cookie "sessionId=eyJwZXJtaXNzYW8iOiAxLCAidXNlcm5hbWUiOiAiZGFuaWVsIn0u
 
 ## Secure this app
 
-How would you migitate this vulnerability? After your changes, an attacker should not be able to:
+How would you mitigate this vulnerability? After your changes, an attacker should not be able to:
 
 * Log in as admin or any other user, rather than himself, by modifying the session cookie.
 

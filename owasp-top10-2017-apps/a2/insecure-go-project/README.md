@@ -65,7 +65,7 @@ Using this credentials to access local MongoDB, it was possible to check that th
 
 ## Secure this app
 
-How would you migitate this vulnerability? After your changes, an attacker should not be able to:
+How would you mitigate this vulnerability? After your changes, an attacker should not be able to:
 
 * Find sensitive information (such as passwords or usernames) hardcoded.
 

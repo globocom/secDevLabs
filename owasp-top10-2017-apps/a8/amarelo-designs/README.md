@@ -150,7 +150,7 @@ $ nc localhost 9051
 
 ## Secure this app
 
-How would you migitate this vulnerability? After your changes, an attacker should not be able to:
+How would you mitigate this vulnerability? After your changes, an attacker should not be able to:
 
 * Execute code remotely through a serialization vulnerability
 

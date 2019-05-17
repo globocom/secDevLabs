@@ -119,7 +119,7 @@ Even though we still don't know which NodeJS version is currently running, we've
 
 ## Secure this app
 
-How would you migitate this vulnerability? After your changes, an attacker should not be able to:
+How would you mitigate this vulnerability? After your changes, an attacker should not be able to:
 
 * See error stack traces
 * Log in with default credentials

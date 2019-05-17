@@ -152,7 +152,7 @@ However, we can also confirm that little information is being logged at the serv
 
 ## Secure this app
 
-How would you migitate this vulnerability? After your changes, an attacker should not be able to:
+How would you mitigate this vulnerability? After your changes, an attacker should not be able to:
 
 * Receive a `200 OK` to every and any request done
 
