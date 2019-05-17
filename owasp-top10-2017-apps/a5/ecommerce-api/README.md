@@ -103,7 +103,7 @@ curl -vvv http://localhost:8888/ticket/GUID
 
 ## Secure this app
 
-How would you migitate this vulnerability? After your changes, an attacker should not be able to:
+How would you mitigate this vulnerability? After your changes, an attacker should not be able to:
 
 * Access other users' tickets.
 
