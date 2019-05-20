@@ -2,7 +2,7 @@
 
 <img src="images/CopyNPaste.png" align="center"/>
 
-CopyNPaste is Golang web application that uses an API and a simple front end to simulate a login page. It has both `/register` and `/login` routes that, by communicating with a MySQL database, enables users register and enter into a generic system.
+CopyNPaste is a Golang web application that uses an API and a simple front end to simulate a login page. It has both `/register` and `/login` routes that, by communicating with a MySQL database, enable users register and enter into a generic system.
 
 ## Index
 
@@ -57,7 +57,7 @@ Now that you know the purpose of this app, what could possibly go wrong? The fol
 
 ### 👀
 
-#### Lack of input validation allows for remote code execution
+#### Lack of input validation allows injection of SQL queries
 
 After reviewing `NewUser()` , `CheckIfUserExists()` and `AuthenticateUser()` from [`db.go`]((https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2017-apps/a1/copy-n-paste/app/util/db.go#)) file, it was possible to see that some input from users are concatenated with SQL queries, as shown in the following code snippets:
 
