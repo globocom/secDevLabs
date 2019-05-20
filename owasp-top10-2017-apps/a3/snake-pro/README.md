@@ -102,7 +102,7 @@ sudo tcpdump -i lo0 -X host localhost | grep -C 2 pass --color
 
 ## Secure this app
 
-How would you migitate this vulnerability? After your changes, an attacker should not be able to:
+How would you mitigate this vulnerability? After your changes, an attacker should not be able to:
 
 * Capture sensitive information by sniffing on network packages.
 * Bonus: What about using HTTPS?

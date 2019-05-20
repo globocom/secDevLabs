@@ -110,7 +110,7 @@ curl -d @evilxml.xml localhost:10080/contact.php ; echo
 
 ## Secure this app
 
-How would you migitate this vulnerability? After your changes, an attacker should not be able to:
+How would you mitigate this vulnerability? After your changes, an attacker should not be able to:
 
 * Extract data from the server through the method shown above.
 

@@ -134,7 +134,7 @@ The attacker now gets all the input on the server log, as shown below:
 
 ## Secure this app
 
-How would you migitate this vulnerability? After your changes, an attacker should not be able to:
+How would you mitigate this vulnerability? After your changes, an attacker should not be able to:
 
 * Execute scripts through input fields
 

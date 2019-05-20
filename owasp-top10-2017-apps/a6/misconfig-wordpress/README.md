@@ -200,7 +200,7 @@ Now, by doing the following curl command to check the HTTP headers of the applic
 
 ## Secure this app
 
-How would you migitate this vulnerability? After your changes, an attacker should not be able to:
+How would you mitigate this vulnerability? After your changes, an attacker should not be able to:
 
 * See verbose error messages
 * Log in with default credentials
