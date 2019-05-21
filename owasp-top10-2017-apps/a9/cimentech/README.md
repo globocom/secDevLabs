@@ -17,7 +17,7 @@ Cimentech is a simple web application built with Drupal that contains an example
 
 ## What does it mean to use a component with known vulnerabilities?
 
-Components, such as libraries, frameworks, and other software modules, run with the same privileges as the application. If a vulnerable component is exploited, such an attack can facilitate serious data loss or server takeover. Applications and APIs using components with known vulnerabilities may undermine application defenses and enable various attacks and impacts.
+Imagine that components, such as libraries, frameworks, and other software modules, run with the same privileges as the application. If a vulnerable component is exploited, such an attack can facilitate serious data loss or server takeover. Applications and APIs using components with known vulnerabilities may undermine application defenses and enable various attacks and impacts.
 
 The main goal of this app is to discuss how **Using Components With Known Vulnerabilities** can be exploited and to encourage developers to send secDevLabs Pull Requests on how they would mitigate these flaws.
 
@@ -96,7 +96,7 @@ ruby /tmp/44449.rb http://localhost
 
 **NOTE**: You need to have Ruby installed on your system to run the exploit, for information on how to install it, click [here][1]!
 
-**NOTE 2**: If you are running Linux and came across an execution error when trying to run the exploit, please have a look at this [Issue][4] for information on how to proceed.
+**NOTE 2**: If you came across an execution error when trying to run the exploit, please have a look at this [Issue][4] for information on how to proceed.
 
 The exploit works by adding into the server a malicious `s.php`, which allows remote code execution on it via following malicious content: 
 
