@@ -17,7 +17,7 @@ CopyNPaste is a Golang web application that uses an API and a simple front end t
 
 Injection flaws, such as SQL, NoSQL, OS, and LDAP injection, occur when untrusted data is sent to an interpreter as part of a command or query. The attacker’s hostile data can trick the interpreter into executing unintended commands or accessing data without proper authorization.
 
-The main goal of this project is to discuss how **SQL Injection** vulnerabilities can be exploited and to encourage developers send Pull Requests to secDevLabs on how they would mitigate these flaws.
+The main goal of this project is to discuss how **SQL Injection** vulnerabilities can be exploited and to encourage developers to send Pull Requests to secDevLabs on how they would mitigate these flaws.
 
 ## Setup
 
