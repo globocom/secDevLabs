@@ -39,9 +39,9 @@ Then simply visit [localhost:3001][App] ! 😆
 
 To properly understand how this application works, you can follow these simple steps:
 
-- Hide a message into an image.
-- Decrypt the message from this image.
-- Try using a password to better protect your image!
+- Create a new user!
+- Check out all the games offered!
+- Try redeeming a game coupon after login in!
 
 ## Attack narrative
 
@@ -152,11 +152,12 @@ However, we can also confirm that little information is being logged at the serv
 
 ## Secure this app
 
-How would you mitigate this vulnerability? After your changes, an attacker should not be able to:
+How would you mitigate this vulnerability? After your changes, the new log system must give us: 
 
-* Receive a `200 OK` to every and any request done
-
-The server should also have a more informative log system
+* Who did the request
+* What happened
+* When did it happen
+* Where did it happen
 
 ## PR solutions
 
