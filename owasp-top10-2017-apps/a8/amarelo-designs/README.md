@@ -57,7 +57,7 @@ It's possible to reach the server's web application from the HTTP port 5000, as 
 Making use of the [Dirb] tool to search for webpages and a common directories [wordlist], we were able to find `/user`, `/admin` and `/console`, as shown by the picture below: (If you want to install Dirb for Mac OS, be sure to click [here][4])
 
 ```sh
-$ dirb http://localhost:5000 ./docs/common.txt
+$ dirb http://localhost:5000 ./../../../docs/common.txt
 ```
 
 <p align="center">
