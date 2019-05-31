@@ -6,7 +6,9 @@ import (
 	"html/template"
 	"io"
 	"log"
+	"net/http"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a1/copy-n-paste/app/handlers"
@@ -61,6 +63,11 @@ func main() {
 	echoInstance.Use(middleware.Logger())
 	echoInstance.Use(middleware.Recover())
 	echoInstance.Use(middleware.RequestID())
+
+	echoInstance.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: strings.Split(os.Getenv("ALLOW_ORIGINS"), " "),
+		AllowMethods: []string{http.MethodGet, http.MethodPost},
+	}))
 
 	echoInstance.GET("/", handlers.PageLogin)
 	echoInstance.POST("/login", handlers.Login)

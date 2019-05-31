@@ -13,6 +13,8 @@ services:
             - a1net
         command: "go run app/server.go"
         environment:
+            # add your domains/IPs in this envvar if you would like to enable CORS
+            ALLOW_ORIGINS: "*"
             MYSQL_ROOT_PASSWORD: root
             MYSQL_USER: user
             MYSQL_PASSWORD: pass
