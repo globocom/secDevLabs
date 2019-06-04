@@ -2,7 +2,7 @@
 
 <img src="images/secDevLabs-logo.png" align="" height="" />
 
-The main goal of this project is to provide a laboratory for those who are interested in learning about web security development in a practical manner.
+A laboratory for learning secure web development in a practical manner.
 
 ## Build your own lab
 
