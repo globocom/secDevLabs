@@ -4,7 +4,7 @@
     <img src="images/gamesirados-banner.png"/>
 </p>
 
-Games Irados is a simple Python web application that contains an example of an Insufficient Logging & Monitoring vulnerability and, it's main goal, is to demonstrate how important it is to properly log all requests made to the application and how easily malicious requests could go unnoticed.
+Games Irados is a simple Python web application that contains an example of an Insufficient Logging & Monitoring vulnerability and, its main goal is to demonstrate how important it is to properly log all requests made to the application and how easily malicious requests could go unnoticed.
 
 ## Index
 
@@ -45,13 +45,13 @@ To properly understand how this application works, you can follow these simple s
 
 ## Attack narrative
 
-Now that you know the purpose of this app, what could possibly go wrong? The following section describes how an attacker could identify and eventually find sensitive information about the app or it's users. We encourage you to follow these steps and try to reproduce them on your own to better understand the attack vector! 😜
+Now that you know the purpose of this app, what could go wrong? The following section describes how an attacker could identify and eventually find sensitive information about the app or its users. We encourage you to follow these steps and try to reproduce them on your own to better understand the attack vector! 😜
 
 ### 👀
 
 #### Poor application log might mask malicious requests made to the server
 
-With the goal of verifying how an application handles events that are considered malicious, two attacks will be done to test it:
+To verify how an application handles events that are considered malicious, two attacks will be done to test it:
 * Brute forcing the login screen
 * Brute forcing the coupon validation screen
 
@@ -69,13 +69,13 @@ After that, an attacker could use [Burp Suite] as a proxy to send as many reques
     <img src="images/attack9.png"/>
 </p>
 
-In Positions tab, all fields must be cleared first via `Clear §` button. To set `password` to change acording to each password from our dictionary wordlist, simply click on `Add §` button after selecting it:
+In the Positions tab, all fields must be cleared first via the `Clear §` button. To set `password` to change according to each password from our dictionary wordlist, simply click on `Add §` button after selecting it:
 
 <p align="center">
     <img src="images/attack2.png"/>
 </p>
 
-If a valid password is found, the application may process new cookies and eventually redirect the flow to other pages. To guarantee that the brute force attack follows this behavior, set `Always` into `Follow Redirections` options in `Options` tab, as shown below:
+If a valid password is found, the application may process new cookies and eventually redirect the flow to other pages. To guarantee that the brute force attack follows this behavior, set `Always` into `Follow Redirections` options in the `Options` tab, as shown below:
 
 <p align="center">
     <img src="images/attack10.png"/>
@@ -102,13 +102,13 @@ Before executing the attack, you can open a new tab in your terminal and type th
 docker logs app-a10 -f
 ```
 
-In `Payloads` tab, simply choose the wordlist from `Load...` option and then the attack may be performed via `Start attack` button. 
+In the `Payloads` tab, simply choose the wordlist from `Load...` option and then the attack may be performed via the `Start attack` button. 
 
 <p align="center">
     <img src="images/attack11.png"/>
 </p>
 
-As we can see from the results of the requests, the application handles successfull and unsuccessfull requests differently by responding different status codes. As shown below, when the payload is correct the application responds a status code `302 FOUND`, otherwise it responds with a `200 OK`.
+As we can see from the results of the requests, the application handles successful and unsuccessful requests differently by responding to different status codes. As shown below, when the payload is correct the application responds a status code `302 FOUND`, otherwise it responds with a `200 OK`.
 
 <p align="center">
     <img src="images/attack3.png"/>
@@ -120,13 +120,13 @@ By having a look at the application on the server side, it's possible to see tha
     <img src="images/attack4.png"/>
 </p>
 
-Further more, if we try the `/coupon` route, instead of the `/login`, we can see similar results. The coupon page is shown below:
+Furthermore, if we try the `/coupon` route, instead of the `/login`, we can see similar results. The coupon page is shown below:
 
 <p align="center">
     <img src="images/attack5.png"/>
 </p>
 
-Using Burp Suite again, we could send multiple requests to the application to simulate the second brute force attack, changing only `coupon` field:
+Using Burp Suite again, we could send multiple requests to the application to simulate the second brute force attack, changing only the `coupon` field:
 
 <p align="center">
     <img src="images/attack6.png"/>
