@@ -4,7 +4,7 @@
     <img src="images/banner.png"/>
 </p>
 
-Insecure Go Project is a simple Golang API that contains an example of a Broken Authentication vulnerabilty.
+Insecure Go Project is a simple Golang API that contains an example of a Broken Authentication vulnerability.
 
 ## Index
 
@@ -43,13 +43,13 @@ To properly understand how this application works, you can try:
 
 ## Attack narrative
 
-Now that you know the purpose of this app, what could possibly go wrong? The following section describes how an attacker could identify and eventually find sensitive information about the app or it's users. We encourage you to follow these steps and try to reproduce them on your own to better understand the attack vector! 😜
+Now that you know the purpose of this app, what could go wrong? The following section describes how an attacker could identify and eventually find sensitive information about the app or its users. We encourage you to follow these steps and try to reproduce them on your own to better understand the attack vector! 😜
 
 ### 👀
 
-#### Sensitive hardcoded credentials allows an attacker access to the database
+#### Sensitive hardcoded credentials allow an attacker access to the database
 
-After inspecting the application source code, it is possible to identify that some sensitive data from MongoDB are hardcoded on the [`config.yml`](../app/config.yml), as shown on the picture bellow:
+After inspecting the application source code, it is possible to identify that some sensitive data from MongoDB are hardcoded on the [`config.yml`](../app/config.yml), as shown on the picture below:
 
 <img src="images/attack-1.png" align="center"/>
 

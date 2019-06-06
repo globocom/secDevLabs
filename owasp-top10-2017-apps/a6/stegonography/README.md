@@ -45,7 +45,7 @@ To properly understand how this application works, you can follow these simple s
 
 ## Attack narrative
 
-Now that you know the purpose of this app, what could possibly go wrong? The following section describes how an attacker could identify and eventually find sensitive information about the app or it's users. We encourage you to follow these steps and try to reproduce them on your own to better understand the attack vector! 😜
+Now that you know the purpose of this app, what could go wrong? The following section describes how an attacker could identify and eventually find sensitive information about the app or its users. We encourage you to follow these steps and try to reproduce them on your own to better understand the attack vector! 😜
 
 ### 👀
 
@@ -61,7 +61,7 @@ An attacker, when trying to enumerate available pages on the application, could 
 
 #### Default username and passwords are being used
 
-Using [Dirb] with it's default wordlist, `common.txt`, to enumerate existing pages on the application and hide the "Not Found" with the `-N 401` flag, it's possible to find what seems to be a login page, as pointed in the image below:
+Using [Dirb] with its default wordlist, `common.txt`, to enumerate existing pages on the application and hide the "Not Found" with the `-N 401` flag, it's possible to find what seems to be a login page, as pointed in the image below:
 
 ```sh
 dirb http://localhost:10006 -N 401
@@ -79,7 +79,7 @@ By visiting `http://localhost:10006/login` we get to the following screen:
 
 ### 🔥
 
-A quick `admin:admin` guess revealed that we can successfully log in to the application and get to the admin's control-panel, as shown by the image below:
+A quick `admin:admin` guess revealed that we can successfully log in to the application and get to the admin's control panel, as shown by the image below:
 
 <p align="center">
     <img src="images/admin_page.png"/>
@@ -115,14 +115,14 @@ searchsploit nodejs
     <img src="images/available_exploits.png"/>
 </p>
 
-Even though we still don't know which NodeJS version is currently running, we've gained valuable information for our enumeration phase. The more an attacker knows about the app being analysed, the bigger the chances of exploiting it.
+Even though we still don't know which NodeJS version is currently running, we've gained valuable information for our enumeration phase. The more an attacker knows about the app being analyzed, the bigger the chances of exploiting it.
 
 ## Secure this app
 
 How would you mitigate this vulnerability? After your changes, an attacker should not be able to:
 
 * See error stack traces
-* Log in with default credentials
+* Sign in with default credentials
 * See verbose token names
 
 ## PR solutions

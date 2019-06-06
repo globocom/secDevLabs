@@ -2,23 +2,23 @@
 
 <img src="images/secDevLabs-logo.png" align="" height="" />
 
-A laboratory for learning secure web development in a practical manner.
+A laboratory for effectively learning secure web development.
 
-## Build your own lab
+## Build your lab
 
-By provisioning local environments via docker-compose, you will learn how the most critical web application security risks are exploited and how these vulnerable code can be fixed to mitigate them. 👩‍💻
+By provisioning local environments via docker-compose, you will learn how the most critical web application security risks are exploited and how these vulnerable codes can be fixed to mitigate them. 👩‍💻
 
 ## How do I start?
 
-After forking this repository, you will find multiple intended vulnerable apps based on real life cenarios in various languages such as Golang, Python and PHP. A good start would be installing the ones you are most familiar with. 💡
+After forking this repository, you will find multiple intended vulnerable apps based on real-life scenarios in various languages such as Golang, Python and PHP. A good start would be installing the ones you are most familiar with. 💡
 
 Each of them has an `Attack Narrative` section that describes how an attacker would exploit the corresponding vulnerability.  Before reading any code, it may be a good idea following these steps so you can better understand the attack itself. 💉
 
-Now it's time to shield the application up! Imagine that this is your application and you need to fix these flaws! Your mission is writing new code that mitigates them and sending a new Pull Request to deploy a secure app! 🔐
+Now it's time to shield the application up! Imagine that this is your application and you need to fix these flaws! Your mission is writing new codes that mitigate them and sending a new Pull Request to deploy a secure app! 🔐
 
 ## How secure is my new code?
 
-After mitigating a vulnerability, you can send a Pull Request to gently ask secDevLabs community to review your new secure code. If you're feeling a bit lost, try having a look at [this mitigation solution](https://github.com/globocom/secDevLabs/pull/29), it might help! 🚀
+After mitigating a vulnerability, you can send a Pull Request to gently ask the secDevLabs community to review your new secure codes. If you're feeling a bit lost, try having a look at [this mitigation solution](https://github.com/globocom/secDevLabs/pull/29), it might help! 🚀
 
 ##  OWASP Top 10 (2017) apps:
 

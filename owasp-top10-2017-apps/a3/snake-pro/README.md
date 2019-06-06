@@ -4,7 +4,7 @@
     <img src="images/banner.png"/>
 </p>
 
-Snake Pro is a simple Golang Web App that contains an example of Sensitive Data Exposure vulnerability, and it's main goal is to illustrate how an attacker could explore it.
+Snake Pro is a simple Golang Web App that contains an example of Sensitive Data Exposure vulnerability, and its main goal is to illustrate how an attacker could explore it.
 
 ## Index
 
@@ -44,7 +44,7 @@ To properly understand how this application works, you can follow these simple s
 
 ## Attack narrative
 
-Now that you know the purpose of this app, what could possibly go wrong? The following section describes how an attacker could identify and eventually find sensitive information about the app or it's users. We encourage you to follow these steps and try to reproduce them on your own to better understand the attack vector! 😜
+Now that you know the purpose of this app, what could go wrong? The following section describes how an attacker could identify and eventually find sensitive information about the app or its users. We encourage you to follow these steps and try to reproduce them on your own to better understand the attack vector! 😜
 
 ### 👀
 
@@ -60,7 +60,7 @@ After reviewing how application stores users' passwords in MongoDB, it was possi
     <img src="images/attack2.png"/>
 </p>
 
-Additionally, the channel is being used by users to send their sensitive data is unsafe (HTTP), as shown bellow:
+Additionally, the channel is being used by users to send their sensitive data is unsafe (HTTP), as shown below:
 
 <p align="center">
     <img src="images/attack3.png"/>
@@ -68,20 +68,20 @@ Additionally, the channel is being used by users to send their sensitive data is
 
 ### 🔥
 
-If database is somehow exposed, all users' passwords  will be leaked, as shown on these MongoDB documents. To view them, you can locally install [Robo 3T](https://robomongo.org/download) and use default credentials used in `config.yml`:
+If the database is somehow exposed, all users' passwords will be leaked, as shown on these MongoDB documents. To view them, you can locally install [Robo 3T](https://robomongo.org/download) and use default credentials used in `config.yml`:
 
 ```
 Database: snake_pro
 User name: u_snake_pro
 Password: svGX8SViufvYYNu6m3Kv
-Adress: localhost:27017
+Address: localhost:27017
 ```
 
 <p align="center">
     <img src="images/attack4.png"/>
 </p>
 
-Also, as login pages uses HTTP to transmit users' credentials, an attacker on the same network as the victim (same wifi, for example) can use `tcpdump` to perform a man-in-the-middle attack.
+Also, as login pages use HTTP to transmit users' credentials, an attacker on the same network as the victim (same wifi, for example) can use `tcpdump` to perform a man-in-the-middle attack.
 
 To install tcpdump on Mac, use the following command:
 
