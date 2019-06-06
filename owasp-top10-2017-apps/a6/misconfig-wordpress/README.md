@@ -134,6 +134,8 @@ As seen from the image above, the tool found out that the CMS version is outdate
 To install this tool, simply type the following in your OSX terminal:
 
 ```sh
+⚠️ 'The next command will install several exploit codes in your system and many of them may trigger antiviruses alerts'
+
 brew install exploitdb
 ```
 

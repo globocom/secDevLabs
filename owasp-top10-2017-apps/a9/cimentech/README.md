@@ -69,6 +69,8 @@ Having the CMS version, it's possible to check on [exploit-db][3] if there are a
 By using [searchsploit](https://www.exploit-db.com/searchsploit), an attacker could also find this same result via a terminal. To install it, simply type the following in your OSX terminal (keep in mind it might trigger your anti-virus software) :
 
 ```sh
+⚠️ 'The next command will install several exploit codes in your system and many of them may trigger antiviruses alerts'
+
 brew install exploitdb
 ```
 
