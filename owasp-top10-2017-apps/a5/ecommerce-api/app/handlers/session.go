@@ -113,8 +113,10 @@ func RegisterUser(c echo.Context) error {
 	err = db.RegisterUser(userData)
 	if err != nil {
 		// could not register this user into MongoDB (or MongoDB err connection)
-		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error user data2."})
+		errorString := fmt.Sprintf("%s", err)
+		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": errorString})
+
 	}
 
-	return c.String(http.StatusOK, "Register: success!\n")
+	return c.String(http.StatusCreated, "Register: success!\n")
 }
