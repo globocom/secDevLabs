@@ -4,7 +4,7 @@
     <img src="images/img1.png"/>
 </p>
 
-Saidajaula Monstro Fit is a Flask API built with the purpouse of demonstrating how a malicious user could exploit a Broken Authentication vulnerability and escalate his priviledges.
+Saidajaula Monstro Fit is a Flask API built to demonstrate how a malicious user could exploit a Broken Authentication vulnerability and escalate his privileges.
 
 ## Index
 
@@ -39,12 +39,12 @@ Then simply visit [localhost:10082][App] ! 😆
 
 To properly understand how this application works, you can follow these simple steps:
 
-- Visit it's homepage!
+- Visit its homepage!
 - Try registering yourself as a new user.
 
 ## Attack narrative
 
-Now that you know the purpose of this app, what could possibly go wrong? The following section describes how an attacker could identify and eventually find sensitive information about the app or it's users. We encourage you to follow these steps and try to reproduce them on your own to better understand the attack vector! 😜
+Now that you know the purpose of this app, what could go wrong? The following section describes how an attacker could identify and eventually find sensitive information about the app or its users. We encourage you to follow these steps and try to reproduce them on your own to better understand the attack vector! 😜
 
 ### 👀
 
@@ -62,7 +62,7 @@ We can sign-up for a new account by clicking the `SIGN UP` button on the top rig
     <img src="images/attack1.png"/>
 </p>
 
-After creating an account, we are redirected to the `/login` page and, to better understand how the application is handling the requests, we will perform a login using the following `curl` command. As shown by the image:
+After creating an account, we are redirected to the `/login` page and, to better understand how the application is handling the requests, we will perform login using the following `curl` command. As shown by the image:
 
 ```sh
 curl -i -L localhost:10082/login -F "username=daniel" -F "password=daniel" -X POST
@@ -72,7 +72,7 @@ curl -i -L localhost:10082/login -F "username=daniel" -F "password=daniel" -X PO
     <img src="images/attack2.png"/>
 </p>
 
-As we can see from the image above, the application sets a cookie for the user, `sessionId`. By having a better look at this cookie, we find out that it is actually base64 encoded, and it's content are as following:
+As we can see from the image above, the application sets a cookie for the user, `sessionId`. By having a better look at this cookie, we find out that it is base64 encoded, and it's content are as follows:
 
 <p align="center">
     <img src="images/attack3.png"/>
