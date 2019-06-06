@@ -4,7 +4,7 @@
     <img src="images/banner.png"/>
 </p>
 
-This is a simple Wordpress web application that contains an example of a Security Misconfiguration vulnerability and it's main goal is to describe how a malicious user could exploit multiple Security Misconfiguration vulnerabilities intentionally installed on SecWeb.
+This is a simple Wordpress web application that contains an example of a Security Misconfiguration vulnerability and its main goal is to describe how a malicious user could exploit multiple Security Misconfiguration vulnerabilities intentionally installed on SecWeb.
 
 ## Index
 
@@ -39,11 +39,11 @@ Then simply visit [localhost:8000][App] ! 😆
 
 To properly understand how this application works, you can try to:
 
-- Visit it's homepage!
+- Visit its homepage!
 
 ## Attack narrative
 
-Now that you know the purpose of this app, what could possibly go wrong? The following section describes how an attacker could identify and eventually find sensitive information about the app or it's users. We encourage you to follow these steps and try to reproduce them on your own to better understand the attack vector! 😜
+Now that you know the purpose of this app, what could go wrong? The following section describes how an attacker could identify and eventually find sensitive information about the app or its users. We encourage you to follow these steps and try to reproduce them on your own to better understand the attack vector! 😜
 
 ### 👀
 
@@ -69,25 +69,25 @@ An attacker could try to log in with the username: `admin` and realize, through 
 
 ### 🔥
 
-At this moment, an attacker could use [Burp Suite](https://portswigger.net/burp) to perform a brute force attack using this [wordlist] (if you need any help setting up your proxy you should check this [guide](https://support.portswigger.net/customer/portal/articles/1783066-configuring-firefox-to-work-with-burp)). To do so, after finding the login POST request, right click and send to Intruder, as shown bellow:
+At this moment, an attacker could use [Burp Suite](https://portswigger.net/burp) to perform a brute force attack using this [wordlist] (if you need any help setting up your proxy you should check this [guide](https://support.portswigger.net/customer/portal/articles/1783066-configuring-firefox-to-work-with-burp)). To do so, after finding the login POST request, right click and send to Intruder, as shown below:
 
  <p align="center">
     <img src="images/attack10.png"/>
 </p>
 
-In `Positions` tab, all fields must be cleared first via `Clear §` button. To set `pwd` to change acording to each password from our dictionary wordlist, simply click on `Add §` button after selecting it:
+In the `Positions` tab, all fields must be cleared first via the `Clear §` button. To set `pwd` to change according to each password from our dictionary wordlist, simply click on `Add §` button after selecting it:
 
  <p align="center">
     <img src="images/attack11.png"/>
 </p>
 
-If a valid password is found, the application may process new cookies and eventually redirect the flow to other pages. To guarantee that the brute force attack follows this behavior, set `Always` into `Follow Redirections` options in `Options` tab, as shown bellow:
+If a valid password is found, the application may process new cookies and eventually redirect the flow to other pages. To guarantee that the brute force attack follows this behavior, set `Always` into `Follow Redirections` options in the `Options` tab, as shown below:
 
 <p align="center">
     <img src="images/attack13.png"/>
 </p>
 
-In `Payloads` tab, simply choose the wordlist from `Load...` option and then the attack may be performed via `Start attack` button:
+In `Payloads` tab, simply choose the wordlist from `Load...` option and then the attack may be performed via the `Start attack` button:
 
  <p align="center">
     <img src="images/attack12.png"/>
@@ -170,9 +170,9 @@ We can confirm that the directory is browseable by accessing it through a web br
 
 ## 👀
 
-#### Misconfigured headers gives away unnecessary information about the server
+#### Misconfigured headers give away unnecessary information about the server
 
-Using [Nikto] tool to perform a security check scan, it's possible to see that there are multiple points of attention regarging security headers.
+Using [Nikto] tool to perform a security check scan, it's possible to see that there are multiple points of attention regarding security headers.
 
 To install it, you can use the following command in your OSX terminal:
 
@@ -203,11 +203,11 @@ Now, by doing the following curl command to check the HTTP headers of the applic
 How would you mitigate this vulnerability? After your changes, an attacker should not be able to:
 
 * See verbose error messages
-* Log in with default credentials
+* Sign in with default credentials
 * See verbose tokens
 * Find an outdated CMS version
 
-Note: In this particular app, due to how it works, you can simply write down the changes you would make to mitigate those vulnerabilites and submit it as a pull request.
+Note: In this particular app, due to how it works, you can simply write down the changes you would make to mitigate those vulnerabilities and submit it as a pull request.
 
 ## PR solutions
 
