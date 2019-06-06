@@ -4,7 +4,7 @@
     <img src="images/banner.png"/>
 </p>
 
-Gossip World is a simple Flask app that contains an example of multiple Cross-Site Scripting vulnerabilities and it's main goal is to describe how a malicious user could exploit them on this purposefully vulnerable app.
+Gossip World is a simple Flask app that contains an example of multiple Cross-Site Scripting vulnerabilities and its main goal is to describe how a malicious user could exploit them on this purposefully vulnerable app.
 
 ## Index
 
@@ -41,19 +41,19 @@ To properly understand how this application works, you can follow these simple s
 
 - Create a new user
 - Try leaving a comment on a gossip
-- Try creating your own gossip!
+- Try creating your gossip!
 
 ## Attack narrative
 
-Now that you know the purpose of this app, what could possibly go wrong? The following section describes how an attacker could identify and eventually find sensitive information about the app or it's users. We encourage you to follow these steps and try to reproduce them on your own to better understand the attack vector! 😜
+Now that you know the purpose of this app, what could go wrong? The following section describes how an attacker could identify and eventually find sensitive information about the app or its users. We encourage you to follow these steps and try to reproduce them on your own to better understand the attack vector! 😜
 
 ### Note: This attack narrative works best in Mozilla Firefox.
 
 ### 👀
 
-#### Non sanitization of user input allows for cross-site scripting
+#### Non-sanitization of user input allows for cross-site scripting
 
-After inspecting the application, it is possible to identify that some entries are not sanitized and can be  executed on web browser. It occurs on *search*, *comment* and *post* fields. The following images show this behavior when the following text  is used as an input on these fields:
+After inspecting the application, it is possible to identify that some entries are not sanitized and can be executed on a web browser. It occurs on *search*, *comment* and *post* fields. The following images show this behavior when the following text  is used as an input on these fields:
 
 ```
 <script>alert(1)</script>
@@ -76,7 +76,7 @@ The missing input validation allows a malicious user to insert some scripts that
 
 ### 🔥
 
-An attacker may abuse these flaws by generating a malicious JS code and sending to other users. In order to demonstrate this, the following example will get all keyboard input from an user by persisting a malicious code in the server.
+An attacker may abuse these flaws by generating a malicious JS code and sending it to other users. To demonstrate this, the following example will get all keyboard input from a user by persisting a malicious code in the server.
 
 First, the following Golang API can be built (main.go) that logs all received requests:
 
@@ -124,7 +124,7 @@ This code implements a keylogger to capture all keyboard input from users and se
 
    <img src="images/attack-7.png" align="center"/>
 
-When a victim access the post, the browser will interpret the text between the script tag as a code and will execute it secretly. The following image shows the victim typing letters into the page that has been "infected" by the malicious JS:
+When a victim accesses the post, the browser will interpret the text between the script tag as code and will execute it secretly. The following image shows the victim typing letters into the page that has been "infected" by the malicious JS:
 
 <img src="images/attack-8.png" align="center"/>
 
