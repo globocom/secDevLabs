@@ -102,6 +102,8 @@ Having a look at the token's name, we get a strong indication that the app might
 To install this tool, simply type the following in your OSX terminal:
 
 ```sh
+⚠️ 'The next command will install several exploit codes in your system and many of them may trigger antiviruses alerts'
+
 brew install exploitdb
 ```
 
