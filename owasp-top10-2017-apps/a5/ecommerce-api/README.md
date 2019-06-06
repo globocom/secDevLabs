@@ -1,10 +1,10 @@
-# Vulnerable Ecommerce API
+# Vulnerable eCommerce API
 
 <p align="center">
     <img src="images/a5-banner.png"/>
 </p>
 
-Vulnerable Ecommerce API is a simple Golang web application that contains an example of a Broken Access Control vulnerability and it's main goal is to describe how a malicious user could exploit it.
+Vulnerable eCommerce API is a simple Golang web application that contains an example of a Broken Access Control vulnerability and its main goal is to describe how a malicious user could exploit it.
 
 ## Index
 
@@ -17,7 +17,7 @@ Vulnerable Ecommerce API is a simple Golang web application that contains an exa
 
 ## What is Broken Access Control?
 
-Restrictions on what authenticated users are allowed to do are often not properly enforced. Attackers can exploit these flaws to access unauthorized functionality and/or data, such as access other users' accounts, view sensitive files, modify other users’ data, change access rights, etc.
+Restrictions on what authenticated users are allowed to do are often not properly enforced. Attackers can exploit these flaws to access unauthorized functionality and/or data, such as access to other users' accounts, view sensitive files, modify other users’ data, change access rights, etc.
 
 The main goal of this app is to discuss how **Broken Access Control** vulnerabilities can be exploited and to encourage developers to send secDevLabs Pull Requests on how they would mitigate these flaws.
 
@@ -39,11 +39,11 @@ Then simply visit [localhost:8888][App] ! 😆
 
 To properly understand how this application works, you can follow this step:
 
-- Try registering an user and log in!
+- Try registering a user and log in!
 
 ## Attack narrative
 
-Now that you know the purpose of this app, what could possibly go wrong? The following section describes how an attacker could identify and eventually find sensitive information about the app or it's users. We encourage you to follow these steps and try to reproduce them on your own to better understand the attack vector! 😜
+Now that you know the purpose of this app, what could go wrong? The following section describes how an attacker could identify and eventually find sensitive information about the app or its users. We encourage you to follow these steps and try to reproduce them on your own to better understand the attack vector! 😜
 
 ### 👀
 
@@ -91,7 +91,7 @@ This can also be observed via the web interface. In the web interface it is poss
 
 ### 🔥
 
-Having both `userID`, we can verify that the route "`GET /ticket/:userID`" does not validade if the request was made by the same user or someone else without the proper permission, as shown by the image:
+Having both `userID`, we can verify that the route "`GET /ticket/:userID`" does not validate if the request was made by the same user or someone else without the proper permission, as shown by the image:
 
 ```sh
 curl -vvv http://localhost:8888/ticket/GUID
