@@ -2,7 +2,7 @@
 
 <img src="images/CopyNPaste.png" align="center"/>
 
-CopyNPaste is a Golang web application that uses an API and a simple front end to simulate a login page. It has both `/register` and `/login` routes that, by communicating with a MySQL database, enable users register and enter into a generic system.
+CopyNPaste is a Golang web application that uses an API and a simple front end to simulate a login page. It has both `/register` and `/login` routes that, by communicating with a MySQL database, enable users to register and enter into a generic system.
 
 ## Index
 
@@ -53,7 +53,7 @@ curl -s -H "Content-Type: application/json" -d '{"user":"bob", "pass":"password"
 
 ## Attack narrative
 
-Now that you know the purpose of this app, what could possibly go wrong? The following section describes how an attacker could identify and eventually find sensitive information about the app or it's users. We encourage you to follow these steps and try to reproduce them on your own to better understand the attack vector! 😜
+Now that you know the purpose of this app, what could go wrong? The following section describes how an attacker could identify and eventually find sensitive information about the app or its users. We encourage you to follow these steps and try to reproduce them on your own to better understand the attack vector! 😜
 
 ### 👀
 
@@ -102,7 +102,7 @@ Request:
 
 #### 🔥
 
-An attacker could now create any malicious SQL queries and send them to the API that, in theory, would be executed. For the purpose of this attack narrative, [sqlmap](https://github.com/sqlmapproject/sqlmap) will be used to exemplify how an automated SQL Injection attack may be performed.
+An attacker could now create any malicious SQL queries and send them to the API that, in theory, would be executed. For this attack narrative, [sqlmap](https://github.com/sqlmapproject/sqlmap) will be used to exemplify how an automated SQL Injection attack may be performed.
 
 To install sqlmap on a Mac you can simply type:
 
@@ -153,7 +153,7 @@ sqlmap -r postRequest.txt -D a1db -T Users --dump
 
 ## Secure this app
 
-How could you now migitate this vulnerability? After your code modification, an attacker should not be able to:
+How could you now mitigate this vulnerability? After your code modification, an attacker should not be able to:
 
 * Run SQL queries in the database.
 
