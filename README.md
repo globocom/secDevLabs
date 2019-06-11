@@ -1,5 +1,7 @@
 # secDevLabs
 
+[![Join the chat at https://gitter.im/secDevLabs/community](https://badges.gitter.im/secDevLabs/community.svg)](https://gitter.im/secDevLabs/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 <img src="images/secDevLabs-logo.png" align="" height="" />
 
 A laboratory for effectively learning secure web development.
