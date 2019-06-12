@@ -4,7 +4,7 @@
 
 [![Join the chat at https://gitter.im/secDevLabs/community](https://badges.gitter.im/secDevLabs/community.svg)](https://gitter.im/secDevLabs/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-A laboratory for effectively learning secure web development.
+A laboratory for learning secure web development in a practical manner.
 
 ## Build your lab
 
