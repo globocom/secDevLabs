@@ -1,0 +1,113 @@
+@import url(https://fonts.googleapis.com/css?family=Patrick+Hand+SC);
+* {
+    cursor:url('../cursors/cursor2.cur'), auto;
+    font-family: 'Patrick Hand SC', cursive;
+}
+h1 {
+    font-size: 32pt;
+    color: tan;
+}
+.item{
+    text-align: center;
+    font-size: 90pt;
+    justify-content: center;
+    background:transparent;
+    transition:all .5s ease;
+    color:tan;
+}
+
+.item:hover{
+    background-color: darkslategrey;
+}
+
+.gamegrid {
+    justify-content: center;
+    height: 550px;
+    width: 550px;
+    display: grid;
+    grid-template-columns: repeat(3, 30%);
+    grid-template-rows: repeat(3, 30%);;
+}
+
+.statButton {
+
+}
+
+.pencilBorder {
+    justify-content: center;
+    transition:all .5s ease;
+    outline:none;
+    box-shadow: 20px 38px 34px -26px hsla(0,0%,0%,.2);
+    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;   
+    border:solid 3px goldenrod;
+}
+
+.buttonPlay {
+    position: absolute;
+    height: 50px;
+    width: 170px;
+    font-size: 24pt;
+    left: 90px;
+    vertical-align: bottom;
+    justify-content: center;
+    text-align: center;
+    margin-top: 20px;
+    z-index: 20;
+    background-color: cornflowerblue;
+}
+
+.buttonPlay:hover{
+    /* cursor:url('../img/cursor.png'); */
+    background-color:skyblue;
+}
+
+.boxinfo {
+    font-size: 48pt;
+    text-align: center;
+    vertical-align: middle;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -100px;
+    margin-left: -175px;
+    z-index: 10;
+    height: 200px;
+    width: 350px;
+    text-align: center;
+    /* justify-content: center; */
+    color:whitesmoke;
+}
+
+#fry {
+    position: absolute;
+    left: 20px;
+    top: 70px;
+}
+#bender {
+    position: absolute;
+    right: 20px;
+    top: 70px;
+}
+#fryPoints {
+    position: absolute;
+    left: 250px;
+    font-size: 90pt;
+    top: 50%;
+    vertical-align: center;
+}
+
+#benderPoints {
+    position: absolute;
+    right: 270px;
+    font-size: 90pt;
+    top: 50%;
+    vertical-align: center;
+}
+@media (max-width: 1000px){
+    #fry {display: none;}
+    #bender {display: none;}
+}
+@media (max-width: 1200px){
+    #fryPoints {display: none;}
+    #benderPoints {display: none;}
+}
