@@ -115,7 +115,7 @@ In order to better understand how this app works, two users, `fry123` and `bende
   
   
 
-After registering, the user `fry123` can sign in throuth the route /login, start playing the game:
+After registering, the user `fry123` can sign in throught the route /login, start playing the game:
 
   
   
@@ -131,7 +131,6 @@ After registering, the user `fry123` can sign in throuth the route /login, start
 And see his private statistics:
 
   
-at
 <p  align="center">
 
 <img  src="images/attack2.png"/>
@@ -140,7 +139,7 @@ at
 
   
 
-Using another user `bender` and the Burp Suit Tool, we can see the API request details when accessing _localhost:10005/statistics_. As seen below, to get the user statistics data, an ajax request is made passing the username as a URL parameter:
+Using another user `bender` and the Burp Suite Tool, we can see the API request details when accessing _localhost:10005/statistics_. As seen below, to get the user statistics data, an ajax request is made passing the username as a URL parameter:
 
   
 
