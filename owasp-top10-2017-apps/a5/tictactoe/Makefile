@@ -11,7 +11,7 @@ PROJECT := A5 - TicTacToe
 PORT := 10005
 
 ## Installs a development environment
-install: compose 
+install: env compose 
 
 ## Composes project using docker-compose
 compose:
@@ -20,13 +20,8 @@ compose:
 
 ## Generate new environment variables for Stegonography app
 env:
-	chmod +x deployments/generate-env.sh
-	./deployments/generate-env.sh
-
-## Prints initialization message after compose phase
-msg:
-	chmod +x deployments/check-init.sh
-	./deployments/check-init.sh
+	chmod +x ./generate-env.sh
+	./generate-env.sh
 
 ## Prints help message
 help:

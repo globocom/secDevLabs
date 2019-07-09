@@ -11,14 +11,8 @@ services:
             - "10005:10005"
         networks:
             - a5net
-        environment:
-            DB_PASSWORD: root
-            DB_USER: user
-            DB_PASSWORD: pass
-            DB_DATABASE: a5db
-            DB_PORT: 3306
-            DB_HOST: mysqldb
-            SECRET: secret
+        env_file:
+            - .dockers.env
         depends_on:
             - mysqldb
         external_links:
@@ -32,11 +26,8 @@ services:
           - "3307:3306"
         volumes:
             - db_data:/var/lib/mysql
-        environment:
-            MYSQL_ROOT_PASSWORD: root
-            MYSQL_USER: user
-            MYSQL_PASSWORD: pass
-            MYSQL_DATABASE: a5db
+        env_file:
+            - .dockers.env
         networks:
             - a5net
 
