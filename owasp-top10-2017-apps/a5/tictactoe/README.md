@@ -100,7 +100,7 @@ Now that you know the purpose of this app, what could go wrong? The following se
 
   
 
-In order to better understand how this attack works, two users, `fry123` and `bender`, were created using web interface by visiting [localhost:10005/create](localhost:10005/create) as shown below:
+In order to better understand how the attacks works, two users, `fry123` and `bender`, were created using the web interface by visiting [localhost:10005/create](localhost:10005/create) as shown below:
 
   
   
@@ -110,6 +110,9 @@ In order to better understand how this attack works, two users, `fry123` and `be
 <img  src="images/attack0.png"/>
 
 </p>
+
+
+To perform the attacks we'll use the Burp Suite Tool. If you need any help setting up your proxy you should check this [guide](https://support.portswigger.net/customer/portal/articles/1783066-configuring-firefox-to-work-with-burp).
 
 
 👀 
