@@ -81,7 +81,10 @@ To properly understand how this application works, you can follow this step:
 
   
 
-- Try registering a user, sign in, play the game and see your statistics!
+- Try registering a user
+- Sign in
+- Play the game 
+- See your statistics
 
   
 
@@ -97,7 +100,7 @@ Now that you know the purpose of this app, what could go wrong? The following se
 
   
 
-In order to better understand how this app works, two users, `fry123` and `bender`, were created using web interface by visiting localhost:10005/create as shown below:
+In order to better understand how this attack works, two users, `fry123` and `bender`, were created using web interface by visiting _localhost:10005/create_ as shown below:
 
   
   
@@ -139,7 +142,7 @@ And see his private statistics:
 
   
 
-Using another user `bender` and the Burp Suite Tool, we can see the API request details when accessing _localhost:10005/statistics_. As seen below, to get the user statistics data, an ajax request is made passing the username as a URL parameter:
+Using another user `bender` and the Burp Suite Tool, we can see the API request details when accessing _localhost:10005/statistics_. As seen below, to get the user statistics data, an AJAX request is made passing the username as a URL parameter:
 
   
 
@@ -191,7 +194,7 @@ Analyzing the browser inspector we can see that every time a game ends, a reques
 
   
 
-Using Burp Suite Tool, we can see the request details and notice that two parameters are sent, the username and the match result:
+Using Burp Suite Tool, we can see the request details and notice that two parameters are sent, the `user` and the `result`:
 
   
 
@@ -203,7 +206,7 @@ Using Burp Suite Tool, we can see the request details and notice that two parame
 
   
 
-Using Burp Repeater we changed the _user_ parameter by `fry123` and, as shown below, it was  possible to add a new result to this user:
+Sending this request to Burp Repeater and change the user parameter to another one, for example, fry123, an attacker could try to add a new result without the proper authorization, as can be seen in the following image:
 
   
 
@@ -215,7 +218,7 @@ Using Burp Repeater we changed the _user_ parameter by `fry123` and, as shown be
 
   
 
-Now, when the user `fry123` tries to see his statistics by web interface, he will see the modified data:
+Now, when the user `fry123` tries to see his/her statistics by web interface, he/she will see the modified data:
 
   
 
