@@ -40,6 +40,10 @@ app.get('/home', verifyJWT, (req, res) => {
     res.sendFile(path.join(__dirname+'/public/views/home.html'))
 });
 
+app.get('/', (req, res) => {
+    res.redirect('/login')
+})
+
 app.post('/game', verifyJWT, async (req, res) => {
     const user = req.body.user
     const result = req.body.result
