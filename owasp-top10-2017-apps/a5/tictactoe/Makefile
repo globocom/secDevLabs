@@ -7,11 +7,11 @@ COLOR_YELLOW = \033[33m
 COLOR_GREEN = \033[32m
 COLOR_RED = \033[31m
 
-PROJECT := A5 - TicTacToe
+PROJECT := A5 - Tic-Tac-Toe
 PORT := 10005
 
 ## Installs a development environment
-install: env compose 
+install: env compose msg
 
 ## Composes project using docker-compose
 compose:
@@ -20,8 +20,13 @@ compose:
 
 ## Generate new environment variables for Stegonography app
 env:
-	chmod +x ./generate-env.sh
-	./generate-env.sh
+	chmod +x deployments/generate-env.sh
+	./deployments/generate-env.sh
+
+## Prints initialization message after compose phase
+msg:
+	chmod +x deployments/check-init.sh
+	./deployments/check-init.sh
 
 ## Prints help message
 help:
