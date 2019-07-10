@@ -44,6 +44,10 @@ app.get('/', (req, res) => {
     res.redirect('/login')
 })
 
+app.get('/healthcheck', (req, res) => {
+    res.sendStatus(200)
+})
+
 app.post('/game', verifyJWT, async (req, res) => {
     const user = req.body.user
     const result = req.body.result
