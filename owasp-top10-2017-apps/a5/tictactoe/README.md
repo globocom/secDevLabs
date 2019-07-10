@@ -73,7 +73,7 @@ Then simply visit [localhost:10005][App] ! 😆
 
   
 
-## Get to know the app 💵
+## Get to know the app 🕹
 
   
 
