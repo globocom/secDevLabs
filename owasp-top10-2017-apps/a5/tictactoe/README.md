@@ -115,10 +115,8 @@ In order to better understand how the attacks works, two users, `fry123` and `be
 To perform the attacks we'll use the Burp Suite Tool. If you need any help setting up your proxy you should check this [guide](https://support.portswigger.net/customer/portal/articles/1783066-configuring-firefox-to-work-with-burp).
 
 
-👀 
 
-
-#### Lack of user cookie validation allows for an attacker to get other users' game statistics
+#### 👀 Lack of user cookie validation allows for an attacker to get other users' game statistics
 
   
   
@@ -184,7 +182,7 @@ This allows an attacker to see every known user's private statistics.
 
   
 
-#### Lack of user cookie validation allows for an attacker to manipulate user statistics
+#### 👀 Lack of user cookie validation allows for an attacker to manipulate user statistics
 
   
 Analyzing the browser inspector we can see that every time a game ends, a request is made.
