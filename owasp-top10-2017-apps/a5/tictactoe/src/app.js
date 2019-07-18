@@ -20,6 +20,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true})) 
 app.use(express.static(__dirname + '/public'));
 
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "http://localhost.:10005");
+    next();
+  });
+
 app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname+'/public/views/login.html'))
 });
