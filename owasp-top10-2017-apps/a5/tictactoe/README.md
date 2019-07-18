@@ -55,7 +55,7 @@ Now that you know the purpose of this app, what could go wrong? The following se
 
 ### 👀
 
-In order to better understand how the application handles its data, two users, `user1` and `user2`, can be created using the web interface by visiting [http://locahost:.10005/create](http://localhost:.10005/create) as exemplified below:
+In order to better understand how the application handles its data, two users, `user1` and `user2`, can be created using the web interface by visiting [http://locahost.:10005/create](http://localhost:.10005/create) as exemplified below:
 
 <p  align="center"><img  src="images/attack0.png"/></p>
 
