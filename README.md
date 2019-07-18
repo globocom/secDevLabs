@@ -34,6 +34,7 @@ Disclaimer: You are about to install vulnerable apps in your machine! 🔥
 | A3 - Sensitive Data Exposure | Golang | [SnakePro](owasp-top10-2017-apps/a3/snake-pro)|
 | A4 - XML External Entities (XXE) | PHP | [ViniJr Blog](owasp-top10-2017-apps/a4/vinijr-blog) |
 | A5 - Broken Access Control | Golang | [Vulnerable Ecommerce API](owasp-top10-2017-apps/a5/ecommerce-api) |
+| A5 - Broken Access Control | NodeJS | [Tic-Tac-Toe](owasp-top10-2017-apps/a5/tictactoe) |
 | A6 - Security Misconfiguration | PHP | [Vulnerable Wordpress Misconfig](owasp-top10-2017-apps/a6/misconfig-wordpress) |
 | A6 - Security Misconfiguration | NodeJS | [Stegonography](owasp-top10-2017-apps/a6/stegonography) |
 | A7 - Cross-Site Scripting (XSS) | Python | [Gossip World](owasp-top10-2017-apps/a7/gossip-world) |
