@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tic-Tac-Toe</title>
+    <link rel="stylesheet" href="../css/login.css">
+</head>
+<script src="../js/sender.js"></script>
+<body >
+    <div class="login">
+        <div class="ticTacTitle">Tic-Tac-Toe!</div>
+        <div class="loginBox">
+            <form onsubmit="createAccount(event);">
+                <div class="loginTitle">
+                    Create account
+                </div>
+                <div id="message"></div>
+                <label for="username"> Username </label> 
+                <input type="text" name="username" id="username">
+                <label for="password"> Password </label> 
+                <input type="password" name="password" id="password">
+                <label for="passwordconf"> Password again </label> 
+                <input type="password" name="passwordconf" id="passwordconf" >
+                <input type="submit" value="Create" >
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
