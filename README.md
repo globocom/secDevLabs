@@ -12,7 +12,7 @@ By provisioning local environments via docker-compose, you will learn how the mo
 
 ## How do I start?
 
-After forking this repository, you will find multiple intended vulnerable apps based on real-life scenarios in various languages such as Golang, Python and PHP. A good start would be installing the ones you are most familiar with. 💡
+After forking this repository, you will find multiple intended vulnerable apps based on real-life scenarios in various languages such as Golang, Python and PHP. A good start would be installing the ones you are most familiar with. You can find instructions to do this on each of the apps. 💡
 
 Each of them has an `Attack Narrative` section that describes how an attacker would exploit the corresponding vulnerability.  Before reading any code, it may be a good idea following these steps so you can better understand the attack itself. 💉
 
