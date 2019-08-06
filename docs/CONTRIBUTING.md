@@ -8,6 +8,10 @@ The following is a set of guidelines for contributing to SecDevLabs. These are j
 
 Well, a good place to start is to make sure you can deploy your app with Docker-Compose. All the apps in SecDevLabs are built with it in order to ensure you can get get right into the action! ✓
 
+If you need help with it, make sure to check [Docker Compose Getting Started][6]. There you'll find examples for both `Dockerfile` and `docker-compose.yml`, two essential files for deploying your app.
+
+For an even more detailed look at `docker-compose.yml` structure, you can check [Compose File Reference][7]. All of the existing apps have these files inside the deployments folder, so remember you can use them as example too!
+
 So your app can be deployed with Docker-Compose, nice job! But wait, does it have a Makefile? If it doesn't, be sure to have a look [here][1], we have a template you can follow or you can create your own! ✓
 
 ## Ok, my app is looking awesome and all set up with Docker-Compose, what else do I need to send it?
@@ -49,3 +53,5 @@ Please let us know! Send a Pull Request with the `bug 🕷 ` label or create an 
 [3]:/docs/README_Template.md
 [4]:/docs/PR_Template.md
 [5]:/docs/Issue_Template.md
+[6]:https://docs.docker.com/compose/gettingstarted/
+[7]:https://docs.docker.com/compose/compose-file/
