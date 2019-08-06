@@ -3,6 +3,11 @@
 .SILENT:
 .DEFAULT_GOAL := help
 
+GO ?= go
+GOROOT ?= $(shell $(GO) env GOROOT)
+GOPATH ?= $(shell $(GO) env GOPATH)
+GOBIN ?= $(GOPATH)/bin
+
 COLOR_RESET = \033[0m
 COLOR_COMMAND = \033[36m
 COLOR_YELLOW = \033[33m
@@ -10,14 +15,21 @@ COLOR_GREEN = \033[32m
 COLOR_RED = \033[31m
 
 PROJECT := #Add your project's name here!
+PORT := #The port your app uses! If possible, make sure the port matches the app's topic number. As an example, if your app fits in the A6 category, it would be great if your port were 10006! :)
+SLEEPUNTILAPPSTARTS := 45
 
-## Installs a development environment
-install: deploy
+## Installs a development environment using docker-compose
+install: compose msg
 
-## Composes project using docker-compose
-deploy:
-	docker-compose -f deployments/docker-compose.yml down -v 
+## Run project using docker-compose
+compose:
+	docker-compose -f deployments/docker-compose.yml down -v --remove-orphans
 	docker-compose -f deployments/docker-compose.yml up -d --build --force-recreate
+
+## Prints initialization message after compose phase - You can find that the check-init.sh script is also in the docs folder.
+msg:
+	chmod +x deployments/check-init.sh
+	./deployments/check-init.sh
 
 ## Prints help message
 help:
