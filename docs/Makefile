@@ -3,6 +3,7 @@
 .SILENT:
 .DEFAULT_GOAL := help
 
+#If your app is written in golang, add the following lines to set GOPATH
 GO ?= go
 GOROOT ?= $(shell $(GO) env GOROOT)
 GOPATH ?= $(shell $(GO) env GOPATH)
