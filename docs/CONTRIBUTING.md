@@ -12,9 +12,34 @@ So your app can be deployed with Docker-Compose, nice job! But wait, does it hav
 
 ## Ok, my app is looking awesome and all set up with Docker-Compose, what else do I need to send it?
 
+It would be awesome if you could follow this basic suggested skeleton for your app, as all others conform to this template:
+
+```bash
+├── owasp-top10-2017-apps
+│   ├── a#
+        ├── MY-APP
+            ├── app
+                ├── myApp.go
+            ├── deployments
+                ├── Dockerfile
+                ├── check-init.sh
+                ├── docker-compose.yml
+            ├── images
+                ├── image1.jpg
+                ├── image2.jpg
+            ├── .gitignore
+            ├── Makefile
+            ├── README.md
+├── docs
+├── images
+├── LICENSE.md
+├── README.md
+└── .gitignore
+```
+
 Do you have a README file? If you don't, have a look at our [README template][3]!
 
-Just be sure to add some pictures! A picture is worth a thousand words! 👍
+Be sure to add some pictures! A picture is worth a thousand words! 👍
 
 ## I've found an error on one of the apps!
 
