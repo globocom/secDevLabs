@@ -6,11 +6,7 @@ The following is a set of guidelines for contributing to SecDevLabs. These are j
 
 ## So... I built this app, it looks great, but how can I send it to SecDevLabs?
 
-Well, a good place to start is to make sure you can deploy your app with Docker-Compose. All the apps in SecDevLabs are built with it in order to ensure you can get get right into the action! ✓
-
-If you need help with it, make sure to check [Docker Compose Getting Started][6]. There you'll find examples for both `Dockerfile` and `docker-compose.yml`, two essential files for deploying your app.
-
-For an even more detailed look at `docker-compose.yml` structure, you can check [Compose File Reference][7]. All of the existing apps have these files inside the deployments folder, so remember you can use them as example too!
+Well, a good place to start is to make sure you can deploy your app with Docker-Compose. All the apps in SecDevLabs are built with it in order to ensure you can get right into the action! If you need help, make sure to check [Docker Compose Getting Started][6] and [Compose File Reference][7] for a detailed look at `docker-compose.yml` file structure. ✓
 
 So your app can be deployed with Docker-Compose, nice job! But wait, does it have a Makefile? If it doesn't, be sure to have a look [here][1], we have a template you can follow or you can create your own! ✓
 
