@@ -104,7 +104,7 @@ Some good examples of images are as follows:
 Creating a payload:
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/globocom/secDevLabs/master/owasp-top10-2017-apps/a1/copy-n-paste/docs/attack-0.png"/>
+    <img src="https://raw.githubusercontent.com/globocom/secDevLabs/master/owasp-top10-2017-apps/a2/saidajaula-monster/images/attack7.png"/>
 </p>
 
 Delivering a payload, and results!
