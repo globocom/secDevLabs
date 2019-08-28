@@ -46,12 +46,17 @@ func AuthenticateUser(user string, pass string) (bool, error) {
 	}
 	defer dbConn.Close()
 
-	query := fmt.Sprint("select * from Users where username = '" + user + "'")
-	rows, err := dbConn.Query(query)
+	stmt, stmtErr := dbConn.Prepare("SELECT * FROM Users WHERE username = ?")
+	if stmtErr != nil {
+		return false, stmtErr
+	}
+
+	rows, err := stmt.Query(user)
 	if err != nil {
 		return false, err
 	}
 	defer rows.Close()
+
 	loginAttempt := types.LoginAttempt{}
 	for rows.Next() {
 		err := rows.Scan(&loginAttempt.ID, &loginAttempt.User, &loginAttempt.Pass)
@@ -88,8 +93,12 @@ func NewUser(user string, pass string, passcheck string) (bool, error) {
 	}
 	defer dbConn.Close()
 
-	query := fmt.Sprint("insert into Users (username, password) values ('" + user + "', '" + passHash + "')")
-	rows, err := dbConn.Query(query)
+	stmt, stmtErr := dbConn.Prepare("INSERT INTO Users (username, password) VALUES (?, ?)")
+	if stmtErr != nil {
+		return false, stmtErr
+	}
+
+	rows, err := stmt.Query(user, passHash)
 	if err != nil {
 		return false, err
 	}
@@ -108,8 +117,12 @@ func CheckIfUserExists(username string) (bool, error) {
 	}
 	defer dbConn.Close()
 
-	query := fmt.Sprint("select username from Users where username = '" + username + "'")
-	rows, err := dbConn.Query(query)
+	stmt, stmtErr := dbConn.Prepare("SELECT username FROM Users WHERE username = ?")
+	if stmtErr != nil {
+		return false, stmtErr
+	}
+
+	rows, err := stmt.Query(username)
 	if err != nil {
 		return false, err
 	}
