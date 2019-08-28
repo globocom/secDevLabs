@@ -21,6 +21,8 @@ services:
             - mongodb
         external_links:
             - mongodb:mongodb
+        env_file:
+            - ../.env
 
     mongodb:
         container_name: mongodb
