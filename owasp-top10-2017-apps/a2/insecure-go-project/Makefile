@@ -21,12 +21,16 @@ PROJECT := A2 - Insecure Go Project
 PORT := 9999
 
 ## Installs a development environment
-install: compose msg
+install: generate-mongo-init compose msg
 
 ## Composes project using docker-compose
 compose:
 	docker-compose -f deployments/docker-compose.yml down -v --remove-orphans
 	docker-compose -f deployments/docker-compose.yml up -d --build --force-recreate
+
+generate-mongo-init:
+	chmod +x scripts/generate_mongo_init.sh
+	./scripts/generate_mongo_init.sh
 
 ## Prints initialization message after compose phase
 msg:
