@@ -7,10 +7,10 @@ type APIconfig struct {
 
 // MongoConfig holds all information regarding MongoDB.
 type MongoConfig struct {
-	MongoPassword string
-	MongoUser     string
-	MongoDBName   string
-	MongoHost     string
+	MongoPassword string `mapstructure:"password"`
+	MongoUser     string `mapstructure:"username"`
+	MongoDBName   string `mapstructure:"dbname"`
+	MongoHost     string `mapstructure:"host"`
 }
 
 // Project configuration.
