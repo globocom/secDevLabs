@@ -24,6 +24,10 @@ func Login(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error binding login attempt."})
 	}
 
+	if err := loginAttempt.Validate(); err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": fmt.Sprintf("Validation error: %s.", err)})
+	}
+
 	validUser, err := util.AuthenticateUser(loginAttempt.User, loginAttempt.Pass)
 	if err != nil {
 		msgUser := err.Error()
@@ -46,6 +50,10 @@ func Register(c echo.Context) error {
 	err := c.Bind(&RegisterAttempt)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error binding register attempt."})
+	}
+
+	if err := RegisterAttempt.Validate(); err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": fmt.Sprintf("Validation error: %s.", err)})
 	}
 
 	userCreated, err := util.NewUser(RegisterAttempt.User, RegisterAttempt.Pass, RegisterAttempt.PassCheck)
