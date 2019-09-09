@@ -185,9 +185,9 @@ func RegisterUser(userData types.UserData) error {
 	}
 
 	newUserData := bson.M{
-		"username": userData.Username,
-		"password": userData.Password,
-		"userID":   userData.UserID,
+		"username":        userData.Username,
+		"hashed-password": userData.HashedPassword,
+		"userID":          userData.UserID,
 	}
 	err = session.Insert(newUserData, UserCollection)
 	return err

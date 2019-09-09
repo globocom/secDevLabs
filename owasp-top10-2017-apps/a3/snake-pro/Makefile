@@ -26,7 +26,7 @@ generate-certs:
 	{ \
 	if [ ! -s "app/server.key" ] || [ ! -s "app/server.crt" ]; \
 	then \
-		openssl req -subj '/' -new -newkey rsa:2048 -sha256 -days 365 -nodes -x509 -keyout app/server.key -out app/server.crt; \
+		openssl req -subj '/' -new -newkey rsa:2048 -sha256 -days 365 -nodes -x509 -keyout app/server.key -out app/server.crt 1>/dev/null 2>&1; \
 	fi; \
 	}
 
