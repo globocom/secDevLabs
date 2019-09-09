@@ -62,6 +62,7 @@ func main() {
 	echoInstance.Use(middleware.Logger())
 	echoInstance.Use(middleware.Recover())
 	echoInstance.Use(middleware.RequestID())
+	echoInstance.Pre(middleware.HTTPSRedirect())
 
 	templates := make(map[string]*template.Template)
 	templates["form.html"] = template.Must(template.ParseFiles("views/form.html", "views/base.html"))
@@ -87,7 +88,7 @@ func main() {
 	r.GET("/ranking", api.PageRanking)
 
 	APIport := fmt.Sprintf(":%d", getAPIPort())
-	echoInstance.Logger.Fatal(echoInstance.Start(APIport))
+	echoInstance.Logger.Fatal(echoInstance.StartTLS(APIport, "server.crt", "server.key"))
 }
 
 func errorAPI(err error) {

@@ -19,7 +19,16 @@ COLOR_RED = \033[31m
 
 
 ## Installs a development environment
-install: compose msg
+install: generate-certs compose msg
+
+## Generate certificates
+generate-certs:
+	{ \
+	if [ ! -s "app/server.key" ] || [ ! -s "app/server.crt" ]; \
+	then \
+		openssl req -subj '/' -new -newkey rsa:2048 -sha256 -days 365 -nodes -x509 -keyout app/server.key -out app/server.crt; \
+	fi; \
+	}
 
 ## Composes project using docker-compose
 compose:
