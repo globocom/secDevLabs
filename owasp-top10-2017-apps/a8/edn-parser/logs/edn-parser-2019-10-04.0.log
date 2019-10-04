@@ -1,0 +1,12 @@
+12:30:29.466 [main] INFO  org.eclipse.jetty.util.log  - Logging initialized @6593ms to org.eclipse.jetty.util.log.Slf4jLog
+12:32:18.812 [main] INFO  org.eclipse.jetty.util.log  - Logging initialized @6467ms to org.eclipse.jetty.util.log.Slf4jLog
+12:39:31.083 [main] INFO  org.eclipse.jetty.util.log  - Logging initialized @6612ms to org.eclipse.jetty.util.log.Slf4jLog
+12:40:38.063 [main] INFO  org.eclipse.jetty.util.log  - Logging initialized @6466ms to org.eclipse.jetty.util.log.Slf4jLog
+12:42:04.426 [main] INFO  org.eclipse.jetty.util.log  - Logging initialized @6737ms to org.eclipse.jetty.util.log.Slf4jLog
+12:44:38.878 [main] INFO  org.eclipse.jetty.util.log  - Logging initialized @6398ms to org.eclipse.jetty.util.log.Slf4jLog
+13:00:12.077 [main] INFO  org.eclipse.jetty.util.log  - Logging initialized @6423ms to org.eclipse.jetty.util.log.Slf4jLog
+13:03:20.345 [main] INFO  org.eclipse.jetty.util.log  - Logging initialized @6210ms to org.eclipse.jetty.util.log.Slf4jLog
+13:26:48.362 [main] INFO  org.eclipse.jetty.util.log  - Logging initialized @6387ms to org.eclipse.jetty.util.log.Slf4jLog
+13:36:40.481 [main] INFO  org.eclipse.jetty.util.log  - Logging initialized @6506ms to org.eclipse.jetty.util.log.Slf4jLog
+13:38:50.946 [main] INFO  org.eclipse.jetty.util.log  - Logging initialized @6508ms to org.eclipse.jetty.util.log.Slf4jLog
+13:39:15.164 [main] INFO  org.eclipse.jetty.util.log  - Logging initialized @6527ms to org.eclipse.jetty.util.log.Slf4jLog

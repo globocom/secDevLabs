@@ -1,0 +1,15 @@
+version: "3"
+services:
+  edn-parser:
+    container_name: edn-parser
+    build:
+      context: .
+      dockerfile: deployments/Dockerfile
+    networks: 
+      - a8_net
+    ports:
+      - "8080:8080"
+    restart: always
+
+networks:
+  a8_net:
