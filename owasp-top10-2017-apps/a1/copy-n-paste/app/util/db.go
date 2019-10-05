@@ -46,12 +46,16 @@ func AuthenticateUser(user string, pass string) (bool, error) {
 	}
 	defer dbConn.Close()
 
-	query := fmt.Sprint("select * from Users where username = '" + user + "'")
-	rows, err := dbConn.Query(query)
+	stmtSelect, err := dbConn.Prepare("select * from Users where username = ?")
 	if err != nil {
 		return false, err
 	}
+
+	rows, err := stmtSelect.Query(user)
 	defer rows.Close()
+	if err != nil {
+		return false, err
+	}
 	loginAttempt := types.LoginAttempt{}
 	for rows.Next() {
 		err := rows.Scan(&loginAttempt.ID, &loginAttempt.User, &loginAttempt.Pass)
@@ -88,12 +92,15 @@ func NewUser(user string, pass string, passcheck string) (bool, error) {
 	}
 	defer dbConn.Close()
 
-	query := fmt.Sprint("insert into Users (username, password) values ('" + user + "', '" + passHash + "')")
-	rows, err := dbConn.Query(query)
+	stmtIns, err := dbConn.Prepare("insert into Users (username, password) values (?, ?)")
 	if err != nil {
 		return false, err
 	}
+	rows, err := stmtIns.Query(user, passHash)
 	defer rows.Close()
+	if err != nil {
+		return false, err
+	}
 
 	fmt.Println("User created: ", user)
 	return true, nil //user created
@@ -101,19 +108,21 @@ func NewUser(user string, pass string, passcheck string) (bool, error) {
 
 //CheckIfUserExists checks if there is an user with the given username on db
 func CheckIfUserExists(username string) (bool, error) {
-
 	dbConn, err := OpenDBConnection()
 	if err != nil {
 		return false, err
 	}
 	defer dbConn.Close()
 
-	query := fmt.Sprint("select username from Users where username = '" + username + "'")
-	rows, err := dbConn.Query(query)
+	stmtCheck, err := dbConn.Prepare("select username from Users where username = ?")
 	if err != nil {
 		return false, err
 	}
+	rows, err := stmtCheck.Query(username)
 	defer rows.Close()
+	if err != nil {
+		return false, err
+	}
 
 	if !rows.Next() {
 		return false, nil //invalid username
