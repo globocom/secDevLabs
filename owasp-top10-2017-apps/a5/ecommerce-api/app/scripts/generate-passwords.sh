@@ -12,8 +12,8 @@ echo "MONGO_DATABASE_USERNAME=$MONGO_DATABASE_USERNAME_TMP" > deployments/docker
 echo "MONGO_DATABASE_PASSWORD=$MONGO_DATABASE_PASSWORD_TMP" >> deployments/dockers.env
 
 # Writing passwords into .env to be used by run_create_cert.sh and to send to STDOUT
-echo "export MONGO_DATABASE_USERNAME=\"$MONGO_DATABASE_USERNAME_TMP\"" > .env
-echo "export MONGO_DATABASE_PASSWORD=\"$MONGO_DATABASE_PASSWORD_TMP\"" >> .env
+echo "MONGO_DATABASE_USERNAME=\"$MONGO_DATABASE_USERNAME_TMP\"" > .env
+echo "MONGO_DATABASE_PASSWORD=\"$MONGO_DATABASE_PASSWORD_TMP\"" >> .env
 
 # Preparing script to create mongoDB default user
 cat << EOF > deployments/mongo-init.js
