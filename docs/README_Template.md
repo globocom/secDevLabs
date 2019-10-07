@@ -13,7 +13,7 @@
 ## Index
 
 ( Remember to fix these links when everything is done! )
-- [Definition](#what-is-the-vulnerability-?)
+- [Definition](#definition)
 - [Setup](#setup)
 - [Attack narrative](#attack-narrative)
 - [Objectives](#secure-this-app)
@@ -21,7 +21,7 @@
 - [Contributing](#contributing)
 
 
-## What is ( vulnerability being explored in this app )?
+## <a name="definition"></a> What is ( vulnerability being explored in this app )?
 
 ( OWASP vulnerability definition here )
 
