@@ -1,10 +1,17 @@
-# secDevLabs
+<p align="center">
+  <img src="images/secDevLabs-logo.png" allign="center" height=""/>
+  <!-- logo font: Agency FB Bold Condensed -->
+</p>
 
-<img src="images/secDevLabs-logo.png" align="" height="" />
-
-[![Join the chat at https://gitter.im/secDevLabs/community](https://badges.gitter.im/secDevLabs/community.svg)](https://gitter.im/secDevLabs/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
+<p align="center">
 A laboratory for learning secure web development in a practical manner.
+</p>
+
+<p align="center">
+<a href="https://github.com/globocom/secDevLabs/blob/master/docs/CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-Welcome-brightgreen"/></a>
+<a href="https://gitter.im/secDevLabs/community"><img src="https://badges.gitter.im/secDevLabs/community.svg"/></a>
+<a href="https://github.com/globocom/secDevLabs/issues"><img src="https://img.shields.io/github/hacktoberfest/2019/globocom/secdevlabs"/></a>
+</p>
 
 ## Build your lab
 
