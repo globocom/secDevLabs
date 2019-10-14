@@ -17,7 +17,7 @@ services:
       - db
     image: secdevlabs/a6-the-mistery:wp-version-2
     ports:
-      - "8000:80"
+      - "10006:10006"
     restart: always
     environment:
       WORDPRESS_DB_HOST: db:3306

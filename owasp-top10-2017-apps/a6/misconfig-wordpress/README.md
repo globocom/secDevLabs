@@ -33,7 +33,7 @@ cd secDevLabs/owasp-top10-2017-apps/a6/misconfig-wordpress
 make install
 ```
 
-Then simply visit [localhost:8000][App] ! 😆
+Then simply visit [localhost:10006][App] ! 😆
 
 ## Get to know the app 📄
 
@@ -49,7 +49,7 @@ Now that you know the purpose of this app, what could go wrong? The following se
 
 #### Verbose error message allows for username enumeration
 
-It's possible to reach the site through the HTTP port 8000, as shown by the image below:
+It's possible to reach the site through the HTTP port 10006, as shown by the image below:
 
 <p align="center">
     <img src="images/banner.png"/>
@@ -120,7 +120,7 @@ brew install wpscan
 And then use this command to start a new simple scan:
 
 ```sh
-wpscan -u localhost:8000
+wpscan -u localhost:10006
 ```
 
  <p align="center">
@@ -185,7 +185,7 @@ brew install nikto
 Then scan the web app using:
 
 ```sh
-nikto -h http://localhost:8000/
+nikto -h http://localhost:10006/
 ```
 
  <p align="center">
@@ -221,7 +221,7 @@ We encourage you to contribute to SecDevLabs! Please check out the [Contributing
 
 [Docker Install]:  https://docs.docker.com/install/
 [Docker Compose Install]: https://docs.docker.com/compose/install/
-[App]: http://localhost:8000
+[App]: http://localhost:10006
 [wordlist]: https://github.com/danielmiessler/SecLists/blob/master/Passwords/UserPassCombo-Jay.txt
 [wpscan]:https://wpscan.org/
 [malicious code]: https://www.exploit-db.com/exploits/44949
