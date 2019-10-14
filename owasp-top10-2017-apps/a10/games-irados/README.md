@@ -33,7 +33,7 @@ cd secDevLabs/owasp-top10-2017-apps/a10/games-irados
 make install
 ```
 
-Then simply visit [localhost:3001][App] ! 😆
+Then simply visit [localhost:10010][App] ! 😆
 
 ## Get to know the app 🎮
 
@@ -169,7 +169,7 @@ We encourage you to contribute to SecDevLabs! Please check out the [Contributing
 
 [Docker Install]:  https://docs.docker.com/install/
 [Docker Compose Install]: https://docs.docker.com/compose/install/
-[App]: http://localhost:3001
+[App]: http://localhost:10010
 [secDevLabs]: https://github.com/globocom/secDevLabs
 [2]:https://github.com/globocom/secDevLabs/tree/master/owasp-top10-2017-apps/a10/games-irados
 [Burp Suite]: https://portswigger.net/burp
