@@ -61,7 +61,7 @@ func getMongoConfig() *MongoConfig {
 func getAPIPort() int {
 	apiPort, err := strconv.Atoi(os.Getenv("API_PORT"))
 	if err != nil {
-		apiPort = 8888
+		apiPort = 10005
 	}
 	return apiPort
 }
