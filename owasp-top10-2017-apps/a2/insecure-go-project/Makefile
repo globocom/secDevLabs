@@ -18,7 +18,7 @@ COLOR_GREEN = \033[32m
 COLOR_RED = \033[31m
 
 PROJECT := A2 - Insecure Go Project
-PORT := 9999
+PORT := 10002
 
 ## Installs a development environment
 install: compose msg
