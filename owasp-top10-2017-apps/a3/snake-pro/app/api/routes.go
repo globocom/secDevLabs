@@ -12,6 +12,7 @@ import (
 	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a3/snake-pro/app/types"
 	"github.com/google/uuid"
 	"github.com/labstack/echo"
+	"golang.org/x/crypto/bcrypt"
 )
 
 // HealthCheck is the heath check function.
@@ -40,6 +41,17 @@ func ReadCookie(c echo.Context) (string, error) {
 	}
 	return cookie.Value, err
 }
+// HashPassword hash passwords
+func HashPassword(password string) (string, error) {
+    bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
+    return string(bytes), err
+}
+
+// CheckPasswordHash check passwords hash
+func CheckPasswordHash(password, hash string) bool {
+    err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
+    return err == nil
+}
 
 // Register registers a new user into MongoDB.
 func Register(c echo.Context) error {
@@ -58,6 +70,8 @@ func Register(c echo.Context) error {
 	newGUID1 := uuid.Must(uuid.NewRandom())
 	userData.UserID = newGUID1.String()
 	userData.HighestScore = 0
+	
+	userData.Password = Hashpassword(userData.Password)
 
 	err = db.RegisterUser(userData)
 	if err != nil {
@@ -86,7 +100,7 @@ func Login(c echo.Context) error {
 		return c.JSON(http.StatusForbidden, map[string]string{"result": "error", "details": "Error login."})
 	}
 
-	validPass := pass.CheckPass(userDataResult.Password, loginAttempt.Password)
+	validPass := CheckPasswordHash(loginAttempt.Password, userDataResult.Password)
 	if !validPass {
 		// wrong password
 		return c.JSON(http.StatusForbidden, map[string]string{"result": "error", "details": "Error login."})
