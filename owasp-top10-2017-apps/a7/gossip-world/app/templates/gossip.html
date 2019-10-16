@@ -75,7 +75,8 @@
           <!-- Post Content -->
           <p class="lead">{{post[4]}}</p>
 
-          <p>{{post[1] | safe}}</p>
+          <!-- Impedindo XSS -->
+          <p>{{post[1]}}</p>
 
           <hr>
 
@@ -113,7 +114,8 @@
             <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
             <div class="media-body">
               <h5 class="mt-0">{{comment[0]}}</h5>
-              {{comment[1] | safe}}
+              <!--  Impedindo XSS   -->
+              {{comment[1]}}
             </div>
           </div>
           {% endfor %}
