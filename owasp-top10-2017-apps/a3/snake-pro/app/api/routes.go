@@ -41,8 +41,15 @@ func ReadCookie(c echo.Context) (string, error) {
 	return cookie.Value, err
 }
 
+//HashPassword encrypt user password.
+func HashPassword(password string) (string, error) {
+    bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
+    return string(bytes), err
+
+
 // Register registers a new user into MongoDB.
 func Register(c echo.Context) error {
+	
 
 	userData := types.UserData{}
 	err := c.Bind(&userData)
@@ -58,6 +65,7 @@ func Register(c echo.Context) error {
 	newGUID1 := uuid.Must(uuid.NewRandom())
 	userData.UserID = newGUID1.String()
 	userData.HighestScore = 0
+	userData.password = HashPassword(userData.password)
 
 	err = db.RegisterUser(userData)
 	if err != nil {
@@ -68,7 +76,12 @@ func Register(c echo.Context) error {
 	msgUser := fmt.Sprintf("User %s created!", userData.Username)
 	return c.String(http.StatusOK, msgUser)
 }
-
+	
+//CheckPasswordHash validate user password	
+func CheckPasswordHash(password, hash string) bool {
+    err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
+    return err == nil
+	
 // Login checks MongoDB if this user exists and then returns a JWT session cookie.
 func Login(c echo.Context) error {
 
@@ -86,7 +99,9 @@ func Login(c echo.Context) error {
 		return c.JSON(http.StatusForbidden, map[string]string{"result": "error", "details": "Error login."})
 	}
 
-	validPass := pass.CheckPass(userDataResult.Password, loginAttempt.Password)
+	//validPass := pass.CheckPass(userDataResult.Password, loginAttempt.Password)
+	validPass := CheckPasswordHash(loginAttempt.Password, userDataResult.Password)
+	
 	if !validPass {
 		// wrong password
 		return c.JSON(http.StatusForbidden, map[string]string{"result": "error", "details": "Error login."})
