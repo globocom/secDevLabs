@@ -81,7 +81,7 @@ As no validation is being made on these variables, SQL injections may be success
 To confirm the input field is vulnerable, the following payload could be used to test if a 5 seconds delay will be noted after sending it:
 
 ```
--1' UNION select 1,2,sleep(5) --
+-1' UNION select 1,2,sleep(5) -- '
 ```
 
 <img src="images/attack-1.png" align="center"/>
