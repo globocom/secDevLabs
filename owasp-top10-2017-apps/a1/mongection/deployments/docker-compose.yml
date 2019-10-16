@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+
+    server:
+        container_name: a1_mongection
+        build:
+            context: ../
+            dockerfile: deployments/Dockerfile
+        ports:
+            - "9995:9995"
+        networks:
+            - a1net
+        depends_on:
+            - mongo
+        external_links:
+            - mongo:mongo
+        restart: always
+
+    mongo:
+        container_name: mongo
+        image: mongo
+        ports:
+          - "27017:27017"
+        networks:
+            - a1net
+
+networks:
+    a1net:
