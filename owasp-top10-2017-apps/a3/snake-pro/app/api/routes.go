@@ -41,6 +41,18 @@ func ReadCookie(c echo.Context) (string, error) {
 	return cookie.Value, err
 }
 
+// HashPassword hash password
+func HashPassword(password string) (string, error) {
+    bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
+    return string(bytes), err
+}
+
+// CheckPasswordHash Check Password Hash
+func CheckPasswordHash(password, hash string) bool {
+    err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
+    return err == nil
+}
+
 // Register registers a new user into MongoDB.
 func Register(c echo.Context) error {
 
@@ -54,7 +66,9 @@ func Register(c echo.Context) error {
 	if userData.Password != userData.RepeatPassword {
 		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Passwords do not match."})
 	}
-
+	userData.Password = HashPassword(userData.Password)
+	
+	err = db.RegisterUser(userData)
 	newGUID1 := uuid.Must(uuid.NewRandom())
 	userData.UserID = newGUID1.String()
 	userData.HighestScore = 0
@@ -86,9 +100,10 @@ func Login(c echo.Context) error {
 		return c.JSON(http.StatusForbidden, map[string]string{"result": "error", "details": "Error login."})
 	}
 
-	validPass := pass.CheckPass(userDataResult.Password, loginAttempt.Password)
+
+	validPass := CheckPasswordHash(loginAttempt.Password, userDataResult.Password )
 	if !validPass {
-		// wrong password
+		wrong password
 		return c.JSON(http.StatusForbidden, map[string]string{"result": "error", "details": "Error login."})
 	}
 
