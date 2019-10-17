@@ -16,7 +16,7 @@ Mongection is a simple Nodejs web application that contains an example of a Inje
 
 ## What is NoSQL Injection?
 
-NoSQL Injection it's a vulnerability that occurs when codes / queries are injected on application via unsanitized input.
+NoSQL Injection it's a vulnerability that occurs when codes / queries are injected on application's logic via unsanitized input.
 
 You can find more about this vulnerability here: https://www.owasp.org/index.php/Testing_for_NoSQL_injection
 
