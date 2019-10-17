@@ -22,11 +22,11 @@ server.get("/", (request, response) => {
     response.sendFile(path.join(__dirname+'/public/view/index.html'));
 });
 
-server.get("/login", (request, response) => {
+server.get("/login.html", (request, response) => {
     response.sendFile(path.join(__dirname+'/public/view/login.html'));
 });
 
-server.get("/register", (request, response) => {
+server.get("/register.html", (request, response) => {
     response.sendFile(path.join(__dirname+'/public/view/register.html'));
 });
 
