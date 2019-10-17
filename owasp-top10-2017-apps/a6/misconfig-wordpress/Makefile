@@ -8,7 +8,7 @@ COLOR_GREEN = \033[32m
 COLOR_RED = \033[31m
 
 PROJECT := A6 - Vulnerable Wordpress Misconfig
-PORT := 10006
+PORT := 8000
 SLEEPUNTILAPPSTARTS := 60
 
 ## Installs a development environment using docker-compose

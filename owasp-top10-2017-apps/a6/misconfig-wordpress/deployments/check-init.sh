@@ -10,7 +10,7 @@ COLOR_BLUE='\033[1;34m'
 COLOR_RESET='\033[0m'
 
 PROJECT="A6 - Vulnerable Wordpress Misconfig"
-PORT=10006
+PORT=8000
 TRIES=480
 LOADING=0
 
