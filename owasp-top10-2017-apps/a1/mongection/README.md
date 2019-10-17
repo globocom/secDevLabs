@@ -87,7 +87,7 @@ The application will return the first user that MongoDB find, and you'll see a m
 #### NoSQL Injection via curl
 <p  align="center"><img  src="images/attack7.png"/></p>
 
-## Solutions
+## PR Solutions
 
 To fix this vulnerability it's necessary to sanitize all data that will be send to back-end, a way to do this is to convert all data to string or escape special chars.  
 
