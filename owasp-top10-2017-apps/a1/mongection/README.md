@@ -7,14 +7,18 @@ Mongection is a simple Nodejs web application that contains an example of a Inje
 
 ## Index
 
-- [Definition](#what-is-nosql-injection)
+- [Definition](#what-is-broken-authentication?)
 - [Setup](#setup)
-- [How Works](#how-works)
-- [The Application](#the-application)
+- [Attack narrative](#attack-narrative)
+- [Objectives](#secure-this-app)
+- [Solutions](#pr-solutions)
+- [Contributing](#contributing)
 
 ## What is NoSQL Injection?
 
+NoSQL Injection it's a vulnerability that occurs when codes / queries are injected on application via unsanitized input.
 
+You can find more about this vulnerability here: https://www.owasp.org/index.php/Testing_for_NoSQL_injection
 
 ## Setup
 
@@ -38,11 +42,9 @@ make install
 
 Then simply visit http://localhost:9995😆
 
-## How Works
+## Get to know the app
 
 The application simulate a simple Register/Login page. When you can register a account and when you do a successful login, you email will be showed on page.
-
-## The Application
 
 Accessing the application (http://localhost:9995), the homepage have 2 buttons: 1 to do Login (http://localhost:9995/login.html) and 1 to Register a new account (http://localhost:9995/register.html).😜
 
@@ -64,7 +66,7 @@ When you create a account, you will see a message containing Hello and your emai
 #### Login Message
 <p  align="center"><img  src="images/attack4.png"/></p>
 
-## Exploiting
+## Attack Narrative
 
 So, to exploit this application, you must to send a NoSQL query on email and password fields, such as: {"$ne":""}. This query tells to MongoDB that must return all results that are different of " " (null, empty).
 
@@ -84,3 +86,12 @@ The application will return the first user that MongoDB find, and you'll see a m
 
 #### NoSQL Injection via curl
 <p  align="center"><img  src="images/attack7.png"/></p>
+
+## Contributing
+
+We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](../../../docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉
+
+[Docker Install]:  https://docs.docker.com/install/
+[Docker Compose Install]: https://docs.docker.com/compose/install/
+[App]: http://localhost:10082
+[Dirb]: https://tools.kali.org/web-applications/dirb
