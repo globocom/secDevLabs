@@ -8,7 +8,7 @@ services:
             context: ../
             dockerfile: deployments/mongection.Dockerfile
         ports:
-            - "9995:9995"
+            - "10001:10001"
         networks:
             - a1net
         depends_on:

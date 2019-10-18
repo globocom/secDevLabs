@@ -6,12 +6,12 @@ const db = require('./db');
 
 const server = express();
 
-const PORT = 9995;
+const PORT = 10001;
 
 server.use(bodyParser.json());
 
 server.use(function(request, response, next) {
-    response.header("Access-Control-Allow-Origin", "http://localhost:9995");
+    response.header("Access-Control-Allow-Origin", "http://localhost:10001");
     response.header("Access-Control-Allow-Headers", "Content-Type");
     next();
   });
