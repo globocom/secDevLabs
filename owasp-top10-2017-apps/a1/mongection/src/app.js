@@ -40,7 +40,7 @@ server.post("/login", async (request, response) => {
 
         if(user == null) { response.send('Bad Credentials'); }
 
-        response.send("<h1>Hello</h1><h3>" + user.email + "</h3>");
+        response.send("<h1>Hello, Welcome Again!</h1><h3>" + user.email + "</h3>");
     }
    
     catch(error) { throw error; }
@@ -58,7 +58,7 @@ server.post("/register", async (request, response) => {
 
         if(!user) { response.send('User Already Exists'); }
 
-        response.send("<h1>Hello</h1><h3>" + user.email + "</h3>");
+        response.send("<h1>Welcome to Mongection System</h1><h3>" + user.email + "</h3>");
     }
 
     catch(error) { throw error; }
