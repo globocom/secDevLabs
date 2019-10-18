@@ -6,7 +6,7 @@ services:
         container_name: a1_mongection
         build:
             context: ../
-            dockerfile: deployments/Dockerfile
+            dockerfile: deployments/mongection.Dockerfile
         ports:
             - "9995:9995"
         networks:
@@ -20,6 +20,9 @@ services:
     mongo:
         container_name: mongo
         image: mongo
+        build:
+            context: ../
+            dockerfile: deployments/mongo.Dockerfile
         ports:
           - "27017:27017"
         networks:
