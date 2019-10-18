@@ -11,8 +11,8 @@ const PORT = 9995;
 server.use(bodyParser.json());
 
 server.use(function(request, response, next) {
-    response.header("Access-Control-Allow-Origin", "*");
-    response.header("Access-Control-Allow-Headers", "*");
+    response.header("Access-Control-Allow-Origin", "http://localhost:9995");
+    response.header("Access-Control-Allow-Headers", "Content-Type");
     next();
   });
 
