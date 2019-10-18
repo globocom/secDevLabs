@@ -5,7 +5,7 @@ services:
         container_name: a5api
         environment:
             GOPATH: /go/
-            API_PORT: 8888
+            API_PORT: 10005
             MONGO_HOST: mongodb
             MONGO_DATABASE_NAME: DB
             MONGO_PORT: 27017
@@ -21,7 +21,7 @@ services:
         volumes:
             - docker_vol:/var/lib/docker
         ports:
-          - "8888:8888"
+          - "10005:10005"
         networks:
             - a5_net
         depends_on:

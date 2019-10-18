@@ -18,7 +18,7 @@ COLOR_GREEN = \033[32m
 COLOR_RED = \033[31m
 
 PROJECT := A5 Vulnerable Ecommerce API
-PORT := 8888
+PORT := 10005
 SLEEPUNTILAPPSTARTS := 10
 
 ## Installs a development environment

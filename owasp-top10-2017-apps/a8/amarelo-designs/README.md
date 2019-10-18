@@ -33,7 +33,7 @@ cd secDevLabs/owasp-top10-2017-apps/a8/amarelo-designs
 make install
 ```
 
-Then simply visit [localhost:5000][App] ! 😆
+Then simply visit [localhost:10008][App] ! 😆
 
 ## Get to know the app 🎨
 
@@ -50,14 +50,14 @@ Now that you know the purpose of this app, what could go wrong? The following se
 
 #### Use of an insecure deserialization function allows for remote code execution
 
-It's possible to reach the server's web application from the HTTP port 5000, as shown by the image below:
+It's possible to reach the server's web application from the HTTP port 10008, as shown by the image below:
 
 <img src="images/attack1.png" align="center"/>
 
 Making use of the [Dirb] tool to search for webpages and a common directories [wordlist], we were able to find `/user`, `/admin` and `/console`, as shown by the picture below: (If you want to install Dirb for Mac OS, be sure to click [here][4])
 
 ```sh
-$ dirb http://localhost:5000 ./../../../docs/common.txt
+$ dirb http://localhost:10008 ./../../../docs/common.txt
 ```
 
 <p align="center">
@@ -125,7 +125,7 @@ r = requests.get(url, cookies=cookie)
 To be certain that the app is exploitable, we will send a sleep command to make the app unresponsive for 10 seconds. If the app takes 10 seconds to return our request, then it's confirmed, the app is exploitable. As we can see from the image below, the app takes some time to return our request, thus confirming that it is exploitable and confirming the remote code execution:
 
 ```sh
-$ python3 serializaPickle.py "sleep 10" http://localhost:5000/user
+$ python3 serializaPickle.py "sleep 10" http://localhost:10008/user
 ```
 
 <img src="images/attack9.png" align="center"/>
@@ -133,7 +133,7 @@ $ python3 serializaPickle.py "sleep 10" http://localhost:5000/user
 To show how an attacker could have access to the server through an RCE, we will use the code depicted on the image below to create a bind shell on the server's 9051 port.
 
 ```sh
-$ python3 serializaPickle.py "nc -lvp 9051 -e /bin/sh" http://localhost:5000/user
+$ python3 serializaPickle.py "nc -lvp 9051 -e /bin/sh" http://localhost:10008/user
 ```
 
 <img src="images/attack10.png" align="center"/>
@@ -164,7 +164,7 @@ We encourage you to contribute to SecDevLabs! Please check out the [Contributing
 
 [Docker Install]:  https://docs.docker.com/install/
 [Docker Compose Install]: https://docs.docker.com/compose/install/
-[App]: http://localhost:5000
+[App]: http://localhost:10008
 [secDevLabs]: https://github.com/globocom/secDevLabs
 [2]: https://github.com/globocom/secDevLabs/tree/master/owasp-top10-2017-apps/a8/amarelo-designs
 [Dirb]: https://tools.kali.org/web-applications/dirb

@@ -8,7 +8,7 @@ COLOR_GREEN = \033[32m
 COLOR_RED = \033[31m
 
 PROJECT := A7 Gossip World
-PORT := 3001
+PORT := 10007
 SLEEPUNTILAPPSTARTS := 45
 
 ## Installs a development environment using docker-compose

@@ -8,7 +8,7 @@ COLOR_GREEN = \033[32m
 COLOR_RED = \033[31m
 
 PROJECT := A8 - Amarelo Designs
-PORT := 5000
+PORT := 10008
 SLEEPUNTILAPPSTARTS := 10
 
 ## Installs a development environment

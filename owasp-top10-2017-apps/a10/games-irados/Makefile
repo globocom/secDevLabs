@@ -8,7 +8,7 @@ COLOR_GREEN = \033[32m
 COLOR_RED = \033[31m
 
 PROJECT := A10 - GamesIRADOS
-PORT := 3001
+PORT := 10010
 SLEEPUNTILAPPSTARTS := 45
 
 ## Installs a development environment using docker-compose

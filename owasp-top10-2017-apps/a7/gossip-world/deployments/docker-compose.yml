@@ -7,7 +7,7 @@ services:
       context: ../
       dockerfile: deployments/Dockerfile
     ports:
-      - "3001:3001"
+      - "10007:10007"
     volumes:
       - "../app/:/app"
     environment:
