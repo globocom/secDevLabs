@@ -67,7 +67,7 @@ func main() {
 	echoInstance.POST("/register", handlers.Register)
 	echoInstance.GET("/healthcheck", handlers.HealthCheck)
 
-	echoInstance.Logger.Fatal(echoInstance.Start(":3000"))
+	echoInstance.Logger.Fatal(echoInstance.Start(":10001"))
 }
 
 func checkAPIrequirements() error {

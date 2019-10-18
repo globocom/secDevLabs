@@ -13,7 +13,7 @@ services:
             context: ../
             dockerfile: deployments/api.Dockerfile
         ports:
-            - "10033:10033"
+            - "10003:10003"
         environment:
           SECRET_KEY: secret-key
         networks:

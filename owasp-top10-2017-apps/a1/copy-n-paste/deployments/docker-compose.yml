@@ -8,7 +8,7 @@ services:
             context: ../
             dockerfile: deployments/a1inj.Dockerfile
         ports:
-            - "3000:3000"
+            - "10001:10001"
         networks:
             - a1net
         command: "go run app/server.go"

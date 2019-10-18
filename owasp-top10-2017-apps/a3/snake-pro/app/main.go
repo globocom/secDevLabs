@@ -99,7 +99,7 @@ func errorAPI(err error) {
 func getAPIPort() int {
 	apiPort, err := strconv.Atoi(os.Getenv("API_PORT"))
 	if err != nil {
-		apiPort = 10033
+		apiPort = 10003
 	}
 	return apiPort
 }

@@ -8,4 +8,4 @@ services:
     volumes:
       - "../app/:/var/www/html"
     ports:
-      - 10080:80
+      - 10004:80

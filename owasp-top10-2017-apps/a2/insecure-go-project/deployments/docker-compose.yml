@@ -13,7 +13,7 @@ services:
             context: ../
             dockerfile: deployments/api.Dockerfile
         ports:
-            - "9999:9999"
+            - "10002:10002"
         networks:
             - insecure_net
         command: "go run main.go"

@@ -33,7 +33,7 @@ cd secDevLabs/owasp-top10-2017-apps/a3/snake-pro
 make install
 ```
 
-Then simply visit [localhost:10033][App] ! 😆
+Then simply visit [localhost:10003][App] ! 😆
 
 ## Get to know the app 🐍
 
@@ -117,5 +117,5 @@ We encourage you to contribute to SecDevLabs! Please check out the [Contributing
 
 [Docker Install]:  https://docs.docker.com/install/
 [Docker Compose Install]: https://docs.docker.com/compose/install/
-[App]: http://localhost:10033
+[App]: http://localhost:10003
 [Dirb]: https://tools.kali.org/web-applications/dirb

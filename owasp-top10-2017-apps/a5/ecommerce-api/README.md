@@ -33,7 +33,7 @@ cd secDevLabs/owasp-top10-2017-apps/a5/ecommerce-api
 make install
 ```
 
-Then simply visit [localhost:8888][App] ! 😆
+Then simply visit [localhost:10005][App] ! 😆
 
 ## Get to know the app 💵
 
@@ -52,10 +52,10 @@ Now that you know the purpose of this app, what could go wrong? The following se
 In order to better understand how this API works, two users, `user1` and `user2`, were created as shown below: 
 
 ```sh
-curl -s -H "Content-Type: application/json" -d '{"username":"user1","password":"pass"}' http://localhost:8888/register  
+curl -s -H "Content-Type: application/json" -d '{"username":"user1","password":"pass"}' http://localhost:10005/register  
 ```
 ```sh
-curl -s -H "Content-Type: application/json" -d '{"username":"user2","password":"pass"}' http://localhost:8888/register
+curl -s -H "Content-Type: application/json" -d '{"username":"user2","password":"pass"}' http://localhost:10005/register
 ```
 
 <p align="center">
@@ -73,10 +73,10 @@ Or using web interface:
 The users created above are registered on MongoDB and we can get their `userID` through the following curl commands:
 
 ```sh
-curl -s -H "Content-Type: application/json" -d '{"username":"user1","password":"pass"}' http://localhost:8888/login
+curl -s -H "Content-Type: application/json" -d '{"username":"user1","password":"pass"}' http://localhost:10005/login
 ```
 ```sh
-curl -s -H "Content-Type: application/json" -d '{"username":"user2","password":"pass"}' http://localhost:8888/login
+curl -s -H "Content-Type: application/json" -d '{"username":"user2","password":"pass"}' http://localhost:10005/login
 ```
 
 <p align="center">
@@ -94,7 +94,7 @@ This can also be observed via the web interface. In the web interface it is poss
 Having both `userID`, we can verify that the route "`GET /ticket/:userID`" does not validate if the request was made by the same user or someone else without the proper permission, as shown by the image:
 
 ```sh
-curl -vvv http://localhost:8888/ticket/GUID
+curl -vvv http://localhost:10005/ticket/GUID
 ```
 
 <p align="center">
@@ -117,6 +117,6 @@ We encourage you to contribute to SecDevLabs! Please check out the [Contributing
 
 [Docker Install]:  https://docs.docker.com/install/
 [Docker Compose Install]: https://docs.docker.com/compose/install/
-[App]: http://localhost:8888
+[App]: http://localhost:10005
 [secDevLabs]: https://github.com/globocom/secDevLabs
 [2]:https://github.com/globocom/secDevLabs/tree/master/owasp-top10-2017-apps/a5/ecommerce-api
