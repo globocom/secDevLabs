@@ -8,7 +8,7 @@ COLOR_GREEN = \033[32m
 COLOR_RED = \033[31m
 
 PROJECT := A4 - ViniJR Blog
-PORT := 10080
+PORT := 10004
 SLEEPUNTILAPPSTARTS := 5
 
 ## Installs a development environment

@@ -33,7 +33,7 @@ cd secDevLabs/owasp-top10-2017-apps/a7/gossip-world
 make install
 ```
 
-Then simply visit [localhost:3001][App] ! 😆
+Then simply visit [localhost:10007][App] ! 😆
 
 ## Get to know the app 💄
 
@@ -148,4 +148,4 @@ We encourage you to contribute to SecDevLabs! Please check out the [Contributing
 
 [Docker Install]:  https://docs.docker.com/install/
 [Docker Compose Install]: https://docs.docker.com/compose/install/
-[App]: http://localhost:3001
+[App]: http://localhost:10007

@@ -33,7 +33,7 @@ cd secDevLabs/owasp-top10-2017-apps/a4/vinijr-blog
 make install
 ```
 
-Then simply visit [localhost:10080][App] ! 😆
+Then simply visit [localhost:10004][App] ! 😆
 
 ## Get to know the app ⚽️
 
@@ -75,7 +75,7 @@ To replicate this POST using [curl](https://curl.haxx.se/), create the following
 And run:
 
 ```sh
-curl -d @payload.xml localhost:10080/contact.php ; echo
+curl -d @payload.xml localhost:10004/contact.php ; echo
 ```
 
 By checking the source code of the [file](../vinijr-blog/app/contact.php), it is possible to see how this XML is loaded on the server side:
@@ -102,7 +102,7 @@ As no validation is being used to avoid [ENTITIES](https://www.w3schools.com/xml
 And, as the following picture shows, it is possible to realize that the attack succeeds and sensitive information is retrieved from the server that is hosting the vulnerable app:
 
 ```sh
-curl -d @evilxml.xml localhost:10080/contact.php ; echo
+curl -d @evilxml.xml localhost:10004/contact.php ; echo
 ```
 
 <img src="images/attack-4.png" align="center"/>
@@ -124,4 +124,4 @@ We encourage you to contribute to SecDevLabs! Please check out the [Contributing
 
 [Docker Install]:  https://docs.docker.com/install/
 [Docker Compose Install]: https://docs.docker.com/compose/install/
-[App]: http://localhost:10080
+[App]: http://localhost:10004

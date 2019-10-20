@@ -112,6 +112,6 @@ func Login(c echo.Context) error {
 	}
 	c.Response().Header().Set("Content-type", "text/html")
 	messageLogon := fmt.Sprintf("Hello, %s! Welcome to SnakePro", userDataResult.Username)
-	// err = c.Redirect(http.StatusFound, "http://www.localhost:10033/game/ranking")
+	// err = c.Redirect(http.StatusFound, "http://www.localhost:10003/game/ranking")
 	return c.String(http.StatusOK, messageLogon)
 }

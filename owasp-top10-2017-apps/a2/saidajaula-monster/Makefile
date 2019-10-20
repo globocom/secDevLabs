@@ -8,7 +8,7 @@ COLOR_GREEN = \033[32m
 COLOR_RED = \033[31m
 
 PROJECT := A2 - Saidajaula Monster Fit
-PORT := 10082
+PORT := 10002
 SLEEPUNTILAPPSTARTS := 45
 
 ## Installs a development environment

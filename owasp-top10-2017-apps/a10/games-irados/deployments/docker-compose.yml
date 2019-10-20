@@ -7,7 +7,7 @@ services:
          context: ../
          dockerfile: deployments/Dockerfile
       ports:
-         - "3001:3001"
+         - "10010:10010"
       environment:
          SECRET_KEY: secretkey
          MYSQL_ENDPOINT: mysqldb-a10

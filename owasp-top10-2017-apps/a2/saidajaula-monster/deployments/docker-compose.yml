@@ -15,7 +15,7 @@ services:
     depends_on:
       - db
     ports:
-      - "10082:10082"
+      - "10002:10002"
     networks:
       - a2_net
     volumes:

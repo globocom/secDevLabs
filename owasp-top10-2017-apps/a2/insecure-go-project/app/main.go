@@ -57,7 +57,7 @@ func errorAPI(err error) {
 func getAPIPort() int {
 	apiPort, err := strconv.Atoi(os.Getenv("API_PORT"))
 	if err != nil {
-		apiPort = 9999
+		apiPort = 10002
 	}
 	return apiPort
 }
