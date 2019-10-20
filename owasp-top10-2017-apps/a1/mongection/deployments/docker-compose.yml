@@ -7,6 +7,9 @@ services:
         build:
             context: ../
             dockerfile: deployments/mongection.Dockerfile
+        environment:
+            DBUSER: mongection
+            DBPASS: mongection
         ports:
             - "10001:10001"
         networks:
@@ -19,7 +22,6 @@ services:
 
     mongo:
         container_name: mongo
-        image: mongo
         build:
             context: ../
             dockerfile: deployments/mongo.Dockerfile
