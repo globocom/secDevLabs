@@ -7,7 +7,7 @@ Mongection is a simple Nodejs web application that contains an example of a Inje
 
 ## Index
 
-- [Definition](#what-is-broken-authentication?)
+- [Definition](#what-is-nosql-injection?)
 - [Setup](#setup)
 - [Attack narrative](#attack-narrative)
 - [Objectives](#secure-this-app)
