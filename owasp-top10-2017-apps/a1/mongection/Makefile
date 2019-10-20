@@ -8,7 +8,7 @@ COLOR_GREEN = \033[32m
 COLOR_RED = \033[31m
 
 PROJECT := A1 - Mongection
-PORT := 9995
+PORT := 10001
 
 ## Installs a development environment using docker-compose
 install: compose msg
