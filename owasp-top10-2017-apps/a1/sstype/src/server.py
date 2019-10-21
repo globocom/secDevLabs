@@ -5,7 +5,7 @@ import os
 
 TEMPLATE = open(os.path.join(os.path.dirname(__file__)) + "/public/index.html", 'r').readlines()
 
-tmpl = ""
+tmpl = ''
 for t in TEMPLATE:
     	tmpl += t
 
