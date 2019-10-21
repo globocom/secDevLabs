@@ -13,8 +13,7 @@ html {
   left: auto;
 }
 #overlay {
-  padding: 0.2em;
-  padding-left: 26px;
+  padding: 0.2em 0.2em 0.2em 26px;
 }
 #overlay-close-wrapper {
   left: 0;
