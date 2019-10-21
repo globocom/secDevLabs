@@ -115,7 +115,8 @@
 }
 
 #dashboard.customize-inactive .dashboard-region .ui-sortable .block:hover h2 {
-  background: #0074BD url(../../misc/draggable.png) no-repeat 3px -36px;
+  background: #0074BD url(../../misc/draggable.png) no-repeat;
+  background-position: 3px -36px;
   color: #fff;
 }
 
