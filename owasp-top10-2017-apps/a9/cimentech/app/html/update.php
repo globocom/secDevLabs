@@ -30,7 +30,8 @@ define('MAINTENANCE_MODE', 'update');
 /**
  * Renders a form with a list of available database updates.
  */
-function update_selection_page() {
+function update_selection_page()
+{
   drupal_set_title('Drupal database update');
   $elements = drupal_get_form('update_script_selection_form');
   $output = drupal_render($elements);
@@ -43,7 +44,8 @@ function update_selection_page() {
 /**
  * Form constructor for the list of available database module updates.
  */
-function update_script_selection_form($form, &$form_state) {
+function update_script_selection_form($form, &$form_state)
+{
   $count = 0;
   $incompatible_count = 0;
   $form['start'] = array(
@@ -64,7 +66,7 @@ function update_script_selection_form($form, &$form_state) {
       $form['start'][$module] = array(
         '#type' => 'item',
         '#title' => $module . ' module',
-        '#markup'  => $update['warning'],
+        '#markup' => $update['warning'],
         '#prefix' => '<div class="messages warning">',
         '#suffix' => '</div>',
       );
@@ -117,8 +119,7 @@ function update_script_selection_form($form, &$form_state) {
 
     // No updates to run, so caches won't get flushed later.  Clear them now.
     drupal_flush_all_caches();
-  }
-  else {
+  } else {
     $form['help'] = array(
       '#markup' => '<p>The version of Drupal you are updating from has been automatically detected.</p>',
       '#weight' => -5,
@@ -130,8 +131,7 @@ function update_script_selection_form($form, &$form_state) {
         '@count pending updates (@number_applied to be applied, @number_incompatible skipped)',
         array('@number_applied' => $count - $incompatible_count, '@number_incompatible' => $incompatible_count)
       );
-    }
-    else {
+    } else {
       $form['start']['#title'] = format_plural($count, '1 pending update', '@count pending updates');
     }
     $form['has_js'] = array(
@@ -150,7 +150,8 @@ function update_script_selection_form($form, &$form_state) {
 /**
  * Provides links to the homepage and administration pages.
  */
-function update_helpful_links() {
+function update_helpful_links()
+{
   $links[] = '<a href="' . base_path() . '">Front page</a>';
   if (user_access('access administration pages')) {
     $links[] = '<a href="' . base_path() . '?q=admin">Administration pages</a>';
@@ -161,7 +162,8 @@ function update_helpful_links() {
 /**
  * Displays results of the update script with any accompanying errors.
  */
-function update_results_page() {
+function update_results_page()
+{
   drupal_set_title('Drupal database update');
   $links = update_helpful_links();
 
@@ -169,15 +171,13 @@ function update_results_page() {
   // Report end result.
   if (module_exists('dblog') && user_access('access site reports')) {
     $log_message = ' All errors have been <a href="' . base_path() . '?q=admin/reports/dblog">logged</a>.';
-  }
-  else {
+  } else {
     $log_message = ' All errors have been logged.';
   }
 
   if ($_SESSION['update_success']) {
     $output = '<p>Updates were attempted. If you see no failures below, you may proceed happily back to your <a href="' . base_path() . '">site</a>. Otherwise, you may need to update your database manually.' . $log_message . '</p>';
-  }
-  else {
+  } else {
     $updates_remaining = reset($_SESSION['updates_remaining']);
     list($module, $version) = array_pop($updates_remaining);
     $output = '<p class="error">The update process was aborted prematurely while running <strong>update #' . $version . ' in ' . $module . '.module</strong>.' . $log_message;
@@ -210,8 +210,7 @@ function update_results_page() {
 
             if ($query['success']) {
               $messages[] = '<li class="success">' . $query['query'] . '</li>';
-            }
-            else {
+            } else {
               $messages[] = '<li class="failure"><strong>Failed:</strong> ' . $query['query'] . '</li>';
             }
           }
@@ -251,7 +250,8 @@ function update_results_page() {
  * @return
  *   Rendered HTML form.
  */
-function update_info_page() {
+function update_info_page()
+{
   // Change query-strings on css/js files to enforce reload for all users.
   _drupal_flush_css_js();
   // Flush the cache of all data for the update status module.
@@ -282,7 +282,8 @@ function update_info_page() {
  * @return
  *   Rendered HTML warning with 403 status.
  */
-function update_access_denied_page() {
+function update_access_denied_page()
+{
   drupal_add_http_header('Status', '403 Forbidden');
   watchdog('access denied', 'update.php', NULL, WATCHDOG_WARNING);
   drupal_set_title('Access denied');
@@ -301,7 +302,8 @@ function update_access_denied_page() {
  * @return
  *   TRUE if the current user should be granted access, or FALSE otherwise.
  */
-function update_access_allowed() {
+function update_access_allowed()
+{
   global $update_free_access, $user;
 
   // Allow the global variable in settings.php to override the access check.
@@ -313,8 +315,7 @@ function update_access_allowed() {
   try {
     require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'user') . '/user.module';
     return user_access('administer software updates');
-  }
-  catch (Exception $e) {
+  } catch (Exception $e) {
     return ($user->uid == 1);
   }
 }
@@ -322,7 +323,8 @@ function update_access_allowed() {
 /**
  * Adds the update task list to the current page.
  */
-function update_task_list($active = NULL) {
+function update_task_list($active = NULL)
+{
   // Default list of tasks.
   $tasks = array(
     'requirements' => 'Verify requirements',
@@ -338,7 +340,8 @@ function update_task_list($active = NULL) {
 /**
  * Returns and stores extra requirements that apply during the update process.
  */
-function update_extra_requirements($requirements = NULL) {
+function update_extra_requirements($requirements = NULL)
+{
   static $extra_requirements = array();
   if (isset($requirements)) {
     $extra_requirements += $requirements;
@@ -354,7 +357,8 @@ function update_extra_requirements($requirements = NULL) {
  *   report will only be issued if there are requirement errors. Defaults to
  *   FALSE.
  */
-function update_check_requirements($skip_warnings = FALSE) {
+function update_check_requirements($skip_warnings = FALSE)
+{
   // Check requirements of all loaded modules.
   $requirements = module_invoke_all('requirements', 'update');
   $requirements += update_extra_requirements();
@@ -498,8 +502,7 @@ if (update_access_allowed()) {
       $output = _batch_page();
       break;
   }
-}
-else {
+} else {
   $output = update_access_denied_page();
 }
 if (isset($output) && $output) {
