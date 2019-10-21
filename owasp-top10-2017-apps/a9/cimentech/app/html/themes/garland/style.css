@@ -165,7 +165,7 @@ ol.task-list li.active {
 }
 ol.task-list li.done {
   color: #393;
-  background: transparent url(../../misc/watchdog-ok.png) no-repeat 0px 50%; /* LTR */
+  background: transparent url(../../misc/watchdog-ok.png) no-repeat 0 50%; /* LTR */
 }
 ol.task-list li.active {
   margin-right: 1em; /* LTR */
@@ -511,11 +511,11 @@ body.two-sidebars #squeeze {
 }
 
 #sidebar-first .block-region {
-  margin: 0 15px 0 0px; /* LTR */
+  margin: 0 15px 0 0; /* LTR */
 }
 
 #sidebar-second .block-region {
-  margin: 0 0px 0 15px; /* LTR */
+  margin: 0 0 0 15px; /* LTR */
 }
 
 .block-region {
@@ -589,7 +589,7 @@ div#branding strong {
 #branding a:link,
 #branding a:visited {
   color: #fff;
-  text-shadow: #1659ac 0px 1px 3px;
+  text-shadow: #1659ac 0 1px 3px;
   font-size: 1.5em;
 }
 
@@ -974,10 +974,10 @@ html.js fieldset.collapsed {
 
 html.js fieldset.collapsible .fieldset-legend {
   padding-left: 2em; /* LTR */
-  background: url(images/menu-expanded.gif) no-repeat 0% 50%; /* LTR */
+  background: url(images/menu-expanded.gif) no-repeat 0 50%; /* LTR */
 }
 html.js fieldset.collapsed .fieldset-legend {
-  background: url(images/menu-collapsed.gif) no-repeat 0% 50%; /* LTR */
+  background: url(images/menu-collapsed.gif) no-repeat 0 50%; /* LTR */
 }
 
 .fieldset-legend span.summary {

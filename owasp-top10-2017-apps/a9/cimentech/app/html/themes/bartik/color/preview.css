@@ -153,8 +153,7 @@ html.js #preview {
   width: 220px;
 }
 #preview-footer-wrapper .preview-block {
-  border: 1px solid #444;
-  border-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   margin: 20px 0;
   padding: 10px;
 }
@@ -179,8 +178,7 @@ html.js #preview {
   padding-left: 0;
 }
 #preview-footer-columns .preview-content li {
-  list-style: none;
-  list-style-image: none;
+  list-style: none none;
   margin: 0;
   padding: 0;
 }

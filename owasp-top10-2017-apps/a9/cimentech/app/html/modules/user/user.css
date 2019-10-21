@@ -48,7 +48,7 @@
 }
 .password-indicator div {
   height: 100%;
-  width: 0%;
+  width: 0;
   background-color: #47C965;
 }
 input.password-confirm,

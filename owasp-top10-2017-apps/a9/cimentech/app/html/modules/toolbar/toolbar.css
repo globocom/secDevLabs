@@ -73,7 +73,7 @@ body.toolbar-drawer {
   background: url(toolbar.png) no-repeat 0 -45px;
   display: block;
   height: 14px;
-  margin: 3px 0px;
+  margin: 3px 0;
   text-indent: -9999px;
   vertical-align: text-bottom;
   width: 11px;
