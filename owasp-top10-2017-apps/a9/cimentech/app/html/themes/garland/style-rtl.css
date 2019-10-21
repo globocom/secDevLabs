@@ -71,7 +71,7 @@ dl dd {
 }
 
 .messages li {
-  padding: 0 1.3 0 0;
+  padding: 0 1.3em 0 0;
 }
 
 .form-button,
@@ -101,6 +101,7 @@ body.sidebar-first #center {
   margin-left: 0;
   margin-right: -210px;
 }
+
 body.sidebar-second #center {
   margin-left: -210px;
   margin-right: 0;
@@ -111,6 +112,7 @@ body.sidebar-first #squeeze {
   margin-left: 0;
   margin-right: 210px;
 }
+
 body.sidebar-second #squeeze {
   margin-left: 210px;
   margin-right: 0;
@@ -127,7 +129,6 @@ body.sidebar-second #squeeze {
 #sidebar-second .block {
   padding: 0 15px 0 0;
 }
-
 
 
 #sidebar-first .block-region {
@@ -156,7 +157,7 @@ body.sidebar-second #squeeze {
  */
 ul.main-menu {
   float: left;
-  width:70%;
+  width: 70%;
 }
 
 ul.main-menu li {
@@ -179,10 +180,12 @@ ul.secondary-menu li {
 ul.primary {
   float: right;
 }
+
 ul.secondary {
   clear: both;
   text-align: right;
 }
+
 h1.with-tabs {
   float: right;
   margin: 0 0 0 2em;
@@ -199,6 +202,7 @@ ul.secondary li a:visited {
   margin: 0 1px 0 0;
 
 }
+
 ul.primary li a:after {
   /* Fix Firefox 2 RTL bug. */
   content: " ";
@@ -273,10 +277,12 @@ div.vertical-tabs {
 #user-login-form ul {
   text-align: right;
 }
+
 #user-login-form .openid-links {
   padding-left: 0;
   padding-right: 0.5em;
 }
+
 #user-login-form .openid-links li.user-link {
   padding-left: 0;
   padding-right: 1em;
@@ -299,7 +305,7 @@ div.admin .right {
 #wrapper #container #header #logo-floater {
   width: 100%;
   left: 0;
-  top:0;
+  top: 0;
 }
 
 /**
