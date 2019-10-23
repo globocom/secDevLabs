@@ -59,11 +59,21 @@ Now that you know the purpose of this app, what could go wrong? The following se
 
 #### Lack of input validation allows injection of NoSQL queries
 
+After reviewing [`db.js`]((https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2017-apps/a1/mongection/src/db.js)) file, it was possible to see that some input from users are concatenated with NoSQL queries, as shown in the following code snippets:
 
+```js
+const existUser = await User.findOne({email: email});
+```
+
+```js
+const existsUser = await User.findOne({$and: [ { email: email}, { password: password} ]});
+```
+
+As no validation is being made on these variables, injected queries may be successfully executed in MongoDB. 
 
 #### 🔥
 
-An attacker could create a malicious NoSQL query such as `{"$ne":""}` and pass it to email and password fields. Since `$ne` is the not equals condition in MongoDB, this is querying all the entries in the logins collection where both username and password are not equal to "" (empty). 
+An attacker could create a malicious query such as `{"$ne":""}` and pass it to email and password fields. Since `$ne` is the not equals condition in MongoDB, this is querying all the entries in the logins collection where both `username` and `password` are not equal to "" (empty). 
 
 Using `curl` on CLI interface, the malicious payload could be sent as shown bellow:
 
@@ -73,8 +83,22 @@ curl -X 'POST' 'http://localhost:10001/login' -H "Content-Type: application/json
 
 <p  align="center"><img  src="images/attack1.png"/></p>
 
+The application will return the first user that MongoDB finds with a "Hello, Welcome Again!" message, demonstrating that authentication has been bypassed. There must be at least one user already registered in the database to recieve this message.
 
-The application will return the first user that MongoDB finds with a "Hello, Welcome Again!" message, demonstrating that authentication has been bypassed.
+The same result could be reached if the attacker sent a payload using `$gt` (greater than) directive. The following query will search for entries with both `username` and `password `fields greater than "" (empty).
+
+```sh
+curl -X 'POST' 'http://localhost:10001/login' -H "Content-Type: application/json" --data '{"email": {"$gt": ""}, "password": {"$gt": ""}}'
+```
+<p  align="center"><img  src="images/attack2.png"/></p>
+
+Another possible malicious payload could use `$in` directive. The following query will iterate through every element of the given array and try each value listed for the `username` field. Also, `{"$gt":""}` will guarantee the `password` field is not evaluated.
+
+```sh
+curl -X 'POST' 'http://localhost:10001/login' -H "Content-Type: application/json" --data '{"email": {"$in":["admin@example.com", "root@example", "ana@example.com", "bob"]}, "password": {"$gt":""}}'
+```
+
+<p  align="center"><img  src="images/attack3.png"/></p>
 
 ## Secure this app
 
