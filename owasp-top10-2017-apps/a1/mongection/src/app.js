@@ -43,7 +43,7 @@ server.post("/login", async (request, response) => {
 
         if(user == null) { response.send('Bad Credentials'); }
 
-        response.send("<h1>Hello, Welcome Again!</h1><h3>" + user.email + "</h3>");
+        response.send("<h1>Hello, Welcome Again!</h1><h3>" + user + "</h3>");
     }
    
     catch(error) { throw error; }
@@ -73,7 +73,6 @@ server.post("/register", async (request, response) => {
     catch(error) { throw error; }
 
 });
-
 
 mongoose.connect(`mongodb://${process.env.DBUSER}:${process.env.DBPASS}@mongo:27017/mongection`, {useNewUrlParser: true})
     .then( () => {
