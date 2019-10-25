@@ -29,8 +29,6 @@ def login_admin_required(f):
         cookie_separado = cookie.split('.')
         if(len(cookie_separado) != 2):
             return "Invalid cookie!"
-        #hash_cookie = hashlib.sha256(cookie_separado[0].encode('utf-8')).hexdigest()
-        #sip.update(cookie_separado[0].encode('utf-8')))
         hash_cookie = siphash.SipHash_2_4(key, cookie_separado[0].encode('utf-8')).hash()
         if (hash_cookie != cookie_separado[1]):
             return redirect("/login")
