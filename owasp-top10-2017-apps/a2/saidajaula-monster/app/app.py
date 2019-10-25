@@ -8,6 +8,7 @@ import os
 import json
 import hashlib
 import uuid
+import hmac
 from functools import wraps
 
 
@@ -26,7 +27,8 @@ def login_admin_required(f):
         cookie_separado = cookie.split('.')
         if(len(cookie_separado) != 2):
             return "Invalid cookie!"
-        hash_cookie = hashlib.sha256(cookie_separado[0].encode('utf-8')).hexdigest()
+        #hash_cookie = hashlib.sha256(cookie_separado[0].encode('utf-8')).hexdigest()
+        hmac_cookie = hmac.new(b'pao', cookie_separado[0].encode('utf-8'), hashlib.sha256).hexdigest()  
         if (hash_cookie != cookie_separado[1]):
             return redirect("/login")
         j = json.loads(cookie_separado[0])
@@ -44,8 +46,9 @@ def login_required(f):
         cookie_separado = cookie.split('.')
         if(len(cookie_separado) != 2):
             return "Invalid cookie! \n"
-        hash_cookie = hashlib.sha256(cookie_separado[0].encode('utf-8')).hexdigest()
-        if (hash_cookie != cookie_separado[1]):
+#        hash_cookie = hashlib.sha256(cookie_separado[0].encode('utf-8')).hexdigest()
+        hmac_cookie = hmac.new(b'pao', cookie_separado[0].encode('utf-8'), hashlib.sha256).hexdigest()        
+        if (hmac_cookie != cookie_separado[1]):
             return redirect("/login")
         return f(*args, **kwargs)
     return decorated_function
@@ -104,8 +107,9 @@ def login():
 
         cookie_dic = {"permissao": result[1], "username": form_username}
         cookie = json.dumps(cookie_dic)
-        hash_cookie = hashlib.sha256(cookie.encode('utf-8')).hexdigest()
-        cookie_done = '.'.join([cookie,hash_cookie])
+        #hash_cookie = hashlib.sha256(cookie.encode('utf-8')).hexdigest()
+        hmac_cookie = hmac.new(b'pao', cookie_separado[0].encode('utf-8'), hashlib.sha256).hexdigest()    
+        cookie_done = '.'.join([cookie,hmac_cookie])
         cookie_done = base64.b64encode(str(cookie_done).encode("utf-8"))
         resp = make_response("Logged in!")
         resp.set_cookie("sessionId", cookie_done)
