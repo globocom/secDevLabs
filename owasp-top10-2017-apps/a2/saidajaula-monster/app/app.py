@@ -8,8 +8,11 @@ import os
 import json
 import hashlib
 import uuid
+import siphash
 from functools import wraps
 
+key = '012B45#789MyK3Y'
+sip = siphash.SipHash_2_4(key)
 
 app = Flask(__name__)
 database = DataBase(os.environ.get('A2_DATABASE_HOST'),
@@ -26,7 +29,9 @@ def login_admin_required(f):
         cookie_separado = cookie.split('.')
         if(len(cookie_separado) != 2):
             return "Invalid cookie!"
-        hash_cookie = hashlib.sha256(cookie_separado[0].encode('utf-8')).hexdigest()
+        #hash_cookie = hashlib.sha256(cookie_separado[0].encode('utf-8')).hexdigest()
+        #sip.update(cookie_separado[0].encode('utf-8')))
+        hash_cookie = siphash.SipHash_2_4(key, cookie_separado[0].encode('utf-8')).hash()
         if (hash_cookie != cookie_separado[1]):
             return redirect("/login")
         j = json.loads(cookie_separado[0])
@@ -44,7 +49,7 @@ def login_required(f):
         cookie_separado = cookie.split('.')
         if(len(cookie_separado) != 2):
             return "Invalid cookie! \n"
-        hash_cookie = hashlib.sha256(cookie_separado[0].encode('utf-8')).hexdigest()
+        hash_cookie = siphash.SipHash_2_4(key, cookie_separado[0].encode('utf-8')).hash()
         if (hash_cookie != cookie_separado[1]):
             return redirect("/login")
         return f(*args, **kwargs)
@@ -104,7 +109,7 @@ def login():
 
         cookie_dic = {"permissao": result[1], "username": form_username}
         cookie = json.dumps(cookie_dic)
-        hash_cookie = hashlib.sha256(cookie.encode('utf-8')).hexdigest()
+        hash_cookie = siphash.SipHash_2_4(key, cookie.encode('utf-8')).hash()
         cookie_done = '.'.join([cookie,hash_cookie])
         cookie_done = base64.b64encode(str(cookie_done).encode("utf-8"))
         resp = make_response("Logged in!")
