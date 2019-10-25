@@ -8,10 +8,13 @@ import os
 import json
 import hashlib
 import uuid
+import hmac
 from functools import wraps
 
 
 app = Flask(__name__)
+app.config['KEY'] = os.urandom(64).encode('hex')
+rdmkey = app.config['KEY']
 database = DataBase(os.environ.get('A2_DATABASE_HOST'),
                     os.environ.get('A2_DATABASE_USER'),
                     os.environ.get('A2_DATABASE_PASSWORD'),
@@ -23,13 +26,13 @@ def login_admin_required(f):
     def decorated_function(*args, **kwargs):
         cookie = request.cookies.get("sessionId", "")
         cookie = base64.b64decode(cookie).decode("utf-8")
-        cookie_separado = cookie.split('.')
-        if(len(cookie_separado) != 2):
+        cookie_split = cookie.split('.')
+        if(len(cookie_split) != 2):
             return "Invalid cookie!"
-        hash_cookie = hashlib.sha256(cookie_separado[0].encode('utf-8')).hexdigest()
-        if (hash_cookie != cookie_separado[1]):
+        hash_cookie = hmac.new(rdmkey, cookie_split[0].encode('utf-8'), hashlib.sha256).hexdigest()
+        if (hash_cookie != cookie_split[1]):
             return redirect("/login")
-        j = json.loads(cookie_separado[0])
+        j = json.loads(cookie_split[0])
         if j.get("permissao") != 1:
             return "You don't have permission to access this route. You are not an admin. \n"
         return f(*args, **kwargs)
@@ -41,11 +44,11 @@ def login_required(f):
     def decorated_function(*args, **kwargs):
         cookie = request.cookies.get("sessionId", "")
         cookie = base64.b64decode(cookie).decode("utf-8")
-        cookie_separado = cookie.split('.')
-        if(len(cookie_separado) != 2):
+        cookie_split = cookie.split('.')
+        if(len(cookie_split) != 2):
             return "Invalid cookie! \n"
-        hash_cookie = hashlib.sha256(cookie_separado[0].encode('utf-8')).hexdigest()
-        if (hash_cookie != cookie_separado[1]):
+        hash_cookie = hmac.new(rdmkey, cookie_split[0].encode('utf-8'), hashlib.sha256).hexdigest()
+        if (hash_cookie != cookie_split[1]):
             return redirect("/login")
         return f(*args, **kwargs)
     return decorated_function
@@ -104,7 +107,7 @@ def login():
 
         cookie_dic = {"permissao": result[1], "username": form_username}
         cookie = json.dumps(cookie_dic)
-        hash_cookie = hashlib.sha256(cookie.encode('utf-8')).hexdigest()
+        hash_cookie = hmac.new(rdmkey, cookie_split[0].encode('utf-8'), hashlib.sha256).hexdigest()
         cookie_done = '.'.join([cookie,hash_cookie])
         cookie_done = base64.b64encode(str(cookie_done).encode("utf-8"))
         resp = make_response("Logged in!")
