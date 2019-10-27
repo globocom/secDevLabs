@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block content %}
+<h1>Online cowsay</h1>
+<p>This funny looking cow can say anything you want!</p>
+
+<pre>
+{{ formatted_phrase|nl2br}}
+</pre>
+
+<form action="/" method="post">
+  <input type="text" name="phrase" value="{{ phrase }}"/>
+  <input type="submit" name="submit" value="submit"/>
+</form>
+{% endblock %}

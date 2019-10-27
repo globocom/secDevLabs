@@ -1,0 +1,48 @@
+.navigation .navigation-list {
+    list-style: none;
+    margin-bottom: none;
+    margin-right: 5rem;
+}
+
+.navigation .navigation-item {
+    float: left;
+    margin-bottom: 0;
+    margin-left: 2.5rem;
+    position: relative;
+}
+
+.navigation .navigation-link {
+    display: inline;
+    font-size: 1.6rem;
+    line-height: 5.2rem;
+    padding: 0;
+    text-decoration: none;
+}
+
+.navigation .navigation-title .title {
+    display: inline;
+    font-size: 1.6rem;
+    line-height: 5.2rem;
+    padding: 0;
+    text-decoration: none;
+}
+
+.navigation {
+    background: #f4f5f6;
+    border-bottom: .1rem solid #d1d1d1;
+    display: block;
+    height: 5.2rem;
+    left: 0;
+    max-width: 100%;
+    right: 0;
+    top 0;
+    width: 100%;
+    z-index: 1;
+}
+
+pre {
+    font-size: 1.4rem;
+    line-height: 1rem;
+}
+
+
