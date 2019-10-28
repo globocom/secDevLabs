@@ -33,7 +33,7 @@ cd secDevLabs/owasp-top10-2017-apps/a9/cimentech
 make install
 ```
 
-Then simply visit [localhost:10009][App] ! 😆
+Then simply visit [localhost][App] ! 😆
 
 ## Get to know the app 🏗
 
