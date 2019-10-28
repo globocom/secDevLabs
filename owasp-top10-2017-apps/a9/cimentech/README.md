@@ -50,7 +50,7 @@ Now that you know the purpose of this app, what could go wrong? The following se
 #### Use of a vulnerable Drupal version allows for remote code execution
 
 
-It's possible to reach the server's web application from the standard HTTP port 10009, as shown by the image below:
+It's possible to reach the server's web application from the standard HTTP port 80, as shown by the image below:
 
 <img src="images/attack1.png" align="center"/>
 
@@ -126,7 +126,7 @@ We encourage you to contribute to SecDevLabs! Please check out the [Contributing
 
 [Docker Install]:  https://docs.docker.com/install/
 [Docker Compose Install]: https://docs.docker.com/compose/install/
-[App]: http://localhost:10009
+[App]: http://localhost:80
 [secDevLabs]: https://github.com/globocom/secDevLabs
 [1]: https://www.ruby-lang.org/en/documentation/installation/
 [2]: https://github.com/globocom/secDevLabs/tree/master/owasp-top10-2017-apps/a9/Cimentech
