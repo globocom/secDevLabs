@@ -83,4 +83,3 @@ mongoose.connect(`mongodb://${process.env.DBUSER}:${process.env.DBPASS}@mongo:27
         server.listen(PORT);
     })
     .catch( error => { throw error; });
-    
