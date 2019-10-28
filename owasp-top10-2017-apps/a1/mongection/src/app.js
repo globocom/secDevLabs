@@ -41,7 +41,9 @@ server.post("/login", async (request, response) => {
 
         const user = await db.login({email, password});
 
-        if(user == null) { response.send('Bad Credentials'); }
+        console.log(user.length)
+
+        if(user.length == 0) { response.send('Bad Credentials'); }
 
         response.send("<h1>Hello, Welcome Again!</h1><h3>" + user + "</h3>");
     }
@@ -81,3 +83,4 @@ mongoose.connect(`mongodb://${process.env.DBUSER}:${process.env.DBPASS}@mongo:27
         server.listen(PORT);
     })
     .catch( error => { throw error; });
+    
