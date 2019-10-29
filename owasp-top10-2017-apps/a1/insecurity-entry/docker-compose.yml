@@ -1,0 +1,32 @@
+version: '3.3'
+
+services:
+
+    mysqldb:
+        image: mysql:5.7
+        ports:
+            - "3307:3307"
+        volumes:
+            - db_data:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_USER: user
+            MYSQL_PASSWORD: pass
+            MYSQL_DATABASE: cadastro
+
+    api:
+        container_name: a1_api
+        build: .
+        depends_on:
+            - mysqldb
+        ports:
+            - "3000:3000"
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_USER: user
+            MYSQL_PASSWORD: pass
+            MYSQL_DATABASE: cadastro
+        command: "npm start"
+
+volumes:
+    db_data:
