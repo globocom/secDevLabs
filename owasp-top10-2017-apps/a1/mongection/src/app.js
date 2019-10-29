@@ -8,6 +8,8 @@ const server = express();
 
 const PORT = 10001;
 
+var emailRegex = /^[-!#$%&'*+\/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/;
+
 server.use(bodyParser.json());
 
 server.use(function(request, response, next) {
@@ -33,14 +35,17 @@ server.get("/register.html", (request, response) => {
 server.post("/login", async (request, response) => {
 
     try {
+
         const email = request.body.email;
         const password = request.body.password;
 
         const user = await db.login({email, password});
 
-        if(user == null) { response.send('Bad Credentials'); }
+        console.log(user.length)
 
-        response.send("<h1>Hello, Welcome Again!</h1><h3>" + user.email + "</h3>");
+        if(user.length == 0) { response.send('Bad Credentials'); }
+
+        response.send("<h1>Hello, Welcome Again!</h1><h3>" + user + "</h3>");
     }
    
     catch(error) { throw error; }
@@ -54,11 +59,17 @@ server.post("/register", async (request, response) => {
         const email = request.body.email;
         const password = request.body.password;
 
-        const user = await db.register({name, email, password});
+        const validEmail = emailRegex.test(email);
+        if(!validEmail) { response.send('Bad Email'); }
 
-        if(!user) { response.send('User Already Exists'); }
+        else {
+            const user = await db.register({name, email, password});
 
-        response.send("<h1>Welcome to Mongection System</h1><h3>" + user.email + "</h3>");
+            if(!user) { response.send('User Already Exists'); }
+
+            response.send("<h1>Welcome to Mongection System</h1><h3>" + user.email + "</h3>");
+        }
+        
     }
 
     catch(error) { throw error; }

@@ -29,14 +29,14 @@ const login = async (credentials) => {
     try {
         const { email, password } = credentials;
 
-        const existsUser = await User.findOne({$and: [ { email: email}, { password: password} ]});
+        const existsUser = await User.find({$and: [ { email: email}, { password: password} ]});
 
         if(!existsUser) { return null;}
 
-        const returnUser = {
-            name: existsUser.name,
-            email: existsUser.email
-        }
+        const returnUser = existsUser.map((user) => {
+            return user.email
+        })
+
 
         return returnUser;
     }

