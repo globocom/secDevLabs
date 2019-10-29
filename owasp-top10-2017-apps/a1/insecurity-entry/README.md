@@ -1,14 +1,17 @@
 ## Insecurity Entry
 
-<p align="center">
+## Sample method get with parameter name
+<p align="left">
   <img src="images/method_get_with_parameter_name.png" allign="center" height=""/>
 </p>
 
-<p align="center">
+## Untreated data in database query
+<p align="left">
   <img src="images/sql_injection.png" allign="center" height=""/>
 </p>
 
-<p align="center">
+## Result
+<p align="left">
   <img src="images/show_data.png" allign="center" height=""/>
 </p>
 
