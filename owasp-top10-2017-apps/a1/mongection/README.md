@@ -59,14 +59,14 @@ Now that you know the purpose of this app, what could go wrong? The following se
 
 #### Lack of input validation allows injection of NoSQL queries
 
-After reviewing [db.js]((https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2017-apps/a1/mongection/src/db.js)) file, it was possible to see that some input from users is concatenated with NoSQL queries, as shown in the following code snippets:
+After reviewing [db.js](https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2017-apps/a1/mongection/src/db.js) file, it was possible to see that some input from users is concatenated with NoSQL queries, as shown in the following code snippets:
 
 ```js
 const existUser = await User.findOne({email: email});
 ```
 
 ```js
-const existsUser = await User.findOne({$and: [ { email: email}, { password: password} ]});
+const existsUser = await User.find({$and: [ { email: email}, { password: password} ]});
 ```
 
 As no validation is being made on these variables, injected queries may be successfully executed in MongoDB. Some directives like `$ne` or `$gt`, if successfully injected, could bypass API authentication. 
