@@ -4,3 +4,6 @@ block content
   h1= title
   p Welcome to #{title}
   p Passing raw data to database is a risk
+
+  each user, index in users
+    li= index + ': ' + user.nome_usuario

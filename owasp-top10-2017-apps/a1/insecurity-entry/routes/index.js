@@ -16,15 +16,12 @@ router.get('/nome/:name', function(req, res, next) {
   // usar parametros das rotas para fazer consultas no banco de dados sem fazer tratamento
   // destes dados é perigoso.
   // exemplo de entrada que muda resposta do banco nome/matheus" or nome_usuario = "valter
-
+  let users = null
   con.query('SELECT * FROM usuarios where nome_usuario = "' + req.params.name + '"', (err,rows) => {
     if(err) throw err;
-  
-    console.log('Data received from Db:\n');
-    console.log(rows);
+    res.render('index', { title: 'Untreated data entry', users: rows });
   });
-
-  res.render('index', { title: 'Untreated data entry' });
+  
 });
 
 module.exports = router;
