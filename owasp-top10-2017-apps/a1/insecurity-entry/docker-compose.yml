@@ -1,19 +1,16 @@
-version: '3.3'
+version: '3.4'
 
 services:
 
     mysqldb:
-        image: mysql:5.7
-        ports:
-            - "3307:3307"
+        image: mysql:8.0.18
         volumes:
             - db_data:/var/lib/mysql
         environment:
-            MYSQL_ROOT_PASSWORD: root
-            MYSQL_USER: user
-            MYSQL_PASSWORD: pass
+            MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
             MYSQL_DATABASE: cadastro
-
+        networks:
+            - a1net
     api:
         container_name: a1_api
         build: .
@@ -22,11 +19,17 @@ services:
         ports:
             - "3000:3000"
         environment:
-            MYSQL_ROOT_PASSWORD: root
-            MYSQL_USER: user
-            MYSQL_PASSWORD: pass
             MYSQL_DATABASE: cadastro
+        volumes:
+            - ".:/src"
+        external_links:
+            - mysqldb:mysqldb
         command: "npm start"
+        networks:
+            - a1net
+networks:
+    a1net:
 
 volumes:
     db_data:
+    src_code:

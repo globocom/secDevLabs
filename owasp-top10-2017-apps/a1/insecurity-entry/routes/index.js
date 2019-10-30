@@ -6,10 +6,10 @@ var mysql = require('mysql');
 const mysql_import = require('mysql-import');
  
 const mydb_importer = mysql_import.config({
-    host: 'localhost',
+    host: 'mysqldb',
     port: 3306,
-    user: 'user',
-    password: 'pass',
+    user: 'root',
+    password: '',
     database: 'cadastro',
     onerror: err=>console.log(err.message)
 });
@@ -17,10 +17,10 @@ const mydb_importer = mysql_import.config({
 mydb_importer.import('./database.sql');
 
 var con = mysql.createConnection({
-  host: "localhost",
+  host: "mysqldb",
   port: 3306,
-  user: "user",
-  password: "pass",
+  user: "root",
+  password: "",
   database: "cadastro"
 });
 
