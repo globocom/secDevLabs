@@ -13,13 +13,13 @@ from functools import wraps
 
 
 app = Flask(__name__)
-app.config['KEY'] = os.urandom(64).encode('hex')
-rdmkey = app.config['KEY']
 database = DataBase(os.environ.get('A2_DATABASE_HOST'),
                     os.environ.get('A2_DATABASE_USER'),
                     os.environ.get('A2_DATABASE_PASSWORD'),
-                    os.environ.get('A2_DATABASE_NAME'))
+                    os.environ.get('A2_DATABASE_NAME'),
+                    os.environ.get('A2_KEY'))
 
+rdmkey = os.environ.get('A2_KEY')
 
 def login_admin_required(f):
     @wraps(f)
