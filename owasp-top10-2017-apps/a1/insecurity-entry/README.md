@@ -6,7 +6,7 @@
 </p>
 
 ## Untreated data in database query
-/nome/matheus or id_usuario != 0
+/nome/matheus or id_usuario != "0
 <p align="left">
   <img src="images/sql_injection.png" allign="center" height=""/>
 </p>
