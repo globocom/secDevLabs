@@ -16,7 +16,6 @@ services:
         networks:
             - a1net
     api:
-        container_name: a1_api
         build: .
         depends_on:
             - mysqldb
