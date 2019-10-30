@@ -9,19 +9,25 @@ const mydb_importer = mysql_import.config({
     host: 'mysqldb',
     port: 3306,
     user: 'root',
-    password: '',
+    password: 'root',
     database: 'cadastro',
     onerror: err=>console.log(err.message)
 });
 
-mydb_importer.import('./database.sql');
+async function myImport() {
+  await mydb_importer.import('./database.sql');
+}
+
+myImport().then(result => {
+  console.log(result); //
+})
 
 var con = mysql.createConnection({
-  host: "mysqldb",
+  host: 'mysqldb',
   port: 3306,
-  user: "root",
-  password: "",
-  database: "cadastro"
+  user: 'root',
+  password: 'root',
+  database: 'cadastro'
 });
 
 /* GET home page. */

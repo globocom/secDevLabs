@@ -4,10 +4,14 @@ services:
 
     mysqldb:
         image: mysql:8.0.18
+        ports:
+          - "3307:3307"
         volumes:
             - db_data:/var/lib/mysql
         environment:
-            MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_USER: user
+            MYSQL_PASSWORD: pass
             MYSQL_DATABASE: cadastro
         networks:
             - a1net
@@ -19,6 +23,9 @@ services:
         ports:
             - "3000:3000"
         environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_USER: user
+            MYSQL_PASSWORD: pass
             MYSQL_DATABASE: cadastro
         volumes:
             - ".:/src"
