@@ -12,8 +12,6 @@ import siphash
 from functools import wraps
 
 Key = os.environ.get('A2_KEY')           
-            
-sip = siphash.SipHash_2_4(key)
 
 app = Flask(__name__)
 database = DataBase(os.environ.get('A2_DATABASE_HOST'),
