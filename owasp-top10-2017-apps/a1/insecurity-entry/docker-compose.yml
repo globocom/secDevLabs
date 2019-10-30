@@ -3,7 +3,7 @@ version: '3.4'
 services:
 
     mysqldb:
-        image: mysql:8.0.18
+        image: mysql:5.5.62
         ports:
           - "3307:3307"
         volumes:
@@ -38,4 +38,4 @@ networks:
 
 volumes:
     db_data:
-    src_code:
+    
