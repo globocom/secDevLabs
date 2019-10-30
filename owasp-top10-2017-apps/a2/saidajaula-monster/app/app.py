@@ -106,7 +106,7 @@ def login():
 
         cookie_dic = {"permissao": result[1], "username": form_username}
         cookie = json.dumps(cookie_dic)
-        hash_cookie = hashlib.sha256(cookie.encode('utf-8')).hexdigest()
+        hash_cookie = hmac.new(key, cookie_separado[0].encode('utf-8'), hashlib.sha256)).hexdigest()
         cookie_done = '.'.join([cookie,hash_cookie])
         cookie_done = base64.b64encode(str(cookie_done).encode("utf-8"))
         resp = make_response("Logged in!")
