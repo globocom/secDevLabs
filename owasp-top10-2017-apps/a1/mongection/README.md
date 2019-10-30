@@ -7,11 +7,7 @@ Mongection is a simple NodeJS web application that simulates a login page. It ha
 
 ## Index
 
-<<<<<<< HEAD
 - [Definition](#what-is-nosql-injection?)
-=======
-- [Definition](#what-is-injection)
->>>>>>> 36a1bea4720627cda761fab4d827980ea97912b0
 - [Setup](#setup)
 - [Attack narrative](#attack-narrative)
 - [Objectives](#secure-this-app)
