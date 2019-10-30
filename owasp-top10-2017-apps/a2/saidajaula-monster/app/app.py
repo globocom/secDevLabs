@@ -11,7 +11,8 @@ import uuid
 import siphash
 from functools import wraps
 
-key = '012B45#789MyK3Y'
+Key = os.environ.get('A2_KEY')           
+            
 sip = siphash.SipHash_2_4(key)
 
 app = Flask(__name__)
