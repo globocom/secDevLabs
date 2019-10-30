@@ -108,7 +108,7 @@ func CheckIfUserExists(username string) (bool, error) {
 	}
 	defer dbConn.Close()
 
-	rows, err := dbConn.Query("select username from Users where username = ?",user)
+	rows, err := dbConn.Query("select username from Users where username = ?",username)
 	if err != nil {
 		return false, err
 	}
