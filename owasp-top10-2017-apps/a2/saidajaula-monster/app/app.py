@@ -11,7 +11,7 @@ import uuid
 import siphash
 from functools import wraps
 
-Key = os.environ.get('A2_KEY')           
+key = os.environ.get('A2_KEY')           
 
 app = Flask(__name__)
 database = DataBase(os.environ.get('A2_DATABASE_HOST'),
