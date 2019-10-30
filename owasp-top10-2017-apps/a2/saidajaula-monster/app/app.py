@@ -16,8 +16,7 @@ app = Flask(__name__)
 database = DataBase(os.environ.get('A2_DATABASE_HOST'),
                     os.environ.get('A2_DATABASE_USER'),
                     os.environ.get('A2_DATABASE_PASSWORD'),
-                    os.environ.get('A2_DATABASE_NAME'),
-                    os.environ.get('A2_KEY'))
+                    os.environ.get('A2_DATABASE_NAME'))
 
 rdmkey = os.environ.get('A2_KEY')
 
