@@ -17,7 +17,7 @@
 
 ## How do I start?
 
-npm install
+`docker-compose up `
 
-npm start
+in insecurity-entry
 
