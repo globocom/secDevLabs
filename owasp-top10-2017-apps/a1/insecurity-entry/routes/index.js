@@ -10,7 +10,7 @@ const mydb_importer = mysql_import.config({
     port: 3306,
     user: 'root',
     password: 'root',
-    database: 'a1db',
+    database: 'cadastro',
     onerror: err=>console.log(err.message)
 });
 
@@ -27,7 +27,7 @@ var con = mysql.createConnection({
   port: 3306,
   user: 'root',
   password: 'root',
-  database: 'a1db'
+  database: 'cadastro'
 });
 
 /* GET home page. */
