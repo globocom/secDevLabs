@@ -7,6 +7,7 @@ import base64
 import os
 import json
 import hashlib
+import hmac
 import uuid
 from functools import wraps
 
@@ -17,6 +18,7 @@ database = DataBase(os.environ.get('A2_DATABASE_HOST'),
                     os.environ.get('A2_DATABASE_PASSWORD'),
                     os.environ.get('A2_DATABASE_NAME'))
 
+key = os.environ.get('A2_SECRET')
 
 def login_admin_required(f):
     @wraps(f)
@@ -26,7 +28,7 @@ def login_admin_required(f):
         cookie_separado = cookie.split('.')
         if(len(cookie_separado) != 2):
             return "Invalid cookie!"
-        hash_cookie = hashlib.sha256(cookie_separado[0].encode('utf-8')).hexdigest()
+        hash_cookie = hmac.new(key, cookie_separado[0].encode('utf-8'), hashlib.sha256)).hexdigest()
         if (hash_cookie != cookie_separado[1]):
             return redirect("/login")
         j = json.loads(cookie_separado[0])
@@ -44,7 +46,7 @@ def login_required(f):
         cookie_separado = cookie.split('.')
         if(len(cookie_separado) != 2):
             return "Invalid cookie! \n"
-        hash_cookie = hashlib.sha256(cookie_separado[0].encode('utf-8')).hexdigest()
+         hash_cookie = hmac.new(key, cookie_separado[0].encode('utf-8'), hashlib.sha256)).hexdigest()
         if (hash_cookie != cookie_separado[1]):
             return redirect("/login")
         return f(*args, **kwargs)
