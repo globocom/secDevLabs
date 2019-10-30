@@ -36,6 +36,7 @@ Disclaimer: You are about to install vulnerable apps in your machine! 🔥
 | Vulnerability | Language | Application |
 | --- | --- | --- | 
 | A1 - Injection | Golang | [CopyNPaste API](owasp-top10-2017-apps/a1/copy-n-paste) |
+| A1 - Injection | NodeJS | [Mongection](owasp-top10-2017-apps/a1/mongection) |
 | A2 - Broken Authentication | Python | [Saidajaula Monster Fit](owasp-top10-2017-apps/a2/saidajaula-monster) |
 | A2 - Broken Authentication | Golang | [Insecure go project](owasp-top10-2017-apps/a2/insecure-go-project) |
 | A3 - Sensitive Data Exposure | Golang | [SnakePro](owasp-top10-2017-apps/a3/snake-pro)|
