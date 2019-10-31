@@ -19,7 +19,8 @@ class MainHandler(tornado.web.RequestHandler):
 
 application = tornado.web.Application([
     (r"/", MainHandler),
-], debug=False, static_path=None, template_path=None)
+    (r"/images/(.*)",tornado.web.StaticFileHandler, {"path": os.path.join(os.path.dirname(__file__)) + "/images/"},),
+], debug=False)
 
 if __name__ == '__main__':
     application.listen(10001)
