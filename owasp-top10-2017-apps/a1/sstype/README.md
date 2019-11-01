@@ -121,7 +121,7 @@ nc -nlv ATTACKER-PORT
 But how can we use this payload inside the `name` parameter? To do so, we could compact it using multiples `;` to separate each instruction, resulting in the following payload:
 
 ```
-Don't forget to replace `ATTACKER-IP` and `ATTACKER-PORT` bellow!
+Don't forget to replace `ATTACKER-IP` and `ATTACKER-PORT` below!
 ```
 
 ```python
