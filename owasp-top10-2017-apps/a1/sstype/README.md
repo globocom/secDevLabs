@@ -151,4 +151,3 @@ We encourage you to contribute to SecDevLabs! Please check out the [Contributing
 [Docker Install]:  https://docs.docker.com/install/
 [Docker Compose Install]: https://docs.docker.com/compose/install/
 [App]: http://localhost:10001
-[Dirb]: https://tools.kali.org/web-applications/dirb
