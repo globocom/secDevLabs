@@ -94,9 +94,14 @@ First time acessing the app:
 Found an interesting page:
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/globocom/secDevLabs/master/owasp-top10-2017-apps/a2/saidajaula-monster/images/attack1.png"/>
+    <img src="https://raw.githubusercontent.com/globocom/secDevLabs/master/owasp-top10-2017-apps/a1/phpi/images/app_login_sucess.JPG"/>
 </p>
 
+<!-- ################################################# -->
+
+
+
+<!--
 Started the analysis on how the app handles cookies:
 
 <p align="center">
@@ -135,6 +140,7 @@ Delivering a payload, and results!
 <p align="center">
     <img src="https://raw.githubusercontent.com/globocom/secDevLabs/master/owasp-top10-2017-apps/a2/saidajaula-monster/images/attack8.png"/>
 </p>
+-->
 
 ## Secure this app
 
