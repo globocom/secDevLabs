@@ -3,12 +3,11 @@
 
 > All comments on how to write a README are displayed between ( ), and should not be in the app's final version
 
-( Be sure to add a banner image of your app here! )
 <p align="center">
     <img src="https://github.com/edusantos33/secDevLabs/blob/master/owasp-top10-2017-apps/a1/phpi/images/app1.JPG?raw=true"/>
 </p>
 
-( PHPi is vulnerable app to SQL injection dpolyment in PHP 7! )
+PHPi is a simple and vulnerable application to SQL injection dpolyment in PHP 7!
 
 ## Index
 
@@ -23,19 +22,42 @@
 
 ## <a name="definition"></a> What is ( vulnerability being explored in this app )?
 
-( OWASP vulnerability definition here )
+A1 - SQL Injection
 
-The main goal of this app is to discuss how **( vulnerability being explored in this app )** vulnerabilities can be exploited and to encourage developers to send secDevLabs Pull Requests on how they would mitigate these flaws.
+The main goal of this app is to discuss how **( SQL Injection (SQLi) )** vulnerabilities can be exploited and to encourage developers to send secDevLabs Pull Requests on how they would mitigate these flaws.
 
 ## Setup
 
-( What do you need to do to get it up and running? Remember to add all the commands used as well! )
+To start this intentionally **insecure application**, you will need [Docker][Docker Install] and [Docker Compose][Docker Compose Install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
+
+```sh
+cd secDevLabs/owasp-top10-2017-apps/a1/phpi
+```
+
+```sh
+make install
+```
+
+Then simply visit [localhost:10001][App], as exemplified below:
 
 ## Get to know the app ( Cool emoji describing the app - Get creative! 😝 )
 
+This is a simple login app. You could create an account and test a login system.
+
 To properly understand how this application works, you can follow these simple steps:
 
-( Add steps for an user to follow and get to know your app )
+- Register a new user via front-end.
+- Login as this user via front-end.
+
+<p align="center">
+    <img src="https://github.com/edusantos33/secDevLabs/blob/master/owasp-top10-2017-apps/a1/phpi/images/app1.JPG?raw=true"/>
+</p>
+
+- Register page
+
+<p align="center">
+    <img src="https://github.com/edusantos33/secDevLabs/blob/master/owasp-top10-2017-apps/a1/phpi/images/app_cadastrar.JPG?raw=true"/>
+</p>
 
 ## Attack narrative
 
@@ -65,7 +87,8 @@ A nice example of images to have on an attack narrative in the discovery section
 First time acessing the app:
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/globocom/secDevLabs/master/owasp-top10-2017-apps/a2/saidajaula-monster/images/img1.png"/>
+    <img src="https://github.com/edusantos33/secDevLabs/blob/master/owasp-top10-2017-apps/a1/phpi/images/app1.JPG?raw=true"/>
+
 </p>
 
 Found an interesting page:
