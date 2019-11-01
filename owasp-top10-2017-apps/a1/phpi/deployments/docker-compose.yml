@@ -2,13 +2,17 @@ version: '2'
 services:
   mysql:
         image: mysql:8.0
-        container_name: mysql-server-80
+        container_name: mysql
+        build:
+            context: ../
+            dockerfile: Dockerfile
         command: --default-authentication-plugin=mysql_native_password
         command: --init-file /data/application/init.sql
         volumes:
           - ../app/init.sql:/data/application/init.sql
-        working_dir: ../app
         restart: always
+        networks:
+            - a1net
         environment:
           - MYSQL_ROOT_PASSWORD=imd
           - MYSQL_DATABASE=login_1
@@ -16,15 +20,22 @@ services:
           - MYSQL_PASSWORD=imd
         ports:
           - "3308:3306"
+          
   website:
-    container_name: php72
-    build:
-      context: ./
+      container_name: a1_api
+        build:
+            context: ../
+            dockerfile: deployments/Dockerfile
     links:
       - "mysql:database"
+    networks:
+            - a1net
     volumes:
-      - ../app:/var/www/html
+      - app:/var/www/html
     ports:
-      - 1001:80
+      - 10001:80
     depends_on:
       - mysql
+
+networks:
+    a1net:
