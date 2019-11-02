@@ -7,18 +7,18 @@ COLOR_YELLOW = \033[33m
 COLOR_GREEN = \033[32m
 COLOR_RED = \033[31m
 
-PROJECT := A9 - Cimentech
-PORT := 80
+PROJECT := A1 - Mongection
+PORT := 10001
 
-## Installs a development environment
+## Installs a development environment using docker-compose
 install: compose msg
 
-## Composes project using docker-compose
+## Run project using docker-compose
 compose:
 	docker-compose -f deployments/docker-compose.yml down -v --remove-orphans
 	docker-compose -f deployments/docker-compose.yml up -d --build --force-recreate
 
-## Prints initialization message after compose phase
+## Prints initialization message after compose phase - You can find that the check-init.sh script is also in the docs folder.
 msg:
 	chmod +x deployments/check-init.sh
 	./deployments/check-init.sh

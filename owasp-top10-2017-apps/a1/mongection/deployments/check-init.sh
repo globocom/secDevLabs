@@ -9,9 +9,9 @@ COLOR_GREEN='\033[32m'
 COLOR_BLUE='\033[1;34m'
 COLOR_RESET='\033[0m'
 
-PROJECT="A9 - Cimentech"
-PORT=80
-TRIES=480
+PROJECT="A1 - Mongection"
+PORT=10001
+TRIES=240
 LOADING=0
 
 printf "${COLOR_YELLOW}SecDevLabs: 👀  Your app is starting!\n${COLOR_RESET}"
