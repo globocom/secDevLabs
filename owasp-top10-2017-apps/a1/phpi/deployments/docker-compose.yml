@@ -1,41 +1,46 @@
-version: '2'
+version: '3'
+
 services:
-  mysql:
-        image: mysql:8.0
-        container_name: mysql
-        build:
-            context: ../
-            dockerfile: Dockerfile
-        command: --default-authentication-plugin=mysql_native_password
-        command: --init-file /data/application/init.sql
-        volumes:
-          - ../app/init.sql:/data/application/init.sql
-        restart: always
-        networks:
-            - a1net
-        environment:
-          - MYSQL_ROOT_PASSWORD=imd
-          - MYSQL_DATABASE=login_1
-          - MYSQL_USER=root
-          - MYSQL_PASSWORD=imd
-        ports:
-          - "3308:3306"
-          
-  website:
-      container_name: a1_api
-        build:
-            context: ../
-            dockerfile: deployments/Dockerfile
-    links:
-      - "mysql:database"
-    networks:
-            - a1net
-    volumes:
-      - app:/var/www/html
+
+  apache-php:
+    container_name: a1_apache_php
+    build:
+      context: ../
+      dockerfile: deployments/Dockerfile
     ports:
-      - 10001:80
+      - '10001:80'
+    restart: always
+    environment:
+      DB_PASSWORD: userpassword
+      DB_DATABASE: a1db
+      DB_USER: user
+      DB_HOST: mysqldb
+      DB_PORT: 3306
     depends_on:
-      - mysql
+      - mysqldb
+    networks:
+      - a1net
+    volumes:
+      - ../app:/var/www/html
+
+  mysqldb:
+    container_name: mysqldb
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_PASSWORD: userpassword
+      MYSQL_DATABASE: a1db
+      MYSQL_USER: user
+      MYSQL_ROOT_PASSWORD: rootpassword
+    networks:
+        - a1net
+    volumes:
+        - db_data:/var/lib/mysql
+        - ./init.sql:/docker-entrypoint-initdb.d/schema.sql:ro
 
 networks:
     a1net:
+
+volumes:
+    db_data:
