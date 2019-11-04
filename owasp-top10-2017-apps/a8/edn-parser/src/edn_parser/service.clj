@@ -50,7 +50,7 @@
               ;; string(s) specifying scheme, host and port for
               ;; allowed source(s):
               ;;
-              ;; "http://localhost:8080"
+              ;; "http://localhost:10008"
               ;;
               ;;::http/allowed-origins ["scheme://host:port"]
 
@@ -69,7 +69,7 @@
               ;;  This can also be your own chain provider/server-fn -- http://pedestal.io/reference/architecture-overview#_chain_provider
               ::http/type :jetty
               ::http/host "0.0.0.0"
-              ::http/port 8080
+              ::http/port 10008
               ;; Options to pass to the container (Jetty)
               ::http/container-options {:h2c? true
                                         :h2? false
