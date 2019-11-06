@@ -45,6 +45,12 @@ Be sure to add some pictures! A picture is worth a thousand words! 👍
 
 Please let us know! Send a Pull Request with the `bug 🕷 ` label or create an Issue! We have a [PR][4] and [issue][5] template to help you!
 
+## Contribution Scope
+
+This repository's goal is to provide a laboratory for people worldwide to learn more about cybersecurity and secure development. With that in mind, we expect contributions such as new applications, tweaks on the ones already existing or a bug catch.
+
+To build some of the secDevLabs apps, some third party code, such as libraries or Content Management Systems (CMS), was used. Improving and maintaining external code is not the goal of this project and, in this regard, all contributions on that matter will be considered invalid.
+
 [1]:/docs/Makefile
 [3]:/docs/README_Template.md
 [4]:/docs/PR_Template.md
