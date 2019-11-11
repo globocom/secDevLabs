@@ -10,6 +10,8 @@ services:
       A2_DATABASE_PASSWORD: pass
       A2_DATABASE_HOST: db
       A2_DATABASE_NAME: A2
+      JWT_SECRET: 6DYeK36zvoGKuR2bBNcuc8d7epxNi9wc8m95ofn6Pfe9AMtgSiQjAYQ
+      JWT_ALGORITHM: HS256
     links:
       - db:db
     depends_on:

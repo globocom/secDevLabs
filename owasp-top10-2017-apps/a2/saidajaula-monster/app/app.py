@@ -8,8 +8,11 @@ import os
 import json
 import hashlib
 import uuid
+import jwt
 from functools import wraps
 
+jwt_secret = os.environ.get('JWT_SECRET')
+jwt_algorithm = os.environ.get('JWT_ALGORITHM')
 
 app = Flask(__name__)
 database = DataBase(os.environ.get('A2_DATABASE_HOST'),
@@ -22,32 +25,36 @@ def login_admin_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         cookie = request.cookies.get("sessionId", "")
-        cookie = base64.b64decode(cookie).decode("utf-8")
-        cookie_separado = cookie.split('.')
-        if(len(cookie_separado) != 2):
+
+        jwt_token = request.cookies.get("sessionId", "")
+
+        try:
+            jwt_token_decoded = jwt.decode(jwt_token, jwt_secret, algorithm='HS256')
+            print(jwt_token_decoded)
+        except:
             return "Invalid cookie!"
-        hash_cookie = hashlib.sha256(cookie_separado[0].encode('utf-8')).hexdigest()
-        if (hash_cookie != cookie_separado[1]):
-            return redirect("/login")
-        j = json.loads(cookie_separado[0])
-        if j.get("permissao") != 1:
+
+        if jwt_token_decoded['username'] == 'admin':
+            return f(*args, **kwargs)
+        else:
             return "You don't have permission to access this route. You are not an admin. \n"
-        return f(*args, **kwargs)
+
     return decorated_function
 
 
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        cookie = request.cookies.get("sessionId", "")
-        cookie = base64.b64decode(cookie).decode("utf-8")
-        cookie_separado = cookie.split('.')
-        if(len(cookie_separado) != 2):
+        jwt_token = request.cookies.get("sessionId", "")
+
+        try:
+            jwt_token_decoded = jwt.decode(jwt_token, jwt_secret, algorithm='HS256')
+            print(jwt_token_decoded)
+        except:
             return "Invalid cookie! \n"
-        hash_cookie = hashlib.sha256(cookie_separado[0].encode('utf-8')).hexdigest()
-        if (hash_cookie != cookie_separado[1]):
-            return redirect("/login")
-        return f(*args, **kwargs)
+        else:
+            return f(*args, **kwargs)
+
     return decorated_function
 
 
@@ -102,13 +109,13 @@ def login():
         if not password.validate_password(result[0]):
             return "Login failed! \n"
 
-        cookie_dic = {"permissao": result[1], "username": form_username}
-        cookie = json.dumps(cookie_dic)
-        hash_cookie = hashlib.sha256(cookie.encode('utf-8')).hexdigest()
-        cookie_done = '.'.join([cookie,hash_cookie])
-        cookie_done = base64.b64encode(str(cookie_done).encode("utf-8"))
+        # implementing jwt
+        payload = {'username': form_username}
+        jwt_token = jwt.encode(payload, jwt_secret, jwt_algorithm)
+        print(jwt_token)
         resp = make_response("Logged in!")
-        resp.set_cookie("sessionId", cookie_done)
+        resp.set_cookie("sessionId", jwt_token)
+
         return resp
 
 
