@@ -48,7 +48,7 @@ MongoClient.connect(url, function(err, db) {
 MongoClient.connect(url, function(err, db) {
     if (err) throw err;
     var dbo = db.db("stego");
-    var myobj = { username: "admin", password: "admin" };
+    var myobj = { username: "admin", password: "adm9wE633cQxuzC6spY6SkJin" };
     dbo.collection("users").insertOne(myobj, function(err, res) {
         if (err) throw err;
         console.log("Admin user added to the database");
@@ -89,7 +89,7 @@ router.post("/login", function(req,res)  {
             var token = jwt.sign({ username }, process.env.SECRET, {
                 expiresIn: 300 // Token expires in 5 minutes
             });
-            res.cookie('nodejsSessionToken', token).redirect(301, "/admin");
+            res.cookie('stgSessionToken', token).redirect(301, "/admin");
         } else {
             res.status(500).send('Invalid username or password!').redirect(301, "/logout");
         }
@@ -98,7 +98,7 @@ router.post("/login", function(req,res)  {
 
 // Logout route to deauthorize user session tokens
 router.get("/logout", function(req, res) {
-    res.status(200).clearCookie('nodejsSessionToken').redirect(301, "/");
+    res.status(200).clearCookie('stgSessionToken').redirect(301, "/");
 });
 
 // Admin maintenance page
@@ -123,8 +123,8 @@ router.get("/", function(req,res) {
 
 // Returns the error web-page if none other is found
 app.use('/', router);
-app.use(function(req, res, next) {
-    res.status(404).render("error.html")
+app.use(function(req, res, next) { 
+    res.status(404).type('txt').send("Not Found.")    
 });
 // Listen on port 10006
 app.listen(10006, () => {
@@ -133,7 +133,7 @@ app.listen(10006, () => {
 
 // Verifies the JWT token
 function verifyJWT(req, res, next){
-    var token = req.cookies.nodejsSessionToken;
+    var token = req.cookies.stgSessionToken;
     if (!token) return res.status(401).send({auth: false, message: 'No token provided'});
 
     jwt.verify(token, process.env.SECRET, function(err, decoded) {
