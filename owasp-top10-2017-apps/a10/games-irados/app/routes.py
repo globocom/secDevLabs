@@ -28,6 +28,10 @@ bootstrap = Bootstrap(app)
 
 app.config.from_pyfile('config.py')
 
+logger = logging.getLogger()
+stream_handler = logging.StreamHandler()
+stream_handler.setFormatter(logging.Formatter("[%(asctime)s] - %(name)s - %(levelname)s in {%(filename)s:%(lineno)d} : %(message)s"))
+logger.addHandler(stream_handler)
 
 def generate_csrf_token():
     '''
@@ -78,8 +82,10 @@ def login():
         user_password, success = database.get_user_password(username)
         if not success or user_password == None or not psw.validate_password(str(user_password[0])):
             flash("Usuario ou senha incorretos", "danger")
+            app.logger.warning('(' + request.remote_addr + ') Failed login attempt.')
             return render_template('login.html')
         session['username'] = username
+        app.logger.info('(' + request.remote_addr + ') Successful login.')
         return redirect('/home')
     else:
         return render_template('login.html')
@@ -120,12 +126,15 @@ def cupom():
         rows, success = database.get_game_coupon(coupon, session.get('username'))
         if not success or rows == None or rows == 0:
             flash("Cupom invalido", "danger")
+            app.logger.warning('(' + request.remote_addr + ') Invalid coupon inserted.')
             return render_template('coupon.html')
         game, success = database.get_game(coupon, session.get('username'))
         if not success or game == None:
             flash("Cupom invalido", "danger")
+            app.logger.warning('(' + request.remote_addr + ') Invalid coupon inserted.')
             return render_template('coupon.html')
         flash("Voce ganhou {}".format(game[0]), "primary")
+        app.logger.info('(' + request.remote_addr + ') Valid coupon inserted.')
         return render_template('coupon.html')
     else:
         return render_template('coupon.html')
