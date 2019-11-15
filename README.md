@@ -10,7 +10,6 @@ A laboratory for learning secure web development in a practical manner.
 <p align="center">
 <a href="https://github.com/globocom/secDevLabs/blob/master/docs/CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-Welcome-brightgreen"/></a>
 <a href="https://gitter.im/secDevLabs/community"><img src="https://badges.gitter.im/secDevLabs/community.svg"/></a>
-<a href="https://github.com/globocom/secDevLabs/issues"><img src="https://img.shields.io/github/hacktoberfest/2019/globocom/secdevlabs"/></a>
 </p>
 
 ## Build your lab
@@ -29,7 +28,7 @@ Now it's time to shield the application up! Imagine that this is your applicatio
 
 After mitigating a vulnerability, you can send a Pull Request to gently ask the secDevLabs community to review your new secure codes. If you're feeling a bit lost, try having a look at [this mitigation solution](https://github.com/globocom/secDevLabs/pull/29), it might help! 🚀
 
-##  OWASP Top 10 (2017) apps:
+## OWASP Top 10 (2017) apps:
 
 Disclaimer: You are about to install vulnerable apps in your machine! 🔥
 
@@ -37,6 +36,7 @@ Disclaimer: You are about to install vulnerable apps in your machine! 🔥
 | --- | --- | --- | 
 | A1 - Injection | Golang | [CopyNPaste API](owasp-top10-2017-apps/a1/copy-n-paste) |
 | A1 - Injection | NodeJS | [Mongection](owasp-top10-2017-apps/a1/mongection) |
+| A1 - Injection | Python | [SSType](owasp-top10-2017-apps/a1/sstype) |
 | A2 - Broken Authentication | Python | [Saidajaula Monster Fit](owasp-top10-2017-apps/a2/saidajaula-monster) |
 | A2 - Broken Authentication | Golang | [Insecure go project](owasp-top10-2017-apps/a2/insecure-go-project) |
 | A3 - Sensitive Data Exposure | Golang | [SnakePro](owasp-top10-2017-apps/a3/snake-pro)|
