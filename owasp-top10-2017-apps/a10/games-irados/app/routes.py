@@ -82,10 +82,10 @@ def login():
         user_password, success = database.get_user_password(username)
         if not success or user_password == None or not psw.validate_password(str(user_password[0])):
             flash("Usuario ou senha incorretos", "danger")
-            app.logger.warning('(' + request.remote_addr + ') Failed login attempt.')
+            app.logger.warning('(%s) Failed login attempt - user "%s".' % (request.remote_addr, username.decode('utf-8')) )
             return render_template('login.html')
         session['username'] = username
-        app.logger.info('(' + request.remote_addr + ') Successful login.')
+        app.logger.info('(%s) Successful login - user "%s".' % (request.remote_addr, username.decode('utf-8')) )
         return redirect('/home')
     else:
         return render_template('login.html')
@@ -103,9 +103,11 @@ def newuser():
             message, success = database.insert_user(username, hashed_psw)
             if success == 1:
                 flash("Novo usuario adicionado!", "primary")
+                app.logger.info('(%s) Successfully added new user "%s".' % (request.remote_addr, username.decode('utf-8')) )
                 return redirect('/login')
             else:
                 flash(message, "danger")
+                app.logger.warning('(%s) Failed to add new user "%s".' % (request.remote_addr, username.decode('utf-8')) )
                 return redirect('/register')
 
         flash("Passwords must be the same!", "danger")
@@ -123,18 +125,19 @@ def home():
 def cupom():
     if request.method == 'POST':
         coupon = request.form.get('coupon')
-        rows, success = database.get_game_coupon(coupon, session.get('username'))
+        username = session.get('username')
+        rows, success = database.get_game_coupon(coupon, username)
         if not success or rows == None or rows == 0:
             flash("Cupom invalido", "danger")
-            app.logger.warning('(' + request.remote_addr + ') Invalid coupon inserted.')
+            app.logger.warning('(%s) Invalid coupon inserted "%s" - user "%s".' % (request.remote_addr, coupon, username.decode('utf-8')) )
             return render_template('coupon.html')
         game, success = database.get_game(coupon, session.get('username'))
         if not success or game == None:
             flash("Cupom invalido", "danger")
-            app.logger.warning('(' + request.remote_addr + ') Invalid coupon inserted.')
+            app.logger.warning('(%s) Invalid coupon inserted "%s" - user "%s".' % (request.remote_addr, coupon, username.decode('utf-8')) )
             return render_template('coupon.html')
         flash("Voce ganhou {}".format(game[0]), "primary")
-        app.logger.info('(' + request.remote_addr + ') Valid coupon inserted.')
+        app.logger.info('(%s) Valid coupon inserted "%s" - user "%s".' % (request.remote_addr, coupon, username.decode('utf-8')) )
         return render_template('coupon.html')
     else:
         return render_template('coupon.html')
