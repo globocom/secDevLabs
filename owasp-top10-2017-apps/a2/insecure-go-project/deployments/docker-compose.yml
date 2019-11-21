@@ -21,6 +21,11 @@ services:
             - mongodb
         external_links:
             - mongodb:mongodb
+        environment: 
+            MONGO_DB_NAME: insecure_go_project
+            MONGO_DB_HOST: mongodb
+            MONGO_DB_PASSWORD: svGX8SViufvYYNu6m3Kv
+            MONGO_DB_USERNAME: u_insecure_go_project
 
     mongodb:
         container_name: mongodb
