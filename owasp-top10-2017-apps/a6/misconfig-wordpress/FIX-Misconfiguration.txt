@@ -1,0 +1,15 @@
+- Add the following code to wp-includes/functions.php file:
+
+function no_wordpress_errors(){
+  return 'Something is wrong!';
+}
+add_filter( 'login_errors', 'no_wordpress_errors' );
+
+- On /etc/apache2/conf-enabled/security.conf set the variables “ServerToken Prod”, “ServerSignature Off" and adding the following ones:
+Header unset X-Powered-By
+Header set X-Frame-Options SAMEORIGIN
+Header set X-XSS-Protection 1;mode=block
+Header set X-Content-Type-Options nosniff
+
+- In the Admin Panel click on the banner and upgrade the wordpress version and
+  change the admin password
