@@ -24,3 +24,4 @@ echo "MONGO_DATABASE=$MONGO_DATABASE" >> deployments/.dockers.env
 echo "MONGO_USER=$MONGO_USER" >> deployments/.dockers.env
 echo "MONGO_PASSWORD=$MONGO_PASSWORD" >> deployments/.dockers.env
 echo "MONGO_PORT=$MONGO_PORT" >> deployments/.dockers.env
+echo "NODE_ENV=production" >> deployments/.dockers.env

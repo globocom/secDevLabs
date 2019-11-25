@@ -48,7 +48,7 @@ MongoClient.connect(url, function(err, db) {
 MongoClient.connect(url, function(err, db) {
     if (err) throw err;
     var dbo = db.db("stego");
-    var myobj = { username: "admin", password: "admin" };
+    var myobj = { username: "Dino01", password: "Dino20878"};
     dbo.collection("users").insertOne(myobj, function(err, res) {
         if (err) throw err;
         console.log("Admin user added to the database");
@@ -85,11 +85,11 @@ router.post("/login", function(req,res)  {
     };
 
     VerifiesUser((username) => { 
-        if (username == "admin") {
+        if (username == "Dino01") {
             var token = jwt.sign({ username }, process.env.SECRET, {
                 expiresIn: 300 // Token expires in 5 minutes
             });
-            res.cookie('nodejsSessionToken', token).redirect(301, "/admin");
+            res.cookie('SessionToken', token).redirect(301, "/admin");
         } else {
             res.status(500).send('Invalid username or password!').redirect(301, "/logout");
         }
@@ -98,7 +98,7 @@ router.post("/login", function(req,res)  {
 
 // Logout route to deauthorize user session tokens
 router.get("/logout", function(req, res) {
-    res.status(200).clearCookie('nodejsSessionToken').redirect(301, "/");
+    res.status(200).clearCookie('SessionToken').redirect(301, "/");
 });
 
 // Admin maintenance page
@@ -133,7 +133,7 @@ app.listen(10006, () => {
 
 // Verifies the JWT token
 function verifyJWT(req, res, next){
-    var token = req.cookies.nodejsSessionToken;
+    var token = req.cookies.SessionToken;
     if (!token) return res.status(401).send({auth: false, message: 'No token provided'});
 
     jwt.verify(token, process.env.SECRET, function(err, decoded) {
