@@ -48,7 +48,7 @@ MongoClient.connect(url, function(err, db) {
 MongoClient.connect(url, function(err, db) {
     if (err) throw err;
     var dbo = db.db("stego");
-    var myobj = { username: "Dino01", password: "Dino20878"};
+    var myobj = { username: process.env.USER, password: process.env.USER_PWD};
     dbo.collection("users").insertOne(myobj, function(err, res) {
         if (err) throw err;
         console.log("Admin user added to the database");
@@ -85,7 +85,7 @@ router.post("/login", function(req,res)  {
     };
 
     VerifiesUser((username) => { 
-        if (username == "Dino01") {
+        if (username == process.env.USER) {
             var token = jwt.sign({ username }, process.env.SECRET, {
                 expiresIn: 300 // Token expires in 5 minutes
             });

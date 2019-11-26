@@ -8,6 +8,8 @@ SECRET=$RANDOM$RANDOM
 
 echo "#.env" > app/.env
 echo "SECRET=$SECRET" >> app/.env
+echo "USER=Dino01" >> app/.env
+echo "USER_PWD=Dino20878" >> app/.env
 
 
 # Database environment variables
