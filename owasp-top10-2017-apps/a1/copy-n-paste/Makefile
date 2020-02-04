@@ -16,13 +16,26 @@ PROJECT := A1 - CopyNPaste API
 PORT := 10001
 SLEEPUNTILAPPSTARTS := 45
 
-## Installs a development environment using docker-compose
-install: compose msg
+## Test the application
+test: go test ./...
 
 ## Run project using docker-compose
 compose:
 	docker-compose -f deployments/docker-compose.yml down -v --remove-orphans
 	docker-compose -f deployments/docker-compose.yml up -d --build --force-recreate
+
+exploit:
+	chmod +x deployments/exploit.sh
+	./deployments/exploit.sh
+
+deploy:
+
+
+validate:
+
+
+## Installs a development environment using docker-compose
+install: compose msg
 
 ## Prints initialization message after compose phase
 msg:
