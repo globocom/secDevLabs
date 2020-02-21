@@ -77,9 +77,11 @@ def login():
         psw = Password(request.form.get('password').encode('utf-8'))
         user_password, success = database.get_user_password(username)
         if not success or user_password == None or not psw.validate_password(str(user_password[0])):
+            logging.warning("\nEvent: %s - Timestamp: %s - Route: %s - Ip: %s - Username: %s\n" % ("Invalid Login Credentials!", datetime.datetime.now(), "/login", request.remote_addr, username))
             flash("Usuario ou senha incorretos", "danger")
             return render_template('login.html')
         session['username'] = username
+        logging.info("\nEvent: %s - Timestamp: %s - Route: %s - Ip: %s - Username: %s\n" % ("Login successful!", datetime.datetime.now(), "/login", request.remote_addr, username))
         return redirect('/home')
     else:
         return render_template('login.html')
@@ -97,9 +99,11 @@ def newuser():
             message, success = database.insert_user(username, hashed_psw)
             if success == 1:
                 flash("Novo usuario adicionado!", "primary")
+                logging.info("\nEvent: %s - Timestamp: %s - Route: %s - Ip: %s - Username: %s\n" % ("New user registered!", datetime.datetime.now(), "/register", request.remote_addr, username))
                 return redirect('/login')
             else:
                 flash(message, "danger")
+                logging.error("\nEvent: %s - Timestamp: %s - Route: %s - Ip: %s - Username: %s\n" % ("Error registering new user!", datetime.datetime.now(), "/register", request.remote_addr, username))
                 return redirect('/register')
 
         flash("Passwords must be the same!", "danger")
@@ -120,12 +124,15 @@ def cupom():
         rows, success = database.get_game_coupon(coupon, session.get('username'))
         if not success or rows == None or rows == 0:
             flash("Cupom invalido", "danger")
+            logging.warning("\nEvent: %s - Timestamp: %s - Route: %s - Ip: %s - Username: %s - Coupon: %s\n" % ("Invalid Coupon inserted! (get_game_coupon)", datetime.datetime.now(), "/coupon", request.remote_addr, session.get('username'), coupon))
             return render_template('coupon.html')
         game, success = database.get_game(coupon, session.get('username'))
         if not success or game == None:
             flash("Cupom invalido", "danger")
+            logging.warning("\nEvent: %s - Timestamp: %s - Route: %s - Ip: %s - Username: %s - Coupon: %s\n" % ("Invalid Coupon inserted! (get_game)", datetime.datetime.now(), "/coupon", request.remote_addr, session.get('username'), coupon))
             return render_template('coupon.html')
         flash("Voce ganhou {}".format(game[0]), "primary")
+        logging.info("\nEvent: %s - Timestamp: %s - Route: %s - Ip: %s - Username: %s - Coupon: %s\n" % ("Valid Coupon inserted!", datetime.datetime.now(), "/coupon", request.remote_addr, session.get('username'), coupon))
         return render_template('coupon.html')
     else:
         return render_template('coupon.html')
