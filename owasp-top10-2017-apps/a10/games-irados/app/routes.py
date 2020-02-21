@@ -106,6 +106,7 @@ def newuser():
                 logging.error("\nEvent: %s - Timestamp: %s - Route: %s - Ip: %s - Username: %s\n" % ("Error registering new user!", datetime.datetime.now(), "/register", request.remote_addr, username))
                 return redirect('/register')
 
+        logging.warning("\nEvent: %s - Timestamp: %s - Route: %s - Ip: %s - Username: %s\n" % ("Different passwords while registering new user!", datetime.datetime.now(), "/register", request.remote_addr, username))
         flash("Passwords must be the same!", "danger")
         return redirect('/register')
     else:
