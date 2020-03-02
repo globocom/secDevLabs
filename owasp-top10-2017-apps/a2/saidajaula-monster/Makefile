@@ -24,6 +24,11 @@ msg:
 	chmod +x deployments/check-init.sh
 	./deployments/check-init.sh
 
+## Tries to exploit the app with commands shown in the attack narrative.
+exploit:
+	chmod +x deployments/exploit.sh
+	./deployments/exploit.sh
+
 ## Prints help message
 help:
 	printf "\n${COLOR_YELLOW}${PROJECT}\n------\n${COLOR_RESET}"
