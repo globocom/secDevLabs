@@ -28,7 +28,7 @@
             var password = await document.getElementById("password").value;
             
             const request = new XMLHttpRequest();
-            request.open("POST", "http://localhost:10001/register");
+            request.open("POST", "http://192.168.99.100:10001/register");
             request.setRequestHeader("Content-Type", "application/json");
 
             request.onreadystatechange = function() {

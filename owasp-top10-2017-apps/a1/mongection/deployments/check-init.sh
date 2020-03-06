@@ -17,7 +17,7 @@ LOADING=0
 printf "${COLOR_YELLOW}SecDevLabs: 👀  Your app is starting!\n${COLOR_RESET}"
 
 while : ; do
-    `curl -s -f http://localhost:$PORT > /dev/null`
+    `curl -s -f http://192.168.99.100:$PORT > /dev/null`
     if [ $? == 0 ] ; then
         break
     fi
