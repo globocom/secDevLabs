@@ -9,6 +9,7 @@ const server = express();
 const PORT = 10001;
 
 var emailRegex = /^[-!#$%&'*+\/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/;
+const sqlRegex = /[${}]/g;
 
 server.use(bodyParser.json());
 
@@ -39,13 +40,17 @@ server.post("/login", async (request, response) => {
         const email = request.body.email;
         const password = request.body.password;
 
-        const user = await db.login({email, password});
+        if(!sqlRegex.test(email) && !sqlRegex.test(password)){
+            const user = await db.login({email, password});
 
-        console.log(user.length)
-
-        if(user.length == 0) { response.send('Bad Credentials'); }
-
-        response.send("<h1>Hello, Welcome Again!</h1><h3>" + user + "</h3>");
+            if(user.length == 0) { response.send('Bad Credentials'); }
+    
+                response.send("<h1>Hello, Welcome Again!</h1><h3>" + email + "</h3>");    
+        }
+        else{
+            response.send('Bad Characters in email or password');
+        }
+        
     }
    
     catch(error) { throw error; }
@@ -63,11 +68,17 @@ server.post("/register", async (request, response) => {
         if(!validEmail) { response.send('Bad Email'); }
 
         else {
-            const user = await db.register({name, email, password});
+            if(!sqlRegex.test(email) && !sqlRegex.test(password)){
+                const user = await db.register({name, email, password});
+                if(!user) { response.send('User Already Exists'); }
+                response.send("<h1>Welcome to Mongection System</h1><h3>" + user.email + "</h3>");
+            }
+            else{
+                response.send('Bad Characters in email or password');
+            }
+            
 
-            if(!user) { response.send('User Already Exists'); }
-
-            response.send("<h1>Welcome to Mongection System</h1><h3>" + user.email + "</h3>");
+            
         }
         
     }
