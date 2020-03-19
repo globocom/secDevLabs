@@ -1,0 +1,114 @@
+import 'package:flutter/material.dart';
+import '../widgets/alert_button.dart';
+import 'package:http/http.dart';
+
+class RegisterScreen extends StatelessWidget {
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
+  int _statusCode;
+
+  _register(BuildContext context, String username, String password) async {
+    // set up POST request arguments
+    String url = 'http://10.0.2.2:9051/register';
+    Map<String, String> headers = {"Content-type": "application/json"};
+    String json = '{"username": "$username", "password": "$password"}';
+    // make POST request
+    Response response = await post(url, headers: headers, body: json);
+    // check the status code for the result
+    _statusCode = response.statusCode;
+    if (_statusCode == 409) {
+      showAlertDialog(context, 'Register Error', 'User already exists!');
+      return;
+    }
+    if (_statusCode == 500) {
+      showAlertDialog(context, 'Register Error', 'Please try again later.');
+      return;
+    }
+
+    showAlertDialog(context, 'Register', 'User registered successfully!');
+    return;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        iconTheme: IconThemeData(
+          color: Colors.green[700],
+        ),
+      ),
+      backgroundColor: Colors.white,
+      body: Center(
+        child: Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                height: 55,
+                width: 200,
+                child: Card(
+                  elevation: 0,
+                  color: Colors.white,
+                  child: Text(
+                    'Register Now!',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.green[700],
+                      fontSize: 30,
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                width: 280,
+                child: TextField(
+                  decoration: InputDecoration(
+                    labelText: 'Username',
+                    contentPadding: EdgeInsets.all(10),
+                    labelStyle: TextStyle(
+                      color: Colors.black,
+                    ),
+                  ),
+                  controller: usernameController,
+                ),
+              ),
+              Container(
+                width: 280,
+                child: TextField(
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                    contentPadding: EdgeInsets.all(10),
+                    labelStyle: TextStyle(
+                      color: Colors.black,
+                    ),
+                  ),
+                  controller: passwordController,
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.only(top: 15),
+                child: FlatButton(
+                  onPressed: () {
+                    _register(context, usernameController.text,
+                        passwordController.text);
+                  },
+                  color: Colors.green[700],
+                  child: Text(
+                    'Register',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
