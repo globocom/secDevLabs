@@ -21,7 +21,7 @@ class UserNotes extends StatefulWidget {
 class _UserNotesState extends State<UserNotes> {
   String _loggedInUser;
   final _storage = new FlutterSecureStorage();
-  List<Note> _userNotes;
+  List<Note> _userNotes = [];
   bool _itIsWidgetStart = false;
 
   _UserNotesState(this._loggedInUser);
