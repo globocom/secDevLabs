@@ -96,14 +96,14 @@ def login():
         if not password.validate_password(result[0]):
             return "Login failed! \n"
 
-        encoded = jwt.encode(
+        cookie_done = jwt.encode(
             {"permissao": result[1], "username": form_username},
             os.environ.get('A2_JWT_SECRET'),
             algorithm="HS256"
         )
 
         resp = make_response("Logged in!")
-        resp.set_cookie("sessionId", encoded)
+        resp.set_cookie("sessionId", cookie_done)
         return resp
 
 
