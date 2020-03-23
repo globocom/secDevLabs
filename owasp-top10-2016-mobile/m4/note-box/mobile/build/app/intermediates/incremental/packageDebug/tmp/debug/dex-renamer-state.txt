@@ -1,0 +1,4 @@
+#Mon Mar 23 15:05:56 BRT 2020
+base.0=/Users/daniel.carlier/go/src/github.com/globocom/secDevLabs/owasp-top10-2016-mobile/m4/note-box/mobile/build/app/intermediates/dex/debug/mergeDexDebug/out/classes.dex
+path.0=classes.dex
+renamed.0=classes.dex
