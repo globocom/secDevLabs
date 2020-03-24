@@ -57,6 +57,7 @@ func Register(c echo.Context) error {
 
 	newGUID1 := uuid.Must(uuid.NewRandom())
 	userData.UserID = newGUID1.String()
+	userData.Password = pass.HashPass(userData.Password)
 	userData.HighestScore = 0
 
 	err = db.RegisterUser(userData)

@@ -1,6 +1,23 @@
 package pass
 
+import "golang.org/x/crypto/bcrypt"
+
+const bcryptCost = 14
+
 // CheckPass checks a password
-func CheckPass(truePassword, attemptPassword string) bool {
-	return truePassword == attemptPassword
+func CheckPass(truePasswordHash, attemptPassword string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(truePasswordHash), []byte(attemptPassword))
+	if err != nil {
+		return true
+	}
+	return false
+}
+
+// HashPass hashes a password
+func HashPass(password string) (string, error) {
+	hash, err := bcrypt.GenerateFromPassword([]byte(password), bcryptCost)
+	if err != nil {
+		return "", err
+	}
+	return string(hash), nil
 }
