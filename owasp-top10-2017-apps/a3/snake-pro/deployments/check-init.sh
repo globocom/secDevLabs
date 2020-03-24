@@ -17,7 +17,7 @@ LOADING=0
 printf "${COLOR_YELLOW}SecDevLabs: 👀  Your app is starting!\n${COLOR_RESET}"
 
 while : ; do
-    `curl -s -f http://localhost:$PORT/login > /dev/null`
+    `curl -s -f --insecure https://localhost:$PORT/login > /dev/null`
     if [ $? == 0 ] ; then
         break
     fi
@@ -68,5 +68,5 @@ done
 if [ $TRIES == 0 ]; then
     printf "\n${COLOR_RED}SecDevLabs: Ooops! Something went wrong, please check api details for more information!\n${COLOR_RESET}"
 else
-    printf "\n${COLOR_GREEN}SecDevLabs: 🔥  ${PROJECT} is now running at ${COLOR_RESET}${COLOR_BLUE}http://localhost:$PORT${COLOR_RESET}\n"
+    printf "\n${COLOR_GREEN}SecDevLabs: 🔥  ${PROJECT} is now running at ${COLOR_RESET}${COLOR_BLUE}https://localhost:$PORT${COLOR_RESET}\n"
 fi

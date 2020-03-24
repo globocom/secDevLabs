@@ -19,12 +19,17 @@ COLOR_RED = \033[31m
 
 
 ## Installs a development environment
-install: compose msg
+install: cert compose msg
 
 ## Composes project using docker-compose
 compose:
 	docker-compose -f deployments/docker-compose.yml down -v --remove-orphans
 	docker-compose -f deployments/docker-compose.yml up -d --build --force-recreate
+
+## Generate new certificate and private key for TLS
+cert:
+	chmod +x deployments/generate-cert.sh
+	./deployments/generate-cert.sh
 
 ## Prints initialization message after compose phase
 msg:
