@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from flask import Flask, request, make_response, render_template, redirect, Markup
+from datetime import datetime, timedelta
 from model.password import Password
 from model.db import DataBase
 import base64
@@ -97,7 +98,11 @@ def login():
             return "Login failed! \n"
 
         cookie_done = jwt.encode(
-            {"permissao": result[1], "username": form_username},
+            {
+                "exp": datetime.utcnow() + timedelta(days=7),
+                "permissao": result[1],
+                "username": form_username
+            },
             os.environ.get('A2_JWT_SECRET'),
             algorithm="HS256"
         )
