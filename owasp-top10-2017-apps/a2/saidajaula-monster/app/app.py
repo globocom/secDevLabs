@@ -99,7 +99,7 @@ def login():
 
         refreshToken = jwt.encode(
             {
-                "exp": datetime.utcnow() + timedelta(minutes=5),
+                "exp": datetime.utcnow() + timedelta(days=7),
                 "username": form_username
             },
             os.environ.get('A2_JWT_SECRET'),
@@ -131,7 +131,7 @@ def accessToken():
 
     accessToken = jwt.encode(
         {
-            "exp": datetime.utcnow() + timedelta(minutes=1),
+            "exp": datetime.utcnow() + timedelta(minutes=15),
             "permissao": result[1],
             "username": username
         },
