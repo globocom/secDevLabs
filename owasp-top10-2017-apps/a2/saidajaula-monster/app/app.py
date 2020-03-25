@@ -124,10 +124,10 @@ def accessToken():
 
     result, success = database.get_user(username)
     if not success or result is None:
-        return "Login failed! \n"
+        return "Authentication failed! \n"
 
     if result is None:
-        return "Login failed! \n"
+        return "Authentication failed! \n"
 
     accessToken = jwt.encode(
         {
