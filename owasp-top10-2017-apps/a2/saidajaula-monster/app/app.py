@@ -23,12 +23,12 @@ database = DataBase(os.environ.get('A2_DATABASE_HOST'),
 def login_admin_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        cookie = request.cookies.get("sessionId", "")
+        accessToken = request.cookies.get("access-token", "")
         try:
-            cookie = jwt.decode(cookie, os.environ.get('A2_JWT_SECRET'), algorithms=['HS256'])
+            accessToken = jwt.decode(accessToken, os.environ.get('A2_JWT_SECRET'), algorithms=['HS256'])
         except jwt.InvalidTokenError:
-            return redirect("/login")
-        if cookie.get("permissao") != 1:
+            return redirect("/access-token")
+        if accessToken.get("permissao") != 1:
             return "You don't have permission to access this route. You are not an admin. \n"
         return f(*args, **kwargs)
     return decorated_function
@@ -37,11 +37,11 @@ def login_admin_required(f):
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        cookie = request.cookies.get("sessionId", "")
+        accessToken = request.cookies.get("access-token", "")
         try:
-            cookie = jwt.decode(cookie, os.environ.get('A2_JWT_SECRET'), algorithms=['HS256'])
+            accessToken = jwt.decode(accessToken, os.environ.get('A2_JWT_SECRET'), algorithms=['HS256'])
         except jwt.InvalidTokenError:
-            return redirect("/login")
+            return redirect("/access-token")
         return f(*args, **kwargs)
     return decorated_function
 
@@ -97,19 +97,51 @@ def login():
         if not password.validate_password(result[0]):
             return "Login failed! \n"
 
-        cookie_done = jwt.encode(
+        refreshToken = jwt.encode(
             {
-                "exp": datetime.utcnow() + timedelta(days=7),
-                "permissao": result[1],
+                "exp": datetime.utcnow() + timedelta(minutes=5),
                 "username": form_username
             },
             os.environ.get('A2_JWT_SECRET'),
             algorithm="HS256"
         )
 
-        resp = make_response("Logged in!")
-        resp.set_cookie("sessionId", cookie_done)
+        resp = redirect("/access-token")
+        resp.delete_cookie("access-token")
+        resp.set_cookie("refresh-token", refreshToken)
         return resp
+
+
+@app.route("/access-token", methods=['GET'])
+def accessToken():
+    refreshToken = request.cookies.get("refresh-token", "")
+    try:
+        refreshToken = jwt.decode(refreshToken, os.environ.get('A2_JWT_SECRET'), algorithms=['HS256'])
+    except jwt.InvalidTokenError:
+        return redirect("/login")
+
+    username = refreshToken.get("username")
+
+    result, success = database.get_user(username)
+    if not success or result is None:
+        return "Login failed! \n"
+
+    if result is None:
+        return "Login failed! \n"
+
+    accessToken = jwt.encode(
+        {
+            "exp": datetime.utcnow() + timedelta(minutes=1),
+            "permissao": result[1],
+            "username": username
+        },
+        os.environ.get('A2_JWT_SECRET'),
+        algorithm="HS256"
+    )
+
+    resp = make_response("Token generated!")
+    resp.set_cookie("access-token", accessToken)
+    return resp
 
 
 @app.route("/admin", methods=['GET'])
