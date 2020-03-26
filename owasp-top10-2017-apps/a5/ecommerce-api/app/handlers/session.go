@@ -13,6 +13,9 @@ import (
 	"github.com/labstack/echo"
 )
 
+// JWTSecret is the secret used to sign JWTs
+const JWTSecret = "secret"
+
 // WriteCookie writes a cookie into echo Context
 func WriteCookie(c echo.Context, jwt string) error {
 	cookie := new(http.Cookie)
@@ -67,10 +70,11 @@ func Login(c echo.Context) error {
 	// Set claims
 	claims := token.Claims.(jwt.MapClaims)
 	claims["name"] = userDataResult.Username
+	claims["id"] = userDataResult.UserID
 	claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
 
 	// Generate encoded token and send it as response.
-	t, err := token.SignedString([]byte("secret"))
+	t, err := token.SignedString([]byte(JWTSecret))
 	if err != nil {
 		return err
 	}

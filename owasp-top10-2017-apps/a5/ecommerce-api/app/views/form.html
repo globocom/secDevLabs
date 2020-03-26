@@ -122,7 +122,7 @@ document.getElementById('login').addEventListener('submit', (e) => {
                         
                     }
                 };
-                XHRticket.open('GET', '//localhost:10005/ticket/'+jsonResponse["user_id"]+'?format=json');
+                XHRticket.open('GET', '//localhost:10005/ticket?format=json');
                 XHRticket.setRequestHeader('Content-Type','application/json' );
                 XHRticket.send();
             } else {

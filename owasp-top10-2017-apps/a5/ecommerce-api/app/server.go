@@ -56,7 +56,7 @@ func main() {
 
 	echoInstance.GET("/", handlers.FormPage)
 	echoInstance.GET("/healthcheck", handlers.HealthCheck)
-	echoInstance.GET("/ticket/:id", handlers.GetTicket)
+	echoInstance.GET("/ticket", handlers.GetTicket)
 	echoInstance.POST("/register", handlers.RegisterUser)
 	echoInstance.POST("/login", handlers.Login)
 
