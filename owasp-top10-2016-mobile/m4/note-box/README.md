@@ -23,9 +23,9 @@ The main goal of this app is to discuss how **Insecure Authentication** vulnerab
 
 ## Setup
 
-Before we start, it's important to mention that this app's code is divided into two parts, a back-end server, which can be found in the `server` folder, and the mobile app's code itself in the `mobile` folder. In order for the app to run as intended, the back-end server must be up and running, but no need to worry, we'll walk you through it! 😁
+Before we start, it's important to mention that this app's code is divided into two parts: a back-end server, which can be found in the `server` folder, and the mobile app's code itself in the `mobile` folder. In order for the app to run as intended, the back-end server must be up and running, but no need to worry, we'll walk you through it! 😁
 
-To start this intentionally **insecure application**, you will need [Flutter](https://flutter.dev), [Docker][Docker Install] and [Docker Compose][Docker Compose Install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you'll need to start the server, which can be done through the commands:
+To start this intentionally **insecure application**, you will need [Flutter][VS-Code-Flutter], [Docker][Docker Install] and [Docker Compose][Docker Compose Install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you'll need to start the server, which can be done through the commands:
 
 ### Start server commands:
 
@@ -39,9 +39,9 @@ make install
 
 ### Start app commands:
 
-**Note**: It is important to mention, that you should have an emulator up and running or an available device to run the app in. For instructions on how to set up an emulator, click [here](https://flutter.dev/docs/get-started/test-drive?tab=vscode).
+**Note**: It is important to mention, that you should have an emulator up and running or an available device to run the app in. For instructions on how to set up an emulator, click [here][VS-Code-Flutter].
 
-After properly [setting up your editor][VS-Code-Flutter] and emulator/device to run Flutter apps, open the `main.dart` file with VS Code. You can find it's path here:
+After properly setting up your editor and emulator/device to run Flutter apps, open the `main.dart` file with VS Code. You can find it's path here:
 
 ```
 secDevLabs/owasp-top10-2016-mobile/m4/note-box/mobile/lib/main.dart
