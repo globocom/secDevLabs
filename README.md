@@ -28,12 +28,12 @@ Now it's time to shield the application up! Imagine that this is your applicatio
 
 After mitigating a vulnerability, you can send a Pull Request to gently ask the secDevLabs community to review your new secure codes. If you're feeling a bit lost, try having a look at [this mitigation solution](https://github.com/globocom/secDevLabs/pull/29), it might help! 🚀
 
-## OWASP Top 10 (2017) apps:
+## OWASP Top 10 (2017) apps: 💻
 
 Disclaimer: You are about to install vulnerable apps in your machine! 🔥
 
 | Vulnerability | Language | Application |
-| --- | --- | --- | 
+| --- | --- | --- |
 | A1 - Injection | Golang | [CopyNPaste API](owasp-top10-2017-apps/a1/copy-n-paste) |
 | A1 - Injection | NodeJS | [Mongection](owasp-top10-2017-apps/a1/mongection) |
 | A1 - Injection | Python | [SSType](owasp-top10-2017-apps/a1/sstype) |
@@ -49,6 +49,14 @@ Disclaimer: You are about to install vulnerable apps in your machine! 🔥
 | A8 - Insecure Deserialization | Python | [Amarelo Designs](owasp-top10-2017-apps/a8/amarelo-designs) |
 | A9 - Using Components With Known Vulnerabilities | PHP | [Cimentech](owasp-top10-2017-apps/a9/cimentech) |
 | A10 - Insufficient Logging & Monitoring | Python | [GamesIrados.com](owasp-top10-2017-apps/a10/games-irados) |
+
+## OWASP Top 10 (2016) Mobile apps: 📲
+
+Disclaimer: You are about to install vulnerable mobile apps in your machine! 🔥
+
+| Vulnerability | Language | Application |
+| --- | --- | --- |
+| M4 - Insecure Authentication | Dart/Flutter | [Note Box](owasp-top10-2016-mobile/m4/note-box) |
 
 ## Contributing
 We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](/docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉
