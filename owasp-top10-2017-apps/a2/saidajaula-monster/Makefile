@@ -12,7 +12,13 @@ PORT := 10002
 SLEEPUNTILAPPSTARTS := 45
 
 ## Installs a development environment
-install: compose msg
+install: config compose msg
+
+## Creates config file with Secret Key (if not exists)
+config:
+	test -f app/config.py  || touch app/config.py
+	cat app/config.py | grep -q SECRET_KEY || { echo "SECRET_KEY='" | tr -d "\n"; openssl rand -base64 12 | tr -d "\n"; echo "'"; } >> app/config.py
+
 
 ## Composes project using docker-compose
 compose:

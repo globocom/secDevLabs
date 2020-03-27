@@ -8,10 +8,13 @@ import os
 import json
 import hashlib
 import uuid
+import jwt
+import datetime
 from functools import wraps
 
 
 app = Flask(__name__)
+app.config.from_pyfile('config.py')
 database = DataBase(os.environ.get('A2_DATABASE_HOST'),
                     os.environ.get('A2_DATABASE_USER'),
                     os.environ.get('A2_DATABASE_PASSWORD'),
@@ -21,16 +24,12 @@ database = DataBase(os.environ.get('A2_DATABASE_HOST'),
 def login_admin_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        cookie = request.cookies.get("sessionId", "")
-        cookie = base64.b64decode(cookie).decode("utf-8")
-        cookie_separado = cookie.split('.')
-        if(len(cookie_separado) != 2):
-            return "Invalid cookie!"
-        hash_cookie = hashlib.sha256(cookie_separado[0].encode('utf-8')).hexdigest()
-        if (hash_cookie != cookie_separado[1]):
+        encoded_jwt = request.cookies.get("sessionId", "")
+        try:
+            cookie = jwt.decode(encoded_jwt, app.config['SECRET_KEY'], algorithms='HS256')
+        except jwt.PyJWTError:
             return redirect("/login")
-        j = json.loads(cookie_separado[0])
-        if j.get("permissao") != 1:
+        if cookie['permissao'] != 1:
             return "You don't have permission to access this route. You are not an admin. \n"
         return f(*args, **kwargs)
     return decorated_function
@@ -39,13 +38,10 @@ def login_admin_required(f):
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        cookie = request.cookies.get("sessionId", "")
-        cookie = base64.b64decode(cookie).decode("utf-8")
-        cookie_separado = cookie.split('.')
-        if(len(cookie_separado) != 2):
-            return "Invalid cookie! \n"
-        hash_cookie = hashlib.sha256(cookie_separado[0].encode('utf-8')).hexdigest()
-        if (hash_cookie != cookie_separado[1]):
+        encoded_jwt = request.cookies.get("sessionId", "")
+        try:
+            jwt.decode(encoded_jwt, app.config['SECRET_KEY'], algorithms='HS256')
+        except jwt.PyJWTError:
             return redirect("/login")
         return f(*args, **kwargs)
     return decorated_function
@@ -102,13 +98,13 @@ def login():
         if not password.validate_password(result[0]):
             return "Login failed! \n"
 
-        cookie_dic = {"permissao": result[1], "username": form_username}
-        cookie = json.dumps(cookie_dic)
-        hash_cookie = hashlib.sha256(cookie.encode('utf-8')).hexdigest()
-        cookie_done = '.'.join([cookie,hash_cookie])
-        cookie_done = base64.b64encode(str(cookie_done).encode("utf-8"))
+        cookie = {"permissao": result[1], "username": form_username, "exp": datetime.datetime.now() + datetime.timedelta(hours=48)}
+        try:
+            encoded_jwt = jwt.encode(cookie, app.config['SECRET_KEY'], algorithm='HS256')
+        except jwt.PyJWTError:
+            return "Login failed! \n"
         resp = make_response("Logged in!")
-        resp.set_cookie("sessionId", cookie_done)
+        resp.set_cookie("sessionId", encoded_jwt)
         return resp
 
 
