@@ -10,6 +10,7 @@ services:
       - .dockers.env
     environment:
       - NODE_ENV=production
+      - ADMIN_PASSWORD=correcthorsebatterystaple
     ports:
       - 10006:10006
     networks:
