@@ -3,6 +3,7 @@ package handlers
 import (
 	"fmt"
 	"net/http"
+	"os"
 
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a5/ecommerce-api/app/db"
@@ -23,7 +24,7 @@ func GetTicket(c echo.Context) error {
 
 	claims := jwt.MapClaims{}
 	_, err = jwt.ParseWithClaims(cookie.Value, claims, func(*jwt.Token) (interface{}, error) {
-		return []byte(JWTSecret), nil
+		return []byte(os.Getenv("JWT_SECRET")), nil
 	})
 	if err != nil {
 		return c.String(http.StatusUnauthorized, "Error parsing token")
