@@ -8,6 +8,8 @@ services:
       dockerfile: deployments/api.Dockerfile
     env_file:
       - .dockers.env
+    environment:
+      - NODE_ENV=production
     ports:
       - 10006:10006
     networks:
