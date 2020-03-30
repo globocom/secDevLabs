@@ -57,6 +57,12 @@ func Register(c echo.Context) error {
 
 	newGUID1 := uuid.Must(uuid.NewRandom())
 	userData.UserID = newGUID1.String()
+	hash, err := pass.GeneratePasswordHash(userData.Password)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error generating password hash."})
+	}
+
+	userData.Password = string(hash)
 	userData.HighestScore = 0
 
 	err = db.RegisterUser(userData)
