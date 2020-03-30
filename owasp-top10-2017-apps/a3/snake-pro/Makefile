@@ -19,7 +19,12 @@ COLOR_RED = \033[31m
 
 
 ## Installs a development environment
-install: compose msg
+install: generate-cert compose msg
+
+## Generates self-signed X.509 TLS Certificate and Private Key
+generate-cert:
+	openssl req -x509 -newkey rsa:2048 -keyout app/key.pem -out app/cert.pem -days 365 -subj '/CN=localhost' -nodes
+
 
 ## Composes project using docker-compose
 compose:
