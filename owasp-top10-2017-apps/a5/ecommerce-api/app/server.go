@@ -87,6 +87,7 @@ func checkEnvVars() error {
 		"MONGO_DATABASE_NAME",
 		"MONGO_DATABASE_USERNAME",
 		"MONGO_DATABASE_PASSWORD",
+		"SECRET_KEY",
 	}
 
 	var envIsSet bool
