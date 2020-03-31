@@ -1,16 +1,18 @@
 version: "2"
 services:
   app:
-    container_name: app-a8 
+    container_name: app-a8
     build:
       context: ../
       dockerfile: deployments/Dockerfile
+    environment:
+      - ADMIN_PASSWORD=correcthorsebatterystaple
     volumes:
       - "../app/:/app"
     ports:
       - "10008:5000"
       - "9051:9051"
-    networks: 
+    networks:
       - a8_net
     restart: always
 

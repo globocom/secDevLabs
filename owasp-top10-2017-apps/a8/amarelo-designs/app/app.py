@@ -4,6 +4,7 @@ from flask import Flask, request, make_response, render_template, redirect, flas
 import uuid
 import pickle
 import base64
+import os
 app = Flask(__name__)
 
 
@@ -17,7 +18,7 @@ def login():
         username = request.values.get('username')
         password = request.values.get('password')
     
-        if username == "admin" and password == "admin":
+        if username == "admin" and password == os.environ['ADMIN_PASSWORD']:
             token = str(uuid.uuid4().hex)
             cookie = { "username":username, "admin":True, "sessionId":token }
             pickle_resultado = pickle.dumps(cookie)
