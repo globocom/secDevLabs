@@ -1,10 +1,12 @@
 # coding: utf-8
 
 from flask import Flask, request, make_response, render_template, redirect, flash
+from datetime import datetime, timedelta
 import uuid
 import pickle
 import base64
 import os
+import jwt
 app = Flask(__name__)
 
 
@@ -19,12 +21,18 @@ def login():
         password = request.values.get('password')
     
         if username == "admin" and password == os.environ['ADMIN_PASSWORD']:
-            token = str(uuid.uuid4().hex)
-            cookie = { "username":username, "admin":True, "sessionId":token }
-            pickle_resultado = pickle.dumps(cookie)
-            encodedSessionCookie = base64.b64encode(pickle_resultado)
+            token = jwt.encode(
+                {
+                    "exp": datetime.utcnow() + timedelta(minutes=15),
+                    "username": username,
+                    "sessionId": str(uuid.uuid4().hex),
+                    "admin": True
+                },
+                os.environ.get('JWT_SECRET'),
+                algorithm="HS256"
+            )
             resp = make_response(redirect("/user"))
-            resp.set_cookie("sessionId", encodedSessionCookie)
+            resp.set_cookie("sessionId", token)
             return resp
 
         else:
@@ -36,9 +44,13 @@ def login():
 @app.route("/user", methods=['GET'])
 def userInfo():
     cookie = request.cookies.get("sessionId")
+
     if cookie == None:
         return "Não Autorizado!"
-    cookie = pickle.loads(base64.b64decode(cookie))
+    try:
+        token = jwt.decode(cookie, os.environ.get('JWT_SECRET'), algorithms=['HS256'])
+    except jwt.InvalidTokenError:
+        return "Não Autorizado!"
 
     return render_template('user.html')
     

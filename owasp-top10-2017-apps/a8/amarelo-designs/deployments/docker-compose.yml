@@ -7,6 +7,7 @@ services:
       dockerfile: deployments/Dockerfile
     environment:
       - ADMIN_PASSWORD=correcthorsebatterystaple
+      - JWT_SECRET=supersecretsecret
     volumes:
       - "../app/:/app"
     ports:
