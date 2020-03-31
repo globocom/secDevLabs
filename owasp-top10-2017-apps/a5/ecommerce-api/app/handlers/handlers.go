@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
+	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a5/ecommerce-api/app/db"
 	"github.com/labstack/echo"
 )
@@ -16,6 +17,28 @@ func HealthCheck(c echo.Context) error {
 // GetTicket returns the userID ticket.
 func GetTicket(c echo.Context) error {
 	id := c.Param("id")
+
+	cookie, err := c.Cookie("sessionIDa5")
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error getting sessionID cookie."})
+	}
+	encodedToken := cookie.Value
+	token, err := jwt.Parse(encodedToken, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
+		}
+		return []byte("secret"), nil
+	})
+
+	claims, ok := token.Claims.(jwt.MapClaims)
+	if !ok || !token.Valid {
+		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error reading sessionID cookie."})
+	}
+
+	if claims["userID"] != id {
+		return c.String(http.StatusOK, "You are not allowed to do that! You can only get tickets that belong to your user.\n")
+	}
+
 	userDataQuery := map[string]interface{}{"userID": id}
 	userDataResult, err := db.GetUserData(userDataQuery)
 	if err != nil {
