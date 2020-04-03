@@ -13,7 +13,6 @@ from flask import (
     session
 )
 from util.init_db import init_db
-from flask.logging import default_handler
 from flask_bootstrap import Bootstrap
 from model.password import Password
 from model.db import DataBase
@@ -27,6 +26,11 @@ app = Flask(__name__)
 bootstrap = Bootstrap(app)
 
 app.config.from_pyfile('config.py')
+
+logger = logging.getLogger()
+handler = logging.StreamHandler()
+handler.setFormatter(logging.Formatter("%(asctime)s %(levelname)s %(filename)s:%(lineno)d: %(message)s"))
+logger.addHandler(handler)
 
 
 def generate_csrf_token():
@@ -67,6 +71,7 @@ def root():
 @app.route('/logout', methods=['GET'])
 @login_required
 def logout():
+    app.logger.info(f"{request.method} {request.path} {request.remote_addr} User {session['username']} logged out")
     session.clear()
     return redirect('/login')
 
@@ -78,8 +83,10 @@ def login():
         user_password, success = database.get_user_password(username)
         if not success or user_password == None or not psw.validate_password(str(user_password[0])):
             flash("Usuario ou senha incorretos", "danger")
+            app.logger.warning(f"{request.method} {request.path} {request.remote_addr} Failed login attempt, user={username}")
             return render_template('login.html')
         session['username'] = username
+        app.logger.info(f"{request.method} {request.path} {request.remote_addr} Successful login, user={username}")
         return redirect('/home')
     else:
         return render_template('login.html')
@@ -97,12 +104,15 @@ def newuser():
             message, success = database.insert_user(username, hashed_psw)
             if success == 1:
                 flash("Novo usuario adicionado!", "primary")
+                app.logger.info(f"{request.method} {request.path} {request.remote_addr} New user registered, user={username}")
                 return redirect('/login')
             else:
                 flash(message, "danger")
+                app.logger.warning(f"{request.method} {request.path} {request.remote_addr} Failed user registration attempt, user={username}, cause={message}")
                 return redirect('/register')
 
         flash("Passwords must be the same!", "danger")
+        app.logger.warning(f"{request.method} {request.path} {request.remote_addr} Failed user registration attempt, user={username}, cause='passwords are not the same'")
         return redirect('/register')
     else:
         return render_template('register.html')
@@ -120,12 +130,15 @@ def cupom():
         rows, success = database.get_game_coupon(coupon, session.get('username'))
         if not success or rows == None or rows == 0:
             flash("Cupom invalido", "danger")
+            app.logger.warning(f"{request.method} {request.path} {request.remote_addr} Invalid coupon activation, user={username}, coupon={coupon}")
             return render_template('coupon.html')
         game, success = database.get_game(coupon, session.get('username'))
         if not success or game == None:
             flash("Cupom invalido", "danger")
+            app.logger.warning(f"{request.method} {request.path} {request.remote_addr} Invalid coupon activation, user={username}, coupon={coupon}")
             return render_template('coupon.html')
         flash("Voce ganhou {}".format(game[0]), "primary")
+        app.logger.info(f"{request.method} {request.path} {request.remote_addr} Successful coupon activation, user={username}, coupon={coupon}")
         return render_template('coupon.html')
     else:
         return render_template('coupon.html')
