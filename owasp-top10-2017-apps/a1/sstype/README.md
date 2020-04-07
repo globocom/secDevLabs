@@ -25,7 +25,7 @@ The main goal of this project is to discuss how **Server-Side Template Injection
 To start this intentionally **insecure application**, you will need [Docker][Docker Install] and [Docker Compose][Docker Compose Install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
 
 ```sh
-cd secDevLabs/owasp-top10-2017-apps/a1/copy-n-paste
+cd secDevLabs/owasp-top10-2017-apps/a1/sstype
 ```
 
 ```sh
