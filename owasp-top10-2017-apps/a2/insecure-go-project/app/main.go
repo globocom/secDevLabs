@@ -27,7 +27,7 @@ func main() {
 		errorAPI(err)
 	}
 
-	// check if MongoDB is acessible and credentials received are working.
+	// check if MongoDB is accessible and credentials received are working.
 	if _, err := checkMongoDB(); err != nil {
 		fmt.Println("[X] ERROR MONGODB: ", err)
 		os.Exit(1)
