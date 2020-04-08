@@ -10,20 +10,13 @@ import (
 	db "github.com/globocom/secDevLabs/owasp-top10-2017-apps/a2/insecure-go-project/app/db/mongo"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
-	"github.com/spf13/viper"
 )
 
 func main() {
 
 	fmt.Println("[*] Starting Insecure Go Project...")
 
-	// loading viper
-	viper.SetConfigName("config")
-	viper.AddConfigPath(".")
-	if err := viper.ReadInConfig(); err != nil {
-		errorAPI(err)
-	}
-	if err := viper.Unmarshal(&config.APIconfiguration); err != nil {
+	if err := config.ReadFromEnv(); err != nil {
 		errorAPI(err)
 	}
 
@@ -34,7 +27,7 @@ func main() {
 	}
 
 	fmt.Println("[*] MongoDB: OK!")
-	fmt.Println("[*] Viper loaded: OK!")
+	fmt.Println("[*] Config loaded: OK!")
 
 	echoInstance := echo.New()
 	echoInstance.HideBanner = true

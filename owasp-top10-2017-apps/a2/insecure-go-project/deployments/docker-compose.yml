@@ -14,6 +14,11 @@ services:
             dockerfile: deployments/api.Dockerfile
         ports:
             - "10002:10002"
+        environment:
+            MONGO_PASSWORD: svGX8SViufvYYNu6m3Kv
+            MONGO_USER: u_insecure_go_project
+            MONGO_DBNAME: insecure_go_project
+            MONGO_HOST: mongodb
         networks:
             - insecure_net
         command: "go run main.go"
