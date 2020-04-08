@@ -40,12 +40,9 @@ type Database interface {
 // Connect connects to mongo and returns the session.
 func Connect() (*DB, error) {
 	mongoConfig := config.APIconfiguration.MongoConf
-	fmt.Printf("%v\n", mongoConfig)
-
 	dialInfo := &mgo.DialInfo{
 		Addrs:    []string{mongoConfig.MongoHost},
 		Timeout:  time.Second * 60,
-		FailFast: true,
 		Database: mongoConfig.MongoDBName,
 		Username: mongoConfig.MongoUser,
 		Password: mongoConfig.MongoPassword,
