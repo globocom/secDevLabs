@@ -36,7 +36,7 @@ make install
 
 ```
 
-Then simply visit [http://localhost:10005][App] ! 😆
+Then simply visit [http://localhost.:10005][App] ! 😆
 
 ## Get to know the app 🕹
 
