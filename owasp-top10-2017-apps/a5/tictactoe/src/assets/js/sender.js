@@ -1,8 +1,5 @@
 function sendResult(result){
-    const cookie = getCookie('tictacsession')
-    const payload = JSON.parse(window.atob(cookie.split('.')[1])); 
     const form = {
-        user: payload.username,
         result: result,
     }
     const options = {
