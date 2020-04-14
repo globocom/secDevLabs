@@ -50,7 +50,6 @@ func Connect() (*DB, error) {
 	dialInfo := &mgo.DialInfo{
 		Addrs:    []string{config.Address},
 		Timeout:  time.Second * 60,
-		FailFast: true,
 		Database: config.DatabaseName,
 		Username: config.UserName,
 		Password: config.Password,
