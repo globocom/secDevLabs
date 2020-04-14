@@ -72,7 +72,7 @@ func checkRequirements(configAPI *apiContext.APIConfig) error {
 		return err
 	}
 
-	// check if MongoDB is acessible and credentials received are working.
+	// check if MongoDB is accessible and credentials received are working.
 	if err := checkMongoDB(); err != nil {
 		return err
 	}

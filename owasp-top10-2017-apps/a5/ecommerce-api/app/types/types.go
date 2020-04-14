@@ -6,7 +6,7 @@ type LoginAttempt struct {
 	Password string `json:"password"`
 }
 
-// UserData is the strucht that holds all data from user from MongoDB.
+// UserData is the struct that holds all data from user from MongoDB.
 type UserData struct {
 	Username       string `json:"username" bson:"username"`
 	RawPassword    string `json:"password"`

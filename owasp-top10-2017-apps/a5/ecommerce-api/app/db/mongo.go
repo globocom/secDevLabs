@@ -70,7 +70,7 @@ func Connect() (*DB, error) {
 	return &DB{Session: session}, nil
 }
 
-// autoReconnect checks mongo's connection each second and, if an error is found, reconect to it.
+// autoReconnect checks mongo's connection each second and, if an error is found, reconnect to it.
 func autoReconnect(session *mgo.Session) {
 	var err error
 	for {
