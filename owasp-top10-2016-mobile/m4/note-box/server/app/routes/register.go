@@ -3,9 +3,9 @@ package routes
 import (
 	"net/http"
 
-	"github.com/globocom/secDevLabs/owasp-top10-2016-mobile/note-box/server/app/db"
-	"github.com/globocom/secDevLabs/owasp-top10-2016-mobile/note-box/server/app/types"
-	"github.com/globocom/secDevLabs/owasp-top10-2016-mobile/note-box/server/app/util"
+	"github.com/globocom/secDevLabs/owasp-top10-2016-mobile/m4/note-box/server/app/db"
+	"github.com/globocom/secDevLabs/owasp-top10-2016-mobile/m4/note-box/server/app/types"
+	"github.com/globocom/secDevLabs/owasp-top10-2016-mobile/m4/note-box/server/app/util"
 	"github.com/labstack/echo"
 )
 

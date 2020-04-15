@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/dgrijalva/jwt-go"
-	"github.com/globocom/secDevLabs/owasp-top10-2016-mobile/note-box/server/app/db"
+	"github.com/globocom/secDevLabs/owasp-top10-2016-mobile/m4/note-box/server/app/db"
 	"github.com/labstack/echo"
 )
 
