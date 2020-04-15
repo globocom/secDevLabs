@@ -25,7 +25,7 @@ func GetUserData(mapParams map[string]interface{}) (types.UserData, error) {
 	return userDataResponse, err
 }
 
-// RegisterUser regisiter into MongoDB a new user and returns an error.
+// RegisterUser register into MongoDB a new user and returns an error.
 func RegisterUser(userData types.UserData) error {
 
 	userDataQuery := map[string]interface{}{"username": userData.Username}
@@ -38,7 +38,7 @@ func RegisterUser(userData types.UserData) error {
 				return err
 			}
 
-			userData.HashedPassword, err = pass.BcrpytPassword(userData.RawPassword)
+			userData.HashedPassword, err = pass.BcryptPassword(userData.RawPassword)
 			if err != nil {
 				return err
 			}
@@ -55,6 +55,6 @@ func RegisterUser(userData types.UserData) error {
 		}
 		return err
 	}
-	return errors.New("User already registered.")
+	return errors.New("User already registered")
 
 }

@@ -17,7 +17,7 @@ services:
         build:
             context: ../
             dockerfile: deployments/api.Dockerfile
-        command: "go run app/server.go"
+        command: "go run server.go"
         volumes:
             - docker_vol:/var/lib/docker
         ports:

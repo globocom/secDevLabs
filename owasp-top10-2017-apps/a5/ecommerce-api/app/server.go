@@ -36,6 +36,7 @@ func main() {
 	configAPI := apiContext.GetAPIConfig()
 
 	if err := checkRequirements(configAPI); err != nil {
+		fmt.Printf("Error: %v\n", err)
 		os.Exit(1)
 	}
 
@@ -45,7 +46,7 @@ func main() {
 	// Instantiate a template registry with an array of template set
 	// Ref: https://medium.freecodecamp.org/how-to-setup-a-nested-html-template-in-the-go-echo-web-framework-670f16244bb4
 	templates := make(map[string]*template.Template)
-	templates["form.html"] = template.Must(template.ParseFiles("app/views/form.html", "app/views/base.html"))
+	templates["form.html"] = template.Must(template.ParseFiles("views/form.html", "views/base.html"))
 	echoInstance.Renderer = &TemplateRegistry{
 		templates: templates,
 	}
@@ -72,7 +73,7 @@ func checkRequirements(configAPI *apiContext.APIConfig) error {
 		return err
 	}
 
-	// check if MongoDB is acessible and credentials received are working.
+	// check if MongoDB is accessible and credentials received are working.
 	if err := checkMongoDB(); err != nil {
 		return err
 	}
