@@ -20,7 +20,10 @@ In order to create an Android Emulator, we'll need to first download [Android St
     <img src="../images/flutter-install-3.png"/>
 </p>
 
-* Select `Tools` in the upper Android Studio menu bar, then `AVD Manager` and select `Create Virtual Device`, as shown below:
+* Select `Tools` in the upper Android Studio menu bar, then `AVD Manager` and select `Create Virtual Device`.
+    * If the `AVD Manager` option is not showing up, alternatively, you can look it up using the built in search mechanism. Press `command` + `shift` + `a`, then type `AVD Manager`.
+
+* Once it opens, select `Create Virtual Device`, as shown below:
 
 <p align="center">
     <img src="../images/flutter-install-4.png"/>
@@ -61,8 +64,7 @@ After installing Flutter SDK and Android Studio, we should install VS Code, whic
     <img src="../images/flutter-install-2.png"/>
 </p>
 
-
-### Android SDK
+**Note**: If VS Code doesn't automatically find the Flutter SDK, a message will show in the bottom right corner, but worry not. Your Flutter SDK should be inside the `bin` folder. In my case, I saved the Flutter SDK folder to the `downloads` folder, so the path should be: ```~/Downloads/Flutter/bin```.
 
 
 ## All done! Flutter should now be installed and ready to go! 🚀
