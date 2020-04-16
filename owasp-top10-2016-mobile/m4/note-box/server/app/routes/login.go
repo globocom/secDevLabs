@@ -3,6 +3,7 @@ package routes
 import (
 	"net/http"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -21,8 +22,8 @@ func Login(c echo.Context) error {
 		return err
 	}
 
-	attemptUsername := u.Username
-	attemptPassword := u.Password
+	attemptUsername := strings.TrimSpace(u.Username)
+	attemptPassword := strings.TrimSpace(u.Password)
 
 	user, err := db.FindOneUser(attemptUsername)
 	if err != nil {

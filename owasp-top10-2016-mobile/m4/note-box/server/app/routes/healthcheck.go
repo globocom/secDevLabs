@@ -8,5 +8,5 @@ import (
 
 // Healthcheck returns WORKING! if the API is up and running
 func Healthcheck(c echo.Context) error {
-	return c.JSON(http.StatusOK, "WORKING!")
+	return c.JSON(http.StatusOK, "WORKING")
 }

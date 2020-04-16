@@ -2,6 +2,7 @@ package routes
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/globocom/secDevLabs/owasp-top10-2016-mobile/m4/note-box/server/app/db"
 	"github.com/globocom/secDevLabs/owasp-top10-2016-mobile/m4/note-box/server/app/types"
@@ -16,8 +17,8 @@ func Register(c echo.Context) error {
 		return err
 	}
 
-	attemptUsername := u.Username
-	attemptPassword := u.Password
+	attemptUsername := strings.TrimSpace(u.Username)
+	attemptPassword := strings.TrimSpace(u.Password)
 
 	_, err := db.FindOneUser(attemptUsername)
 	if err == nil {
