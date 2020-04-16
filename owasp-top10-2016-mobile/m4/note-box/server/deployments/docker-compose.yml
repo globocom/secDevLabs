@@ -1,0 +1,41 @@
+version: '3'
+
+networks:
+    m4_insecure_auth_net:
+
+volumes:
+    mongo_vol:
+
+services:
+    api:
+        container_name: m4_insecure_auth
+        build:
+            context: ../
+            dockerfile: deployments/api.Dockerfile
+        ports:
+            - "9051:9051"
+        env_file:
+            - ./api.env
+            - ./mongo.env
+        networks:
+            - m4_insecure_auth_net
+        command: "go run main.go"
+        depends_on:
+            - db
+        external_links:
+            - db:db
+
+    db:
+        container_name: m4_mongodb
+        build:
+            context: ../
+            dockerfile: deployments/mongo.Dockerfile
+        env_file:
+            - ./mongo.env
+        ports:
+          - "27017:27017"
+          - "27018:27018"
+        volumes:
+            - mongo_vol:/data/db
+        networks:
+            - m4_insecure_auth_net
