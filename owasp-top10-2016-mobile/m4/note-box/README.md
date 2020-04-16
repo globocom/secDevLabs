@@ -47,9 +47,21 @@ After properly setting up your editor and emulator/device to run Flutter apps, o
 secDevLabs/owasp-top10-2016-mobile/m4/note-box/mobile/lib/main.dart
 ```
 
-Now, all you need to do is to click `Run > Run Without Debugging` on VS Code top menu bar and it should begin building the app to launch it in no time!
+Now, in order to be sure all packages were successfully downloaded, run the following command inside the `lib` folder:
+
+```sh
+flutter packages get
+```
+
+After that, all you need to do is to click `Run > Run Without Debugging` on VS Code top menu bar and it should begin building the app to launch it in no time!
 
 Then, you should see Note Box's app launch successfully in the emulator/device you're using! 📲
+
+**Note**: In case an Android licenses errors shows up, you may need to run the following command on your terminal and accept them:
+
+``` sh
+flutter doctor --android-licenses
+```
 
 ## Get to know the app 📝
 
