@@ -49,93 +49,95 @@ class _AuthScreenState extends State<AuthScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(30),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Container(
-            height: 55,
-            width: 200,
-            child: Card(
-              elevation: 30,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15.0),
-              ),
-              color: Colors.green[700],
-              child: Text(
-                'Note Box',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black87,
-                  fontSize: 40,
+    return Center(
+      child: Container(
+        padding: EdgeInsets.all(30),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              height: 55,
+              width: 200,
+              child: Card(
+                elevation: 30,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.0),
+                ),
+                color: Colors.green[700],
+                child: Text(
+                  'Note Box',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black87,
+                    fontSize: 40,
+                  ),
                 ),
               ),
             ),
-          ),
-          Container(
-            width: 280,
-            child: TextField(
-              decoration: InputDecoration(
-                labelText: 'Username',
-                contentPadding: EdgeInsets.all(10),
-                labelStyle: TextStyle(
-                  color: Colors.black,
+            Container(
+              width: 280,
+              child: TextField(
+                decoration: InputDecoration(
+                  labelText: 'Username',
+                  contentPadding: EdgeInsets.all(10),
+                  labelStyle: TextStyle(
+                    color: Colors.black,
+                  ),
                 ),
-              ),
-              controller: usernameController,
-            ),
-          ),
-          Container(
-            width: 280,
-            child: TextField(
-              obscureText: true,
-              decoration: InputDecoration(
-                labelText: 'Password',
-                contentPadding: EdgeInsets.all(10),
-                labelStyle: TextStyle(
-                  color: Colors.black,
-                ),
-              ),
-              controller: passwordController,
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.only(top: 15),
-            child: FlatButton(
-              onPressed: () {
-                _login(
-                    context, usernameController.text, passwordController.text);
-              },
-              color: Colors.green[700],
-              child: Text(
-                'Login',
-                style: TextStyle(
-                  color: Colors.white,
-                ),
+                controller: usernameController,
               ),
             ),
-          ),
-          Container(
-            padding: EdgeInsets.only(top: 5),
-            child: InkWell(
-              child: Text(
-                'First time? Click here to register now!',
-                style: TextStyle(
-                  color: Colors.green[700],
-                  fontSize: 15,
+            Container(
+              width: 280,
+              child: TextField(
+                obscureText: true,
+                decoration: InputDecoration(
+                  labelText: 'Password',
+                  contentPadding: EdgeInsets.all(10),
+                  labelStyle: TextStyle(
+                    color: Colors.black,
+                  ),
+                ),
+                controller: passwordController,
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.only(top: 15),
+              child: FlatButton(
+                onPressed: () {
+                  _login(context, usernameController.text,
+                      passwordController.text);
+                },
+                color: Colors.green[700],
+                child: Text(
+                  'Login',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
                 ),
               ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => RegisterScreen()),
-                );
-              },
             ),
-          ),
-        ],
+            Container(
+              padding: EdgeInsets.only(top: 5),
+              child: InkWell(
+                child: Text(
+                  'First time? Click here to register now!',
+                  style: TextStyle(
+                    color: Colors.green[700],
+                    fontSize: 15,
+                  ),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => RegisterScreen()),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
