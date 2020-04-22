@@ -8,6 +8,8 @@
 .buildlog/
 .history
 .svn/
+.vscode/
+mongo-init.js
 
 # IntelliJ related
 *.iml
