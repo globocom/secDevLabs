@@ -1,4 +1,4 @@
-package com.example.cool_games
+package com.secdevlabs.cool.games
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
