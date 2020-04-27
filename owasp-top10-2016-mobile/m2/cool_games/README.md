@@ -173,6 +173,6 @@ How would you mitigate this vulnerability? After your changes, an attacker shoul
 We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](../../../docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉
 
 [Flutter]: https://flutter.dev/docs/get-started/install
-[VS-Code-Flutter]: ../../../docs/installing-flutter.md
+[VS-Code-Flutter]: https://github.com/globocom/secDevLabs/blob/master/docs/installing-flutter.md
 [Docker Install]:  https://docs.docker.com/install/
 [Docker Compose Install]: https://docs.docker.com/compose/install/
