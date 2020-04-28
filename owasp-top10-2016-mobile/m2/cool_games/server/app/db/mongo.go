@@ -81,17 +81,3 @@ func FindOneUser(username string) (types.User, error) {
 
 	return result, nil
 }
-
-// UpdateUserLoggedIn returns an error if the user's status could not be updated or nil otherwise.
-func UpdateUserLoggedIn(username string, status bool) error {
-	filter := bson.M{"username": username}
-	update := bson.M{"$set": bson.M{"isLoggedIn": status}}
-
-	// update document
-	_, err := noteBoxDB.Collection("users").UpdateOne(context.TODO(), filter, update)
-	if err != nil {
-		return err
-	}
-
-	return nil
-}

@@ -25,9 +25,6 @@ func main() {
 	// Login route
 	e.POST("/login", routes.Login)
 
-	// Logout route
-	e.POST("/logout", routes.Logout)
-
 	// Register route
 	e.POST("/register", routes.Register)
 

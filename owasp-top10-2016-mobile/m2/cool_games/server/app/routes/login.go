@@ -33,10 +33,6 @@ func Login(c echo.Context) error {
 		return c.JSON(http.StatusNotFound, "Username or password is wrong or the user doesn't exist")
 	}
 
-	if user.IsLoggedIn {
-		return c.JSON(http.StatusConflict, "User is already logged in!")
-	}
-
 	// Create token
 	token := jwt.New(jwt.SigningMethodHS256)
 
@@ -50,8 +46,6 @@ func Login(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, "Error generating user token")
 	}
-
-	db.UpdateUserLoggedIn(attemptUsername, true)
 
 	return c.JSON(http.StatusOK, echo.Map{
 		"sessionToken": t,

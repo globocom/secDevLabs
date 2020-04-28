@@ -5,7 +5,6 @@ type User struct {
 	Username       string `bson:"username"`
 	HashedPassword string `bson:"hashedPassword"`
 	Salt           string `bson:"salt"`
-	IsLoggedIn     bool   `bson:"isLoggedIn"`
 }
 
 // RequestUser holds user information form incomming requests

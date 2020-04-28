@@ -29,7 +29,7 @@ func Register(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, "Error hashing user password, please try again later")
 	}
 
-	newUser := types.User{attemptUsername, hashedPassword, salt, false}
+	newUser := types.User{attemptUsername, hashedPassword, salt}
 
 	err = db.InsertOneUser(newUser)
 	if err != nil {
