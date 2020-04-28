@@ -56,6 +56,7 @@ Disclaimer: You are about to install vulnerable mobile apps in your machine! ðŸ”
 
 | Vulnerability | Language | Application |
 | --- | --- | --- |
+| M2 - Insecure Data Storage | Dart/Flutter | [Cool Games](owasp-top10-2016-mobile/m2/cool_games) |
 | M4 - Insecure Authentication | Dart/Flutter | [Note Box](owasp-top10-2016-mobile/m4/note-box) |
 
 ## Contributing
