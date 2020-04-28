@@ -4,7 +4,7 @@
     <img src="images/log_in.png"/>
 </p>
 
-Cool Games is a Flutter powered mobile app that serves as the mobile version of [GamesIRADOS.com](https://github.com/globocom/secDevLabs/tree/master/owasp-top10-2017-apps/a10/games-irados). It is built with a mobile front-end a Golang powered back-end.
+Cool Games is a Flutter powered mobile app that serves as the mobile version of [GamesIRADOS.com](https://github.com/globocom/secDevLabs/tree/master/owasp-top10-2017-apps/a10/games-irados). It is built with a mobile front-end and a Golang powered back-end.
 
 ## Index
 
@@ -57,6 +57,8 @@ Then, you should see Cool Games' app launch successfully in the emulator/device 
 flutter doctor --android-licenses
 ```
 
+**Note 2**: If you're experiencing Android API version issues, we suggest you to download the recommended API version for this app, which is 29. We've put together a tutorial to help with that, just click [here][API-Version-Issue]!
+
 ## Get to know the app 📝
 
 To properly understand how this application works, you can follow these simple steps:
@@ -88,7 +90,7 @@ At first hand, the login flow seemed to have run flawlessly, as the user can now
 
 If an attacker came into posession of the device and used the [Android Debug Bridge](https://developer.android.com/studio/command-line/adb) tool to communicate with it through a Unix shell, he could inspect how the app behaves and what it logs.
 
-To begin, after connecting the device through an USB port, it is possible to list connected devices with the following command:
+To begin, it is possible to list connected devices with the following command:
 
 ```sh
 adb devices
@@ -98,9 +100,19 @@ adb devices
     <img src="images/adb_devices.png"/>
 </p>
 
-Note: This attack narrative is being written using an emulator as example, thus the `emulator` showing up as a device.
+**Note**: If `adb` is not showing up on your `PATH`, you can add it through the following commands in OSX:
 
-Now that the device is properly connected, we can start a shell instance inside it through the command:
+```sh
+echo 'export ANDROID_HOME=/Users/$USER/Library/Android/sdk' >> ~/.bash_profile
+
+echo 'export PATH=${PATH}:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools' >> ~/.bash_profile
+
+source ~/.bash_profile
+```
+
+**Note 2**: This attack narrative is being written using an emulator as example, thus the `emulator` showing up as a device.
+
+Now that we can see the device, we can start a shell instance inside it through the command:
 
 ```sh
 adb shell
@@ -140,7 +152,7 @@ Having access to the app's log, it's now a matter of searching through it. Throu
 
 #### Lack of view filling when switching apps allows for possible sensitive information leakage
 
-Both on Android or iOS there's an option to switch between recently opened apps by clicking on the app's screen and getting right back into the action. But in order for the system to show the screen of a recent used app, a screenshot is taken on the exact moment you click to switch and send it to the background, as shown by the following images:
+Both on Android and iOS there's an option to switch between recently opened apps by clicking on the app's screen and getting right back into the action. But in order for the system to show the screen of a recent used app, a screenshot is taken on the exact moment you click to switch and send it to the background, as shown by the following images:
 
 <p align="center">
     <img src="images/recent_app_android.png"/>
@@ -161,7 +173,7 @@ In another scenario, if the device was obtained shortly after the user was using
 How would you mitigate this vulnerability? After your changes, an attacker should not be able to:
 
 * View sensitive data being logged, as the app no longer logs them.
-* View screen of recently opened apps.
+* View Cool Game's screen when switching between recent apps.
 * Clear text passwords when typing during log in and register screens.
 
 ## PR solutions
@@ -172,6 +184,7 @@ How would you mitigate this vulnerability? After your changes, an attacker shoul
 
 We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](../../../docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉
 
+[API-Version-Issue]: https://github.com/globocom/secDevLabs/blob/master/docs/api-version-issue.md
 [Flutter]: https://flutter.dev/docs/get-started/install
 [VS-Code-Flutter]: https://github.com/globocom/secDevLabs/blob/master/docs/installing-flutter.md
 [Docker Install]:  https://docs.docker.com/install/
