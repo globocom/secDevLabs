@@ -4,7 +4,7 @@
 </p>
 
 <p align="center">
-A laboratory for learning secure web development in a practical manner.
+A laboratory for learning secure web and mobile development in a practical manner.
 </p>
 
 <p align="center">
