@@ -12,7 +12,7 @@ class RegisterScreen extends StatelessWidget {
   _register(BuildContext context, String username, String password) async {
     // set up POST request arguments
     String host = Platform.isAndroid ? "10.0.2.2" : "localhost";
-    String url = 'http://$host:9051/login';
+    String url = 'http://$host:9051/register';
     Map<String, String> headers = {"Content-type": "application/json"};
     String json = '{"username": "$username", "password": "$password"}';
 
