@@ -134,6 +134,7 @@ class RegisterScreen extends StatelessWidget {
                             color: Colors.black,
                           ),
                         ),
+                        obscureText: true,
                         controller: passwordController,
                       ),
                     ),

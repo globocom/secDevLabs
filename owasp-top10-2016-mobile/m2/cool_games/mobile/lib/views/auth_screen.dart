@@ -124,6 +124,7 @@ class _AuthScreenState extends State<AuthScreen> {
                             color: Colors.black,
                           ),
                         ),
+                        obscureText: true,
                         controller: passwordController,
                       ),
                     ),
