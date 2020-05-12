@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../widgets/alert_button.dart';
 import 'package:http/http.dart';
+import 'dart:io' show Platform;
 
 class RegisterScreen extends StatelessWidget {
   final usernameController = TextEditingController();
@@ -10,7 +11,8 @@ class RegisterScreen extends StatelessWidget {
 
   _register(BuildContext context, String username, String password) async {
     // set up POST request arguments
-    String url = 'http://10.0.2.2:9051/register';
+    String host = Platform.isAndroid ? "10.0.2.2" : "localhost";
+    String url = 'http://$host:9051/register';
     Map<String, String> headers = {"Content-type": "application/json"};
     String json = '{"username": "$username", "password": "$password"}';
     // make POST request
