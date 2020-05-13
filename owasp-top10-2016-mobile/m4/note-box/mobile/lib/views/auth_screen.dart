@@ -24,22 +24,33 @@ class _AuthScreenState extends State<AuthScreen> {
     Map<String, String> headers = {"Content-type": "application/json"};
     String json = '{"username": "$username", "password": "$password"}';
     // make POST request
-    Response response = await post(url, headers: headers, body: json);
-    // check the status code for the result
-    int statusCode = response.statusCode;
-    if (statusCode == 409) {
-      showAlertDialog(context, 'Login Error', 'User already logged in!');
-      return;
-    }
-    if (statusCode == 404) {
-      // TO DO:
-      // Handle wrong username or password so it can't be exploited.
-      return;
-    }
+    try {
+      Response response = await post(url, headers: headers, body: json);
+      // check the status code for the result
+      int statusCode = response.statusCode;
+      if (statusCode == 409) {
+        showAlertDialog(context, 'Login Error', 'User already logged in!');
+        return;
+      }
+      if (statusCode == 404) {
+        showAlertDialog(context, 'Login Error',
+            'Username or password is wrong or the user doesn\'t exist');
+        return;
+      }
+      if (statusCode != 200) {
+        showAlertDialog(context, 'Login Error',
+            'Unknown error occured. Please try again later.');
+        return;
+      }
 
-    Map sessionTokenMap = jsonDecode(response.body);
-    var sessionToken = SessionToken.fromJson(sessionTokenMap);
-    await _storage.write(key: username, value: sessionToken.Value);
+      Map sessionTokenMap = jsonDecode(response.body);
+      var sessionToken = SessionToken.fromJson(sessionTokenMap);
+      await _storage.write(key: username, value: sessionToken.Value);
+    } on Exception {
+      showAlertDialog(context, 'Server not reachable',
+          'Is the backend server up and running?');
+      return;
+    }
 
     Navigator.push(
       context,
