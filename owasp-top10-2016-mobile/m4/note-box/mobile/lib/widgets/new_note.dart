@@ -4,16 +4,15 @@ import 'package:http/http.dart';
 
 class NewNote extends StatelessWidget {
   final Function addNt;
-  String loggedInUser;
-  final titleControler = TextEditingController();
+  final titleController = TextEditingController();
   final noteController = TextEditingController();
   final _storage = new FlutterSecureStorage();
 
-  NewNote(this.addNt, this.loggedInUser);
+  NewNote(this.addNt);
 
-  Future<void> _addNoteToDB(
-      String username, String title, String content) async {
-    String sessionToken = await _storage.read(key: username);
+  Future<void> _addNoteToDB(String title, String content) async {
+    String username = await _storage.read(key: "username");
+    String sessionToken = await _storage.read(key: "sessionToken");
 
     // set up POST request arguments
     String url = 'http://10.0.2.2:9051/notes/addnote';
@@ -48,7 +47,7 @@ class NewNote extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
-                controller: titleControler,
+                controller: titleController,
               ),
               TextField(
                 style: TextStyle(
@@ -64,13 +63,8 @@ class NewNote extends StatelessWidget {
               ),
               FlatButton(
                 onPressed: () {
-                  addNt(
-                    titleControler.text,
-                    noteController.text,
-                    loggedInUser,
-                  );
-                  _addNoteToDB(
-                      loggedInUser, titleControler.text, noteController.text);
+                  addNt(titleController.text, noteController.text);
+                  _addNoteToDB(titleController.text, noteController.text);
                 },
                 child: Text('Add Note'),
                 color: Colors.green[200],

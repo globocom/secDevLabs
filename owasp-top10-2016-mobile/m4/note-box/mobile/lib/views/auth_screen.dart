@@ -1,12 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:http/http.dart';
+
 import './register_screen.dart';
-import '../widgets/user_notes.dart';
 import '../models/session_token.dart';
 import '../widgets/alert_button.dart';
-import 'package:http/http.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import '../widgets/user_notes.dart';
 
 class AuthScreen extends StatefulWidget {
   @override
@@ -45,22 +46,24 @@ class _AuthScreenState extends State<AuthScreen> {
 
       Map sessionTokenMap = jsonDecode(response.body);
       var sessionToken = SessionToken.fromJson(sessionTokenMap);
-      await _storage.write(key: username, value: sessionToken.Value);
+      await _storage.write(key: "username", value: username);
+      await _storage.write(key: "sessionToken", value: sessionToken.Value);
     } on Exception {
       showAlertDialog(context, 'Server not reachable',
           'Is the backend server up and running?');
       return;
     }
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => UserNotes(username)),
-    );
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => UserNotes()),
+        (Route<dynamic> _) => false);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return Scaffold(
+        body: Center(
       child: Container(
         padding: EdgeInsets.all(30),
         child: Column(
@@ -150,6 +153,6 @@ class _AuthScreenState extends State<AuthScreen> {
           ],
         ),
       ),
-    );
+    ));
   }
 }

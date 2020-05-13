@@ -3,31 +3,37 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart';
+import 'package:note_box/views/auth_screen.dart';
 
 import './new_note.dart';
 import './note_list.dart';
-
 import '../models/note.dart';
+import 'alert_button.dart';
 
 class UserNotes extends StatefulWidget {
-  String _loggedInUser;
-
-  UserNotes(this._loggedInUser);
+  UserNotes();
 
   @override
-  _UserNotesState createState() => _UserNotesState(_loggedInUser);
+  _UserNotesState createState() => _UserNotesState();
 }
 
 class _UserNotesState extends State<UserNotes> {
-  String _loggedInUser;
   final _storage = new FlutterSecureStorage();
   List<Note> _userNotes = [];
-  bool _itIsWidgetStart = false;
 
-  _UserNotesState(this._loggedInUser);
+  _UserNotesState();
 
   @override
   void initState() {
+    _storage.read(key: "username").then((username) {
+      if (username == null) {
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => AuthScreen()),
+            (Route<dynamic> _) => false);
+      }
+    });
+
     // This is the proper place to make the async calls
     // This way they only get called once
 
@@ -46,7 +52,8 @@ class _UserNotesState extends State<UserNotes> {
   }
 
   Future<List<Note>> getNotesFromDB() async {
-    String sessionToken = await _storage.read(key: _loggedInUser);
+    String sessionToken = await _storage.read(key: "sessionToken");
+
     // set up GET request arguments
     String url = 'http://10.0.2.2:9051/notes/mynotes';
     Map<String, String> headers = {
@@ -63,7 +70,9 @@ class _UserNotesState extends State<UserNotes> {
     return userNotes;
   }
 
-  void _addNewNote(String ntTitle, String ntContent, String username) {
+  void _addNewNote(String ntTitle, String ntContent) async {
+    String username = await _storage.read(key: "username");
+
     final newNt = Note(
       title: ntTitle,
       content: ntContent,
@@ -76,13 +85,53 @@ class _UserNotesState extends State<UserNotes> {
     });
   }
 
+  void _logout() async {
+    String sessionToken = await _storage.read(key: "sessionToken");
+
+    String url = 'http://10.0.2.2:9051/logout';
+    Map<String, String> headers = {
+      "Content-type": "application/json",
+      "Authorization": "Bearer $sessionToken"
+    };
+
+    Response response = await post(url, headers: headers);
+    int statusCode = response.statusCode;
+    if (statusCode != 200) {
+      showAlertDialog(context, 'Logout Error',
+          'Unknown error occured. Please try again later.');
+      return;
+    }
+
+    _storage.deleteAll();
+
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => AuthScreen()),
+        (Route<dynamic> _) => false);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
-          NewNote(_addNewNote, _loggedInUser),
+          NewNote(_addNewNote),
           NoteList(_userNotes),
+          Container(
+            padding: EdgeInsets.only(top: 15),
+            child: FlatButton(
+              onPressed: () {
+                _logout();
+              },
+              color: Colors.green[700],
+              child: Text(
+                'Logout',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );

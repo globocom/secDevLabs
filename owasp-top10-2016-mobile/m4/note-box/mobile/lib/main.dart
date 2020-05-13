@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './views/auth_screen.dart';
+import 'package:note_box/widgets/user_notes.dart';
 
 void main() => runApp(MyApp());
 
@@ -16,10 +16,6 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        child: AuthScreen(),
-      ),
-    );
+    return UserNotes();
   }
 }
