@@ -100,6 +100,13 @@ class RegisterScreen extends StatelessWidget {
                 Container(
                   width: 280,
                   child: TextFormField(
+                    validator: (value) {
+                      value = value.trim();
+                      if (value.isEmpty) {
+                        return 'Password can\'t be blank';
+                      }
+                      return null;
+                    },
                     obscureText: true,
                     decoration: InputDecoration(
                       labelText: 'Password',
