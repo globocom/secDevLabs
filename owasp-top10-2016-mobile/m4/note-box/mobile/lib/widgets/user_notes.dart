@@ -90,7 +90,8 @@ class _UserNotesState extends State<UserNotes> {
   void _logout() async {
     String sessionToken = await _storage.read(key: "sessionToken");
 
-    String url = 'http://10.0.2.2:9051/logout';
+    String host = Platform.isAndroid ? "10.0.2.2" : "localhost";
+    String url = 'http://$host:9051/logout';
     Map<String, String> headers = {
       "Content-type": "application/json",
       "Authorization": "Bearer $sessionToken"
