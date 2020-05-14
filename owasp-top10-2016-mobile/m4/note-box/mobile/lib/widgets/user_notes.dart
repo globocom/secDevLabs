@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io' show Platform;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -55,7 +56,8 @@ class _UserNotesState extends State<UserNotes> {
     String sessionToken = await _storage.read(key: "sessionToken");
 
     // set up GET request arguments
-    String url = 'http://10.0.2.2:9051/notes/mynotes';
+    String host = Platform.isAndroid ? "10.0.2.2" : "localhost";
+    String url = 'http://$host:9051/notes/mynotes';
     Map<String, String> headers = {
       "Content-type": "application/json",
       "Authorization": "Bearer $sessionToken"
