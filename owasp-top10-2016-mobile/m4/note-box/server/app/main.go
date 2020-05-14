@@ -18,6 +18,7 @@ func main() {
 	}
 
 	jwtSecret := os.Getenv("M4_SECRET")
+	jwtMiddleware := middleware.JWT([]byte(jwtSecret))
 
 	e := echo.New()
 
@@ -29,14 +30,14 @@ func main() {
 	e.POST("/login", routes.Login)
 
 	// Logout route
-	e.POST("/logout", routes.Logout)
+	e.POST("/logout", routes.Logout, jwtMiddleware)
 
 	// Register route
 	e.POST("/register", routes.Register)
 
 	// Get user notes
 	r := e.Group("/notes")
-	r.Use(middleware.JWT([]byte(jwtSecret)))
+	r.Use(jwtMiddleware)
 	r.GET("/mynotes", routes.MyNotes)
 	r.POST("/addnote", routes.AddNote)
 
