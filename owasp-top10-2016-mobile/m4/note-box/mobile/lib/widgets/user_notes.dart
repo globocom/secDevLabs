@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io' show Platform;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -6,7 +7,6 @@ import 'package:http/http.dart';
 
 import './new_note.dart';
 import './note_list.dart';
-
 import '../models/note.dart';
 
 class UserNotes extends StatefulWidget {
@@ -22,7 +22,6 @@ class _UserNotesState extends State<UserNotes> {
   String _loggedInUser;
   final _storage = new FlutterSecureStorage();
   List<Note> _userNotes = [];
-  bool _itIsWidgetStart = false;
 
   _UserNotesState(this._loggedInUser);
 
@@ -48,7 +47,8 @@ class _UserNotesState extends State<UserNotes> {
   Future<List<Note>> getNotesFromDB() async {
     String sessionToken = await _storage.read(key: _loggedInUser);
     // set up GET request arguments
-    String url = 'http://10.0.2.2:9051/notes/mynotes';
+    String host = Platform.isAndroid ? "10.0.2.2" : "localhost";
+    String url = 'http://$host:9051/notes/mynotes';
     Map<String, String> headers = {
       "Content-type": "application/json",
       "Authorization": "Bearer $sessionToken"

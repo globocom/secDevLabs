@@ -1,12 +1,14 @@
 import 'dart:convert';
+import 'dart:io' show Platform;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:http/http.dart';
+
 import './register_screen.dart';
-import '../widgets/user_notes.dart';
 import '../models/session_token.dart';
 import '../widgets/alert_button.dart';
-import 'package:http/http.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import '../widgets/user_notes.dart';
 
 class AuthScreen extends StatefulWidget {
   @override
@@ -20,7 +22,8 @@ class _AuthScreenState extends State<AuthScreen> {
 
   void _login(BuildContext context, String username, String password) async {
     // set up POST request arguments
-    String url = 'http://10.0.2.2:9051/login';
+    String host = Platform.isAndroid ? "10.0.2.2" : "localhost";
+    String url = 'http://$host:9051/login';
     Map<String, String> headers = {"Content-type": "application/json"};
     String json = '{"username": "$username", "password": "$password"}';
     // make POST request
