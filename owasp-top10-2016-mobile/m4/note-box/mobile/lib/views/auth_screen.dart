@@ -1,13 +1,14 @@
 import 'dart:convert';
+import 'dart:io' show Platform;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:http/http.dart';
+
 import './register_screen.dart';
-import '../widgets/user_notes.dart';
 import '../models/session_token.dart';
 import '../widgets/alert_button.dart';
-import 'package:http/http.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'dart:io' show Platform;
+import '../widgets/user_notes.dart';
 
 class AuthScreen extends StatefulWidget {
   @override

@@ -1,7 +1,9 @@
-import 'package:flutter/material.dart';
-import '../widgets/alert_button.dart';
-import 'package:http/http.dart';
 import 'dart:io' show Platform;
+
+import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+
+import '../widgets/alert_button.dart';
 
 class RegisterScreen extends StatelessWidget {
   final usernameController = TextEditingController();

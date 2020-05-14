@@ -1,3 +1,5 @@
+import 'dart:io' show Platform;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart';
@@ -5,7 +7,7 @@ import 'package:http/http.dart';
 class NewNote extends StatelessWidget {
   final Function addNt;
   String loggedInUser;
-  final titleControler = TextEditingController();
+  final titleController = TextEditingController();
   final noteController = TextEditingController();
   final _storage = new FlutterSecureStorage();
 
@@ -16,7 +18,8 @@ class NewNote extends StatelessWidget {
     String sessionToken = await _storage.read(key: username);
 
     // set up POST request arguments
-    String url = 'http://10.0.2.2:9051/notes/addnote';
+    String host = Platform.isAndroid ? "10.0.2.2" : "localhost";
+    String url = 'http://$host:9051/notes/addnote';
     Map<String, String> headers = {
       "Content-type": "application/json",
       "Authorization": "Bearer $sessionToken"
@@ -48,7 +51,7 @@ class NewNote extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
-                controller: titleControler,
+                controller: titleController,
               ),
               TextField(
                 style: TextStyle(
@@ -65,12 +68,12 @@ class NewNote extends StatelessWidget {
               FlatButton(
                 onPressed: () {
                   addNt(
-                    titleControler.text,
+                    titleController.text,
                     noteController.text,
                     loggedInUser,
                   );
                   _addNoteToDB(
-                      loggedInUser, titleControler.text, noteController.text);
+                      loggedInUser, titleController.text, noteController.text);
                 },
                 child: Text('Add Note'),
                 color: Colors.green[200],

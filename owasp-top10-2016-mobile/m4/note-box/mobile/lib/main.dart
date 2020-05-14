@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import './views/auth_screen.dart';
 
 void main() => runApp(MyApp());
