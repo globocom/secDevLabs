@@ -59,6 +59,11 @@ func Register(c echo.Context) error {
 	userData.UserID = newGUID1.String()
 	userData.HighestScore = 0
 
+	userData.Password, err = pass.HashPass(userData.Password)
+    if err != nil {
+    	return c.JSON(http.StatusInternalServerError, map[string]string{"result": "error", "details": "Error"})
+    }
+
 	err = db.RegisterUser(userData)
 	if err != nil {
 		// could not register this user into MongoDB (or MongoDB err connection)
@@ -86,7 +91,7 @@ func Login(c echo.Context) error {
 		return c.JSON(http.StatusForbidden, map[string]string{"result": "error", "details": "Error login."})
 	}
 
-	validPass := pass.CheckPass(userDataResult.Password, loginAttempt.Password)
+	validPass := pass.CheckPass(loginAttempt.Password, userDataResult.Password)
 	if !validPass {
 		// wrong password
 		return c.JSON(http.StatusForbidden, map[string]string{"result": "error", "details": "Error login."})
