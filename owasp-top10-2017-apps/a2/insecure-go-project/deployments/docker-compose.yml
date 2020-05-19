@@ -27,6 +27,9 @@ services:
         build:
             context: ../
             dockerfile: deployments/mongo.Dockerfile
+        environment: 
+            MONGO_PASSWORD: svGX8SViufvYYNu6m3Kv
+            MONGO_USER: u_insecure_go_project
         ports:
           - "27017:27017"
           - "27018:27018"
