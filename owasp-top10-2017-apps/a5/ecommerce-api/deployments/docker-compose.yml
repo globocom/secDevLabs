@@ -12,6 +12,7 @@ services:
             MONGO_TIMEOUT: 60
             MONGO_PORT: 27017
             MONGO_TIMEOUT: 60
+            JWT_SECRET: syQ@32dJU9*43!nPamc2
         env_file:
             - dockers.env
         build:
