@@ -1,0 +1,56 @@
+1. Update de Wordpress version
+
+Updating to the latest version is going to prevent which your application is vulnerable to the known Wordpress vulnerabilities. You can update it in Admin Dashboard clicking in `Please update now`.
+
+2. Error message
+
+Change the retorned error message in lines 152 and 175 in wp-includes/user.php file to a generic message like "The username or password you entered is incorrect.".
+
+3. Default password
+
+Change the admin's default password to a strong one. The Wordpress has a function which generate a randomic and strong password in Admin Dashboard:
+
+	1. Open http://localhost:8000/wp-login.php.
+	2. Put your credentials (the default credentials are admin/password).
+	3. In Users -> Your Profile -> New Password click in Generate Password.
+	4. Click in Update Profile
+
+If you need more security you can add a captcha in login panel. In Admin Dashboard, access Plugins -> Add New and search for captcha, it has a lot of plugins which do it.
+
+4. HTTP Security Headers
+
+The Wordpress has a plugin which set the security flags, but you can configurate it in .htaccess file.
+
+4.1 HTTP Headers plugin
+
+After you download the plugin, you only need to choose the flags which
+
+4.2 .htaccess file
+
+The .htaccess file is used to configure additional features for websites hosted on Apache Web Server. This file is in the root folder of your project, in our case it is in the /var/www/html.
+
+Add in .htaccess file this lines:
+
+#-------------------------------------------------------#
+# BEGIN HttpHeaders
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  <FilesMatch "\.(php|html)$">
+    Header always unset X-Powered-By
+    Header unset X-Powered-By
+    Header set X-Frame-Options "DENY"
+    Header set X-XSS-Protection "1"
+  </FilesMatch>
+</IfModule>
+# END HttpHeaders
+
+# BEGIN HttpHeadersCookieSecurity
+php_flag session.cookie_httponly on
+# END HttpHeadersCookieSecurity
+#-------------------------------------------------------#
+
+In both cases you need to execute the commands below to enable this changes:
+
+1. "a2enmod headers" to enable the module headers.
+2. "service apache2 restart" to restart the Apache.
+
