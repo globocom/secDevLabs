@@ -54,7 +54,7 @@ app.get('/healthcheck', (req, res) => {
 })
 
 app.post('/game', verifyJWT, async (req, res) => {
-    const user = req.body.user
+    const user = req.user
     const result = req.body.result
     let statistics = await db.getStatisticsFromUser(user)
     if (statistics === null){
@@ -119,7 +119,7 @@ app.post('/create', async (req, res) => {
 });
 
 app.get('/statistics/data', verifyJWT, async (req, res) => {
-    const user = req.query.user
+    const user = req.user
 
     let statistics = await db.getStatisticsFromUser(user)
     if (statistics === undefined){
@@ -188,6 +188,7 @@ function verifyJWT(req, res, next){
             return res
                 .sendFile(path.join(__dirname+'/public/views/error.html'))
         }
+        req.user = decoded.username
         next();
     });
 }
