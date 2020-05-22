@@ -10,7 +10,8 @@ from flask import (
     redirect,
     flash,
     make_response,
-    session
+    session,
+    request
 )
 from util.init_db import init_db
 from flask.logging import default_handler
@@ -77,8 +78,10 @@ def login():
         psw = Password(request.form.get('password').encode('utf-8'))
         user_password, success = database.get_user_password(username)
         if not success or user_password == None or not psw.validate_password(str(user_password[0])):
+            app.logger.info('Login failed for user %s on IP %s', username, request.remote_addr)
             flash("Usuario ou senha incorretos", "danger")
             return render_template('login.html')
+        app.logger.info('Login succeeded for user %s on IP %s', username, request.remote_addr)
         session['username'] = username
         return redirect('/home')
     else:
@@ -119,12 +122,15 @@ def cupom():
         coupon = request.form.get('coupon')
         rows, success = database.get_game_coupon(coupon, session.get('username'))
         if not success or rows == None or rows == 0:
+            app.logger.info('%s used an invalid cupom on IP %s', session.get('username'), request.remote_addr)
             flash("Cupom invalido", "danger")
             return render_template('coupon.html')
         game, success = database.get_game(coupon, session.get('username'))
         if not success or game == None:
+            app.logger.info('%s used an invalid cupom on IP %s', session.get('username'), request.remote_addr)
             flash("Cupom invalido", "danger")
             return render_template('coupon.html')
+        app.logger.info('%s used a valid cupom on IP %s', session.get('username'), request.remote_addr)
         flash("Voce ganhou {}".format(game[0]), "primary")
         return render_template('coupon.html')
     else:
