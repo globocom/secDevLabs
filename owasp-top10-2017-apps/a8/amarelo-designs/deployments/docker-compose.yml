@@ -5,6 +5,8 @@ services:
     build:
       context: ../
       dockerfile: deployments/Dockerfile
+    environment:
+      JWT_SECRET_KEY: tXx#WHgpN%dsLIMeLF!s
     volumes:
       - "../app/:/app"
     ports:

@@ -2,10 +2,13 @@
 
 from flask import Flask, request, make_response, render_template, redirect, flash
 import uuid
-import pickle
 import base64
+import jwt
+import datetime
+import os
 app = Flask(__name__)
 
+JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY')
 
 @app.route("/")
 def ola():
@@ -19,11 +22,20 @@ def login():
     
         if username == "admin" and password == "admin":
             token = str(uuid.uuid4().hex)
-            cookie = { "username":username, "admin":True, "sessionId":token }
-            pickle_resultado = pickle.dumps(cookie)
-            encodedSessionCookie = base64.b64encode(pickle_resultado)
+
+            if JWT_SECRET_KEY == None:
+                return "Internal Error"
+
+            payload_cookie = {
+                "username":username,
+                "admin":True,
+                "sessionId":token,
+                "exp": datetime.datetime.utcnow() + datetime.timedelta(seconds=600)
+            }
+
+            cookie_encoded = jwt.encode(payload_cookie, JWT_SECRET_KEY, algorithm='HS256')
             resp = make_response(redirect("/user"))
-            resp.set_cookie("sessionId", encodedSessionCookie)
+            resp.set_cookie("sessionId", cookie_encoded)
             return resp
 
         else:
@@ -37,7 +49,10 @@ def userInfo():
     cookie = request.cookies.get("sessionId")
     if cookie == None:
         return "Não Autorizado!"
-    cookie = pickle.loads(base64.b64decode(cookie))
+    try:
+        jwt.decode(cookie, JWT_SECRET_KEY, algorithms=['HS256'])
+    except:
+        return "Não Autorizado!"
 
     return render_template('user.html')
     
