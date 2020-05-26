@@ -48,7 +48,7 @@ MongoClient.connect(url, function(err, db) {
 MongoClient.connect(url, function(err, db) {
     if (err) throw err;
     var dbo = db.db("stego");
-    var myobj = { username: "admin", password: "admin" };
+    var myobj = { username: process.env.MONGO_USER, password: process.env.MONGO_PASSWORD };
     dbo.collection("users").insertOne(myobj, function(err, res) {
         if (err) throw err;
         console.log("Admin user added to the database");
