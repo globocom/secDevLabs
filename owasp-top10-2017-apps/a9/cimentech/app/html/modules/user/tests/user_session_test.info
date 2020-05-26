@@ -1,0 +1,11 @@
+name = "User module session tests"
+description = "Support module for user session testing."
+package = Testing
+version = VERSION
+core = 7.x
+hidden = TRUE
+
+; Information added by Drupal.org packaging script on 2020-05-20
+version = "7.70"
+project = "drupal"
+datestamp = "1589989726"

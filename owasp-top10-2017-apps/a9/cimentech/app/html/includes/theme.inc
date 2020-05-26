@@ -1776,13 +1776,13 @@ function theme_link($variables) {
  *     http://www.w3.org/TR/WCAG-TECHS/H42.html for more information.
  */
 function theme_links($variables) {
-  $links = $variables['links'];
-  $attributes = $variables['attributes'];
+  $links = (array) $variables['links'];
+  $attributes = (array) $variables['attributes'];
   $heading = $variables['heading'];
   global $language_url;
   $output = '';
 
-  if (count($links) > 0) {
+  if (!empty($links)) {
     // Treat the heading first if it is present to prepend it to the
     // list of links.
     if (!empty($heading)) {
@@ -1911,7 +1911,7 @@ function theme_breadcrumb($variables) {
 /**
  * Returns HTML for a table.
  *
- * @param $variables
+ * @param array $variables
  *   An associative array containing:
  *   - header: An array containing the table headers. Each element of the array
  *     can be either a localized string or an associative array with the
@@ -1948,6 +1948,11 @@ function theme_breadcrumb($variables) {
  *       )
  *     );
  *     @endcode
+ *   - footer: An array of table rows which will be printed within a <tfoot>
+ *     tag, in the same format as the rows element (see above).
+ *     The structure is the same the one defined for the "rows" key except
+ *     that the no_striping boolean has no effect, there is no rows striping
+ *     for the table footer.
  *   - attributes: An array of HTML attributes to apply to the table tag.
  *   - caption: A localized string to use for the <caption> tag.
  *   - colgroups: An array of column groups. Each element of the array can be
@@ -1984,8 +1989,11 @@ function theme_breadcrumb($variables) {
  *   - sticky: Use a "sticky" table header.
  *   - empty: The message to display in an extra row if table does not have any
  *     rows.
+ *
+ * @return string
+ *   The HTML output.
  */
-function theme_table($variables) {
+function theme_table(array $variables) {
   $header = $variables['header'];
   $rows = $variables['rows'];
   $attributes = $variables['attributes'];
@@ -1995,7 +2003,7 @@ function theme_table($variables) {
   $empty = $variables['empty'];
 
   // Add sticky headers, if applicable.
-  if (count($header) && $sticky) {
+  if (!empty($header) && $sticky) {
     drupal_add_js('misc/tableheader.js');
     // Add 'sticky-enabled' class to the table to identify it for JS.
     // This is needed to target tables constructed by this function.
@@ -2009,7 +2017,7 @@ function theme_table($variables) {
   }
 
   // Format the table columns:
-  if (count($colgroups)) {
+  if (!empty($colgroups)) {
     foreach ($colgroups as $number => $colgroup) {
       $attributes = array();
 
@@ -2044,46 +2052,74 @@ function theme_table($variables) {
   }
 
   // Add the 'empty' row message if available.
-  if (!count($rows) && $empty) {
+  if (empty($rows) && $empty) {
     $header_count = 0;
-    foreach ($header as $header_cell) {
-      if (is_array($header_cell)) {
-        $header_count += isset($header_cell['colspan']) ? $header_cell['colspan'] : 1;
-      }
-      else {
-        $header_count++;
+    if (!empty($header)) {
+      foreach ($header as $header_cell) {
+        if (is_array($header_cell)) {
+          $header_count += isset($header_cell['colspan']) ?
+            $header_cell['colspan'] : 1;
+        }
+        else {
+          $header_count++;
+        }
       }
     }
-    $rows[] = array(array('data' => $empty, 'colspan' => $header_count, 'class' => array('empty', 'message')));
+    $rows[] = array(
+      array(
+        'data' => $empty,
+        'colspan' => $header_count,
+        'class' => array(
+          'empty',
+          'message'
+        ),
+      ),
+    );
   }
 
-  // Format the table header:
-  if (count($header)) {
+  // Format the table header.
+  if (!empty($header)) {
     $ts = tablesort_init($header);
     // HTML requires that the thead tag has tr tags in it followed by tbody
     // tags. Using ternary operator to check and see if we have any rows.
-    $output .= (count($rows) ? ' <thead><tr>' : ' <tr>');
+    $output .= (!empty($rows) ? ' <thead><tr>' : ' <tr>');
     foreach ($header as $cell) {
       $cell = tablesort_header($cell, $header, $ts);
       $output .= _theme_table_cell($cell, TRUE);
     }
-    // Using ternary operator to close the tags based on whether or not there are rows
-    $output .= (count($rows) ? " </tr></thead>\n" : "</tr>\n");
+    // Using ternary operator to close the tags based on whether
+    // or not there are rows.
+    $output .= (!empty($rows) ? " </tr></thead>\n" : "</tr>\n");
   }
   else {
     $ts = array();
   }
 
-  // Format the table rows:
-  if (count($rows)) {
-    $output .= "<tbody>\n";
+  // Format the table and footer rows.
+  $sections = array();
+
+  if (!empty($rows)) {
+    $sections['tbody'] = $rows;
+  }
+
+  if (!empty($variables['footer'])) {
+    $sections['tfoot'] = $variables['footer'];
+  }
+
+  // tbody and tfoot have the same structure and are built using the same
+  // procedure.
+  foreach ($sections as $tag => $content) {
+    $output .= "<" . $tag . ">\n";
     $flip = array('even' => 'odd', 'odd' => 'even');
     $class = 'even';
-    foreach ($rows as $number => $row) {
-      // Check if we're dealing with a simple or complex row
+    $default_no_striping = ($tag === 'tfoot');
+
+    foreach ($content as $number => $row) {
+      // Check if we're dealing with a simple or complex row.
       if (isset($row['data'])) {
         $cells = $row['data'];
-        $no_striping = isset($row['no_striping']) ? $row['no_striping'] : FALSE;
+        $no_striping = isset($row['no_striping']) ?
+          $row['no_striping'] : $default_no_striping;
 
         // Set the attributes array and exclude 'data' and 'no_striping'.
         $attributes = $row;
@@ -2093,16 +2129,17 @@ function theme_table($variables) {
       else {
         $cells = $row;
         $attributes = array();
-        $no_striping = FALSE;
+        $no_striping = $default_no_striping;
       }
-      if (count($cells)) {
-        // Add odd/even class
+
+      if (!empty($cells)) {
+        // Add odd/even class.
         if (!$no_striping) {
           $class = $flip[$class];
           $attributes['class'][] = $class;
         }
 
-        // Build row
+        // Build row.
         $output .= ' <tr' . drupal_attributes($attributes) . '>';
         $i = 0;
         foreach ($cells as $cell) {
@@ -2112,10 +2149,12 @@ function theme_table($variables) {
         $output .= " </tr>\n";
       }
     }
-    $output .= "</tbody>\n";
+
+    $output .= "</" . $tag . ">\n";
   }
 
   $output .= "</table>\n";
+
   return $output;
 }
 

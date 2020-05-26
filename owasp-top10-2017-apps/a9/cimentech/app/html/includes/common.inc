@@ -611,8 +611,9 @@ function drupal_parse_url($url) {
   }
   // The 'q' parameter contains the path of the current page if clean URLs are
   // disabled. It overrides the 'path' of the URL when present, even if clean
-  // URLs are enabled, due to how Apache rewriting rules work.
-  if (isset($options['query']['q'])) {
+  // URLs are enabled, due to how Apache rewriting rules work. The path
+  // parameter must be a string.
+  if (isset($options['query']['q']) && is_string($options['query']['q'])) {
     $options['path'] = $options['query']['q'];
     unset($options['query']['q']);
   }
@@ -683,7 +684,10 @@ function drupal_goto($path = '', array $options = array(), $http_response_code =
   // We do not allow absolute URLs to be passed via $_GET, as this can be an attack vector.
   if (isset($_GET['destination']) && !url_is_external($_GET['destination'])) {
     $destination = drupal_parse_url($_GET['destination']);
-    $path = $destination['path'];
+    // Double check the path derived by drupal_parse_url() is not external.
+    if (!url_is_external($destination['path'])) {
+      $path = $destination['path'];
+    }
     $options['query'] = $destination['query'];
     $options['fragment'] = $destination['fragment'];
   }
@@ -759,9 +763,10 @@ function drupal_access_denied() {
  *   (optional) An array that can have one or more of the following elements:
  *   - headers: An array containing request headers to send as name/value pairs.
  *   - method: A string containing the request method. Defaults to 'GET'.
- *   - data: A string containing the request body, formatted as
- *     'param=value&param=value&...'; to generate this, use http_build_query().
- *     Defaults to NULL.
+ *   - data: An array containing the values for the request body or a string
+ *     containing the request body, formatted as
+ *     'param=value&param=value&...'; to generate this, use
+ *     drupal_http_build_query(). Defaults to NULL.
  *   - max_redirects: An integer representing how many times a redirect
  *     may be followed. Defaults to 3.
  *   - timeout: A float representing the maximum number of seconds the function
@@ -787,7 +792,7 @@ function drupal_access_denied() {
  *     easy access the array keys are returned in lower case.
  *   - data: A string containing the response body that was received.
  *
- * @see http_build_query()
+ * @see drupal_http_build_query()
  */
 function drupal_http_request($url, array $options = array()) {
   // Allow an alternate HTTP client library to replace Drupal's default
@@ -866,8 +871,10 @@ function drupal_http_request($url, array $options = array()) {
       // Make the socket connection to a proxy server.
       $socket = 'tcp://' . $proxy_server . ':' . variable_get('proxy_port', 8080);
       // The Host header still needs to match the real request.
-      $options['headers']['Host'] = $uri['host'];
-      $options['headers']['Host'] .= isset($uri['port']) && $uri['port'] != 80 ? ':' . $uri['port'] : '';
+      if (!isset($options['headers']['Host'])) {
+        $options['headers']['Host'] = $uri['host'];
+        $options['headers']['Host'] .= isset($uri['port']) && $uri['port'] != 80 ? ':' . $uri['port'] : '';
+      }
       break;
 
     case 'http':
@@ -877,14 +884,18 @@ function drupal_http_request($url, array $options = array()) {
       // RFC 2616: "non-standard ports MUST, default ports MAY be included".
       // We don't add the standard port to prevent from breaking rewrite rules
       // checking the host that do not take into account the port number.
-      $options['headers']['Host'] = $uri['host'] . ($port != 80 ? ':' . $port : '');
+      if (!isset($options['headers']['Host'])) {
+        $options['headers']['Host'] = $uri['host'] . ($port != 80 ? ':' . $port : '');
+      }
       break;
 
     case 'https':
       // Note: Only works when PHP is compiled with OpenSSL support.
       $port = isset($uri['port']) ? $uri['port'] : 443;
       $socket = 'ssl://' . $uri['host'] . ':' . $port;
-      $options['headers']['Host'] = $uri['host'] . ($port != 443 ? ':' . $port : '');
+      if (!isset($options['headers']['Host'])) {
+        $options['headers']['Host'] = $uri['host'] . ($port != 443 ? ':' . $port : '');
+      }
       break;
 
     default:
@@ -921,6 +932,11 @@ function drupal_http_request($url, array $options = array()) {
   $path = isset($uri['path']) ? $uri['path'] : '/';
   if (isset($uri['query'])) {
     $path .= '?' . $uri['query'];
+  }
+
+  // Convert array $options['data'] to query string.
+  if (is_array($options['data'])) {
+    $options['data'] = drupal_http_build_query($options['data']);
   }
 
   // Only add Content-Length if we actually have any content or if it is a POST
@@ -1087,6 +1103,11 @@ function drupal_http_request($url, array $options = array()) {
       elseif ($options['max_redirects']) {
         // Redirect to the new location.
         $options['max_redirects']--;
+
+        // We need to unset the 'Host' header
+        // as we are redirecting to a new location.
+        unset($options['headers']['Host']);
+
         $result = drupal_http_request($location, $options);
         $result->redirect_code = $code;
       }
@@ -2310,7 +2331,10 @@ function url($path = NULL, array $options = array()) {
     $language = isset($options['language']) && isset($options['language']->language) ? $options['language']->language : '';
     $alias = drupal_get_path_alias($original_path, $language);
     if ($alias != $original_path) {
-      $path = $alias;
+      // Strip leading slashes from internal path aliases to prevent them
+      // becoming external URLs without protocol. /example.com should not be
+      // turned into //example.com.
+      $path = ltrim($alias, '/');
     }
   }
 
@@ -4426,12 +4450,54 @@ function drupal_get_js($scope = 'header', $javascript = NULL, $skip_alter = FALS
     }
   }
 
-  $output = '';
-  // The index counter is used to keep aggregated and non-aggregated files in
-  // order by weight.
-  $index = 1;
-  $processed = array();
-  $files = array();
+  // Sort the JavaScript so that it appears in the correct order.
+  uasort($items, 'drupal_sort_css_js');
+
+  // Provide the page with information about the individual JavaScript files
+  // used, information not otherwise available when aggregation is enabled.
+  $setting['ajaxPageState']['js'] = array_fill_keys(array_keys($items), 1);
+  unset($setting['ajaxPageState']['js']['settings']);
+  drupal_add_js($setting, 'setting');
+
+  // If we're outputting the header scope, then this might be the final time
+  // that drupal_get_js() is running, so add the setting to this output as well
+  // as to the drupal_add_js() cache. If $items['settings'] doesn't exist, it's
+  // because drupal_get_js() was intentionally passed a $javascript argument
+  // stripped off settings, potentially in order to override how settings get
+  // output, so in this case, do not add the setting to this output.
+  if ($scope == 'header' && isset($items['settings'])) {
+    $items['settings']['data'][] = $setting;
+  }
+
+  $elements = array(
+    '#type' => 'scripts',
+    '#items' => $items,
+  );
+
+  return drupal_render($elements);
+}
+
+/**
+ * The #pre_render callback for the "scripts" element.
+ *
+ * This callback adds elements needed for <script> tags to be rendered.
+ *
+ * @param array $elements
+ *   A render array containing:
+ *   - '#items': The JS items as returned by drupal_add_js() and altered by
+ *     drupal_get_js().
+ *
+ * @return array
+ *   The $elements variable passed as argument with two more children keys:
+ *     - "scripts": contains the Javascript items
+ *     - "settings": contains the Javascript settings items.
+ *   If those keys are already existing, then the items will be appended and
+ *   their keys will be preserved.
+ *
+ * @see drupal_get_js()
+ * @see drupal_add_js()
+ */
+function drupal_pre_render_scripts(array $elements) {
   $preprocess_js = (variable_get('preprocess_js', FALSE) && (!defined('MAINTENANCE_MODE') || MAINTENANCE_MODE != 'update'));
 
   // A dummy query-string is added to filenames, to gain control over
@@ -4452,34 +4518,29 @@ function drupal_get_js($scope = 'header', $javascript = NULL, $skip_alter = FALS
   // third-party code might require the use of a different query string.
   $js_version_string = variable_get('drupal_js_version_query_string', 'v=');
 
-  // Sort the JavaScript so that it appears in the correct order.
-  uasort($items, 'drupal_sort_css_js');
+  $files = array();
 
-  // Provide the page with information about the individual JavaScript files
-  // used, information not otherwise available when aggregation is enabled.
-  $setting['ajaxPageState']['js'] = array_fill_keys(array_keys($items), 1);
-  unset($setting['ajaxPageState']['js']['settings']);
-  drupal_add_js($setting, 'setting');
+  $scripts = isset($elements['scripts']) ? $elements['scripts'] : array();
+  $scripts += array('#weight' => 0);
 
-  // If we're outputting the header scope, then this might be the final time
-  // that drupal_get_js() is running, so add the setting to this output as well
-  // as to the drupal_add_js() cache. If $items['settings'] doesn't exist, it's
-  // because drupal_get_js() was intentionally passed a $javascript argument
-  // stripped off settings, potentially in order to override how settings get
-  // output, so in this case, do not add the setting to this output.
-  if ($scope == 'header' && isset($items['settings'])) {
-    $items['settings']['data'][] = $setting;
-  }
+  $settings = isset($elements['settings']) ? $elements['settings'] : array();
+  $settings += array('#weight' => $scripts['#weight'] + 10);
+
+  // The index counter is used to keep aggregated and non-aggregated files in
+  // order by weight. Use existing scripts count as a starting point.
+  $index = count(element_children($scripts)) + 1;
 
   // Loop through the JavaScript to construct the rendered output.
   $element = array(
+    '#type' => 'html_tag',
     '#tag' => 'script',
     '#value' => '',
     '#attributes' => array(
       'type' => 'text/javascript',
     ),
   );
-  foreach ($items as $item) {
+
+  foreach ($elements['#items'] as $item) {
     $query_string =  empty($item['version']) ? $default_query_string : $js_version_string . $item['version'];
 
     switch ($item['type']) {
@@ -4488,7 +4549,7 @@ function drupal_get_js($scope = 'header', $javascript = NULL, $skip_alter = FALS
         $js_element['#value_prefix'] = $embed_prefix;
         $js_element['#value'] = 'jQuery.extend(Drupal.settings, ' . drupal_json_encode(drupal_array_merge_deep_array($item['data'])) . ");";
         $js_element['#value_suffix'] = $embed_suffix;
-        $output .= theme('html_tag', array('element' => $js_element));
+        $settings[] = $js_element;
         break;
 
       case 'inline':
@@ -4499,7 +4560,7 @@ function drupal_get_js($scope = 'header', $javascript = NULL, $skip_alter = FALS
         $js_element['#value_prefix'] = $embed_prefix;
         $js_element['#value'] = $item['data'];
         $js_element['#value_suffix'] = $embed_suffix;
-        $processed[$index++] = theme('html_tag', array('element' => $js_element));
+        $scripts[$index++] = $js_element;
         break;
 
       case 'file':
@@ -4510,7 +4571,7 @@ function drupal_get_js($scope = 'header', $javascript = NULL, $skip_alter = FALS
           }
           $query_string_separator = (strpos($item['data'], '?') !== FALSE) ? '&' : '?';
           $js_element['#attributes']['src'] = file_create_url($item['data']) . $query_string_separator . ($item['cache'] ? $query_string : REQUEST_TIME);
-          $processed[$index++] = theme('html_tag', array('element' => $js_element));
+          $scripts[$index++] = $js_element;
         }
         else {
           // By increasing the index for each aggregated file, we maintain
@@ -4521,7 +4582,7 @@ function drupal_get_js($scope = 'header', $javascript = NULL, $skip_alter = FALS
           // leading to better front-end performance of a website as a whole.
           // See drupal_add_js() for details.
           $key = 'aggregate_' . $item['group'] . '_' . $item['every_page'] . '_' . $index;
-          $processed[$key] = '';
+          $scripts[$key] = '';
           $files[$key][$item['data']] = $item;
         }
         break;
@@ -4533,7 +4594,7 @@ function drupal_get_js($scope = 'header', $javascript = NULL, $skip_alter = FALS
           $js_element['#attributes']['defer'] = 'defer';
         }
         $js_element['#attributes']['src'] = $item['data'];
-        $processed[$index++] = theme('html_tag', array('element' => $js_element));
+        $scripts[$index++] = $js_element;
         break;
     }
   }
@@ -4548,14 +4609,18 @@ function drupal_get_js($scope = 'header', $javascript = NULL, $skip_alter = FALS
         $preprocess_file = file_create_url($uri);
         $js_element = $element;
         $js_element['#attributes']['src'] = $preprocess_file;
-        $processed[$key] = theme('html_tag', array('element' => $js_element));
+        $scripts[$key] = $js_element;
       }
     }
   }
 
-  // Keep the order of JS files consistent as some are preprocessed and others are not.
-  // Make sure any inline or JS setting variables appear last after libraries have loaded.
-  return implode('', $processed) . $output;
+  // Keep the order of JS files consistent as some are preprocessed and others
+  // are not. Make sure any inline or JS setting variables appear last after
+  // libraries have loaded.
+  $element['scripts'] = $scripts;
+  $element['settings'] = $settings;
+
+  return $element;
 }
 
 /**
@@ -6937,7 +7002,16 @@ function drupal_common_theme() {
       'variables' => array(),
     ),
     'table' => array(
-      'variables' => array('header' => NULL, 'rows' => NULL, 'attributes' => array(), 'caption' => NULL, 'colgroups' => array(), 'sticky' => TRUE, 'empty' => ''),
+      'variables' => array(
+        'header' => NULL,
+        'footer' => NULL,
+        'rows' => NULL,
+        'attributes' => array(),
+        'caption' => NULL,
+        'colgroups' => array(),
+        'sticky' => TRUE,
+        'empty' => '',
+      ),
     ),
     'tablesort_indicator' => array(
       'variables' => array('style' => NULL),

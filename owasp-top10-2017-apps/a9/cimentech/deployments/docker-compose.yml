@@ -2,8 +2,10 @@ version: '3.3'
 
 services:
   drupal:
-    image: drupal:7.57
+    image: drupal:7.70
     container_name: drupal
+    environment:
+      POSTGRES_PASSWORD: example
     build:
       context: ../
       dockerfile: deployments/drupal.Dockerfile
@@ -18,6 +20,8 @@ services:
   db:
     image: postgres:latest
     container_name: a9db
+    environment:
+      POSTGRES_PASSWORD: example
     ports:
       - 5432:5432
     networks: 

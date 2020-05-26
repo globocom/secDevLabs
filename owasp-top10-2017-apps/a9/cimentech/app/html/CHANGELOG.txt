@@ -1,3 +1,97 @@
+Drupal 7.xx, xxxx-xx-xx (development version)
+-----------------------
+
+Drupal 7.70, 2020-05-19
+-----------------------
+- Fixed security issues:
+   - SA-CORE-2020-002
+   - SA-CORE-2020-003
+
+Drupal 7.69, 2019-12-18
+-----------------------
+- Fixed security issues:
+   - SA-CORE-2019-012
+
+Drupal 7.68, 2019-12-04
+-----------------------
+- Fixed: Hide toolbar when printing
+- Fixed: Settings returned via ajax are not run through hook_js_alter()
+- Fixed: Use drupal_http_build_query() in drupal_http_request()
+- Fixed: DrupalRequestSanitizer not found fatal error when bootstrap phase order is changed
+- Fixed: Block web.config in .htaccess (and vice-versa)
+- Fixed: Create "scripts" element to align rendering workflow to how "styles" are handled
+- PHP 7.3: Fixed 'Cannot change session id when session is active'
+- PHP 7.1: Fixed 'A non-numeric value encountered in theme_pager()'
+- PHP 7.x: Fixed file.inc generated .htaccess does not cover PHP 7
+- PHP 5.3: Fixed check_plain() 'Invalid multibyte sequence in argument' test failures
+- Fixed: Allow passing data as array to drupal_http_request()
+- Fixed: Skip module_invoke/module_hook in calling hook_watchdog (excessive function_exist)
+- Fixed: HTTP status 200 returned for 'Additional uncaught exception thrown while handling exception'
+- Fixed: theme_table() should take an optional footer variable and produce <tfoot>
+- Fixed: 'uasort() expects parameter 1 to be array, null given in node_view_multiple()'
+- [regression] Fix default.settings.php permission
+
+Drupal 7.67, 2019-05-08
+-----------------------
+- Fixed security issues:
+   - SA-CORE-2019-007
+
+Drupal 7.66, 2019-04-17
+-----------------------
+- Fixed security issues:
+   - SA-CORE-2019-006
+
+Drupal 7.65, 2019-03-20
+-----------------------
+- Fixed security issues:
+   - SA-CORE-2019-004
+
+Drupal 7.64, 2019-02-06
+-----------------------
+- [regression] Unset the 'host' header in drupal_http_request() during redirect
+- Fixed: 7.x does not have Phar protection and Phar tests are failing on Drupal 7
+- Fixed: Notice: Undefined index: display_field in file_field_widget_value() (line 582 of /module/file/file.field.inc)
+- Performance improvement: Registry rebuild should not parse the same file twice in the same request
+- Fixed _registry_update() to clear caches after transaction is committed
+
+Drupal 7.63, 2019-01-16
+-----------------------
+- Fixed a fatal error for some Drush users introduced by SA-CORE-2019-002.
+
+Drupal 7.62, 2019-01-15
+-----------------------
+- Fixed security issues:
+   - SA-CORE-2019-001
+   - SA-CORE-2019-002
+
+Drupal 7.61, 2018-11-07
+-----------------------
+- File upload validation functions and hook_file_validate() implementations are
+  now always passed the correct file URI.
+- The default form cache expiration of 6 hours is now configurable (API
+  addition: https://www.drupal.org/node/2857751).
+- Allowed callers of drupal_http_request() to optionally specify an explicit
+  Host header.
+- Allowed the + character to appear in usernames.
+- PHP 7.2: Fixed Archive_Tar incompatibility.
+- PHP 7.2: Removed deprecated function each().
+- PHP 7.2: Avoid count() calls on uncountable variables.
+- PHP 7.2: Removed deprecated create_function() call.
+- PHP 7.2: Make sure variables are arrays in theme_links().
+- Fixed theme-settings.php not being loaded on cached forms
+- Fixed problem with IE11 & Chrome(PointerEvents enabled) & some Firefox scroll to the top of the page after dragging the bottom item with jquery 1.5 <-> 1.11
+
+Drupal 7.60, 2018-10-18
+------------------------
+- Fixed security issues. See SA-CORE-2018-006.
+
+Drupal 7.59, 2018-04-25
+-----------------------
+- Fixed security issues (remote code execution). See SA-CORE-2018-004.
+
+Drupal 7.58, 2018-03-28
+-----------------------
+- Fixed security issues (remote code execution). See SA-CORE-2018-002.
 
 Drupal 7.57, 2018-02-21
 -----------------------

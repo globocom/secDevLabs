@@ -532,6 +532,9 @@ SetHandler Drupal_Security_Do_Not_Remove_See_SA_2006_006
 <IfModule mod_php5.c>
   php_flag engine off
 </IfModule>
+<IfModule mod_php7.c>
+  php_flag engine off
+</IfModule>
 EOF;
 
   if ($private) {
@@ -993,8 +996,15 @@ function file_build_uri($path) {
  * @return
  *   The destination filepath, or FALSE if the file already exists
  *   and FILE_EXISTS_ERROR is specified.
+ *
+ * @throws RuntimeException
+ *   Thrown if the filename contains invalid UTF-8.
  */
 function file_destination($destination, $replace) {
+  $basename = drupal_basename($destination);
+  if (!drupal_validate_utf8($basename)) {
+    throw new RuntimeException(sprintf("Invalid filename '%s'", $basename));
+  }
   if (file_exists($destination)) {
     switch ($replace) {
       case FILE_EXISTS_REPLACE:
@@ -1002,7 +1012,6 @@ function file_destination($destination, $replace) {
         break;
 
       case FILE_EXISTS_RENAME:
-        $basename = drupal_basename($destination);
         $directory = drupal_dirname($destination);
         $destination = file_create_filename($basename, $directory);
         break;
@@ -1218,11 +1227,20 @@ function file_unmunge_filename($filename) {
  * @return
  *   File path consisting of $directory and a unique filename based off
  *   of $basename.
+ *
+ * @throws RuntimeException
+ *   Thrown if the $basename is not valid UTF-8 or another error occurs
+ *   stripping control characters.
  */
 function file_create_filename($basename, $directory) {
+  $original = $basename;
   // Strip control characters (ASCII value < 32). Though these are allowed in
   // some filesystems, not many applications handle them well.
   $basename = preg_replace('/[\x00-\x1F]/u', '_', $basename);
+  if (preg_last_error() !== PREG_NO_ERROR) {
+    throw new RuntimeException(sprintf("Invalid filename '%s'", $original));
+  }
+
   if (substr(PHP_OS, 0, 3) == 'WIN') {
     // These characters are not allowed in Windows filenames
     $basename = str_replace(array(':', '*', '?', '"', '<', '>', '|'), '_', $basename);
@@ -1534,9 +1552,9 @@ function file_save_upload($form_field_name, $validators = array(), $destination 
   // rename filename.php.foo and filename.php to filename.php.foo.txt and
   // filename.php.txt, respectively). Don't rename if 'allow_insecure_uploads'
   // evaluates to TRUE.
-  if (!variable_get('allow_insecure_uploads', 0) && preg_match('/\.(php|pl|py|cgi|asp|js)(\.|$)/i', $file->filename) && (substr($file->filename, -4) != '.txt')) {
+  if (!variable_get('allow_insecure_uploads', 0) && preg_match('/\.(php|phar|pl|py|cgi|asp|js)(\.|$)/i', $file->filename) && (substr($file->filename, -4) != '.txt')) {
     $file->filemime = 'text/plain';
-    $file->uri .= '.txt';
+    // The destination filename will also later be used to create the URI.
     $file->filename .= '.txt';
     // The .txt extension may not be in the allowed list of extensions. We have
     // to add it here or else the file upload will fail.
@@ -1563,7 +1581,13 @@ function file_save_upload($form_field_name, $validators = array(), $destination 
   if (substr($destination, -1) != '/') {
     $destination .= '/';
   }
-  $file->destination = file_destination($destination . $file->filename, $replace);
+  try {
+    $file->destination = file_destination($destination . $file->filename, $replace);
+  }
+  catch (RuntimeException $e) {
+    drupal_set_message(t('The file %source could not be uploaded because the name is invalid.', array('%source' => $form_field_name)), 'error');
+    return FALSE;
+  }
   // If file_destination() returns FALSE then $replace == FILE_EXISTS_ERROR and
   // there's an existing file so we need to bail.
   if ($file->destination === FALSE) {
@@ -2130,9 +2154,33 @@ function file_download_access($uri) {
  *   'filename', and 'name' members corresponding to the matching files.
  */
 function file_scan_directory($dir, $mask, $options = array(), $depth = 0) {
+  // Default nomask option.
+  $nomask = '/(\.\.?|CVS)$/';
+
+  // Overrides the $nomask variable accordingly if $options['nomask'] is set.
+  //
+  // Allow directories specified in settings.php to be ignored. You can use this
+  // to not check for files in common special-purpose directories. For example,
+  // node_modules and bower_components. Ignoring irrelevant directories is a
+  // performance boost.
+  if (!isset($options['nomask'])) {
+    $ignore_directories = variable_get(
+      'file_scan_ignore_directories',
+      array()
+    );
+
+    foreach ($ignore_directories as $index => $ignore_directory) {
+      $ignore_directories[$index] = preg_quote($ignore_directory, '/');
+    }
+
+    if (!empty($ignore_directories)) {
+      $nomask = '/^(\.\.?)|CVS|' . implode('|', $ignore_directories) . '$/';
+    }
+  }
+
   // Merge in defaults.
   $options += array(
-    'nomask' => '/(\.\.?|CVS)$/',
+    'nomask' => $nomask,
     'callback' => 0,
     'recurse' => TRUE,
     'key' => 'uri',

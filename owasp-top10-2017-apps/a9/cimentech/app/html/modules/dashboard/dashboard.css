@@ -105,17 +105,18 @@
 }
 
 #dashboard .ui-sortable .block h2 {
-  background: transparent url(../../misc/draggable.png) no-repeat 0 -39px;
+  background: transparent url(../../misc/draggable.png) no-repeat 0px -39px;
   padding: 0 17px;
 }
 
 #dashboard.customize-inactive #disabled-blocks .block:hover h2 {
-  background: #0074BD url(../../misc/draggable.png) no-repeat 0 -39px;
+  background: #0074BD url(../../misc/draggable.png) no-repeat 0px -39px;
   color: #fff;
 }
 
 #dashboard.customize-inactive .dashboard-region .ui-sortable .block:hover h2 {
-  background: #0074BD url(../../misc/draggable.png) no-repeat 3px -36px;
+  background: #0074BD url(../../misc/draggable.png) no-repeat;
+  background-position: 3px -36px;
   color: #fff;
 }
 

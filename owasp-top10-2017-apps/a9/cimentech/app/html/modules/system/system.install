@@ -2870,7 +2870,7 @@ function system_update_7061(&$sandbox) {
     if (!db_table_exists('system_update_7061')) {
       $table = array(
         'description' => t('Stores temporary data for system_update_7061.'),
-        'fields' => array('vid' => array('type' => 'int')),
+        'fields' => array('vid' => array('type' => 'int', 'not null' => TRUE)),
         'primary key' => array('vid'),
       );
       db_create_table('system_update_7061', $table);
@@ -3283,6 +3283,20 @@ function system_update_7081() {
     ->condition('status', 0)
     ->condition('schema_version', 0)
     ->execute();
+}
+
+/**
+ * Add 'jquery-extend-3.4.0.js' to the 'jquery' library.
+ */
+function system_update_7082() {
+  // Empty update to force a rebuild of hook_library() and JS aggregates.
+}
+
+/**
+ * Add 'jquery-html-prefilter-3.5.0-backport.js' to the 'jquery' library.
+ */
+function system_update_7083() {
+  // Empty update to force a rebuild of hook_library() and JS aggregates.
 }
 
 /**

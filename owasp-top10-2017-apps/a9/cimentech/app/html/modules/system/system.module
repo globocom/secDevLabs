@@ -323,6 +323,10 @@ function system_element_info() {
     '#group_callback' => 'drupal_group_css',
     '#aggregate_callback' => 'drupal_aggregate_css',
   );
+  $types['scripts'] = array(
+    '#items' => array(),
+    '#pre_render' => array('drupal_pre_render_scripts'),
+  );
 
   // Input elements.
   $types['submit'] = array(
@@ -1182,6 +1186,10 @@ function system_library() {
     'version' => '1.4.4',
     'js' => array(
       'misc/jquery.js' => array('group' => JS_LIBRARY, 'weight' => -20),
+      // These include security fixes, so assign a weight that makes them load
+      // as soon after jquery.js is loaded as possible.
+      'misc/jquery-extend-3.4.0.js' => array('group' => JS_LIBRARY, 'weight' => -19),
+      'misc/jquery-html-prefilter-3.5.0-backport.js' => array('group' => JS_LIBRARY, 'weight' => -19),
     ),
   );
 

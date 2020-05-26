@@ -957,6 +957,15 @@ class FileDirectoryTest extends FileTestCase {
     $path = file_create_filename($basename, $directory);
     $this->assertEqual($path, $expected, format_string('Creating a new filepath from %original equals %new.', array('%new' => $path, '%original' => $original)), 'File');
 
+    try {
+      $filename = "a\xFFtest\x80€.txt";
+      file_create_filename($filename, $directory);
+      $this->fail('Expected exception not thrown');
+    }
+    catch (RuntimeException $e) {
+      $this->assertEqual("Invalid filename '$filename'", $e->getMessage(), 'The invalid filename has been detected and RuntimeException has been thrown.');
+    }
+
     // @TODO: Finally we copy a file into a directory several times, to ensure a properly iterating filename suffix.
   }
 
@@ -989,6 +998,14 @@ class FileDirectoryTest extends FileTestCase {
     $this->assertNotEqual($path, $destination, 'A new filepath destination is created when filepath destination already exists with FILE_EXISTS_RENAME.', 'File');
     $path = file_destination($destination, FILE_EXISTS_ERROR);
     $this->assertEqual($path, FALSE, 'An error is returned when filepath destination already exists with FILE_EXISTS_ERROR.', 'File');
+
+    try {
+      file_destination("core/misc/a\xFFtest\x80€.txt", FILE_EXISTS_REPLACE);
+      $this->fail('Expected exception not thrown');
+    }
+    catch (RuntimeException $e) {
+      $this->assertEqual("Invalid filename 'a\xFFtest\x80€.txt'", $e->getMessage(), 'The invalid destination has been detected and RuntimeException has been thrown.');
+    }
   }
 
   /**
@@ -2765,5 +2782,65 @@ class StreamWrapperTest extends DrupalWebTestCase {
     $this->assertEqual('foo', file_uri_scheme('foo://pork//chops'), 'Got the correct scheme from foo://asdf');
     $this->assertTrue(file_stream_wrapper_valid_scheme(file_uri_scheme('public://asdf')), 'Got a valid stream scheme from public://asdf');
     $this->assertFalse(file_stream_wrapper_valid_scheme(file_uri_scheme('foo://asdf')), 'Did not get a valid stream scheme from foo://asdf');
+  }
+
+  /**
+   * Tests that phar stream wrapper is registered as expected.
+   *
+   * @see file_get_stream_wrappers()
+   */
+  public function testPharStreamWrapperRegistration() {
+    if (!class_exists('Phar', FALSE)) {
+      $this->assertFalse(in_array('phar', stream_get_wrappers(), TRUE), 'PHP is compiled without phar support. Therefore, no phar stream wrapper is registered.');
+    }
+    elseif (version_compare(PHP_VERSION, '5.3.3', '<')) {
+      $this->assertFalse(in_array('phar', stream_get_wrappers(), TRUE), 'The PHP version is <5.3.3. The built-in phar stream wrapper has been unregistered and not replaced.');
+    }
+    else {
+      $this->assertTrue(in_array('phar', stream_get_wrappers(), TRUE), 'A phar stream wrapper is registered.');
+      $this->assertFalse(file_stream_wrapper_valid_scheme('phar'), 'The phar scheme is not a valid scheme for Drupal File API usage.');
+    }
+
+    // Ensure that calling file_get_stream_wrappers() multiple times, both
+    // without and with a drupal_static_reset() in between, does not create
+    // errors due to the PharStreamWrapperManager singleton.
+    file_get_stream_wrappers();
+    file_get_stream_wrappers();
+    drupal_static_reset('file_get_stream_wrappers');
+    file_get_stream_wrappers();
+  }
+
+  /**
+   * Tests that only valid phar files can be used.
+   */
+  public function testPharFile() {
+    if (!in_array('phar', stream_get_wrappers(), TRUE)) {
+      $this->pass('There is no phar stream wrapper registered.');
+      // Nothing else in this test is relevant when there's no phar stream
+      // wrapper. testPharStreamWrapperRegistration() is sufficient for testing
+      // the conditions of when the stream wrapper should or should not be
+      // registered.
+      return;
+    }
+
+    $base = dirname(dirname(__FILE__)) . '/files';
+
+    // Ensure that file operations via the phar:// stream wrapper work for phar
+    // files with the .phar extension.
+    $this->assertFalse(file_exists("phar://$base/phar-1.phar/no-such-file.php"));
+    $this->assertTrue(file_exists("phar://$base/phar-1.phar/index.php"));
+    $file_contents = file_get_contents("phar://$base/phar-1.phar/index.php");
+    $expected_hash = 'c7e7904ea573c5ebea3ef00bb08c1f86af1a45961fbfbeb1892ff4a98fd73ad5';
+    $this->assertIdentical($expected_hash, hash('sha256', $file_contents));
+
+    // Ensure that file operations via the phar:// stream wrapper throw an
+    // exception for files without the .phar extension.
+    try {
+      file_exists("phar://$base/image-2.jpg/index.php");
+      $this->fail('Expected exception failed to be thrown when accessing an invalid phar file.');
+    }
+    catch (Exception $e) {
+      $this->assertEqual(get_class($e), 'TYPO3\PharStreamWrapper\Exception', 'Expected exception thrown when accessing an invalid phar file.');
+    }
   }
 }
