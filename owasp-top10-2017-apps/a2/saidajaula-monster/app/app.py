@@ -48,23 +48,26 @@ def login_required(f):
 
     return decorated_function
 
-def create_tokens(username, permission):
-    # Create access_token with a lifetime of 10 minutes
-    payload_access_token = {
+# Create access_token with a lifetime of 10 minutes
+def create_access_token(username, permission):
+    payload = {
         "permissao": permission,
         "username": username,
         "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=10)
     }
-    access_token = jwt.encode(payload_access_token, SECRET_KEY, algorithm='HS256')
+    access_token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
 
-    # Create refresh_token with a lifetime of 24 hours
-    payload_refresh_token = {
+    return access_token
+
+# Create refresh_token with a lifetime of 24 hours
+def create_refresh_token(username):
+    payload = {
         "username": username,
         "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=1440)
     }
-    refresh_token = jwt.encode(payload_refresh_token, SECRET_KEY, algorithm='HS256')
+    refresh_token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
 
-    return access_token, refresh_token
+    return refresh_token
 
 @app.route("/", methods=['GET'])
 def home():
@@ -117,7 +120,8 @@ def login():
         if not password.validate_password(result[0]):
             return "Login failed! \n"
 
-        access_token, refresh_token = create_tokens(form_username, result[1])
+        access_token = create_access_token(form_username, result[1])
+        refresh_token = create_refresh_token(form_username)
 
         resp = make_response("Logged in!")
         resp.set_cookie("access_token", access_token)
@@ -137,15 +141,15 @@ def refresh_token():
         if not success:
             return redirect("/login")
 
-        new_access_token, new_refresh_token = create_tokens(username, result[1])
+        new_access_token = create_access_token(username, result[1])
 
         referer = request.referrer
         if referer != None:
             resp = redirect(referer)
         else:
             resp = redirect("user")
+
         resp.set_cookie("access_token", new_access_token)
-        resp.set_cookie("refresh_token", new_refresh_token, path="/refresh-token")
         return resp
     except:
         return redirect("/login")
