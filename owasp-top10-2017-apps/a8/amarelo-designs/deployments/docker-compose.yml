@@ -7,6 +7,8 @@ services:
       dockerfile: deployments/Dockerfile
     environment:
       JWT_SECRET_KEY: tXx#WHgpN%dsLIMeLF!s
+      AMARELO_USER: admin
+      AMARELO_PASSWORD: A%B*llSeAkekq2bq5ewc
     volumes:
       - "../app/:/app"
     ports:

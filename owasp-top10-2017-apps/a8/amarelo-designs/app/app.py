@@ -20,7 +20,7 @@ def login():
         username = request.values.get('username')
         password = request.values.get('password')
     
-        if username == "admin" and password == "admin":
+        if username == os.environ.get('AMARELO_USER') and password == os.environ.get('AMARELO_PASSWORD'):
             token = str(uuid.uuid4().hex)
 
             if JWT_SECRET_KEY == None:
