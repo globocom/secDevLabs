@@ -87,7 +87,7 @@ router.post("/login", function(req,res)  {
     };
 
     VerifiesUser((username) => { 
-        if (username == "admin") {
+        if (username == process.env.MONGO_USER) {
             var token = jwt.sign({ username }, process.env.SECRET, {
                 expiresIn: 300 // Token expires in 5 minutes
             });
