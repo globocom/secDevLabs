@@ -31,7 +31,7 @@ def login_admin_required(f):
                 return "You don't have permission to access this route. You are not an admin. \n"
             return f(*args, **kwargs)
         except:
-            return redirect("/refresh-token")
+            return redirect("/access-token")
 
     return decorated_function
 
@@ -44,7 +44,7 @@ def login_required(f):
             jwt.decode(cookie, SECRET_KEY, algorithms='HS256')
             return f(*args, **kwargs)
         except:
-            return redirect("/refresh-token")
+            return redirect("/access-token")
 
     return decorated_function
 
@@ -121,10 +121,10 @@ def login():
 
         resp = make_response("Logged in!")
         resp.set_cookie("access_token", access_token)
-        resp.set_cookie("refresh_token", refresh_token, path="/refresh-token")
+        resp.set_cookie("refresh_token", refresh_token, path="/access-token")
         return resp
 
-@app.route("/refresh-token", methods=['GET'])
+@app.route("/access-token", methods=['GET'])
 def refresh_token():
     cookie = request.cookies.get("refresh_token", "")
     try:
