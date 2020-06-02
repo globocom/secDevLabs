@@ -44,7 +44,7 @@ class _AuthScreenState extends State<AuthScreen> {
     await _storage.write(key: username, value: sessionToken.Value);
 
     print(
-        'Successfull login - username: \"$username\" password: \"$password\"');
+        'Successfull login - username: \"$username\"');
 
     Navigator.push(
       context,
