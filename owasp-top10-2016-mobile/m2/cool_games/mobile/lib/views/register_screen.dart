@@ -9,6 +9,8 @@ class RegisterScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   int _statusCode;
 
+  bool _obscureText = true;
+
   _register(BuildContext context, String username, String password) async {
     // set up POST request arguments
     String host = Platform.isAndroid ? "10.0.2.2" : "localhost";
@@ -135,6 +137,7 @@ class RegisterScreen extends StatelessWidget {
                           ),
                         ),
                         controller: passwordController,
+                        obscureText: _obscureText,
                       ),
                     ),
                     Container(

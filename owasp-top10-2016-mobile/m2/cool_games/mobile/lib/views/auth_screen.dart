@@ -19,6 +19,8 @@ class _AuthScreenState extends State<AuthScreen> {
   final passwordController = TextEditingController();
   final _storage = new FlutterSecureStorage();
 
+  bool _obscureText = true;
+
   void _login(BuildContext context, String username, String password) async {
     // set up POST request arguments
     String host = Platform.isAndroid ? "10.0.2.2" : "localhost";
@@ -125,6 +127,7 @@ class _AuthScreenState extends State<AuthScreen> {
                           ),
                         ),
                         controller: passwordController,
+                        obscureText: _obscureText,
                       ),
                     ),
                     Container(
