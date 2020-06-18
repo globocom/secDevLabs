@@ -148,7 +148,7 @@ class RegisterScreen extends StatelessWidget {
                             _register(context, inputUsername, inputPassword);
                           }
                           print(
-                              'User \"$inputUsername\" tried registering with password: \"$inputPassword\"');
+                              'User \"$inputUsername\" tried to register"');
                         },
                         color: Color(0xffbbcbef),
                         child: Text(
