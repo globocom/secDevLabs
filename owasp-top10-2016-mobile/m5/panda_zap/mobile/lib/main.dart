@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-
-import 'views/home.dart';
+import 'package:panda_zap/views/add_new_user.dart';
 
 class PandaZap extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -13,7 +11,7 @@ class PandaZap extends StatelessWidget {
         primaryColor: Colors.orange,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Home(),
+      home: AddNewUser(),
     );
   }
 }

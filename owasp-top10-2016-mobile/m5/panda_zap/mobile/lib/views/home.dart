@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:panda_zap/views/add_new_contact.dart';
 import 'package:panda_zap/widgets/my_messages.dart';
 
 class Home extends StatefulWidget {
@@ -28,7 +29,12 @@ class _HomeState extends State<Home> {
               icon: Icon(Icons.add),
               iconSize: 30,
               color: Colors.white,
-              onPressed: () {},
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => AddNewContact(),
+                ),
+              ),
             ),
           ],
         ),
