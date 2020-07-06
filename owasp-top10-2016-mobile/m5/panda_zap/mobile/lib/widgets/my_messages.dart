@@ -1,8 +1,32 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:panda_zap/models/user.dart';
 import 'package:panda_zap/views/write_message.dart';
 
-class MyMessages extends StatelessWidget {
+class MyMessages extends StatefulWidget {
+  @override
+  _MyMessagesState createState() => _MyMessagesState();
+}
+
+class _MyMessagesState extends State<MyMessages> {
+  Future<void> _updateMyMessagesList() async {
+    updateAllUsersList();
+  }
+
+  Timer timer;
+
+  @override
+  void initState() {
+    super.initState();
+    // Update message list to get new messages
+    timer = Timer.periodic(
+        Duration(seconds: 15),
+        (Timer t) => setState(() {
+              _updateMyMessagesList();
+            }));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -22,15 +46,19 @@ class MyMessages extends StatelessWidget {
           child: ListView.builder(
             itemCount: allUsers.length,
             itemBuilder: (BuildContext context, int index) {
-              // bool myMessage = messages[index].sender.id == me.id;
               return GestureDetector(
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) =>
-                        WriteMessageView(allUsers[index].messages, index),
-                  ),
-                ),
+                onTap: () async {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) =>
+                          WriteMessageView(allUsers[index].messages, index),
+                    ),
+                  ).then((value) {
+                    setState(() {});
+                  });
+                  await _updateMyMessagesList();
+                },
                 child: Container(
                   margin: EdgeInsets.only(
                       top: 5.0, bottom: 5.0, right: 20.0, left: 20.0),
@@ -52,7 +80,6 @@ class MyMessages extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            // messages[index].receiver.name,
                             allUsers[index].name,
                             style: TextStyle(
                               color: Colors.black54,
@@ -64,8 +91,7 @@ class MyMessages extends StatelessWidget {
                           Container(
                             width: MediaQuery.of(context).size.width * 0.5,
                             child: Text(
-                              // messages[index].text,
-                              allUsers[index].messages.last.text,
+                              allUsers[index].messages.first.text,
                               style: TextStyle(
                                 color: Colors.blueGrey,
                                 fontSize: 20.0,
@@ -79,8 +105,7 @@ class MyMessages extends StatelessWidget {
                       Column(
                         children: <Widget>[
                           Text(
-                            // messages[index].date,
-                            allUsers[index].messages.last.date,
+                            allUsers[index].messages.last.time.format(context),
                             style: TextStyle(
                               color: Colors.black54,
                               fontSize: 15.0,

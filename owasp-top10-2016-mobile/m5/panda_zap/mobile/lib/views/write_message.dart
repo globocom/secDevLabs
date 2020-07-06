@@ -38,7 +38,7 @@ class _WriteMessageViewState extends State<WriteMessageView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            message.date,
+            message.time.format(context),
             style: TextStyle(
               color: Colors.blueGrey,
               fontSize: 15.0,
@@ -60,17 +60,21 @@ class _WriteMessageViewState extends State<WriteMessageView> {
   }
 
   _buildMessageWriter() {
+    var newMessageController = TextEditingController();
+
+    String messageTextToBeSent;
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8.0),
-      height: 70.0,
       color: Colors.white,
+      height: 70.0,
       child: Row(
         children: <Widget>[
           Expanded(
             child: TextField(
               textCapitalization: TextCapitalization.sentences,
+              controller: newMessageController,
               onChanged: (value) {
-                print(value);
+                messageTextToBeSent = value;
               },
               decoration: InputDecoration(hintText: "Type a message"),
             ),
@@ -79,7 +83,19 @@ class _WriteMessageViewState extends State<WriteMessageView> {
             icon: Icon(Icons.send),
             iconSize: 25.0,
             color: Theme.of(context).primaryColor,
-            onPressed: () {},
+            onPressed: () {
+              setState(() {
+                if (messageTextToBeSent.isNotEmpty) {
+                  Message messageToBeSent = Message(
+                    sentByMe: true,
+                    text: messageTextToBeSent,
+                    time: TimeOfDay.now(),
+                  );
+                  widget.messages.insert(0, messageToBeSent);
+                  newMessageController.clear();
+                }
+              });
+            },
           ),
         ],
       ),

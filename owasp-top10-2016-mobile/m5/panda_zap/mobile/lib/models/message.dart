@@ -1,12 +1,14 @@
+import 'package:flutter/material.dart';
+
 class Message {
   bool sentByMe;
   String text;
-  String date;
+  TimeOfDay time;
 
   Message({
     this.sentByMe,
     this.text,
-    this.date,
+    this.time,
   });
 }
 
@@ -14,17 +16,17 @@ List<Message> user1Messages = [
   Message(
     sentByMe: true,
     text: "Message3",
-    date: "14:10",
+    time: TimeOfDay(hour: 14, minute: 10),
   ),
   Message(
     sentByMe: false,
     text: "Message2",
-    date: "15:00",
+    time: TimeOfDay(hour: 15, minute: 00),
   ),
   Message(
     sentByMe: true,
     text: "Message1",
-    date: "15:40",
+    time: TimeOfDay(hour: 15, minute: 40),
   ),
 ];
 
@@ -32,17 +34,17 @@ List<Message> user2Messages = [
   Message(
     sentByMe: true,
     text: "Message6",
-    date: "14:10",
+    time: TimeOfDay(hour: 14, minute: 10),
   ),
   Message(
     sentByMe: false,
     text: "Message5",
-    date: "15:00",
+    time: TimeOfDay(hour: 15, minute: 00),
   ),
   Message(
     sentByMe: true,
     text: "Message4",
-    date: "15:40",
+    time: TimeOfDay(hour: 15, minute: 50),
   ),
 ];
 
@@ -50,16 +52,34 @@ List<Message> user3Messages = [
   Message(
     sentByMe: true,
     text: "Message9",
-    date: "14:10",
+    time: TimeOfDay(hour: 14, minute: 10),
   ),
   Message(
     sentByMe: false,
     text: "Message8",
-    date: "15:00",
+    time: TimeOfDay(hour: 15, minute: 10),
   ),
   Message(
     sentByMe: true,
     text: "Message7",
-    date: "15:40",
+    time: TimeOfDay(hour: 15, minute: 40),
+  ),
+];
+
+List<Message> user4Messages = [
+  Message(
+    sentByMe: true,
+    text: "Message10",
+    time: TimeOfDay(hour: 14, minute: 10),
+  ),
+  Message(
+    sentByMe: false,
+    text: "Message11",
+    time: TimeOfDay(hour: 15, minute: 10),
+  ),
+  Message(
+    sentByMe: true,
+    text: "Message12",
+    time: TimeOfDay(hour: 15, minute: 40),
   ),
 ];
