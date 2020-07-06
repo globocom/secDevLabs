@@ -14,6 +14,23 @@ class User {
   });
 }
 
+bool foundUser() {
+  return false;
+}
+
+bool userIsAvailable() {
+  return true;
+}
+
+var i = 0;
+
+updateAllUsersList() {
+  if (i == 0) {
+    allUsers.add(user4);
+  }
+  i = 1;
+}
+
 User me = User(
   id: 0,
   name: "Me",
@@ -39,6 +56,13 @@ User user3 = User(
   name: "User 3",
   key: "key3",
   messages: user3Messages,
+);
+
+User user4 = User(
+  id: 4,
+  name: "User 4",
+  key: "key4",
+  messages: user4Messages,
 );
 
 List<User> allUsers = [
