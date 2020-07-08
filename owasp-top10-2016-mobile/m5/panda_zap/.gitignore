@@ -8,6 +8,7 @@
 .buildlog/
 .history
 .svn/
+/server/comandos.sh
 
 # IntelliJ related
 *.iml
