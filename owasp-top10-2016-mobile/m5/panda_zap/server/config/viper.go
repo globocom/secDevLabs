@@ -12,7 +12,7 @@ func NewViper() (*viper.Viper, error) {
 	viperInstance.AutomaticEnv()
 
 	// API default values
-	viperInstance.SetDefault("port", 9051)
+	viperInstance.SetDefault("port", 11005)
 
 	// Database default values
 	viperInstance.SetDefault("database_type", "local")
