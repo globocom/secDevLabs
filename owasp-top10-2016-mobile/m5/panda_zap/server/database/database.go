@@ -9,9 +9,10 @@ import (
 type Database interface {
 	Ping() error
 	Close() error
-	InsertUser(user *user.User) error
+	InsertUser(user *user.User, keyRemoval bool) error
 	GetUser(username string) (*user.User, error)
+	GetUserWithoutKeyWipe(username string) (*user.User, error)
 	GetUserKey(username string) (string, error)
-	UpdateUserMessages(username string, messages *[]message.Message) error
+	UpdateUserMessages(username string, messages []message.Message) error
 	UpdateUserKey(username string, newKey string) error
 }
