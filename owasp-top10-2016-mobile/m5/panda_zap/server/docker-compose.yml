@@ -6,6 +6,8 @@ services:
         build:
             context: .
             dockerfile: api.Dockerfile
+        environment:
+            M5_JWT_SECRET: secret
         ports:
             - "11005:11005"
         command: "go run main.go"

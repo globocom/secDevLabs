@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/globocom/secDevLabs/owasp-top10-2016-mobile/m5/panda_zap/server/auth"
 	"github.com/globocom/secDevLabs/owasp-top10-2016-mobile/m5/panda_zap/server/database"
 	"github.com/globocom/secDevLabs/owasp-top10-2016-mobile/m5/panda_zap/server/routes"
 	"github.com/spf13/viper"
@@ -18,15 +19,17 @@ type Application struct {
 	Settings *viper.Viper
 	Server   *routes.EchoServer
 	Database database.Database
+	Auth     auth.Auth
 }
 
 // Begin starts a new app.
-func Begin(lifecycle fx.Lifecycle, logger *zap.SugaredLogger, settings *viper.Viper, server *routes.EchoServer, database database.Database) {
+func Begin(lifecycle fx.Lifecycle, logger *zap.SugaredLogger, settings *viper.Viper, server *routes.EchoServer, database database.Database, auth auth.Auth) {
 	application := &Application{
 		Logger:   logger,
 		Settings: settings,
 		Server:   server,
 		Database: database,
+		Auth:     auth,
 	}
 
 	lifecycle.Append(

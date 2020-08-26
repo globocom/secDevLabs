@@ -12,6 +12,7 @@ func main() {
 			config.NewViper,
 			config.NewLogger,
 			config.NewDatabase,
+			config.NewAuthSession,
 			config.NewEchoEngine,
 			config.NewEchoServer,
 		),

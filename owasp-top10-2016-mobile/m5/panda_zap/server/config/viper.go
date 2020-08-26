@@ -17,5 +17,8 @@ func NewViper() (*viper.Viper, error) {
 	// Database default values
 	viperInstance.SetDefault("database_type", "local")
 
+	// Authentication default values
+	viperInstance.SetDefault("auth_type", "jwt")
+
 	return viperInstance, nil
 }
