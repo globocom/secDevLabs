@@ -1,85 +1,99 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:panda_zap/models/caesar.dart';
+import 'package:panda_zap/models/user.dart';
+import 'package:uuid/uuid.dart';
 
 class Message {
+  String id;
   bool sentByMe;
+  String owner;
   String text;
-  TimeOfDay time;
+  DateTime time;
 
-  Message({
+  Message(
+    this.id,
     this.sentByMe,
+    this.owner,
     this.text,
     this.time,
-  });
+  );
+
+  factory Message.fromJson(dynamic json) {
+    return Message(json['id'] as String, false, json['owner'] as String,
+        json['text'] as String, DateTime.parse(json['date']));
+  }
 }
 
-List<Message> user1Messages = [
-  Message(
-    sentByMe: true,
-    text: "Message3",
-    time: TimeOfDay(hour: 14, minute: 10),
-  ),
-  Message(
-    sentByMe: false,
-    text: "Message2",
-    time: TimeOfDay(hour: 15, minute: 00),
-  ),
-  Message(
-    sentByMe: true,
-    text: "Message1",
-    time: TimeOfDay(hour: 15, minute: 40),
-  ),
-];
+class TmpMessageResponse {
+  String id;
+  String localUsername;
+  List<Message> messages;
 
-List<Message> user2Messages = [
-  Message(
-    sentByMe: true,
-    text: "Message6",
-    time: TimeOfDay(hour: 14, minute: 10),
-  ),
-  Message(
-    sentByMe: false,
-    text: "Message5",
-    time: TimeOfDay(hour: 15, minute: 00),
-  ),
-  Message(
-    sentByMe: true,
-    text: "Message4",
-    time: TimeOfDay(hour: 15, minute: 50),
-  ),
-];
+  TmpMessageResponse(
+    this.id,
+    this.localUsername,
+    this.messages,
+  );
 
-List<Message> user3Messages = [
-  Message(
-    sentByMe: true,
-    text: "Message9",
-    time: TimeOfDay(hour: 14, minute: 10),
-  ),
-  Message(
-    sentByMe: false,
-    text: "Message8",
-    time: TimeOfDay(hour: 15, minute: 10),
-  ),
-  Message(
-    sentByMe: true,
-    text: "Message7",
-    time: TimeOfDay(hour: 15, minute: 40),
-  ),
-];
+  factory TmpMessageResponse.fromJson(dynamic json) {
+    if (json['messages'] != null) {
+      var msgObjsJson = json['messages'] as List;
+      List<Message> _msg =
+          msgObjsJson.map((msgJson) => Message.fromJson(msgJson)).toList();
 
-List<Message> user4Messages = [
-  Message(
-    sentByMe: true,
-    text: "Message10",
-    time: TimeOfDay(hour: 14, minute: 10),
-  ),
-  Message(
-    sentByMe: false,
-    text: "Message11",
-    time: TimeOfDay(hour: 15, minute: 10),
-  ),
-  Message(
-    sentByMe: true,
-    text: "Message12",
-    time: TimeOfDay(hour: 15, minute: 40),
-  ),
-];
+      return TmpMessageResponse(
+          json['id'] as String, json['name'] as String, _msg);
+    } else {
+      return TmpMessageResponse(
+          json['id'] as String, json['name'] as String, null);
+    }
+  }
+}
+
+String encryptMessage(String rawMessage) {
+  CaesarCypher caesarCypher = CaesarCypher(key: me.key);
+
+  return caesarCypher.encrypt(rawMessage);
+}
+
+String decryptMessage(String encryptedMessage) {
+  CaesarCypher caesarCypher = CaesarCypher(
+    key: me.key,
+  );
+
+  return caesarCypher.decrypt(encryptedMessage);
+}
+
+Future<void> sendMessage(Message rawMessage, User contactUser) async {
+  int statusCode;
+  var sessionToken = me.sessionToken;
+  var contactUserID = contactUser.id;
+  var contactUserName = contactUser.name;
+  var myName = me.name;
+  String encryptedMessage = encryptMessage(rawMessage.text);
+  var messageID = rawMessage.id;
+  var messageDate = rawMessage.time.toIso8601String();
+
+  // set up PUT request arguments
+  String host = Platform.isAndroid ? "10.0.2.2" : "localhost";
+  String url = 'http://$host:11005/messages';
+  var headers = {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+    'Authorization': 'Bearer $sessionToken',
+  };
+
+  String body =
+      '{"id":"$contactUserID", "name": "$contactUserName","messages":[{"id":"$messageID", "owner":"$myName", "text":"$encryptedMessage", "date":"$messageDate"}]}';
+
+  // make PUT request
+  Response response = await put(url, headers: headers, body: body);
+
+  // check the status code for the result
+  statusCode = response.statusCode;
+
+  return statusCode;
+}

@@ -11,7 +11,7 @@ class MyMessages extends StatefulWidget {
 
 class _MyMessagesState extends State<MyMessages> {
   Future<void> _updateMyMessagesList() async {
-    updateAllUsersList();
+    await updateAllUsersList();
   }
 
   Timer timer;
@@ -51,13 +51,13 @@ class _MyMessagesState extends State<MyMessages> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) =>
-                          WriteMessageView(allUsers[index].messages, index),
+                      builder: (_) => WriteMessageView(allUsers[index], index),
                     ),
                   ).then((value) {
                     setState(() {});
                   });
-                  await _updateMyMessagesList();
+                  await _updateMyMessagesList()
+                      .then((value) => setState(() {}));
                 },
                 child: Container(
                   margin: EdgeInsets.only(
@@ -90,28 +90,49 @@ class _MyMessagesState extends State<MyMessages> {
                           SizedBox(height: 5.0),
                           Container(
                             width: MediaQuery.of(context).size.width * 0.5,
-                            child: Text(
-                              allUsers[index].messages.first.text,
-                              style: TextStyle(
-                                color: Colors.blueGrey,
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.w600,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                            child: allUsers[index].messages.isNotEmpty
+                                ? Text(
+                                    allUsers[index].messages.first.text,
+                                    style: TextStyle(
+                                      color: Colors.blueGrey,
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                  )
+                                : Text(
+                                    "No messages yet!",
+                                    style: TextStyle(
+                                      color: Colors.blueGrey,
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                           ),
                         ],
                       ),
                       Column(
                         children: <Widget>[
-                          Text(
-                            allUsers[index].messages.last.time.format(context),
-                            style: TextStyle(
-                              color: Colors.black54,
-                              fontSize: 15.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                          allUsers[index].messages.isNotEmpty
+                              ? Text(
+                                  TimeOfDay.fromDateTime(
+                                          allUsers[index].messages.last.time)
+                                      .format(context),
+                                  style: TextStyle(
+                                    color: Colors.black54,
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                )
+                              : Text(
+                                  "",
+                                  style: TextStyle(
+                                    color: Colors.black54,
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                         ],
                       ),
                     ],

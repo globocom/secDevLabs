@@ -1,19 +1,28 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:panda_zap/models/message.dart';
 import 'package:panda_zap/models/user.dart';
+import 'package:uuid/uuid.dart';
 
 class WriteMessageView extends StatefulWidget {
-  List<Message> messages;
+  User contactUser;
   int userIndex;
 
   WriteMessageView(
-    this.messages,
+    this.contactUser,
     this.userIndex,
   );
 
   @override
   _WriteMessageViewState createState() => _WriteMessageViewState();
 }
+
+Future<void> _sendMessageCaller(Message message, User contactUser) async {
+  await sendMessage(message, contactUser);
+}
+
+Timer timer;
 
 class _WriteMessageViewState extends State<WriteMessageView> {
   _buildMessage(Message message, bool myMessage) {
@@ -38,7 +47,7 @@ class _WriteMessageViewState extends State<WriteMessageView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            message.time.format(context),
+            TimeOfDay.fromDateTime(message.time).format(context),
             style: TextStyle(
               color: Colors.blueGrey,
               fontSize: 15.0,
@@ -61,7 +70,6 @@ class _WriteMessageViewState extends State<WriteMessageView> {
 
   _buildMessageWriter() {
     var newMessageController = TextEditingController();
-
     String messageTextToBeSent;
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8.0),
@@ -83,18 +91,18 @@ class _WriteMessageViewState extends State<WriteMessageView> {
             icon: Icon(Icons.send),
             iconSize: 25.0,
             color: Theme.of(context).primaryColor,
-            onPressed: () {
-              setState(() {
-                if (messageTextToBeSent.isNotEmpty) {
-                  Message messageToBeSent = Message(
-                    sentByMe: true,
-                    text: messageTextToBeSent,
-                    time: TimeOfDay.now(),
-                  );
-                  widget.messages.insert(0, messageToBeSent);
-                  newMessageController.clear();
-                }
-              });
+            onPressed: () async {
+              Message messageToBeSent = Message(Uuid().v4(), true, me.name,
+                  messageTextToBeSent, DateTime.now());
+              setState(
+                () {
+                  if (messageTextToBeSent.isNotEmpty) {
+                    widget.contactUser.messages.insert(0, messageToBeSent);
+                  }
+                },
+              );
+              await _sendMessageCaller(messageToBeSent, widget.contactUser);
+              newMessageController.clear();
             },
           ),
         ],
@@ -104,7 +112,7 @@ class _WriteMessageViewState extends State<WriteMessageView> {
 
   @override
   Widget build(BuildContext context) {
-    List<Message> messages = widget.messages;
+    List<Message> messages = widget.contactUser.messages;
     int userIndex = widget.userIndex;
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
@@ -147,6 +155,10 @@ class _WriteMessageViewState extends State<WriteMessageView> {
                     padding: EdgeInsets.only(top: 15.0),
                     itemCount: messages.length,
                     itemBuilder: (BuildContext context, int index) {
+                      // timer = Timer.periodic(
+                      //     Duration(seconds: 10), (Timer t) => setState(() {}));
+                      timer = Timer.periodic(Duration(seconds: 10),
+                          (Timer t) => mounted ? setState(() {}) : null);
                       Message message = messages[index];
                       return _buildMessage(message, message.sentByMe);
                     },
