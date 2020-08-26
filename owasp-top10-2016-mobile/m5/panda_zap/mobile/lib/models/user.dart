@@ -1,77 +1,164 @@
+import 'dart:convert';
+import 'dart:math';
+
 import 'package:panda_zap/models/message.dart';
+import 'package:http/http.dart';
+import 'dart:io' show Platform;
+
+import 'package:uuid/uuid.dart';
 
 class User {
-  int id;
+  String id;
   String name;
-  String key;
+  int key;
+  String sessionToken;
   List<Message> messages;
 
   User({
     this.id,
     this.name,
     this.key,
+    this.sessionToken,
     this.messages,
   });
 }
 
-bool foundUser() {
-  return false;
+User me;
+List<User> allUsers = [];
+
+Future<int> register(String username) async {
+  int statusCode;
+  var sessionToken;
+  var uuid = Uuid();
+  var uuidString = uuid.v4();
+
+  // set up POST request arguments
+  String host = Platform.isAndroid ? "10.0.2.2" : "localhost";
+  String url = 'http://$host:11005/user';
+  Map<String, String> headers = {"Content-type": "application/json"};
+  String json = '{"id":"$uuidString", "name": "$username"}';
+
+  // make POST request
+  Response response = await post(url, headers: headers, body: json);
+
+  // check the status code for the result
+  statusCode = response.statusCode;
+  if (statusCode != 201) {
+    return statusCode;
+  }
+
+  sessionToken = response.headers["set-cookie"].split("=")[1];
+
+// Update local user "me" with username and ID
+  me = User(
+    id: uuid.v1().toString(),
+    name: username,
+    sessionToken: sessionToken,
+  );
+
+  return statusCode;
 }
 
-bool userIsAvailable() {
+Future<bool> userIsAvailable(String username) async {
+  // set up GET request arguments
+  int _statusCode;
+  String host = Platform.isAndroid ? "10.0.2.2" : "localhost";
+  String url = 'http://$host:11005/user/$username';
+
+  // make GET request
+  try {
+    Response response = await get(url);
+
+    // check the status code for the result
+    _statusCode = response.statusCode;
+    if (_statusCode != 200) {
+      return false;
+    }
+  } on Exception {
+    // Server not reachable
+    return false;
+  }
+
   return true;
 }
 
-var i = 0;
+Future<void> updateAllUsersList() async {
+  // set up GET request arguments
+  int statusCode;
+  String host = Platform.isAndroid ? "10.0.2.2" : "localhost";
+  String url = 'http://$host:11005/messages';
+  var sessionToken = me.sessionToken;
+  var headers = {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+    'Authorization': 'Bearer $sessionToken',
+  };
 
-updateAllUsersList() {
-  if (i == 0) {
-    allUsers.add(user4);
+  // make GET request
+  try {
+    Response response = await get(url, headers: headers);
+
+    // check the status code for the result
+    statusCode = response.statusCode;
+    if (statusCode != 200) {
+      return;
+    }
+
+    TmpMessageResponse msgResponse =
+        TmpMessageResponse.fromJson(json.decode(response.body));
+
+    if (msgResponse.messages != null) {
+      msgResponse.messages.forEach((message) {
+        allUsers.forEach((user) {
+          if (user.name == message.owner) {
+            message.text = decryptMessage(message.text);
+            user.messages.insert(0, message);
+          }
+        });
+      });
+    }
+  } on Exception {
+    // Server not reachable
+    return;
   }
-  i = 1;
 }
 
-User me = User(
-  id: 0,
-  name: "Me",
-  key: "key0",
-);
+Future<bool> addContact(String contactName) async {
+  // set up GET request arguments
+  int _statusCode;
+  String host = Platform.isAndroid ? "10.0.2.2" : "localhost";
+  String url = 'http://$host:11005/user/$contactName';
 
-User user1 = User(
-  id: 1,
-  name: "User 1",
-  key: "key1",
-  messages: user1Messages,
-);
+  // make GET request
+  try {
+    Response response = await get(url);
 
-User user2 = User(
-  id: 2,
-  name: "User 2",
-  key: "key2",
-  messages: user2Messages,
-);
+    // check the status code for the result
+    _statusCode = response.statusCode;
+    if (_statusCode != 200) {
+      return false;
+    }
 
-User user3 = User(
-  id: 3,
-  name: "User 3",
-  key: "key3",
-  messages: user3Messages,
-);
+    allUsers.where((user) {
+      if (user.name == contactName) {
+        return false;
+      }
+    });
 
-User user4 = User(
-  id: 4,
-  name: "User 4",
-  key: "key4",
-  messages: user4Messages,
-);
+    List<Message> emptyMessages = [];
 
-List<User> allUsers = [
-  user1,
-  user2,
-  user3,
-];
+    var newUserJSON = json.decode(response.body);
+    User newUser = User(
+      id: newUserJSON['id'],
+      name: newUserJSON['name'],
+      messages: emptyMessages,
+    );
 
-String getUserNameFromId(int id) {
-  User foundUser = allUsers.singleWhere((element) => element.id == id);
-  return foundUser.name;
+    allUsers.add(newUser);
+
+    return true;
+  } on Exception {
+    // Server not reachable
+    return false;
+  }
 }

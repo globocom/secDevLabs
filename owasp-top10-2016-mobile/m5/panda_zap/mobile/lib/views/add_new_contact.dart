@@ -3,28 +3,46 @@ import 'package:panda_zap/models/user.dart';
 import 'package:toast/toast.dart';
 
 class AddNewContact extends StatelessWidget {
-  _searchForUser(BuildContext context) {
-    if (foundUser()) {
-      Toast.show(
-        "User added!",
-        context,
-        duration: Toast.LENGTH_LONG,
-        gravity: Toast.BOTTOM,
-        backgroundColor: Colors.grey,
-      );
-    }
-
-    Toast.show(
-      "Panda Zap was unable to find user",
-      context,
-      duration: Toast.LENGTH_LONG,
-      gravity: Toast.BOTTOM,
-      backgroundColor: Colors.grey,
+  _searchForUser(BuildContext context, String contactName) {
+    userIsAvailable(contactName).then(
+      (foundUser) {
+        if (foundUser) {
+          addContact(contactName).then((success) {
+            if (success) {
+              Toast.show(
+                "New contact added!",
+                context,
+                duration: Toast.LENGTH_LONG,
+                gravity: Toast.BOTTOM,
+                backgroundColor: Colors.grey,
+              );
+            } else {
+              Toast.show(
+                "Error adding contact, please try again",
+                context,
+                duration: Toast.LENGTH_LONG,
+                gravity: Toast.BOTTOM,
+                backgroundColor: Colors.grey,
+              );
+            }
+          });
+        } else {
+          Toast.show(
+            "Panda Zap was unable to find user",
+            context,
+            duration: Toast.LENGTH_LONG,
+            gravity: Toast.BOTTOM,
+            backgroundColor: Colors.grey,
+          );
+        }
+      },
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    var newContactController = TextEditingController();
+
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       appBar: PreferredSize(
@@ -106,6 +124,7 @@ class AddNewContact extends StatelessWidget {
                                   Container(
                                     width: 200.0,
                                     child: TextField(
+                                      controller: newContactController,
                                       decoration: new InputDecoration(
                                         border: InputBorder.none,
                                         focusedBorder: InputBorder.none,
@@ -125,7 +144,20 @@ class AddNewContact extends StatelessWidget {
                                     iconSize: 25.0,
                                     color: Theme.of(context).primaryColor,
                                     onPressed: () {
-                                      _searchForUser(context);
+                                      if (newContactController
+                                          .text.isNotEmpty) {
+                                        FocusScope.of(context).unfocus();
+                                        _searchForUser(
+                                            context, newContactController.text);
+                                      } else {
+                                        Toast.show(
+                                          "Your username can't be empty!",
+                                          context,
+                                          duration: Toast.LENGTH_LONG,
+                                          gravity: Toast.CENTER,
+                                          backgroundColor: Colors.grey,
+                                        );
+                                      }
                                     },
                                   ),
                                 ],

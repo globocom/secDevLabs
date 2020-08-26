@@ -1,34 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:panda_zap/models/user.dart';
+import 'package:panda_zap/models/key.dart';
 import 'package:panda_zap/views/home.dart';
 import 'package:toast/toast.dart';
 
 class AddNewUser extends StatelessWidget {
-  _createNewUser(BuildContext context) {
-    if (userIsAvailable()) {
-      Toast.show(
-        "User created!",
-        context,
-        duration: 5,
-        gravity: Toast.BOTTOM,
-        backgroundColor: Colors.grey,
-      );
-
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (_) => Home(),
-        ),
-      );
-    } else {
-      Toast.show(
-        "Sorry, but this username is already taken",
-        context,
-        duration: 5,
-        gravity: Toast.BOTTOM,
-        backgroundColor: Colors.grey,
-      );
-    }
+  _createNewUser(BuildContext context, String username) {
+    register(username).then(
+      (statusCode) {
+        if (statusCode == 409) {
+          Toast.show("Register Error! User already exists!", context,
+              duration: 5, gravity: Toast.BOTTOM, backgroundColor: Colors.grey);
+        } else if (statusCode == 500) {
+          Toast.show("Register Error! Please try again later.", context,
+              duration: 5, gravity: Toast.BOTTOM, backgroundColor: Colors.grey);
+        } else if (statusCode != 201) {
+          Toast.show(
+              "Register Error! Please check API for more details", context,
+              duration: 5, gravity: Toast.BOTTOM, backgroundColor: Colors.grey);
+        } else {
+          getMessageKey().then(
+            (key) {
+              if (key == -1) {
+                Toast.show("Error getting key for messages!", context,
+                    duration: 5,
+                    gravity: Toast.BOTTOM,
+                    backgroundColor: Colors.grey);
+              } else {
+                Toast.show("User created!", context,
+                    duration: 5,
+                    gravity: Toast.BOTTOM,
+                    backgroundColor: Colors.grey);
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => Home(),
+                  ),
+                );
+              }
+            },
+          );
+        }
+      },
+    );
   }
 
   @override
@@ -131,7 +145,8 @@ class AddNewUser extends StatelessWidget {
                                       if (newUsernameController
                                           .text.isNotEmpty) {
                                         FocusScope.of(context).unfocus();
-                                        _createNewUser(context);
+                                        _createNewUser(context,
+                                            newUsernameController.text);
                                         newUsernameController.clear();
                                       } else {
                                         Toast.show(
