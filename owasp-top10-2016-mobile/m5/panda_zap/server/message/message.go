@@ -4,6 +4,6 @@ package message
 type Message struct {
 	ID            string `bson:"id" json:"id"`
 	Owner         string `bson:"owner" json:"owner"`
-	EncryptedText string `bson:"encrypted_text" json:"encrypted_text"`
+	EncryptedText string `bson:"text" json:"text"`
 	Date          string `bson:"date" json:"date"`
 }
