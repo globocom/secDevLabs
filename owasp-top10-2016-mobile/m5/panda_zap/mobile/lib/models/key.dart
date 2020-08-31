@@ -31,6 +31,7 @@ Future<int> getMessageKey() async {
     var newKeyJSON = json.decode(response.body);
     String newKey = newKeyJSON['key'];
     int newKeyInt = int.parse(newKey);
+    print("Encryption key $newKeyInt received");
 
     me.key = newKeyInt;
 
