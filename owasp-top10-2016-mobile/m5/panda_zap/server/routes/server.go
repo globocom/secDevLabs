@@ -45,7 +45,8 @@ func (es *EchoServer) SetRoutesV1() {
 	k.GET("", es.GetKeyV1)
 }
 
-// SetRoutesV2 sets the server's routes for version 2.
+// SetRoutesV2 sets the server's routes for version 2, which will support much stronger crypto.
+// If only we had the time to set it straight in the app... :(
 func (es *EchoServer) SetRoutesV2() {
 
 	// restricted key routes
