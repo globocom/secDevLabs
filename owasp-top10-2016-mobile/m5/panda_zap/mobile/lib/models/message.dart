@@ -1,10 +1,8 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:panda_zap/models/caesar.dart';
 import 'package:panda_zap/models/user.dart';
-import 'package:uuid/uuid.dart';
 
 class Message {
   String id;
