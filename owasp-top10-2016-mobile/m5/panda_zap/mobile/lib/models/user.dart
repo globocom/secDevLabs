@@ -1,10 +1,8 @@
 import 'dart:convert';
-import 'dart:math';
-
-import 'package:panda_zap/models/message.dart';
-import 'package:http/http.dart';
 import 'dart:io' show Platform;
 
+import 'package:http/http.dart';
+import 'package:panda_zap/models/message.dart';
 import 'package:uuid/uuid.dart';
 
 class User {

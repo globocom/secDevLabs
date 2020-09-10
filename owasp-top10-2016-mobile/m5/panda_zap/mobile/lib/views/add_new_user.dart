@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:panda_zap/models/user.dart';
 import 'package:panda_zap/models/key.dart';
+import 'package:panda_zap/models/user.dart';
 import 'package:panda_zap/views/home.dart';
 import 'package:toast/toast.dart';
 
