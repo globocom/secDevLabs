@@ -10,7 +10,7 @@ Future<int> getMessageKey() async {
   // set up GET request arguments
   int _statusCode;
   String host = Platform.isAndroid ? "10.0.2.2" : "localhost";
-  String url = 'http://$host:11005/key';
+  String url = 'http://$host:11005/v1/key';
   var sessionToken = me.sessionToken;
   var headers = {
     'Content-Type': 'application/json',

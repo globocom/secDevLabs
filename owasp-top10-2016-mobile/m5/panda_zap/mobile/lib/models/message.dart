@@ -28,27 +28,21 @@ class Message {
 }
 
 class TmpMessageResponse {
-  String id;
-  String localUsername;
   List<Message> messages;
 
   TmpMessageResponse(
-    this.id,
-    this.localUsername,
     this.messages,
   );
 
   factory TmpMessageResponse.fromJson(dynamic json) {
-    if (json['messages'] != null) {
-      var msgObjsJson = json['messages'] as List;
+    if (json != null) {
+      var msgObjsJson = json as List;
       List<Message> _msg =
           msgObjsJson.map((msgJson) => Message.fromJson(msgJson)).toList();
 
-      return TmpMessageResponse(
-          json['id'] as String, json['name'] as String, _msg);
+      return TmpMessageResponse(_msg);
     } else {
-      return TmpMessageResponse(
-          json['id'] as String, json['name'] as String, null);
+      return TmpMessageResponse(null);
     }
   }
 }
