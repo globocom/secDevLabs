@@ -29,7 +29,7 @@ func NewJWTSession(logger *zap.SugaredLogger, settings *viper.Viper) (*JWTInterf
 	return authSession, nil
 }
 
-// NewToken returns a new JWT token
+// NewToken returns a new JWT
 func (j *JWTInterface) NewToken(id string, username string) (string, error) {
 	claims := j.TokenConfig.Claims.(jwt.MapClaims)
 	claims["id"] = id
@@ -43,7 +43,7 @@ func (j *JWTInterface) NewToken(id string, username string) (string, error) {
 	return token, nil
 }
 
-// GetUser returns the user from the JWT token given the context.
+// GetUser returns the user from the JWT given the context.
 func (j *JWTInterface) GetUser(c echo.Context) string {
 	JWTToken := c.Get("user").(*jwt.Token)
 	claims := JWTToken.Claims.(jwt.MapClaims)
