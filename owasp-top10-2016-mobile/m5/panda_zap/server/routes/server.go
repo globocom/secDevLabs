@@ -11,15 +11,16 @@ import (
 
 // EchoServer is the struct that hold all relevant information for a new app.
 type EchoServer struct {
-	Logger   *zap.SugaredLogger
-	Settings *viper.Viper
-	Engine   *echo.Echo
-	Database database.Database
-	Auth     auth.Auth
+	Logger     *zap.SugaredLogger
+	Settings   *viper.Viper
+	Engine     *echo.Echo
+	Database   database.Database
+	Auth       auth.Auth
+	MessageKey keyHolderV1
 }
 
-// SetRoutes sets the server's routes.
-func (es *EchoServer) SetRoutes() {
+// SetGenericRoutes sets the server's generic routes.
+func (es *EchoServer) SetGenericRoutes() {
 
 	// healthcheck route
 	es.Engine.GET("/healthcheck", es.Healthcheck)
@@ -33,11 +34,23 @@ func (es *EchoServer) SetRoutes() {
 	r.Use(middleware.JWT([]byte(es.Settings.GetString("jwt_secret"))))
 	r.GET("", es.GetUserMessages)
 	r.PUT("", es.UpdateMessages)
+}
+
+// SetRoutesV1 sets the server's routes for version 1.
+func (es *EchoServer) SetRoutesV1() {
 
 	// restricted key routes
-	// es.Engine.GET("/user/key/:name", es.GetUserKey)
-	// es.Engine.PUT("/user/key/:name", es.UpdateKey)
-	k := es.Engine.Group("/key")
+	k := es.Engine.Group("/v1/key")
 	k.Use(middleware.JWT([]byte(es.Settings.GetString("jwt_secret"))))
-	k.GET("", es.GetKey)
+	k.GET("", es.GetKeyV1)
+}
+
+// SetRoutesV2 sets the server's routes for version 2.
+func (es *EchoServer) SetRoutesV2() {
+
+	// restricted key routes
+	k := es.Engine.Group("/v2/user/key/")
+	k.Use(middleware.JWT([]byte(es.Settings.GetString("jwt_secret"))))
+	k.GET(":name", es.GetUserKeyV2)
+	k.PUT("", es.UpdateUserKeyV2)
 }

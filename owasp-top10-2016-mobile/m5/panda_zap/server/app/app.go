@@ -36,7 +36,8 @@ func Begin(lifecycle fx.Lifecycle, logger *zap.SugaredLogger, settings *viper.Vi
 		fx.Hook{
 			OnStart: func(context.Context) error {
 				application.Logger.Info("Starting the application")
-				application.Server.SetRoutes()
+				application.Server.SetGenericRoutes()
+				application.Server.SetRoutesV1()
 				go application.Server.Engine.Start(fmt.Sprintf(":%d", application.Settings.GetInt("port")))
 				return nil
 			},
