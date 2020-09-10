@@ -8,11 +8,28 @@ import (
 	"github.com/labstack/echo"
 )
 
-type keyHolder struct {
-	Key int `bson:"key" json:"key"`
+type keyHolderV1 struct {
+	Value int `bson:"key" json:"key"`
 }
 
-// GetUserKey returns a key from the user.
+type keyHolderV2 struct {
+	Value string `bson:"key" json:"key"`
+}
+
+// GetKeyV1 returns the encryption key
+func (es *EchoServer) GetKeyV1(c echo.Context) error {
+
+	if es.MessageKey.Value == 0 {
+		es.MessageKey.Value = rand.Intn(100) + 1
+	}
+
+	return c.JSON(http.StatusOK,
+		map[string]string{"key": strconv.Itoa(es.MessageKey.Value)})
+}
+
+// V2 key management system:
+
+// // GetUserKey returns a key from the user.
 // func (es *EchoServer) GetUserKey(c echo.Context) error {
 
 // 	username := c.Param("name")
@@ -29,7 +46,7 @@ type keyHolder struct {
 // 	return c.JSON(http.StatusOK, userFromDB.Key)
 // }
 
-// UpdateKey attempts to update an existing user's key in the database.
+// // UpdateKey attempts to update an existing user's key in the database.
 // func (es *EchoServer) UpdateKey(c echo.Context) error {
 
 // 	username := c.Param("name")
@@ -60,15 +77,3 @@ type keyHolder struct {
 // 	return c.JSON(http.StatusOK,
 // 		map[string]string{"result": "success", "message": "user key update success"})
 // }
-
-// GetKey returns the encryption key
-func (es *EchoServer) GetKey(c echo.Context) error {
-
-	var tmpKey keyHolder
-	if tmpKey.Key == 0 {
-		tmpKey.Key = rand.Intn(100)
-	}
-
-	return c.JSON(http.StatusOK,
-		map[string]string{"key": strconv.Itoa(tmpKey.Key)})
-}
