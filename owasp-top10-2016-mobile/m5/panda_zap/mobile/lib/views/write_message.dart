@@ -155,8 +155,6 @@ class _WriteMessageViewState extends State<WriteMessageView> {
                     padding: EdgeInsets.only(top: 15.0),
                     itemCount: messages.length,
                     itemBuilder: (BuildContext context, int index) {
-                      // timer = Timer.periodic(
-                      //     Duration(seconds: 10), (Timer t) => setState(() {}));
                       timer = Timer.periodic(Duration(seconds: 10),
                           (Timer t) => mounted ? setState(() {}) : null);
                       Message message = messages[index];
