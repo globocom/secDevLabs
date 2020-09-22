@@ -30,7 +30,16 @@ const login = async (credentials) => {
     try {
         const login = new Login(credentials);
 
-        if (login.validateSync()) { return []; }
+        if (login.validateSync()) { 
+            // TODO: Log suspected attacks here.
+            // It's probably a good idea to log when a suspected attack occurs so that those monitoring
+            // the system can be aware.
+            // This section should only be entered if the username/password end up as `null`.
+            // This would only happen if they were:
+            //   a) not present in the request (unlikely, but possible)
+            //   b) not a string (likely attempted attack)
+            return []; 
+        }
 
         const existsUser = await User.find({$and: [ { email: login.email}, { password: login.password} ]});
 
