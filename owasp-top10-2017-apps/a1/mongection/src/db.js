@@ -1,4 +1,5 @@
 const User = require('./models/user');
+const Login = require('./models/login');
 
 const register = async (user) => {
 
@@ -27,9 +28,9 @@ const register = async (user) => {
 const login = async (credentials) => {
 
     try {
-        const { email, password } = credentials;
+        const login = new Login(credentials);
 
-        const existsUser = await User.find({$and: [ { email: String(email)}, { password: String(password)} ]});
+        const existsUser = await User.find({$and: [ { email: login.email}, { password: login.password} ]});
 
         if(!existsUser) { return null;}
 
