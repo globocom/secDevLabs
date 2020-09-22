@@ -29,7 +29,7 @@ const login = async (credentials) => {
     try {
         const { email, password } = credentials;
 
-        const existsUser = await User.find({$and: [ { email: email.toString()}, { password: password.toString()} ]});
+        const existsUser = await User.find({$and: [ { email: String(email)}, { password: String(password)} ]});
 
         if(!existsUser) { return null;}
 
