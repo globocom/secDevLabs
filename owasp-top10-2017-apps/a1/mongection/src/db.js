@@ -30,11 +30,11 @@ const login = async (credentials) => {
     try {
         const login = new Login(credentials);
 
-        if (login.validateSync()) { return null; }
+        if (login.validateSync()) { return []; }
 
         const existsUser = await User.find({$and: [ { email: login.email}, { password: login.password} ]});
 
-        if(!existsUser) { return null;}
+        if(!existsUser) { return [];}
 
         const returnUser = existsUser.map((user) => {
             return user.email
