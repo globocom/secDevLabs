@@ -26,7 +26,7 @@ Agora é hora de proteger o aplicativo! Imagine que este é o seu aplicativo e v
 
 ## Quão seguro é meu novo código?
 
-Depois de mitigar uma vulnerabilidade, você pode enviar uma solicitação pull para pedir gentilmente à comunidade secDevLabs para revisar seus novos códigos seguros. Se você estiver se sentindo um pouco perdido, tente dar uma olhada em [esta solução de mitigação](https://github.com/globocom/secDevLabs/pull/29), isto pode ajudar! 🚀
+Depois de mitigar uma vulnerabilidade, você pode enviar uma solicitação pull para pedir gentilmente à comunidade secDevLabs para revisar seus novos códigos seguros. Se você estiver se sentindo um pouco perdido, tente dar uma olhada [nesta solução de mitigação](https://github.com/globocom/secDevLabs/pull/29), isto pode ajudar! 🚀
 
 ## OWASP Top 10 aplicativos (2017): 💻
 
@@ -67,4 +67,4 @@ Nós encorajamos você a contribuir com o SecDevLabs! Verifique a seção [Contr
 
 Este projeto está licenciado sob a licença BSD 3-Clause "Nova" ou "Revisada" - leia o arquivo [LICENSE.md](LICENSE.md) para detalhes. 📖
 
-*Este artigo foi traduzido do [Inglês](README.md) para [Português (Brasil)](README-pt-BR.md).*
+*Este artigo foi traduzido do [Inglês](README.md) para o [Português (Brasil)](README-pt-BR.md).*
