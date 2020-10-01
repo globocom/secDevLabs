@@ -66,3 +66,5 @@ We encourage you to contribute to SecDevLabs! Please check out the [Contributing
 ## License
 
 This project is licensed under the BSD 3-Clause "New" or "Revised" License - read [LICENSE.md](LICENSE.md) file for details. 📖
+
+*This article can also be read in [Brazilian Portuguese](README-pt-BR.md).*
