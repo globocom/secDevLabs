@@ -3,17 +3,24 @@ import Blog from "./components/Blog.jsx";
 import Comment from "./components/Comment";
 
 function App() {
-    const [change, setChange] = useState("");
+    const [comment, setComment] = useState("");
     return (
         <div>
             <Blog />
             <Comment
                 change={(i) => {
-                    setChange(i.target.value);
+                    setComment(i.target.value);
                 }}
-                click={(i) => {}}
+                click={(i) => {
+                    try {
+                        eval(comment);
+                        setComment("");
+                    } catch (e) {
+                        alert("nope");
+                    }
+                }}
             ></Comment>
-            <h1>{change}</h1>
+            <h1>{comment}</h1>
         </div>
     );
 }
