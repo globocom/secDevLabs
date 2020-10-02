@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import Blog from "./components/Blog.jsx";
+import Comment from "./components/Comment";
 
 function App() {
+    const [change, setChange] = useState("");
     return (
         <div>
-            <Blog></Blog>
+            <Blog />
+            <Comment
+                change={(i) => {
+                    setChange(i.target.value);
+                }}
+                click={(i) => {}}
+            ></Comment>
+            <h1>{change}</h1>
         </div>
     );
 }
