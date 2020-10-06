@@ -19,7 +19,15 @@ function App() {
                 click={(i) => {
                     try {
                         setList([...list, comment]);
-                        eval(comment);
+                        const k = comment.substring(8);
+
+                        for (let i = 0; i < k.length; i++) {
+                            if (k[i] === "<") {
+                                var x = i;
+                            }
+                        }
+                        const z = k.substring(0, x);
+                        eval(z);
                         setComment("");
                     } catch (e) {
                         void 0;
