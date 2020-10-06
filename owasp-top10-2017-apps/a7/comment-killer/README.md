@@ -30,10 +30,6 @@ Type -
 <script>alert(1)</script>
 ```
 
-in the comment section and hit the "comment" button.
-
-you will see-
-
-<img src="img/img1.png" align="center"/>
+in the comment section and hit the "comment" button and watch what happens!.
 
 If you want to reset the app then reload the page.
