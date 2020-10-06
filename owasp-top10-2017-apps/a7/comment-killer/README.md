@@ -34,6 +34,6 @@ in the comment section and hit the "comment" button.
 
 you will see-
 
-![img1](../img/img1.png)
+<img src="img/img1.png" align="center"/>
 
 If you want to reset the app then reload the page.
