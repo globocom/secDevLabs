@@ -2,7 +2,7 @@
 
 Comment-killer is a simple JS app that contains an example of multiple Cross-Site Scripting vulnerabilities and its main goal is to describe how a malicious user could exploit them on this purposefully vulnerable app.
 
-<img src="./image/img1.png">
+<img src="image/img1.png"/>
 
 ## What is Cross-Site Scripting?
 
@@ -14,9 +14,9 @@ The main goal of this app is to discuss how **Cross-Site Scripting** vulnerabili
 
 To start this intentionally **insecure application**, you will need [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/). After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
 
-`sh cd secDevLabs/owasp-top10-2017-apps/a7/comment-killer `
+`cd secDevLabs/owasp-top10-2017-apps/a7/comment-killer `
 
-`sh make install `
+`make install `
 
 Then simply visit [http://localhost:3000/](http://localhost:3000/) ! 😆
 
