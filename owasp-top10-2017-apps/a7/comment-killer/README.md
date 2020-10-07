@@ -1,35 +1,50 @@
 # Comment-killer
 
-Use this app to learn about XSS vulnerability.
+Comment-killer is a simple JS app that contains an example of multiple Cross-Site Scripting vulnerabilities and its main goal is to describe how a malicious user could exploit them on this purposefully vulnerable app.
 
-# What is XSS?
+## What is Cross-Site Scripting?
 
-Cross-site Scripting (XSS) is a client-side code injection attack. The attacker aims to execute malicious scripts in a web browser of the victim. The actual attack occurs when the victim visits the web page or web application that executes the malicious code. Learn more <a href="https://owasp.org/www-community/attacks/xss/">here</a>.
+XSS flaws occur whenever an application includes untrusted data in a new web page without proper validation or escaping, or updates an existing web page with user-supplied data using a browser API that can create HTML or JavaScript. XSS allows attackers to execute scripts in the victim’s browser which can hijack user sessions, deface web sites, or redirect the user to malicious sites.
 
-# Installation
+The main goal of this app is to discuss how **Cross-Site Scripting** vulnerabilities can be exploited and to encourage developers to send secDevLabs Pull Requests on how they would mitigate these flaws. Learn more <a href="https://owasp.org/www-community/attacks/xss/">here</a>.
 
-```bash
-cd secDevLabs/owasp-top10-2017-apps/a7/comment-killer
-docker-compose up -d --build
-docker-compose ps
-```
+## Setup
 
-Now visit http://localhost:3000/
+To start this intentionally **insecure application**, you will need [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/). After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
 
-In order to stop-
+`sh cd secDevLabs/owasp-top10-2017-apps/a7/comment-killer `
 
-```bash
-docker-compose stop
-```
+`sh make install `
 
-# Now what?
+Then simply visit [http://localhost:3000/](http://localhost:3000/) ! 😆
 
-Type -
+## Get to know the app 👾
 
-```
-<script>alert(1)</script>
-```
+To properly understand how this application works, you can follow these simple steps:
 
-in the comment section and hit the "comment" button and watch what happens!.
+-   Read all blog posts.
+-   Comment in a post.
 
 If you want to reset the app then reload the page.
+
+## Attack narrative
+
+So now you have the app up and running - congrats! This section will show how a hackers can use XSS and attack anybody who visits this webpage.
+
+## Secure this app
+
+How would you mitigate this vulnerability? After your changes, an attacker should not be able to:
+
+-   Execute scripts through input fields
+
+## PR solutions
+
+[Spoiler alert 🚨] To understand how this vulnerability can be mitigated, check out [these pull requests](https://github.com/globocom/secDevLabs/pulls?q=is%3Apr+label%3A%22mitigation+solution+%F0%9F%94%92%22+label%3AComment-Killer)!
+
+## Contributing
+
+We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](../../../docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉
+
+[docker install]: https://docs.docker.com/install/
+[docker compose install]: https://docs.docker.com/compose/install/
+[app]: http://localhost:10007
