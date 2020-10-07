@@ -1,5 +1,7 @@
 import React from "react";
 
+import logo from "./image/logo.jpg";
+
 function blog() {
     return (
         <div>
@@ -7,35 +9,39 @@ function blog() {
                 style={{
                     backgroundColor: "#D5E3E3",
                     textAlign: "center",
-                    paddingLeft: 200,
-                    paddingRight: 200,
+                    paddingLeft: 300,
+                    paddingRight: 300,
                 }}
             >
                 <h3>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Eu lobortis elementum nibh tellus molestie. Vel
-                    pharetra vel turpis nunc eget. Leo vel fringilla est
-                    ullamcorper eget nulla facilisi etiam. Eget lorem dolor sed
-                    viverra ipsum nunc aliquet bibendum. Malesuada fames ac
-                    turpis egestas maecenas pharetra convallis. Dignissim enim
-                    sit amet venenatis. Vitae turpis massa sed elementum.
-                    Suspendisse potenti nullam ac tortor. Id aliquet lobortis
-                    elementum nibh tellus molestie. Vel pharetra vel turpis
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Eu lobortis elementum nibh tellus molestie. Vel
-                    pharetra vel turpis nunc eget. Leo vel fringilla est
-                    ullamcorper eget nulla facilisi etiam. Eget lorem dolor sed
-                    viverra ipsum nunc aliquet bibendum. Malesuada fames ac
-                    turpis egestas maecenas pharetra convallis. Dignissim enim
-                    sit amet venenatis. Vitae turpis massa sed elementum.
+                    Welcome to my blog! Today we will talk about memes :) Where
+                    Does the Word “Meme” Come From? The term “meme” was coined
+                    by Richard Dawkins, a biologist. Dawkins believed that
+                    cultural ideas are like genes. He thought that our concepts
+                    as a society spread from brain to brain, multiplying and
+                    mutating as they went. The resulting trends were his
+                    definition of a “meme.” Most modern “memes” are cultural
+                    inside jokes. They’re a way of connecting with people across
+                    the internet through unique photos that become instantly
+                    recognizable. Memes collect emotions, ideas and actions into
+                    an easy-to-translate format. Memes are ideal for the digital
+                    age. <br />
+                    Most internet users spend around 100 minutes a day on social
+                    media. Most of our conversations today are informed by the
+                    jokes and references made online. Whether it’s a picture
+                    from a social influencer or a video from a brand, memes are
+                    affecting the language that customers speak online. This
+                    means that brands need to learn how to translate their
+                    advertising for this new world. Memes elicit better
+                    reactions from audiences because they’re tailored for social
+                    media. People naturally share memes as part of their online
+                    experience, so they’re a great way to improve engagement.
                 </h3>
             </div>
-            <div style={{ textAlign: "right", marginRight: 300 }}>
+            <div style={{ textAlign: "center" }}>
                 <img
                     style={{ borderRadius: 1000, height: 100 }}
-                    src="https://i.kym-cdn.com/entries/icons/facebook/000/032/279/Screen_Shot_2019-12-30_at_11.26.24_AM.jpg"
+                    src={logo}
                 ></img>
                 <h1>Written by Meme-Man</h1>
             </div>
