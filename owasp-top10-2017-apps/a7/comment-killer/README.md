@@ -2,7 +2,7 @@
 
 Comment-killer is a simple JS app that contains an example of multiple Cross-Site Scripting vulnerabilities and its main goal is to describe how a malicious user could exploit them on this purposefully vulnerable app.
 
-<img src="image/img1.png"/>
+<img src="image/img1.png" alt="img1.png"/>
 
 ## What is Cross-Site Scripting?
 
@@ -31,7 +31,13 @@ If you want to reset the app then reload the page.
 
 ## Attack narrative
 
-So now you have the app up and running - congrats! This section will show how a hackers can use XSS and attack anybody who visits this webpage.
+So now you have the app up and running - congrats! This section will show how hackers can exploit this vulnerability.
+
+Type- `<script>alert(1)</script>` in the comment box and comment it. You will see this-
+
+<img src="image/img2.png" alt="img2.png">
+
+This website has interpreted your comment as a block of code, and stored it in it's server. Hence, whenever the comment section loads on anybody's machine, this block of code will be executed!
 
 ## Secure this app
 
