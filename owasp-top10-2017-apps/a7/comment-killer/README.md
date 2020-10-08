@@ -69,6 +69,8 @@ Type- `<script>alert(1)</script>` in the comment box and comment it. You will se
 
 This website has interpreted your comment as a block of code, and stored it in it's server. Hence, whenever the comment section loads on anybody's machine, this block of code will be executed!
 
+🔥
+
 ### Level1
 
 Make the page alert this message- "Hello! You have completed level1 !" by calling a function which has already been defined.(Hine: You have to use the inspector tool!(Right-click and choose Inspect))
