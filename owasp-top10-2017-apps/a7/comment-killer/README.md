@@ -75,13 +75,19 @@ This website has interpreted your comment as a block of code, and stored it in i
 
 Make the page alert this message- "Hello! You have completed level1 !" by calling a function which has already been defined.(Hint: You have to use the inspector tool!(Right-click and choose Inspect))
 
+<img src="image/img3.png" alt="img3.png">
+
 ### Level2
 
 Get the author's password!
 
+<img src="image/img4.png" alt="img4.png">
+
 ### Level3
 
 Change the content of the blog post!
+
+<img src="image/img5.png" alt="img5.png">
 
 <a name="Obj"></a>
 
