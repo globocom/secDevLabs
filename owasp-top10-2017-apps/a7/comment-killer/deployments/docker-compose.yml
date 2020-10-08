@@ -1,0 +1,11 @@
+version: "3.7"
+
+services:
+    app:
+        container_name: app-a7
+        build:
+            context: ../
+            dockerfile: deployments/Dockerfile
+        ports:
+            - "10007:3000"
+        stdin_open: true

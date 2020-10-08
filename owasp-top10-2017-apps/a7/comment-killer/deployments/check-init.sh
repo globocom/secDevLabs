@@ -25,7 +25,7 @@ while : ; do
         break
     fi
     TRIES=$((TRIES-1))
-	sleep 0.25 
+	sleep 0.25
 
     # Loading animation
     if [ $LOADING == 14 ]; then
@@ -68,5 +68,5 @@ done
 if [ $TRIES == 0 ]; then
     printf "\n${COLOR_RED}SecDevLabs: Ooops! Something went wrong, please check api details for more information!\n${COLOR_RESET}"
 else
-    printf "\n${COLOR_GREEN}SecDevLabs: 🔥  ${PROJECT} is now running at ${COLOR_RESET}${COLOR_BLUE}http://localhost:$PORT${COLOR_RESET}\n"
+    printf "\n${COLOR_GREEN}SecDevLabs: 🔥 ${PROJECT} is now running at ${COLOR_RESET}${COLOR_BLUE}http://localhost:$PORT${COLOR_RESET}\n"
 fi
