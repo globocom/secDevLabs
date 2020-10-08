@@ -34,7 +34,11 @@ docker-compose up -d --build
 
 Then simply visit [http://localhost:10007/](http://localhost:10007/) ! 😆
 
-In order to stop the app- `docker-compose stop`
+In order to stop the app-
+
+```bash
+docker-compose stop
+```
 
 ## Get to know the app 👾
 
@@ -64,6 +68,18 @@ Type- `<script>alert(1)</script>` in the comment box and comment it. You will se
 <img src="image/img2.png" alt="img2.png">
 
 This website has interpreted your comment as a block of code, and stored it in it's server. Hence, whenever the comment section loads on anybody's machine, this block of code will be executed!
+
+### Level1
+
+Make the page alert this message- "Hello! You have completed level1 !" by calling a function which has already been defined.(Hine: You have to use the inspector tool!(Right-click and choose Inspect))
+
+### Level2
+
+Get the author's password!
+
+### Level3
+
+Change the content of the blog post!
 
 <a name="Obj"></a>
 
