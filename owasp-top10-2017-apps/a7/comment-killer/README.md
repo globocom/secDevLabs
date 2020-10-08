@@ -2,7 +2,7 @@
 
 <img src="image/img1.png" alt="img1.png"/>
 
-Comment-killer is a simple ReactJS app, which is has Cross-Site Scripting vulnerability and its main goal is to describe how a malicious user could exploit them on this purposefully vulnerable app.
+Comment-killer is a simple ReactJS app, which has Cross-Site Scripting vulnerability and its main goal is to describe how a malicious user could exploit them on this purposefully vulnerable app.
 
 # Index
 
@@ -44,8 +44,8 @@ docker-compose stop
 
 To properly understand how this application works, you can follow these simple steps:
 
--   Read all blog posts.
 -   Comment in a post.
+-   Complete the levels.
 
 If you want to reset the app then reload the page.
 
@@ -73,7 +73,7 @@ This website has interpreted your comment as a block of code, and stored it in i
 
 ### Level1
 
-Make the page alert this message- "Hello! You have completed level1 !" by calling a function which has already been defined.(Hine: You have to use the inspector tool!(Right-click and choose Inspect))
+Make the page alert this message- "Hello! You have completed level1 !" by calling a function which has already been defined.(Hint: You have to use the inspector tool!(Right-click and choose Inspect))
 
 ### Level2
 
