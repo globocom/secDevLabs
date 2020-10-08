@@ -32,7 +32,7 @@ cd secDevLabs/owasp-top10-2017-apps/a7/comment-killer
 docker-compose up -d --build
 ```
 
-Then simply visit [http://localhost:3000/](http://localhost:3000/) ! 😆
+Then simply visit [http://localhost:10007/](http://localhost:10007/) ! 😆
 
 In order to stop the app- `docker-compose stop`
 
@@ -49,7 +49,15 @@ If you want to reset the app then reload the page.
 
 ## Attack narrative
 
-So now you have the app up and running - congrats! This section will show how hackers can exploit this vulnerability.
+Now that you know the purpose of this app, what could go wrong? The following section describes how an attacker could identify and eventually find sensitive information about the app or its users. We encourage you to follow these steps and try to reproduce them on your own to better understand the attack vector! 😜
+
+Note: This attack narrative works best in Mozilla Firefox.
+
+👀
+
+Non-sanitization of user input allows for cross-site scripting
+
+After inspecting the application, it is possible to identify that some entries are not sanitized and can be executed on a web browser. It occurs in search, comment, and post fields. The following images show this behavior when the following text is used as an input on these fields:
 
 Type- `<script>alert(1)</script>` in the comment box and comment it. You will see this-
 
