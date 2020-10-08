@@ -1,8 +1,19 @@
 # Comment-killer
 
-Comment-killer is a simple JS app that contains an example of multiple Cross-Site Scripting vulnerabilities and its main goal is to describe how a malicious user could exploit them on this purposefully vulnerable app.
-
 <img src="image/img1.png" alt="img1.png"/>
+
+Comment-killer is a simple ReactJS app, which is has Cross-Site Scripting vulnerability and its main goal is to describe how a malicious user could exploit them on this purposefully vulnerable app.
+
+# Index
+
+1. [ Definition ](#Def)
+2. [ Setup ](#Set)
+3. [ Attack narrative ](#Att)
+4. [ Objectives ](#Obj)
+5. [ Solutions ](#Sol)
+6. [ Contributing ](#Cont)
+
+<a name="Def"></a>
 
 ## What is Cross-Site Scripting?
 
@@ -10,15 +21,20 @@ XSS flaws occur whenever an application includes untrusted data in a new web pag
 
 The main goal of this app is to discuss how **Cross-Site Scripting** vulnerabilities can be exploited and to encourage developers to send secDevLabs Pull Requests on how they would mitigate these flaws. Learn more <a href="https://owasp.org/www-community/attacks/xss/">here</a>.
 
+<a name="Set" ></a>
+
 ## Setup
 
 To start this intentionally **insecure application**, you will need [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/). After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
 
-`cd secDevLabs/owasp-top10-2017-apps/a7/comment-killer `
-
-`make install `
+```bash
+cd secDevLabs/owasp-top10-2017-apps/a7/comment-killer
+docker-compose up -d --build
+```
 
 Then simply visit [http://localhost:3000/](http://localhost:3000/) ! 😆
+
+In order to stop the app- `docker-compose stop`
 
 ## Get to know the app 👾
 
@@ -28,6 +44,8 @@ To properly understand how this application works, you can follow these simple s
 -   Comment in a post.
 
 If you want to reset the app then reload the page.
+
+<a name="Att"></a>
 
 ## Attack narrative
 
@@ -39,15 +57,21 @@ Type- `<script>alert(1)</script>` in the comment box and comment it. You will se
 
 This website has interpreted your comment as a block of code, and stored it in it's server. Hence, whenever the comment section loads on anybody's machine, this block of code will be executed!
 
+<a name="Obj"></a>
+
 ## Secure this app
 
 How would you mitigate this vulnerability? After your changes, an attacker should not be able to:
 
 -   Execute scripts through input fields
 
+<a name="Sol"></a>
+
 ## PR solutions
 
 [Spoiler alert 🚨] To understand how this vulnerability can be mitigated, check out [these pull requests](https://github.com/globocom/secDevLabs/pulls?q=is%3Apr+label%3A%22mitigation+solution+%F0%9F%94%92%22+label%3AComment-Killer)!
+
+<a name="Cont"></a>
 
 ## Contributing
 
