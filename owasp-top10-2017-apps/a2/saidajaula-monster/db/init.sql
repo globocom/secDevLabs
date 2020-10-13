@@ -7,4 +7,12 @@ CREATE TABLE tb_users(
     PRIMARY KEY(Id)
 );
 
+CREATE TABLE tb_auth_token(
+    Token VARCHAR(100),
+    Created_Date DATE,
+    Created_Time TIME,
+    User_ID VARCHAR(36) NOT NULL REFERENCES person(Id),
+    PRIMARY KEY(Token)
+);
+
 INSERT INTO tb_users (Id, Login, Hash_Senha, Dt_Cookie, Permissao) VALUES ('99016fcb-b4f7-48fe-9fed-5729265ce393', 'admin', '245a4cba5219e282178d46263a7e7cce1ed64006dc93aae9819645c6f6bc5c9d', NULL, 1);

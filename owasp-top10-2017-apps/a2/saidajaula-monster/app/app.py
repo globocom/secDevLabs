@@ -9,7 +9,9 @@ import json
 import hashlib
 import uuid
 from functools import wraps
-
+from datetime import datetime
+import random
+import string
 
 app = Flask(__name__)
 database = DataBase(os.environ.get('A2_DATABASE_HOST'),
@@ -18,19 +20,35 @@ database = DataBase(os.environ.get('A2_DATABASE_HOST'),
                     os.environ.get('A2_DATABASE_NAME'))
 
 
+def gen_random_string():
+    chars = string.ascii_letters + string.digits
+    return ''.join(random.choice(chars) for i in range(20))
+
+
+def basic_authentication(cookie):
+    cookie = base64.b64decode(cookie).decode("utf-8")
+
+    auth_token = database.get_token(cookie)
+
+    if not auth_token:
+        return False, None
+
+    user_data = database.get_user(guid=auth_token[0])
+    permission = user_data[0][1]
+
+    return True, permission
+
+
 def login_admin_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        cookie = request.cookies.get("sessionId", "")
-        cookie = base64.b64decode(cookie).decode("utf-8")
-        cookie_separado = cookie.split('.')
-        if(len(cookie_separado) != 2):
-            return "Invalid cookie!"
-        hash_cookie = hashlib.sha256(cookie_separado[0].encode('utf-8')).hexdigest()
-        if (hash_cookie != cookie_separado[1]):
+        authenticated, permission = basic_authentication(request.cookies.get(
+            "sessionId", ""))
+
+        if not authenticated:
             return redirect("/login")
-        j = json.loads(cookie_separado[0])
-        if j.get("permissao") != 1:
+
+        if permission != 1:
             return "You don't have permission to access this route. You are not an admin. \n"
         return f(*args, **kwargs)
     return decorated_function
@@ -39,14 +57,12 @@ def login_admin_required(f):
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        cookie = request.cookies.get("sessionId", "")
-        cookie = base64.b64decode(cookie).decode("utf-8")
-        cookie_separado = cookie.split('.')
-        if(len(cookie_separado) != 2):
-            return "Invalid cookie! \n"
-        hash_cookie = hashlib.sha256(cookie_separado[0].encode('utf-8')).hexdigest()
-        if (hash_cookie != cookie_separado[1]):
+        authenticated = basic_authentication(request.cookies.get(
+            "sessionId", ""))[0]
+
+        if not authenticated:
             return redirect("/login")
+
         return f(*args, **kwargs)
     return decorated_function
 
@@ -91,7 +107,8 @@ def login():
         if form_username == "" or form_password == "":
             return "Error! You have to pass username and password! \n"
 
-        result, success = database.get_user(form_username)
+        result, success = database.get_user(username=form_username)
+
         if not success:
             return "Login failed! \n"
 
@@ -102,11 +119,18 @@ def login():
         if not password.validate_password(result[0]):
             return "Login failed! \n"
 
-        cookie_dic = {"permissao": result[1], "username": form_username}
-        cookie = json.dumps(cookie_dic)
+        now = datetime.now()
+
+        cookie = str(form_username) + str(result[2]) + now.__str__() + gen_random_string()
         hash_cookie = hashlib.sha256(cookie.encode('utf-8')).hexdigest()
-        cookie_done = '.'.join([cookie,hash_cookie])
-        cookie_done = base64.b64encode(str(cookie_done).encode("utf-8"))
+
+        message, success = database.insert_auth_token(
+            hash_cookie, result[2], now.date().__str__(), now.time().__str__().split('.')[0])
+
+        if not success:
+            return make_response(message)
+
+        cookie_done = base64.b64encode(str(hash_cookie).encode("utf-8"))
         resp = make_response("Logged in!")
         resp.set_cookie("sessionId", cookie_done)
         return resp

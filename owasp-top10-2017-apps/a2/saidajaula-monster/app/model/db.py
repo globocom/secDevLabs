@@ -41,18 +41,21 @@ class DataBase:
                 return message, 0
         return "", 1
 
-    def get_user(self, username):
+    def get_user(self, guid=None, username=None):
+        if guid:
+            query = "SELECT Hash_Senha, Permissao, Id FROM tb_users WHERE Id = %s"
+            key = guid
+        else:
+            query = "SELECT Hash_Senha, Permissao, Id FROM tb_users WHERE Login = %s"
+            key = username
+
         try:
-            self.c.execute(
-                "SELECT Hash_Senha, Permissao, Id FROM tb_users WHERE Login = %s",
-                [username])
+            self.c.execute(query, [key])
             user_password = self.c.fetchone()
 
         except (AttributeError, MySQLdb.OperationalError):
             self.connect()
-            self.c.execute(
-                "SELECT Hash_Senha, Permissao, Id FROM tb_users WHERE Login = %s",
-                [username])
+            self.c.execute(query, [key])
             user_password = self.c.fetchone()
 
         except MySQLdb.Error as e:
@@ -115,3 +118,49 @@ class DataBase:
                 message = "MySQL Error: %s" % str(e)
                 return message, 0
         return "", 1
+
+    def insert_auth_token(self, token, user_id, created_date, created_time):
+        try:
+            self.c.execute(
+                "INSERT INTO tb_auth_token (Token, Created_Date, Created_Time, User_ID) VALUES (%s, %s, %s, %s);",
+                (token, created_date, created_time, user_id))
+            self.db.commit()
+        except (AttributeError, MySQLdb.OperationalError):
+            self.connect()
+            self.c.execute(
+                "INSERT INTO tb_auth_token (Token, Created_Date, Created_Time, User_ID) VALUES (%s, %s, %s, %s);",
+                (token, created_date, created_time, user_id))
+            self.db.commit()
+        except MySQLdb.Error as e:
+            try:
+                message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
+                return message, 0
+            except IndexError:
+                message = "MySQL Error: %s" % str(e)
+                return message, 0
+        return "", 1
+
+    def get_token(self, token):
+        try:
+            self.c.execute(
+                "SELECT User_ID FROM tb_auth_token WHERE token = %s",
+                [token])
+            token_data = self.c.fetchone()
+
+        except (AttributeError, MySQLdb.OperationalError):
+            self.connect()
+            self.c.execute(
+                "SELECT User_ID FROM tb_auth_token WHERE token = %s",
+                [token])
+            token_data = self.c.fetchone()
+
+        except MySQLdb.Error as e:
+            try:
+                message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
+                return message, 0
+            except IndexError:
+                message = "MySQL Error: %s" % str(e)
+                return message, 0
+
+        return token_data if token_data else None
+
