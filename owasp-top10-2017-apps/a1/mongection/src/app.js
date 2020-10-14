@@ -10,6 +10,16 @@ const PORT = 10001;
 
 var emailRegex = /^[-!#$%&'*+\/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/;
 
+function validate_input(inputs){
+    for (idx in inputs){
+        if (typeof(inputs[idx]) != "string"){
+            return false;
+        }
+    }
+    return true;
+
+}
+
 server.use(bodyParser.json());
 
 server.use(function(request, response, next) {
@@ -35,13 +45,12 @@ server.get("/register.html", (request, response) => {
 server.post("/login", async (request, response) => {
 
     try {
-
         const email = request.body.email;
         const password = request.body.password;
 
-        const user = await db.login({email, password});
+        if(!validate_input([email, password])) { response.send('Invalid input'); }
 
-        console.log(user.length)
+        const user = await db.login({email, password});
 
         if(user.length == 0) { response.send('Bad Credentials'); }
 
@@ -61,6 +70,7 @@ server.post("/register", async (request, response) => {
 
         const validEmail = emailRegex.test(email);
         if(!validEmail) { response.send('Bad Email'); }
+        if(!validate_input([email, password, name])) { response.send('Invalid input'); }
 
         else {
             const user = await db.register({name, email, password});
