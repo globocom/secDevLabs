@@ -1,5 +1,6 @@
 package br.com.streaming.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -57,6 +58,16 @@ public class LiveController {
 	public Message addMessage(@PathVariable Long id, @RequestBody MessageDTO messageDto) {
 		Message message = addMessageOnLiveService.add(id, messageDto);
 		return message;
+	}
+
+	@GetMapping("/{id}/messages")
+	public List<Message> getMessagesSize(@PathVariable Long id) {
+		Live live = repository.findById(id).orElse(null);
+		if(live != null) {
+			return live.getMessages();
+		} else {
+			return new ArrayList<>();
+		}
 	}
 
 	@DeleteMapping("/{id}/messages")
