@@ -46,8 +46,9 @@ func AuthenticateUser(user string, pass string) (bool, error) {
 		return false, err
 	}
 	defer dbConn.Close()
-
-	rows, err := dbConn.Query("select * from Users where username = ?", user)
+	
+	query := fmt.Sprintf("select * from Users where username = ?")
+	rows, err := dbConn.Query(query, user)
 	if err != nil {
 		return false, err
 	}
@@ -88,8 +89,8 @@ func NewUser(user string, pass string, passcheck string) (bool, error) {
 	}
 	defer dbConn.Close()
 	
-	query := fmt.Sprintf("insert into Users (username, password) values (?, ?)", user, passHash)
-	rows, err := dbConn.Query(query)
+	query := fmt.Sprintf("insert into Users (username, password) values (?, ?)")
+	rows, err := dbConn.Query(query, user, passHash)
 	if err != nil {
 		return false, err
 	}
@@ -108,8 +109,8 @@ func CheckIfUserExists(username string) (bool, error) {
 	}
 	defer dbConn.Close()
 
-	query := fmt.Sprint("select username from Users where username = ?", username)
-	rows, err := dbConn.Query(query)
+	query := fmt.Sprint("select username from Users where username = ?")
+	rows, err := dbConn.Query(query, username)
 	if err != nil {
 		return false, err
 	}
