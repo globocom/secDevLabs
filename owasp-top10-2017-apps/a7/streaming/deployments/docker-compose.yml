@@ -23,6 +23,7 @@ services:
       context: ../
     image: backend-a7-streaming
     container_name: backend-a7-streaming
+    restart: always
     environment:
       - spring.profiles.active=prod
       - A7_STREAMING_DATABASE_URL=jdbc:mysql://mysql-a7-streaming:3306/streaming?useSSL=false&useTimezone=true&serverTimezone=UTC&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
@@ -32,9 +33,11 @@ services:
       - 8080:8080
     networks:
       - a7-streaming-network
+    depends_on:
+      - db
     volumes:  
-      - ./wait-for-it.sh:/usr/local/bin/wait-for-it.sh
-    command: ["wait-for-it.sh", "mysql-a7-streaming:3306", "--timeout=120", "--strict", "--", "java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/app.jar", "-Xmx512m"]
+      - ./wait-for:/usr/local/bin/wait-for
+    command: sh -c './wait-for db:3306 -- java -Djava.security.egd=file:/dev/./urandom -jar /app.jar -Xmx512m'
     stop_signal: SIGINT
 
   frontend:
@@ -43,14 +46,18 @@ services:
       context: ../
     image: frontend-a7-streaming
     container_name: frontend-a7-streaming
+    restart: always
     ports:
       - 10007:80
     expose: 
       - 10007
     networks:
       - a7-streaming-network
-    depends_on: 
+    depends_on:
       - backend
+    command: sh -c "/wait-for backend:8080 -- nginx -g 'daemon off;'"
+    volumes:  
+      - ./wait-for:/wait-for
 
 networks:
   a7-streaming-network:
