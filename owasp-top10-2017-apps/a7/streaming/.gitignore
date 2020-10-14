@@ -1,0 +1,4 @@
+app/backend/.classpath
+app/backend/target/**
+app/backend/.project
+app/backend/src/main/resources/application.properties
