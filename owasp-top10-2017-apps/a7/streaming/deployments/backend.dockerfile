@@ -1,9 +1,10 @@
 FROM maven:3.6.0-jdk-11-slim AS build
+
 COPY app/backend/src /home/app/src
+
 COPY app/backend/pom.xml /home/app
+
 RUN mvn -f /home/app/pom.xml install -U -Dmaven.test.skip=true
-
-
 
 FROM openjdk:8-jdk-alpine
 
