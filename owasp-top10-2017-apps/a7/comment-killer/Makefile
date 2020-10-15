@@ -12,7 +12,7 @@ PORT := 10007
 SLEEPUNTILAPPSTARTS := 45
 
 ## Installs a development environment using docker-compose
-install: compose msg 
+install: compose msg
 
 ## Runs project using docker-compose
 compose:
