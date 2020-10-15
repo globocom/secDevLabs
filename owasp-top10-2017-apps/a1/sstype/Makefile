@@ -36,3 +36,8 @@ help:
 	} \
 	{ lastLine = $$0 }' $(MAKEFILE_LIST) | sort
 	printf "\n"
+
+## Validate if app is vulnerable to the attack narrative
+check-sec:
+	chmod +x deployments/check-sec.sh
+	./deployments/check-sec.sh
