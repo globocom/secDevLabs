@@ -26,7 +26,7 @@ services:
     restart: always
     environment:
       - spring.profiles.active=prod
-      - A7_STREAMING_DATABASE_URL=jdbc:mysql://mysql-a7-streaming:3307/streaming?useSSL=false&useTimezone=true&serverTimezone=UTC&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
+      - A7_STREAMING_DATABASE_URL=jdbc:mysql://mysql-a7-streaming:3306/streaming?useSSL=false&useTimezone=true&serverTimezone=UTC&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
       - A7_STREAMING_DATABASE_USERNAME=root
       - A7_STREAMING_DATABASE_PASSWORD=streaming
     ports:
@@ -37,7 +37,7 @@ services:
       - db
     volumes:  
       - ./wait-for:/usr/local/bin/wait-for
-    command: sh -c './wait-for db:3307 -- java -Djava.security.egd=file:/dev/./urandom -jar /app.jar -Xmx512m'
+    command: sh -c './wait-for db:3306 -- java -Djava.security.egd=file:/dev/./urandom -jar /app.jar -Xmx512m'
     stop_signal: SIGINT
 
   frontend:
