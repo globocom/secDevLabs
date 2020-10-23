@@ -37,7 +37,7 @@ Then simply visit [localhost:10007][App] ! 😆
 
 ## Get to know the app
 
-When you access the Streaming application you will be identified as anonymous user and can to watch a streaming on registered users channel and interact with another users (or the master channel) through messages on chat.
+When accessing the Streaming application, you will be identified as an anonymous user to watch a stream on registered users channels and interact with other users (or the master channel) through messages in the chat.
 
 ## Attack narrative
 
@@ -45,7 +45,11 @@ Now that you know the purpose of this app, what could go wrong? The following se
 
 #### Non-sanitization of user input allows for cross-site scripting
 
-After reviewing `buildLiveHTMLMessage(message)` from [`play.component.ts`]((https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2017-apps/a7/streaming/app/frontend/src/app/lives/play/play.component.ts#)) file, it was possible to identify that loaded messages and username are not sanitized and can be executed on a web browser. The following images show this behavior when the following text  is used as an input on these fields:
+After reviewing `buildLiveHTMLMessage(message)` from [`play.component.ts`]((https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2017-apps/a7/streaming/app/frontend/src/app/lives/play/play.component.ts#)) file, it was possible to identify that loaded messages and username are not sanitized and can be executed on a web browser (as shown in the message bellow).
+
+<img src="images/vulnerable-function.png" align="center"/>
+
+The following images show this behavior when the following text  is used as an input on these fields:
 
 ```
 <b><i>Hi</i></b>
@@ -63,12 +67,14 @@ The missing message validation (that will be loaded by another users) allows a m
 An attacker may abuse these flaws by generating a malicious HTML/JS code and sending it to other users. To demonstrate this, the following code example will redirect all users that are watching the channel to another channel.
 
 ```html
-<img src=x onError="window.location.href='http://localhost:10007/play/@mr.robot'"/>
+<img src="wrongImage.png" onError="window.location.href='http://localhost:10007/play/@mr.robot'"/>
 ```
 
 This code redirect all users to another page, in this case is to **/play/@mr.robot** route.
 
-When the message is loaded to victim, the browser will interpret the text and will try load image, however the informed image is invalid, then the javascript function ```window.location.href``` will be executed. The following gif show the attacker sending the malicious code to redirect victims (that are watching the **@matthewpets** live) to **/play/@mr.robot** route:
+When the message is loaded by the victim, the browser will read it and try to load the image, however, the path is invalid. Subsequently, the JavaScript function ```window.location.href``` will be executed.
+
+The following gif shows the attacker sending the malicious code to redirect victims (that are watching **@matthewpets** live) to **/play/@mr.robot** route:
 
 <img src="images/attack-3.gif"/>
 
