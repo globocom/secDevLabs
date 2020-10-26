@@ -47,7 +47,9 @@ Now that you know the purpose of this app, what could go wrong? The following se
 
 After reviewing `buildLiveHTMLMessage(message)` from [`play.component.ts`]((https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2017-apps/a7/streaming/app/frontend/src/app/lives/play/play.component.ts#)) file, it was possible to identify that loaded messages and username are not sanitized and can be executed on a web browser (as shown in the message bellow).
 
-<img src="images/vulnerable-function.png" align="center"/>
+<p align="center">
+    <img src="images/vulnerable-function.png"/>
+</p>
 
 The following images show this behavior when the following text  is used as an input on these fields:
 
@@ -56,9 +58,14 @@ The following images show this behavior when the following text  is used as an i
 ```
 
 Adding a new message on chat:
-   <img src="images/attack-1.png" align="center"/>
+   <p align="center">
+     <img src="images/attack-1.png"/>
+   </p>
 
-   <img src="images/attack-2.png" align="center"/>
+   <p align="center">
+     <img src="images/attack-2.png"/>
+   </p>
+   
 
 The missing message validation (that will be loaded by another users) allows a malicious user to insert some scripts that will persist in the server and be executed on the victims' browser every time they access the routes that contain these scripts.
 
@@ -76,7 +83,9 @@ When the message is loaded by the victim, the browser will read it and try to lo
 
 The following gif shows the attacker sending the malicious code to redirect victims (that are watching **@matthewpets** live) to **/play/@mr.robot** route:
 
-<img src="images/attack-3.gif"/>
+<p align="center">
+  <img src="images/attack-3.gif"/>
+</p>
 
 ## Secure this app
 
