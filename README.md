@@ -47,6 +47,7 @@ Disclaimer: You are about to install vulnerable apps in your machine! 🔥
 | A6 - Security Misconfiguration | NodeJS | [Stegonography](owasp-top10-2017-apps/a6/stegonography) |
 | A7 - Cross-Site Scripting (XSS) | Python | [Gossip World](owasp-top10-2017-apps/a7/gossip-world) |
 | A7 - Cross-Site Scripting (XSS) | React | [Comment Killer](owasp-top10-2017-apps/a7/comment-killer) |
+| A7 - Cross-Site Scripting (XSS) | Angular/Spring | [Streaming](owasp-top10-2017-apps/a7/streaming) |
 | A8 - Insecure Deserialization | Python | [Amarelo Designs](owasp-top10-2017-apps/a8/amarelo-designs) |
 | A9 - Using Components With Known Vulnerabilities | PHP | [Cimentech](owasp-top10-2017-apps/a9/cimentech) |
 | A10 - Insufficient Logging & Monitoring | Python | [GamesIrados.com](owasp-top10-2017-apps/a10/games-irados) |

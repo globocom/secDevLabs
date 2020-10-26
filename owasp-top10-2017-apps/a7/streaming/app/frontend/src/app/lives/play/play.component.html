@@ -1,0 +1,45 @@
+
+<mat-card class="user-live-card live-card" *ngIf="live">
+  <mat-card-header>
+    <mat-card-title>{{ live.user.name }}</mat-card-title>
+    <mat-card-subtitle>5 minutes left before @{{ live.user.username }} starts live</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="block-live-img">
+      <img class="live-img" src="./assets/images/lives/live.gif"/>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+      
+  </mat-card-actions>
+</mat-card>
+
+<mat-card class="messages-live-card" *ngIf="live">
+  <mat-card-header>
+    <div mat-card-avatar class="message-header-image"></div>
+    <mat-card-title>Messages</mat-card-title>
+    <mat-card-subtitle *ngIf="live">Send your message to other peoples that are view @{{ live.user.username }}</mat-card-subtitle>
+    <button mat-button type="button" matSuffix mat-icon-button (click)="removeMessages()">
+        <mat-icon aria-hidden="false">delete</mat-icon>
+      </button>
+  </mat-card-header>
+  <mat-card-content>
+      <cdk-virtual-scroll-viewport #messages itemSize="50" minBufferPx="200" maxBufferPx="400" class="viewport" id="messages">
+          <div *cdkVirtualFor="let message of live.messages; let i = index;" class="example-item">
+          </div>
+      </cdk-virtual-scroll-viewport>
+  </mat-card-content>
+  <mat-card-actions>
+      <form class="form">
+          <mat-form-field class="send-message">
+            <mat-label>Message</mat-label>
+            <textarea matInput [(ngModel)]="message" name="message" maxlength="100" rows="2" placeholder="Ex. I need help with..."></textarea>
+            <mat-hint align="start"><strong>Don't disclose personal info</strong> </mat-hint>
+            <mat-hint align="end">{{ message.length }} / 100</mat-hint>
+            <button mat-button type="button" matSuffix mat-icon-button (click)="addMessage()">
+              <mat-icon aria-hidden="false" class="icon-send">send</mat-icon>
+            </button>
+          </mat-form-field>
+      </form>
+  </mat-card-actions>
+</mat-card>

@@ -1,0 +1,66 @@
+version: '3'
+services:
+  db:
+    image: mysql:5.7
+    container_name: mysql-a7-streaming
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: streaming
+      MYSQL_DATABASE: streaming
+      MYSQL_USER: streaming
+      MYSQL_PASSWORD: streaming
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - 3307:3306
+    networks:
+      - a7-streaming-network
+    volumes:
+      - db_data:/var/lib/mysql
+
+  backend:
+    build:
+      dockerfile: ./deployments/backend.dockerfile
+      context: ../
+    image: backend-a7-streaming
+    container_name: backend-a7-streaming
+    restart: always
+    environment:
+      - spring.profiles.active=prod
+      - A7_STREAMING_DATABASE_URL=jdbc:mysql://mysql-a7-streaming:3306/streaming?useSSL=false&useTimezone=true&serverTimezone=UTC&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
+      - A7_STREAMING_DATABASE_USERNAME=root
+      - A7_STREAMING_DATABASE_PASSWORD=streaming
+    ports:
+      - 8080:8080
+    networks:
+      - a7-streaming-network
+    depends_on:
+      - db
+    volumes:  
+      - ./wait-for:/usr/local/bin/wait-for
+    command: sh -c './wait-for db:3306 -- java -Djava.security.egd=file:/dev/./urandom -jar /app.jar -Xmx512m'
+    stop_signal: SIGINT
+
+  frontend:
+    build:
+      dockerfile: ./deployments/frontend.dockerfile
+      context: ../
+    image: frontend-a7-streaming
+    container_name: frontend-a7-streaming
+    restart: always
+    ports:
+      - 10007:80
+    expose: 
+      - 10007
+    networks:
+      - a7-streaming-network
+    depends_on:
+      - backend
+    command: sh -c "/wait-for backend:8080 -- nginx -g 'daemon off;'"
+    volumes:  
+      - ./wait-for:/wait-for
+
+networks:
+  a7-streaming-network:
+    driver: bridge
+volumes:
+    db_data:
