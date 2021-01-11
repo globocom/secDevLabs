@@ -18,12 +18,13 @@ func main() {
 	fmt.Println("[*] Starting Insecure Go Project...")
 
 	// loading viper
-	viper.SetConfigName("config")
-	viper.AddConfigPath(".")
-	if err := viper.ReadInConfig(); err != nil {
-		errorAPI(err)
-	}
-	if err := viper.Unmarshal(&config.APIconfiguration); err != nil {
+	//viper.SetConfigName("config")
+	//viper.AddConfigPath(".")
+	//err := viper.ReadInConfig(); err != nil {
+	//	errorAPI(err)
+	//}
+
+	if err := viper.Unmarshal(&config.APIconfiguration.MongoConf); err != nil {
 		errorAPI(err)
 	}
 

@@ -12,6 +12,11 @@ services:
         build:
             context: ../
             dockerfile: deployments/api.Dockerfile
+        environment:
+            MONGO_PWD: svGX8SViufvYYNu6m3Kv
+            MONGO_USER: u_insecure_go_project
+            MONGO_DBNAME: insecure_go_project
+            MONGO_HOST: mongodb
         ports:
             - "10002:10002"
         networks:
@@ -27,6 +32,14 @@ services:
         build:
             context: ../
             dockerfile: deployments/mongo.Dockerfile
+
+        environment: 
+            MONGO_PWD = vGX8SViufvYYNu6m3Kv
+            MONGO_USER = u_insecure_go_pr
+            MONGO_DBNAME = insecure_go_project
+            MONGO_HOST = mongodb
+
+
         ports:
           - "27017:27017"
           - "27018:27018"
