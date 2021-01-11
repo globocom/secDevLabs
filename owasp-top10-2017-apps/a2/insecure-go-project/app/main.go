@@ -23,7 +23,10 @@ func main() {
 	//err := viper.ReadInConfig(); err != nil {
 	//	errorAPI(err)
 	//}
-
+	viper.BindEnv("MongoPassword", "MONGO_PWD")
+	viper.BindEnv("MongoUser", "MONGO_USER")
+	viper.BindEnv("MongoDBName", "MONGO_DBNAME")
+	viper.BindEnv("MongoHost", "MONGO_HOST")
 	if err := viper.Unmarshal(&config.APIconfiguration.MongoConf); err != nil {
 		errorAPI(err)
 	}
