@@ -1,3 +1,4 @@
+mongo << EOF
 var db = connect("mongodb://localhost/insecure_go_project");
 
 db.createUser(
@@ -7,3 +8,4 @@ db.createUser(
         roles: [{ role: "userAdminAnyDatabase", db: "admin" }]
     }
 );
+EOF

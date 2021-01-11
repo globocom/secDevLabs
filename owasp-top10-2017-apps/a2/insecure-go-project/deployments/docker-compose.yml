@@ -14,7 +14,7 @@ services:
             dockerfile: deployments/api.Dockerfile
         environment:
             MONGO_PWD: svGX8SViufvYYNu6m3Kv
-            MONGO_USER: u_insecure_go_project
+            MONGO_USER: u_insecure_go_user
             MONGO_DBNAME: insecure_go_project
             MONGO_HOST: mongodb
         ports:
@@ -32,14 +32,10 @@ services:
         build:
             context: ../
             dockerfile: deployments/mongo.Dockerfile
-
         environment: 
-            MONGO_PWD = vGX8SViufvYYNu6m3Kv
-            MONGO_USER = u_insecure_go_pr
-            MONGO_DBNAME = insecure_go_project
-            MONGO_HOST = mongodb
-
-
+            MONGO_PWD: svGX8SViufvYYNu6m3Kv
+            MONGO_USER: u_insecure_go_user
+           
         ports:
           - "27017:27017"
           - "27018:27018"
