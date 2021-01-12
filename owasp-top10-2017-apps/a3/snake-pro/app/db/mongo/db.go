@@ -177,7 +177,7 @@ func GetUserData(mapParams map[string]interface{}) (types.UserData, error) {
 	return userDataResponse, err
 }
 
-// RegisterUser regisiter into MongoDB a new user and returns an error.
+// RegisterUser register into MongoDB a new user and returns an error.
 func RegisterUser(userData types.UserData) error {
 	session, err := Connect()
 	if err != nil {
