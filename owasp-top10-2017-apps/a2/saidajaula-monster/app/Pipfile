@@ -12,6 +12,7 @@ mysql-connector-python-rf = "*"
 mysql-connector-repackaged = "*"
 flask-mysql = "*"
 mysql-connector-python = "*"
+pyjwt = "*"
 
 [dev-packages]
 
