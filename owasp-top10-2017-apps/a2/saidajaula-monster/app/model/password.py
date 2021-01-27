@@ -17,7 +17,7 @@ class Password:
 
     def _make_hash(self, password):
         salt = self.guid + str(self.username)
-        dk = hashlib.pbkdf2_hmac('sha256', password, salt, 100000, 32)
+        dk = hashlib.pbkdf2_hmac('sha256', password.encode(), salt.encode(), 100000, 32)
         return str(binascii.hexlify(dk))
 
     def _compare_password(self, password_1, password_2):
