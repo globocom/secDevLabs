@@ -83,7 +83,7 @@ def login():
 
     if request.method == 'POST':
         form_username = request.form.get('username', "")
-        form_password = request.form.get('ppassword', "")
+        form_password = request.form.get('password', "")
         if form_username == "" or form_password == "":
             return "Error! You have to pass username and password! \n"
 
@@ -93,12 +93,11 @@ def login():
 
         if result is None:
             return "Login failed! \n"
-
         password = Password(form_password, form_username, result[2])
         if not password.validate_password(result[0]):
             return "Login failed! \n"
         try:
-            encoded_jwt = jwt.encode({"permissao": result[1], "username": form_username,"exp": datetime.datetime.now() + datetime.timedelta(hours=24)}, jwt_key, algorithm="HS256")
+            encoded_jwt = jwt.encode({"permissao": result[1], "username": form_username} , jwt_key, algorithm="HS256")
         except jwt.PyJWTError:
             return "Login failed! \n"
         resp = make_response("Logged in!")

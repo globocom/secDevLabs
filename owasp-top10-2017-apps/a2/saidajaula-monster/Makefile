@@ -16,6 +16,7 @@ install: compose msg
 
 ## Composes project using docker-compose
 compose:
+	echo "APP_JWT_KEY=`openssl rand -base64 32`" > deployments/key.env
 	docker-compose -f deployments/docker-compose.yml down -v --remove-orphans
 	docker-compose -f deployments/docker-compose.yml up -d --build --force-recreate
 
