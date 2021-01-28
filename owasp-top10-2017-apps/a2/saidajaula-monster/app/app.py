@@ -3,10 +3,7 @@
 from flask import Flask, request, make_response, render_template, redirect, Markup
 from model.password import Password
 from model.db import DataBase
-import base64
 import os
-import json
-import hashlib
 import uuid
 import jwt
 import datetime
@@ -40,7 +37,7 @@ def login_required(f):
     def decorated_function(*args, **kwargs):
         jwt_enc = request.cookies.get("sessionId", "")
         try:
-            cookie = jwt.decode(cookie, jwt_key,algorithms="HS256")
+            cookie = jwt.decode(jwt_enc, jwt_key,algorithms="HS256")
         except jwt.PyJWTError:
             return redirect("/login")
         return f(*args, **kwargs)
@@ -97,7 +94,7 @@ def login():
         if not password.validate_password(result[0]):
             return "Login failed! \n"
         try:
-            encoded_jwt = jwt.encode({"permissao": result[1], "username": form_username} , jwt_key, algorithm="HS256")
+            encoded_jwt = jwt.encode({"permissao": result[1], "username": form_username, "exp": datetime.datetime.now() + datetime.timedelta(hours=24)} , jwt_key, algorithm="HS256")
         except jwt.PyJWTError:
             return "Login failed! \n"
         resp = make_response("Logged in!")
