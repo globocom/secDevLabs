@@ -23,6 +23,9 @@ install: compose msg
 
 ## Composes project using docker-compose
 compose:
+	rm -rf app/server.key app/server.crt
+	openssl genrsa -out app/server.key 2048
+	openssl req -new -x509 -sha256  -subj "/CN=localhost" -key  app/server.key -out app/server.crt -days 365
 	docker-compose -f deployments/docker-compose.yml down -v --remove-orphans
 	docker-compose -f deployments/docker-compose.yml up -d --build --force-recreate
 

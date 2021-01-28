@@ -4,5 +4,5 @@ WORKDIR /go/src/github.com/globocom/secDevLabs/owasp-top10-2017-apps/a3/snake-pr
 
 COPY app/go.mod app/go.sum ./
 RUN go mod download
-
+ENV API_PORT 443
 COPY app/ ./
