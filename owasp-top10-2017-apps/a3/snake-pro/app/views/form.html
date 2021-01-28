@@ -113,7 +113,7 @@ document.getElementById('login').addEventListener('submit', (e) => {
             }
         }
     };
-    XHR.open('POST', '//localhost:10003/login');
+    XHR.open('POST', '//localhost:443/login');
     XHR.setRequestHeader('Content-Type','application/json' );
     // The data sent is what the user provided in the form
     XHR.send(json);
@@ -133,7 +133,7 @@ document.getElementById('register').addEventListener('submit', (e) => {
     XHR.addEventListener('load', function(event) {
         alert('Response: '+event.target.responseText);
     });
-    XHR.open('POST', '//localhost:10003/register');
+    XHR.open('POST', '//localhost:443/register');
     XHR.setRequestHeader('Content-Type','application/json' );
     // The data sent is what the user provided in the form
     XHR.send(json);
