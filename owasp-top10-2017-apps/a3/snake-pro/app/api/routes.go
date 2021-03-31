@@ -12,6 +12,7 @@ import (
 	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a3/snake-pro/app/types"
 	"github.com/google/uuid"
 	"github.com/labstack/echo"
+	"golang.org/x/crypto/bcrypt"
 )
 
 // HealthCheck is the heath check function.
@@ -41,22 +42,35 @@ func ReadCookie(c echo.Context) (string, error) {
 	return cookie.Value, err
 }
 
+func toHash(password string) (string, error) {
+
+	hashPass, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	return string(hashPass), err
+}
+
 // Register registers a new user into MongoDB.
 func Register(c echo.Context) error {
 
 	userData := types.UserData{}
 	err := c.Bind(&userData)
+
+	hashPass, err := toHash(userData.Password)
+	hashPassRep, err := toHash(userData.RepeatPassword)
+
 	if err != nil {
 		// error binding JSON
 		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Invalid Input."})
 	}
 
 	if userData.Password != userData.RepeatPassword {
+		//return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Passwords do not match.", "Hash": hashPass, "------------------ HashRepeat": hashPassRep})
 		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Passwords do not match."})
 	}
 
 	newGUID1 := uuid.Must(uuid.NewRandom())
 	userData.UserID = newGUID1.String()
+	userData.Password = hashPass
+	userData.RepeatPassword = hashPassRep
 	userData.HighestScore = 0
 
 	err = db.RegisterUser(userData)
@@ -86,9 +100,7 @@ func Login(c echo.Context) error {
 		return c.JSON(http.StatusForbidden, map[string]string{"result": "error", "details": "Error login."})
 	}
 
-	validPass := pass.CheckPass(userDataResult.Password, loginAttempt.Password)
-	if !validPass {
-		// wrong password
+	if !pass.CheckPass(userDataResult.Password, loginAttempt.Password) {
 		return c.JSON(http.StatusForbidden, map[string]string{"result": "error", "details": "Error login."})
 	}
 

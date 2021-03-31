@@ -1,6 +1,8 @@
 package pass
 
-// CheckPass checks a password
+import "golang.org/x/crypto/bcrypt"
+
 func CheckPass(truePassword, attemptPassword string) bool {
-	return truePassword == attemptPassword
+	err := bcrypt.CompareHashAndPassword([]byte(truePassword), []byte(attemptPassword))
+	return err == nil
 }
