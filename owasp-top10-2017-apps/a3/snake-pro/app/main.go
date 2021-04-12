@@ -1,117 +1,110 @@
-package api
+
+package main
 
 import (
+	"errors"
 	"fmt"
-	"net/http"
+	"html/template"
+	"io"
 	"os"
-	"time"
+	"strconv"
 
-	jwt "github.com/dgrijalva/jwt-go"
+	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a3/snake-pro/app/api"
+	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a3/snake-pro/app/config"
 	db "github.com/globocom/secDevLabs/owasp-top10-2017-apps/a3/snake-pro/app/db/mongo"
-	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a3/snake-pro/app/pass"
-	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a3/snake-pro/app/types"
-	"github.com/google/uuid"
 	"github.com/labstack/echo"
+	"github.com/labstack/echo/middleware"
+	"github.com/spf13/viper"
 )
 
-// HealthCheck is the heath check function.
-func HealthCheck(c echo.Context) error {
-	return c.String(http.StatusOK, "WORKING!\n")
+// TemplateRegistry defines the template registry struct
+// Ref: https://medium.freecodecamp.org/how-to-setup-a-nested-html-template-in-the-go-echo-web-framework-670f16244bb4
+type TemplateRegistry struct {
+	templates map[string]*template.Template
 }
 
-func Root(c echo.Context) error {
-	return c.Redirect(302, "/login")
-}
-
-// WriteCookie writes a cookie into echo Context
-func WriteCookie(c echo.Context, jwt string) error {
-	cookie := new(http.Cookie)
-	cookie.Name = "sessionIDsnake"
-	cookie.Value = jwt
-	c.SetCookie(cookie)
-	return c.String(http.StatusOK, "")
-}
-
-// ReadCookie reads a cookie from echo Context.
-func ReadCookie(c echo.Context) (string, error) {
-	cookie, err := c.Cookie("sessionIDsnake")
-	if err != nil {
-		return "", err
-	}
-	return cookie.Value, err
-}
-
-// Register registers a new user into MongoDB.
-func Register(c echo.Context) error {
-
-	userData := types.UserData{}
-	err := c.Bind(&userData)
-	if err != nil {
-		// error binding JSON
-		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Invalid Input."})
-	}
-
-	if userData.Password != userData.RepeatPassword {
-		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Passwords do not match."})
-	}
-
-	newGUID1 := uuid.Must(uuid.NewRandom())
-	userData.UserID = newGUID1.String()
-	userData.HighestScore = 0
-
-	err = db.RegisterUser(userData)
-	if err != nil {
-		// could not register this user into MongoDB (or MongoDB err connection)
-		return c.JSON(http.StatusInternalServerError, map[string]string{"result": "error", "details": "Error user data2."})
-	}
-
-	msgUser := fmt.Sprintf("User %s created!", userData.Username)
-	return c.String(http.StatusOK, msgUser)
-}
-
-// Login checks MongoDB if this user exists and then returns a JWT session cookie.
-func Login(c echo.Context) error {
-
-	loginAttempt := types.LoginAttempt{}
-	err := c.Bind(&loginAttempt)
-	if err != nil {
-		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error login."})
-	}
-	// input validation missing! do it later!
-
-	userDataQuery := map[string]interface{}{"username": loginAttempt.Username}
-	userDataResult, err := db.GetUserData(userDataQuery)
-	if err != nil {
-		// could not find this user in MongoDB (or MongoDB err connection)
-		return c.JSON(http.StatusForbidden, map[string]string{"result": "error", "details": "Error login."})
-	}
-
-	validPass := pass.CheckPass(userDataResult.Password, loginAttempt.Password)
-	if !validPass {
-		// wrong password
-		return c.JSON(http.StatusForbidden, map[string]string{"result": "error", "details": "Error login."})
-	}
-
-	// Create token
-	token := jwt.New(jwt.SigningMethodHS256)
-
-	// Set claims
-	claims := token.Claims.(jwt.MapClaims)
-	claims["name"] = userDataResult.Username
-	claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
-
-	// Generate encoded token and send it as response.
-	t, err := token.SignedString([]byte(os.Getenv("SECRET_KEY")))
-	if err != nil {
+// Render implement e.Renderer interface
+// Ref: https://medium.freecodecamp.org/how-to-setup-a-nested-html-template-in-the-go-echo-web-framework-670f16244bb4
+func (t *TemplateRegistry) Render(w io.Writer, name string, data interface{}, c echo.Context) error {
+	tmpl, ok := t.templates[name]
+	if !ok {
+		err := errors.New("Template not found -> " + name)
 		return err
 	}
+	return tmpl.ExecuteTemplate(w, "base.html", data)
+}
 
-	err = WriteCookie(c, t)
-	if err != nil {
-		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error login5."})
+func main() {
+
+	fmt.Println("[*] Starting Snake Pro...")
+
+	// loading viper
+	viper.SetConfigName("config")
+	viper.AddConfigPath(".")
+	if err := viper.ReadInConfig(); err != nil {
+		errorAPI(err)
 	}
-	c.Response().Header().Set("Content-type", "text/html")
-	messageLogon := fmt.Sprintf("Hello, %s! Welcome to SnakePro", userDataResult.Username)
-	// err = c.Redirect(http.StatusFound, "http://www.localhost:10003/game/ranking")
-	return c.String(http.StatusOK, messageLogon)
+	if err := viper.Unmarshal(&config.APIconfiguration); err != nil {
+		errorAPI(err)
+	}
+
+	// check if MongoDB is acessible and credentials received are working.
+	if _, err := checkMongoDB(); err != nil {
+		fmt.Println("[X] ERROR MONGODB: ", err)
+		os.Exit(1)
+	}
+
+	fmt.Println("[*] MongoDB: OK!")
+	fmt.Println("[*] Viper loaded: OK!")
+
+	echoInstance := echo.New()
+	echoInstance.HideBanner = true
+
+	echoInstance.Use(middleware.Logger())
+	echoInstance.Use(middleware.Recover())
+	echoInstance.Use(middleware.RequestID())
+
+	templates := make(map[string]*template.Template)
+	templates["form.html"] = template.Must(template.ParseFiles("views/form.html", "views/base.html"))
+	templates["game.html"] = template.Must(template.ParseFiles("views/game.html", "views/base.html"))
+	templates["ranking.html"] = template.Must(template.ParseFiles("views/ranking.html", "views/base.html"))
+
+	echoInstance.Renderer = &TemplateRegistry{
+		templates: templates,
+	}
+	echoInstance.GET("/healthcheck", api.HealthCheck)
+	echoInstance.POST("/register", api.Register)
+	echoInstance.POST("/login", api.Login)
+	echoInstance.GET("/login", api.PageLogin)
+	echoInstance.GET("/", api.Root)
+	r := echoInstance.Group("/game")
+	config := middleware.JWTConfig{
+		TokenLookup: "cookie:sessionIDsnake",
+		SigningKey:  []byte(os.Getenv("SECRET_KEY")),
+	}
+	r.Use(middleware.JWTWithConfig(config))
+
+	r.GET("/play", api.PageGame)
+	r.GET("/ranking", api.PageRanking)
+
+	APIport := fmt.Sprintf(":%d", getAPIPort())
+	echoInstance.Logger.Fatal(echoInstance.Start(APIport))
+}
+
+func errorAPI(err error) {
+	fmt.Println("[x] Error starting Snake Pro:")
+	fmt.Println("[x]", err)
+	os.Exit(1)
+}
+
+func getAPIPort() int {
+	apiPort, err := strconv.Atoi(os.Getenv("API_PORT"))
+	if err != nil {
+		apiPort = 10003
+	}
+	return apiPort
+}
+
+func checkMongoDB() (*db.DB, error) {
+	return db.Connect()
 }
