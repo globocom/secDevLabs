@@ -1,4 +1,3 @@
-
 package pass
 
 // CheckPass checks a password
