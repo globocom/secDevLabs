@@ -219,7 +219,6 @@ Note: In this particular app, due to how it works, you can simply write down the
 
 We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](../../../docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉
 
-
 [Docker Install]:  https://docs.docker.com/install/
 [Docker Compose Install]: https://docs.docker.com/compose/install/
 [App]: http://localhost:8000
