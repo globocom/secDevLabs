@@ -5,6 +5,9 @@ import Card from "./components/Card";
 import * as HTTP from "./Http.js";
 import * as COMMENT from "./Comment.js";
 
+
+var bleach = require('bleach');
+
 function App() {
     document.cookie = 'checkPageRefresh=1';
     const [comment, setComment] = useState("");
@@ -42,7 +45,7 @@ function App() {
             })}
             <Comment
                 change={(i) => {
-                    setComment(i.target.value);
+                    setComment(bleach.sanitize(i.target.value));
                 }}
                 click={(i) => {
                     try {

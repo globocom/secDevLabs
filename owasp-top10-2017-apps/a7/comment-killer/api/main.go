@@ -52,6 +52,7 @@ func Healthcheck(c echo.Context) error {
 func main() {
 	e := echo.New()
 	e.HideBanner = true
+
 	DefaultCORSConfig := middleware.CORSConfig{
 		AllowOrigins: []string{"*"},
 		AllowMethods: []string{http.MethodGet, http.MethodHead, http.MethodPut, http.MethodPatch, http.MethodPost, http.MethodDelete},

@@ -5,6 +5,6 @@ WORKDIR /app
 
 ADD app/ /app/
 
-RUN apk update && npm install
+RUN apk update && npm install && npm install bleach
 
 CMD npm start
