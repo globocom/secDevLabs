@@ -23,9 +23,9 @@ function execQuery(query, fields){
 }
 
 
-function addUser(username, password, salt){
-    const query = 'INSERT INTO User(username, password, salt) VALUES(?, ?, ?)'
-    const parameters = [username, password, salt]
+function addUser(username, password, salt, type){
+    const query = 'INSERT INTO User(username, password, salt, type) VALUES(?, ?, ?, ?)'
+    const parameters = [username, password, salt, type]
 
     execQuery(query, parameters)
 }
@@ -69,6 +69,22 @@ function checkUser(username){
             }
         })
         .catch(err => console.log(err))
+}
+
+function getType(username){
+    const query = 'SELECT type FROM User WHERE username=?'
+    const parameters = [username]
+
+    return execQuery(query, parameters)
+        .then(result => {
+            if (result !== undefined){
+                return result
+            }
+        })
+        .catch(err => {
+            console.log(err)
+            return null
+        })
 }
 
 function getStatisticsFromUser(username){
@@ -117,6 +133,7 @@ function createTables(){
     (username VARCHAR(20) NOT NULL, 
     password VARCHAR(100) NOT NULL, 
     salt BLOB NOT NULL,
+    type INT NOT NULL,
     PRIMARY KEY(username));`
 
     execQuery(usersTableSQL)
@@ -149,4 +166,5 @@ module.exports = {
     getStatisticsFromUser,
     createTables,
     checkUser,
+    getType,
 }
