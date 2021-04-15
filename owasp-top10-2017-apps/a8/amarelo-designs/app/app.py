@@ -4,7 +4,16 @@ from flask import Flask, request, make_response, render_template, redirect, flas
 import uuid
 import pickle
 import base64
+import hmac
+import hashlib
+import jwt
+import datetime
+from hashlib import sha1
+from flask.sessions import session_json_serializer
+from itsdangerous import URLSafeTimedSerializer
 app = Flask(__name__)
+
+app.config['SECRET_KEY'] = "secret"
 
 
 @app.route("/")
@@ -18,12 +27,14 @@ def login():
         password = request.values.get('password')
     
         if username == "admin" and password == "admin":
-            token = str(uuid.uuid4().hex)
-            cookie = { "username":username, "admin":True, "sessionId":token }
-            pickle_resultado = pickle.dumps(cookie)
-            encodedSessionCookie = base64.b64encode(pickle_resultado)
+            payload = { 
+                "username":username, 
+                "admin":True,
+                "exp": datetime.datetime.utcnow() + datetime.timedelta(seconds=360)
+            }
+            token = jwt.encode(payload, app.config['SECRET_KEY'], algorithm="HS256")
             resp = make_response(redirect("/user"))
-            resp.set_cookie("sessionId", encodedSessionCookie)
+            resp.set_cookie("sessionId", token)
             return resp
 
         else:
@@ -34,15 +45,18 @@ def login():
 
 @app.route("/user", methods=['GET'])
 def userInfo():
-    cookie = request.cookies.get("sessionId")
-    if cookie == None:
-        return "Não Autorizado!"
-    cookie = pickle.loads(base64.b64decode(cookie))
-
+    token = request.cookies.get("sessionId", "")
+    try:
+        data = jwt.decode(token, app.config['SECRET_KEY'], algorithms="HS256")
+    except:
+        if jwt.exceptions.ExpiredSignatureError:
+            return redirect("/")
+        return "Invalid cookie!"
+    if(len(data) != 3):
+        return "Invalid cookie!"
+    if data['admin'] != True:
+        return "You are not an admin. \n"
     return render_template('user.html')
-    
-
-
 
 if __name__ == '__main__':
     app.run(debug=True,host='0.0.0.0')
