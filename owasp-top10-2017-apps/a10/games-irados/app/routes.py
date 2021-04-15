@@ -19,6 +19,7 @@ from model.password import Password
 from model.db import DataBase
 import logging
 import os
+import socket
 
 from flask_cors import CORS, cross_origin
 from model.db import DataBase
@@ -27,6 +28,15 @@ app = Flask(__name__)
 bootstrap = Bootstrap(app)
 
 app.config.from_pyfile('config.py')
+
+FORMAT = '%(asctime)-15s %(method)s %(route)s %(ip)s %(user)-8s %(message)s'
+logging.basicConfig(format=FORMAT)
+
+def loggingOut(method, route, data, user):
+    hostname = socket.gethostname()
+    IP = socket.gethostbyname(hostname)
+    info = {'method': method, 'route': route, 'ip': IP, 'user': user}
+    logging.warning('INPUT %s', data, extra=info)
 
 
 def generate_csrf_token():
@@ -112,20 +122,25 @@ def newuser():
 def home():
     return render_template('index.html')
 
+
 @app.route('/coupon', methods=['GET', 'POST'])
 @login_required
 def cupom():
     if request.method == 'POST':
         coupon = request.form.get('coupon')
-        rows, success = database.get_game_coupon(coupon, session.get('username'))
+        user = session.get('username')
+        rows, success = database.get_game_coupon(coupon, user)
         if not success or rows == None or rows == 0:
             flash("Cupom invalido", "danger")
+            loggingOut(request.method,'/coupon', coupon, user)
             return render_template('coupon.html')
-        game, success = database.get_game(coupon, session.get('username'))
+        game, success = database.get_game(coupon, user)
         if not success or game == None:
             flash("Cupom invalido", "danger")
+            loggingOut(request.method,'/coupon', coupon, user)
             return render_template('coupon.html')
         flash("Voce ganhou {}".format(game[0]), "primary")
+        loggingOut(request.method,'/coupon', coupon, user)
         return render_template('coupon.html')
     else:
         return render_template('coupon.html')
