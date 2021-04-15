@@ -2,15 +2,9 @@
 
 from flask import Flask, request, make_response, render_template, redirect, flash
 import uuid
-import pickle
-import base64
-import hmac
-import hashlib
 import jwt
 import datetime
-from hashlib import sha1
-from flask.sessions import session_json_serializer
-from itsdangerous import URLSafeTimedSerializer
+
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = "secret"
