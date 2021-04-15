@@ -87,7 +87,6 @@ app.post('/create', async (req, res) => {
 
     const username = req.body.username
     const password = req.body.password
-    const type = 0
     if (username.length < 5 || password.length < 5) {
         res
             .status(400)
@@ -109,7 +108,7 @@ app.post('/create', async (req, res) => {
     const salt = crypto.generateSalt()
     const hashedPassword = crypto.hash(password, salt)
     try {
-        db.addUser(username, hashedPassword, salt, type)
+        db.addUser(username, hashedPassword, salt)
     } catch (e) {
         res
             .status(400)
@@ -154,12 +153,6 @@ app.post('/login', async (req, res) => {
     const username = req.body.username
     const password = req.body.password
     const salt = await db.getPasswordSalt(username)
-    const type = await db.getType(username)
-    if (type === undefined) {
-        res
-            .status(400)
-            .json({ msg: "Type is undefined!" })
-    }
     if (salt === undefined) {
         res
             .status(400)
@@ -174,7 +167,7 @@ app.post('/login', async (req, res) => {
             .json({ msg: "User doesn't exist or wrong password" })
     }
 
-    const token = jwt.sign({ type, username }, process.env.SECRET, {
+    const token = jwt.sign({ username }, process.env.SECRET, {
         expiresIn: 3600
     });
 
@@ -195,7 +188,6 @@ function verifyJWT(req, res, next) {
             return res
                 .sendFile(path.join(__dirname + '/public/views/error.html'))
         }
-        if (decoded.username != req.body.username) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
         next();
     });
 }
