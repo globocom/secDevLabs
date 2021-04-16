@@ -1,8 +1,8 @@
-version: '3.8'
+version: '3.3'
 
 services:
   drupal:
-    image: drupal:7.74
+    image: drupal:7.57
     container_name: drupal
     environment:
       POSTGRES_PASSWORD: example

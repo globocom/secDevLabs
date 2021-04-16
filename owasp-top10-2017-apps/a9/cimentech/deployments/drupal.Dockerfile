@@ -1,1 +1,1 @@
-FROM drupal:7.74
+FROM drupal:7.57
