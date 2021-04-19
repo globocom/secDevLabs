@@ -113,7 +113,7 @@ def newuser():
             if success == 1:
                 flash("Novo usuario adicionado!", "primary")
                 status = str(201)+" - Novo usuario adicionado"
-                loggingOut(request.method,'/register', username, status, response.method)
+                loggingOut(request.method,'/register', username, status)
                 return redirect('/login')
             else:
                 flash(message, "danger")
