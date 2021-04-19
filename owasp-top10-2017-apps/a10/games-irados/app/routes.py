@@ -20,7 +20,6 @@ from model.db import DataBase
 import logging
 import os
 import socket
-
 from flask_cors import CORS, cross_origin
 from model.db import DataBase
 
@@ -29,14 +28,16 @@ bootstrap = Bootstrap(app)
 
 app.config.from_pyfile('config.py')
 
-FORMAT = '%(asctime)-15s %(method)s %(route)s %(ip)s %(user)-8s %(message)s'
+FORMAT = '%(asctime)-15s %(method)s %(error)s %(message)s'
 logging.basicConfig(format=FORMAT)
 
-def loggingOut(method, route, data, user):
-    hostname = socket.gethostname()
-    IP = socket.gethostbyname(hostname)
-    info = {'method': method, 'route': route, 'ip': IP, 'user': user}
-    logging.warning('INPUT %s', data, extra=info)
+def loggingOut(method, route, user, status):
+    IP = request.remote_addr
+    msg = '- STATUS: '+ str(status) + ' - ROUTE: ' + route + ' - IP: '+ str(IP) + ' - USER: ' + str(user)
+    info = {'method': "METHOD: "+method, 
+            'error': msg
+    }
+    logging.warning('STATUS LOG', extra=info)
 
 
 def generate_csrf_token():
@@ -88,8 +89,12 @@ def login():
         user_password, success = database.get_user_password(username)
         if not success or user_password == None or not psw.validate_password(str(user_password[0])):
             flash("Usuario ou senha incorretos", "danger")
+            status = str(401)+" - Usuario ou senha incorretos"
+            loggingOut(request.method,'/login', username, status)
             return render_template('login.html')
         session['username'] = username
+        status = str(200)+" - Login realizado"
+        loggingOut(request.method,'/login', username, status)
         return redirect('/home')
     else:
         return render_template('login.html')
@@ -107,12 +112,18 @@ def newuser():
             message, success = database.insert_user(username, hashed_psw)
             if success == 1:
                 flash("Novo usuario adicionado!", "primary")
+                status = str(201)+" - Novo usuario adicionado"
+                loggingOut(request.method,'/register', username, status, response.method)
                 return redirect('/login')
             else:
                 flash(message, "danger")
+                status = str(500)+" - Erro ao inserir no DB"
+                loggingOut(request.method,'/register', username, status)
                 return redirect('/register')
 
         flash("Passwords must be the same!", "danger")
+        status = "Erro: passwords nao sao iguais"
+        loggingOut(request.method,'/register', username, status)
         return redirect('/register')
     else:
         return render_template('register.html')
@@ -121,7 +132,6 @@ def newuser():
 @login_required
 def home():
     return render_template('index.html')
-
 
 @app.route('/coupon', methods=['GET', 'POST'])
 @login_required
@@ -132,15 +142,18 @@ def cupom():
         rows, success = database.get_game_coupon(coupon, user)
         if not success or rows == None or rows == 0:
             flash("Cupom invalido", "danger")
-            loggingOut(request.method,'/coupon', coupon, user)
+            status = str(404)+" - Cupom invalido"
+            loggingOut(request.method,'/coupon', user, status)
             return render_template('coupon.html')
         game, success = database.get_game(coupon, user)
         if not success or game == None:
             flash("Cupom invalido", "danger")
-            loggingOut(request.method,'/coupon', coupon, user)
+            status = str(404)+" - Cupom invalido"
+            loggingOut(request.method,'/coupon', user, status)
             return render_template('coupon.html')
         flash("Voce ganhou {}".format(game[0]), "primary")
-        loggingOut(request.method,'/coupon', coupon, user)
+        status = str(200)+" - Cupom valido"
+        loggingOut(request.method,'/coupon', user, status)
         return render_template('coupon.html')
     else:
         return render_template('coupon.html')
