@@ -89,11 +89,11 @@ def login():
         user_password, success = database.get_user_password(username)
         if not success or user_password == None or not psw.validate_password(str(user_password[0])):
             flash("Usuario ou senha incorretos", "danger")
-            status = str(401)+" - Usuario ou senha incorretos"
+            status = "Usuario ou senha incorretos"
             loggingOut(request.method,'/login', username, status)
             return render_template('login.html')
         session['username'] = username
-        status = str(200)+" - Login realizado"
+        status = "Login realizado"
         loggingOut(request.method,'/login', username, status)
         return redirect('/home')
     else:
@@ -112,12 +112,12 @@ def newuser():
             message, success = database.insert_user(username, hashed_psw)
             if success == 1:
                 flash("Novo usuario adicionado!", "primary")
-                status = str(201)+" - Novo usuario adicionado"
+                status = "Novo usuario adicionado"
                 loggingOut(request.method,'/register', username, status)
                 return redirect('/login')
             else:
                 flash(message, "danger")
-                status = str(500)+" - Erro ao inserir no DB"
+                status = "Erro ao inserir no DB"
                 loggingOut(request.method,'/register', username, status)
                 return redirect('/register')
 
@@ -142,17 +142,17 @@ def cupom():
         rows, success = database.get_game_coupon(coupon, user)
         if not success or rows == None or rows == 0:
             flash("Cupom invalido", "danger")
-            status = str(404)+" - Cupom invalido"
+            status = "Cupom invalido"
             loggingOut(request.method,'/coupon', user, status)
             return render_template('coupon.html')
         game, success = database.get_game(coupon, user)
         if not success or game == None:
             flash("Cupom invalido", "danger")
-            status = str(404)+" - Cupom invalido"
+            status = "Cupom invalido"
             loggingOut(request.method,'/coupon', user, status)
             return render_template('coupon.html')
         flash("Voce ganhou {}".format(game[0]), "primary")
-        status = str(200)+" - Cupom valido"
+        status = "Cupom valido"
         loggingOut(request.method,'/coupon', user, status)
         return render_template('coupon.html')
     else:
