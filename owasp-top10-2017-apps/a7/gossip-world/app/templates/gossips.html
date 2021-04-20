@@ -55,7 +55,7 @@
         <div class="col-md-8">
 
          {% if search %}
-         <h1>Results for {{search_text | safe}} </h1>
+         <h1>Results for {{search_text}} </h1>
          {% else %}
           <h1 class="my-4">Last gossips</h1>
          {% endif %}
@@ -113,7 +113,6 @@
                <span class="input-group-btn">
                    <button class="btn btn-secondary" type="submit">Go!</button>
                </span>
-
              </div>
            </div>
          </div>
