@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "This is a node js insecure app",
   "main": "app.js",
+  "errorHandler": {
+    "disableStackTrace": true
+  },
   "dependencies": {
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.4",
