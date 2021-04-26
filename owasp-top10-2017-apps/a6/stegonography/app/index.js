@@ -48,11 +48,7 @@ MongoClient.connect(url, function(err, db) {
 MongoClient.connect(url, function(err, db) {
     if (err) throw err;
     var dbo = db.db("stego");
-<<<<<<< HEAD
     var myobj = { username: "admin", password: process.env.ADMINPASS };
-=======
-    var myobj = { username: "admin", password: "password" };
->>>>>>> 22d043a67d91c588f75a5247e80a6dde49750baa
     dbo.collection("users").insertOne(myobj, function(err, res) {
         if (err) throw err;
         console.log("Admin user added to the database");
@@ -93,11 +89,7 @@ router.post("/login", function(req,res)  {
             var token = jwt.sign({ username }, process.env.SECRET, {
                 expiresIn: 300 // Token expires in 5 minutes
             });
-<<<<<<< HEAD
-            res.cookie('nodejsSessionToken', token).redirect(301, "/admin");
-=======
             res.cookie('sessionToken', token).redirect(301, "/admin");
->>>>>>> 22d043a67d91c588f75a5247e80a6dde49750baa
         } else {
             res.status(500).send('Invalid username or password!').redirect(301, "/logout");
         }
@@ -106,11 +98,7 @@ router.post("/login", function(req,res)  {
 
 // Logout route to deauthorize user session tokens
 router.get("/logout", function(req, res) {
-<<<<<<< HEAD
-    res.status(200).clearCookie('nodejsSessionToken').redirect(301, "/");
-=======
     res.status(200).clearCookie('sessionToken').redirect(301, "/");
->>>>>>> 22d043a67d91c588f75a5247e80a6dde49750baa
 });
 
 // Admin maintenance page
@@ -150,11 +138,7 @@ app.listen(10006, () => {
 
 // Verifies the JWT token
 function verifyJWT(req, res, next){
-<<<<<<< HEAD
-    var token = req.cookies.nodejsSessionToken;
-=======
     var token = req.cookies.sessionToken;
->>>>>>> 22d043a67d91c588f75a5247e80a6dde49750baa
     if (!token) return res.status(401).send({auth: false, message: 'No token provided'});
 
     jwt.verify(token, process.env.SECRET, function(err, decoded) {
