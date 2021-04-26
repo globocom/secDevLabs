@@ -8,7 +8,7 @@ SECRET=$RANDOM$RANDOM
 
 echo "#.env" > app/.env
 echo "SECRET=$SECRET" >> app/.env
-echo "ADMINPASS=admin" >> app/.env
+echo "ADMINPASS=password" >> app/.env
 echo "NODE_ENV=production" >> app/.env
 
 
