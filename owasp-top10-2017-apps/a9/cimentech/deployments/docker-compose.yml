@@ -12,7 +12,8 @@ services:
     ports:
       - 80:80
     volumes:
-      - ../app/html:/var/www/html
+      - ../app/html/sites/:/var/www/html/sites
+      - ../app/html/themes:/var/www/html/themes
     restart: always
     networks: 
       - a9_net
