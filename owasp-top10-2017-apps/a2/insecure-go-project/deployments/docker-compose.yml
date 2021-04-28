@@ -27,14 +27,12 @@ services:
         build:
             context: ../
             dockerfile: deployments/mongo.Dockerfile
+        env_file: 
+            - .env
         environment:
-            MONGO_INITDB_ROOT_USERNAME: /run/secrets/mongo_user
-            MONGO_INITDB_ROOT_PASSWORD: /run/secrets/mongo_pass
-            MONGO_INITDB_DATABASE: /run/secrets/mongo_db
-        secrets:
-          - mongo_pass
-          - mongo_user
-          - mongo_db
+            MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+            MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASS}
+            MONGO_INITDB_DATABASE: ${MONGO_DB}
 
         ports:
           - "27017:27017"
@@ -43,11 +41,3 @@ services:
             - mongo_vol:/data/db
         networks:
             - insecure_net
-            
-secrets:
-    mongo_pass:
-        external: true
-    mongo_user:
-        external: true
-    mongo_db: 
-        external: true
