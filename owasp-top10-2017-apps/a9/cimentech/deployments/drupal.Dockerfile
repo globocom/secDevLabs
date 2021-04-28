@@ -1,1 +1,0 @@
-FROM drupal:7.79
