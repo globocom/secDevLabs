@@ -15,7 +15,7 @@ from functools import wraps
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = "secret"
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 database = DataBase(os.environ.get('A2_DATABASE_HOST'),
                     os.environ.get('A2_DATABASE_USER'),
                     os.environ.get('A2_DATABASE_PASSWORD'),
