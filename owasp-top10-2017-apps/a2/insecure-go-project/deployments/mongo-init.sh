@@ -1,7 +1,7 @@
 #!/module/for/bash
 db.createUser()
     {
-        user: $MONGO_USERNAME,
-        pwd: $MONGO_PASSWORD,
+        user: "$MONGO_USER",
+        pwd: "$MONGO_PASS",
         roles: [{ role: "userAdminAnyDatabase", db: "admin" }]
     }
