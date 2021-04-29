@@ -15,8 +15,7 @@ from flask import (
     redirect,
     flash,
     make_response,
-    session,
-    escape
+    session
 )
 from flask_bootstrap import Bootstrap
 from model.password import Password
@@ -79,7 +78,7 @@ def root():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        username = escape(request.form.get('username'))
+        username = request.form.get('username')
         psw = Password(request.form.get('password').encode('utf-8'))
         user_password, success = database.get_user_password(username)
 
@@ -140,7 +139,7 @@ def newuser():
 @app.route('/gossip', methods=['GET'])
 @login_required
 def all_gossips():
-    search = escape(request.args.get('search'))
+    search = request.args.get('search')
     search_flag = 0
     if search is not None:
         gossips, success = database.search_gossips(search)
@@ -164,7 +163,7 @@ def all_gossips():
 @login_required
 def gossip(id):
     if request.method == 'POST':
-        comment = escape(request.form.get('comment'))
+        comment = request.form.get('comment')
         user = session.get('username')
         date = datetime.datetime.now()
         if comment == '':
@@ -199,9 +198,9 @@ def gossip(id):
 @login_required
 def newgossip():
     if request.method == 'POST':
-        text = escape(request.form.get('text'))
-        subtitle = escape(request.form.get('subtitle'))
-        title = escape(request.form.get('title'))
+        text = request.form.get('text')
+        subtitle = request.form.get('subtitle')
+        title = request.form.get('title')
         author = session.get('username')
         date = datetime.datetime.now()
         if author is None or text is None or subtitle is None or title is None:
