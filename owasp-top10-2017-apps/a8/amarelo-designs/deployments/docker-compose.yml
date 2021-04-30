@@ -7,6 +7,8 @@ services:
       dockerfile: deployments/Dockerfile
     volumes:
       - "../app/:/app"
+    environment: 
+      ADMIN_PASS: "password"
     ports:
       - "10008:5000"
       - "9051:9051"
