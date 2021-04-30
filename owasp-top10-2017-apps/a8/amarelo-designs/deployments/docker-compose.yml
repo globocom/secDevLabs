@@ -9,6 +9,7 @@ services:
       - "../app/:/app"
     environment: 
       ADMIN_PASS: "password"
+      SECRET_JWT: "secret"
     ports:
       - "10008:5000"
       - "9051:9051"
