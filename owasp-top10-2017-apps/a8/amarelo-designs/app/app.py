@@ -3,12 +3,14 @@
 from flask import Flask, request, make_response, render_template, redirect, flash
 import uuid
 import jwt
+import os
 import datetime
 
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = "secret"
 
+admin_pass = os.environ['ADMIN_PASS']
 
 @app.route("/")
 def ola():
@@ -20,7 +22,7 @@ def login():
         username = request.values.get('username')
         password = request.values.get('password')
     
-        if username == "admin" and password == "admin":
+        if username == "admin" and password == admin_pass:
             payload = { 
                 "username":username, 
                 "admin":True,
