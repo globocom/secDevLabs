@@ -11,6 +11,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = "secret"
 
 admin_pass = os.environ['ADMIN_PASS']
+secret_jwt = os.environ['SECRET_JWT']
 
 @app.route("/")
 def ola():
@@ -28,7 +29,7 @@ def login():
                 "admin":True,
                 "exp": datetime.datetime.utcnow() + datetime.timedelta(seconds=360)
             }
-            token = jwt.encode(payload, app.config['SECRET_KEY'], algorithm="HS256")
+            token = jwt.encode(payload, secret_jwt, algorithm="HS256")
             resp = make_response(redirect("/user"))
             resp.set_cookie("sessionId", token)
             return resp
@@ -43,7 +44,7 @@ def login():
 def userInfo():
     token = request.cookies.get("sessionId", "")
     try:
-        data = jwt.decode(token, app.config['SECRET_KEY'], algorithms="HS256")
+        data = jwt.decode(token, secret_jwt, algorithms="HS256")
     except:
         if jwt.exceptions.ExpiredSignatureError:
             return redirect("/")
