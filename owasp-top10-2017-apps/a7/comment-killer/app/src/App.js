@@ -5,9 +5,6 @@ import Card from "./components/Card";
 import * as HTTP from "./Http.js";
 import * as COMMENT from "./Comment.js";
 
-
-var bleach = require('bleach');
-
 function App() {
     document.cookie = 'checkPageRefresh=1';
     const [comment, setComment] = useState("");
@@ -45,13 +42,12 @@ function App() {
             })}
             <Comment
                 change={(i) => {
-                    setComment(bleach.sanitize(i.target.value));
+                    setComment(i.target.value);
                 }}
                 click={(i) => {
                     try {
                         HTTP.PostComment(comment).then(response => console.log(response))
                         setList([...list, comment]);
-                        COMMENT.Parse(comment);
                         setComment("");
                     } catch (e) {
                         void 0;
