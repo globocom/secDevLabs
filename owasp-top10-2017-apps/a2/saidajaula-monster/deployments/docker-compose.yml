@@ -10,6 +10,15 @@ services:
       A2_DATABASE_PASSWORD: pass
       A2_DATABASE_HOST: db
       A2_DATABASE_NAME: A2
+      A2_JWT_PRIVKEY: -----BEGIN EC PRIVATE KEY-----
+        MHQCAQEEIIcpb0EzAbE7DdGZbQpsvNta19PGqviOOCyG+jGEgvjDoAcGBSuBBAAK
+        oUQDQgAEF7e2wIV/9VfHvUc8gD7mkBmsrjWCSpLHO1CJWhdcShdc6biRrIJ4kKHU
+        A7Na7FOW6y7Ul4pckXprsvSOqGdClg==
+        -----END EC PRIVATE KEY-----
+      A2_JWT_PUBKEY: -----BEGIN PUBLIC KEY-----
+        MFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAEF7e2wIV/9VfHvUc8gD7mkBmsrjWCSpLH
+        O1CJWhdcShdc6biRrIJ4kKHUA7Na7FOW6y7Ul4pckXprsvSOqGdClg==
+        -----END PUBLIC KEY-----
     links:
       - db:db
     depends_on:
