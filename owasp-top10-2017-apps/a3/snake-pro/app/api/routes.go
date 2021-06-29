@@ -58,6 +58,10 @@ func Register(c echo.Context) error {
 	newGUID1 := uuid.Must(uuid.NewRandom())
 	userData.UserID = newGUID1.String()
 	userData.HighestScore = 0
+	userData.Password, err := pass.HashPassword(userData.Password)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"result": "error", "details": "Error!"})
+	}
 
 	err = db.RegisterUser(userData)
 	if err != nil {

@@ -23,6 +23,7 @@ install: compose msg
 
 ## Composes project using docker-compose
 compose:
+	openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -subj "/CN=snakepro.local" -keyout ./certs/key.pem -out ./certs/cert.pem 
 	docker-compose -f deployments/docker-compose.yml down -v --remove-orphans
 	docker-compose -f deployments/docker-compose.yml up -d --build --force-recreate
 
