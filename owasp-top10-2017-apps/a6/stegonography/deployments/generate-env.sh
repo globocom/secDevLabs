@@ -8,6 +8,8 @@ SECRET=$RANDOM$RANDOM
 
 echo "#.env" > app/.env
 echo "SECRET=$SECRET" >> app/.env
+echo "ADMIN_USERNAME=joseph_little_drop"
+echo "ADMIN_PASSWORD=X3_vNDwkETxH+/m2L"
 
 
 # Database environment variables
@@ -24,3 +26,4 @@ echo "MONGO_DATABASE=$MONGO_DATABASE" >> deployments/.dockers.env
 echo "MONGO_USER=$MONGO_USER" >> deployments/.dockers.env
 echo "MONGO_PASSWORD=$MONGO_PASSWORD" >> deployments/.dockers.env
 echo "MONGO_PORT=$MONGO_PORT" >> deployments/.dockers.env
+echo "NODE_ENV=production" >> deployments/.dockers.env
