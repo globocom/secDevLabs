@@ -24,17 +24,17 @@ func GetTicket(c echo.Context) error {
 
 	cookie, err := c.Cookie("sessionIDa5")
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error to get cookie.\n"})
+		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error to get cookie."})
 	}
 	encodedToken := cookie.Value
 	token, err := jwt.ParseWithClaims(encodedToken, &types.Claims{}, func(beforeVerificationToken *jwt.Token) (interface{}, error) {
-		if beforeVerificationToken.Method.Alg() != jwt.SigningMethodES256.Alg() {
-			return nil, c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error on signing method.\n"})
+		if beforeVerificationToken.Method.Alg() != jwt.SigningMethodHS256.Alg() {
+			return nil, c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error on signing method."})
 		}
 		return []byte(JWT_SECRET_KEY), nil
 	})
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "JWT Error.\n"})
+		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "JWT Error."})
 	}
 
 	claims := token.Claims.(*types.Claims)
@@ -43,7 +43,7 @@ func GetTicket(c echo.Context) error {
 	userDataResult, err := db.GetUserData(userDataQuery)
 
 	if claims.Username != userDataResult.Username {
-		return c.JSON(http.StatusForbidden, map[string]string{"result": "forbidden", "details": "You shall not pass!\n"})
+		return c.JSON(http.StatusForbidden, map[string]string{"result": "forbidden", "details": "You shall not pass!"})
 	}
 
 	if err != nil {
