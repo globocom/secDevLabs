@@ -1,7 +1,6 @@
-version: '3'
+version: '3.4'
 
 services:
-
     api:
         container_name: a5_tictactoe
         build:
@@ -21,7 +20,7 @@ services:
 
     mysqldb:
         container_name: mysqldb
-        image: mysql:5.7
+        image: mariadb:10.6.3
         ports:
           - "3307:3306"
         volumes:

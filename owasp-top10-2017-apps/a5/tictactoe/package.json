@@ -20,7 +20,7 @@
   "devDependencies": {
     "@babel/core": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
-    "gulp": "3.9.1",
+    "gulp": "^3.9.1",
     "gulp-babel": "^8.0.0",
     "gulp-concat": "2.6.1",
     "gulp-htmlmin": "4.0.0",

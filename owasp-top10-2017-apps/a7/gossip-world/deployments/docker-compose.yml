@@ -1,4 +1,4 @@
-version: "2"
+version: "3.4"
 
 services:
   app:
@@ -26,7 +26,7 @@ services:
     
   mysqldb-a7:
     container_name: mysqldb-a7
-    image: mysql:5.7
+    image: mariadb:10.6.3
     ports:
       - "3307:3307"
     environment:

@@ -1,9 +1,9 @@
-version: '3.3'
+version: '3.4'
 
 services:
    db:
     container_name: a6db
-    image: secdevlabs/a6-the-mistery:db-version-2
+    image: mariadb:10.6.3
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: somewordpress
