@@ -26,8 +26,12 @@ function execQuery(query, fields){
 function addUser(username, password, salt){
     const query = 'INSERT INTO User(username, password, salt) VALUES(?, ?, ?)'
     const parameters = [username, password, salt]
-
-    execQuery(query, parameters)
+    
+    try {
+        execQuery(query, parameters)
+    } catch(e) {
+        console.log(e.message)
+    }
 }
 
 function getPasswordSalt(username){
@@ -93,7 +97,11 @@ function updateUserStatistics(username, statistics){
                    SET games = ?, wins = ?, ties = ?, loses = ?
                    WHERE username = ?`
     const parameters = [statistics.games, statistics.wins, statistics.ties, statistics.loses, username]
-    execQuery(query, parameters)
+    try {
+        execQuery(query, parameters)
+    } catch(e) {
+        console.log(e.message)
+    }
 }
 function upsertUserStatistics(username, statistics){
     const query = `INSERT INTO Statistics(username, games, wins, ties, loses)
@@ -109,7 +117,11 @@ function upsertUserStatistics(username, statistics){
         statistics.wins, 
         statistics.ties, 
         statistics.loses]
-    execQuery(query, parameters)
+    try {
+        execQuery(query, parameters)
+    } catch(e) {
+        console.log(e.message)
+    }
 }
 
 function createTables(){
