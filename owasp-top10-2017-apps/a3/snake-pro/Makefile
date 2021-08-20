@@ -23,6 +23,8 @@ install: compose msg
 
 ## Composes project using docker-compose
 compose:
+	if [ ! -d "app/certs" ]; then mkdir app/certs; fi
+	openssl req -new -x509 -sha256 -newkey rsa:2048 -nodes -keyout app/certs/localhost.key -days 365 -subj "/CN=localhost" -out app/certs/localhost.crt
 	docker-compose -f deployments/docker-compose.yml down -v --remove-orphans
 	docker-compose -f deployments/docker-compose.yml up -d --build --force-recreate
 

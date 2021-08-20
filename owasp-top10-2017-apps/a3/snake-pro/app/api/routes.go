@@ -59,6 +59,12 @@ func Register(c echo.Context) error {
 	userData.UserID = newGUID1.String()
 	userData.HighestScore = 0
 
+	password, err := pass.HashPass(userData.Password)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"result": "error", "details": "Error."})
+	}
+	userData.Password = password
+
 	err = db.RegisterUser(userData)
 	if err != nil {
 		// could not register this user into MongoDB (or MongoDB err connection)
