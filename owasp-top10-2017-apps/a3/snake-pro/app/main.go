@@ -87,7 +87,7 @@ func main() {
 	r.GET("/ranking", api.PageRanking)
 
 	APIport := fmt.Sprintf(":%d", getAPIPort())
-	echoInstance.Logger.Fatal(echoInstance.Start(APIport))
+	echoInstance.Logger.Fatal(echoInstance.StartTLS(APIport, "server.crt", "server.key"))
 }
 
 func errorAPI(err error) {
