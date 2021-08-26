@@ -1,6 +1,7 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SecurityContext } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
 import { UserUtil } from 'src/app/user/user-utils';
 import { LiveService } from '../lives.service';
 import { Message } from '../message';
@@ -15,7 +16,7 @@ export class PlayComponent implements OnInit {
   #selectedLive;
   #message;
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private liveService: LiveService) {
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private liveService: LiveService, private sanitizer: DomSanitizer) {
     this.#message = "";
 
     setInterval(() => {
@@ -50,7 +51,7 @@ export class PlayComponent implements OnInit {
         }
 
         this.#selectedLive.messages = [...this.#selectedLive.messages, ...newMessages];
-        this.populateLiveMessage(newMessages);
+        // this.populateLiveMessage(newMessages);
       },
       error => {
         console.log('Unable to load messages! :(');
@@ -120,7 +121,7 @@ export class PlayComponent implements OnInit {
 
     newMessageBox.appendChild(labelUserMessage);
 
-    contentMessage.innerHTML = message.content;
+    contentMessage.innerHTML = this.sanitizer.sanitize(SecurityContext.HTML, message.content);
     newMessageBox.appendChild(contentMessage);
 
     return newMessageBox;

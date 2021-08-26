@@ -25,6 +25,7 @@ services:
     restart: always
     
   mysqldb-a7:
+    platform: x86_64
     container_name: mysqldb-a7
     image: mysql:5.7
     ports:
