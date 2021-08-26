@@ -6,6 +6,7 @@ services:
       context: ../
       dockerfile: deployments/Dockerfile
     environment:
+      SECRET_KEY: ${SECRET_KEY}
       A2_DATABASE_USER: user
       A2_DATABASE_PASSWORD: pass
       A2_DATABASE_HOST: db

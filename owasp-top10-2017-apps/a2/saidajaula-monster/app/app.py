@@ -10,7 +10,7 @@ from functools import wraps
 
 
 app = Flask(__name__)
-app.secret_key = 'J6v8LuZvr9mOqmaawI1FPoOSLoW(*U9dhHH'
+app.secret_key = os.environ["SECRET_KEY"]
 database = DataBase(os.environ.get('A2_DATABASE_HOST'),
                     os.environ.get('A2_DATABASE_USER'),
                     os.environ.get('A2_DATABASE_PASSWORD'),
