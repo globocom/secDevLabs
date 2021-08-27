@@ -8,7 +8,8 @@ SECRET=$RANDOM$RANDOM
 
 echo "#.env" > app/.env
 echo "SECRET=$SECRET" >> app/.env
-
+echo "ADMIN_USER=ademir" >> app/.env
+echo "ADMIN_PASS=POWdjoad9120wjL" >> app/.env
 
 # Database environment variables
 # MONGO_DATABASE="stego"
@@ -19,6 +20,7 @@ MONGO_DATABASE_PASSWORD=Pass$RANDOM$RANDOM
 echo "#" > deployments/.dockers.env
 echo "# This file is auto generated and contains all environment variables needed by Stegonography's database" >> deployments/.dockers.env
 echo "#" >> deployments/.dockers.env
+echo "NODE_ENV=production" >> deployments/.dockers.env
 echo "MONGO_ROOT_PASSWORD=$MONGO_ROOT_PASSWORD" >> deployments/.dockers.env
 echo "MONGO_DATABASE=$MONGO_DATABASE" >> deployments/.dockers.env
 echo "MONGO_USER=$MONGO_USER" >> deployments/.dockers.env
