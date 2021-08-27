@@ -17,7 +17,6 @@ from flask.logging import default_handler
 from flask_bootstrap import Bootstrap
 from model.password import Password
 from model.db import DataBase
-import logging
 import os
 
 from flask_cors import CORS, cross_origin
@@ -28,6 +27,8 @@ bootstrap = Bootstrap(app)
 
 app.config.from_pyfile('config.py')
 
+def log(data=""):
+    app.logger.info(f"{request.remote_addr} - {request.method} {request.full_path} {data}")
 
 def generate_csrf_token():
     '''
@@ -49,12 +50,14 @@ def csrf_protect():
         token_csrf = session.get('_csrf_token')
         form_token = request.form.get('_csrf_token')
         if not token_csrf or str(token_csrf) != str(form_token):
+            log("The user may have lost his session or is a victim of CSRF")
             return "ERROR: Wrong value for csrf_token"
 
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if 'username' not in session:
+            log("The session was expired and the user tried to access this page")
             flash('oops, session expired', "danger")
             return redirect('/login')
         return f(*args, **kwargs)
@@ -77,9 +80,11 @@ def login():
         psw = Password(request.form.get('password').encode('utf-8'))
         user_password, success = database.get_user_password(username)
         if not success or user_password == None or not psw.validate_password(str(user_password[0])):
+            log(f"Tried login with {username}")
             flash("Usuario ou senha incorretos", "danger")
             return render_template('login.html')
         session['username'] = username
+        log(f"Logged in with {username}")
         return redirect('/home')
     else:
         return render_template('login.html')
@@ -96,9 +101,11 @@ def newuser():
             hashed_psw = psw.get_hashed_password()
             message, success = database.insert_user(username, hashed_psw)
             if success == 1:
+                log(f"Created the user {username}")
                 flash("Novo usuario adicionado!", "primary")
                 return redirect('/login')
             else:
+                log(f"Trigged error {message} with user {username}")
                 flash(message, "danger")
                 return redirect('/register')
 
@@ -116,15 +123,19 @@ def home():
 @login_required
 def cupom():
     if request.method == 'POST':
+        username = session.get('username')
         coupon = request.form.get('coupon')
-        rows, success = database.get_game_coupon(coupon, session.get('username'))
+        rows, success = database.get_game_coupon(coupon, username)
         if not success or rows == None or rows == 0:
+            log(f"Tried the coupon {coupon} - {username}")
             flash("Cupom invalido", "danger")
             return render_template('coupon.html')
-        game, success = database.get_game(coupon, session.get('username'))
+        game, success = database.get_game(coupon, username)
         if not success or game == None:
+            log(f"Tried the coupon {coupon} - {username}")
             flash("Cupom invalido", "danger")
             return render_template('coupon.html')
+        log(f"Redeemed coupon {coupon} - {username}")
         flash("Voce ganhou {}".format(game[0]), "primary")
         return render_template('coupon.html')
     else:
