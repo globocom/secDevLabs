@@ -8,7 +8,9 @@ SECRET=$RANDOM$RANDOM
 
 echo "#.env" > app/.env
 echo "SECRET=$SECRET" >> app/.env
-
+echo "ADMIN_USERNAME=admin" >> app/.env
+echo "ADMIN_PASSWORD=Rva6&46d-aYTxUE#" >> app/.env
+echo "NODE_ENV=production" >> app/.env
 
 # Database environment variables
 # MONGO_DATABASE="stego"
