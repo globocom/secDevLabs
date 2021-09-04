@@ -67,6 +67,7 @@ def root():
 @app.route('/logout', methods=['GET'])
 @login_required
 def logout():
+    app.logger.info('Logout performed for user %s on IP address %s', session.get('username').decode('utf-8'), request.remote_addr)
     session.clear()
     return redirect('/login')
 
@@ -78,8 +79,10 @@ def login():
         user_password, success = database.get_user_password(username)
         if not success or user_password == None or not psw.validate_password(str(user_password[0])):
             flash("Usuario ou senha incorretos", "danger")
+            app.logger.warning('Login failed for user %s on IP address %s', username.decode('utf-8'), request.remote_addr)
             return render_template('login.html')
         session['username'] = username
+        app.logger.info('Login performed for user %s on IP address %s', username.decode('utf-8'), request.remote_addr)
         return redirect('/home')
     else:
         return render_template('login.html')
@@ -97,12 +100,15 @@ def newuser():
             message, success = database.insert_user(username, hashed_psw)
             if success == 1:
                 flash("Novo usuario adicionado!", "primary")
+                app.logger.info('Register performed for user %s on IP address %s', username.decode('utf-8'), request.remote_addr)
                 return redirect('/login')
             else:
                 flash(message, "danger")
+                app.logger.warning('Register failed for user %s on IP address %s', username.decode('utf-8'), request.remote_addr)
                 return redirect('/register')
 
         flash("Passwords must be the same!", "danger")
+        app.logger.warning('Register failed for user %s on IP address %s', username.decode('utf-8'), request.remote_addr)
         return redirect('/register')
     else:
         return render_template('register.html')
@@ -120,12 +126,15 @@ def cupom():
         rows, success = database.get_game_coupon(coupon, session.get('username'))
         if not success or rows == None or rows == 0:
             flash("Cupom invalido", "danger")
+            app.logger.warning('Invalid coupon registered for user %s on IP address %s', session.get('username').decode('utf-8'), request.remote_addr)
             return render_template('coupon.html')
         game, success = database.get_game(coupon, session.get('username'))
         if not success or game == None:
             flash("Cupom invalido", "danger")
+            app.logger.warning('Invalid coupon registered for user %s on IP address %s', session.get('username').decode('utf-8'), request.remote_addr)
             return render_template('coupon.html')
         flash("Voce ganhou {}".format(game[0]), "primary")
+        app.logger.info('Valid coupon registered for user %s on IP address %s', session.get('username').decode('utf-8'), request.remote_addr)
         return render_template('coupon.html')
     else:
         return render_template('coupon.html')
