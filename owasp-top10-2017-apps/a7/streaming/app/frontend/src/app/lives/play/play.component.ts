@@ -1,9 +1,10 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SecurityContext } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { UserUtil } from 'src/app/user/user-utils';
 import { LiveService } from '../lives.service';
 import { Message } from '../message';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-play',
@@ -15,7 +16,7 @@ export class PlayComponent implements OnInit {
   #selectedLive;
   #message;
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private liveService: LiveService) {
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private liveService: LiveService, private domSanitizer: DomSanitizer) {
     this.#message = "";
 
     setInterval(() => {
@@ -120,7 +121,7 @@ export class PlayComponent implements OnInit {
 
     newMessageBox.appendChild(labelUserMessage);
 
-    contentMessage.innerHTML = message.content;
+    contentMessage.innerHTML = this.domSanitizer.sanitize(SecurityContext.HTML, message.content);
     newMessageBox.appendChild(contentMessage);
 
     return newMessageBox;
