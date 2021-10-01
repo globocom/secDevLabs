@@ -1,7 +1,7 @@
-version: '3'
+version: '3.4'
 services:
   db:
-    image: mysql:5.7
+    image: mariadb:10.6.3
     container_name: mysql-a7-streaming
     restart: always
     environment:

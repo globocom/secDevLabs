@@ -1,7 +1,5 @@
-version: '3'
-
+version: '3.4'
 services:
-
     api:
         container_name: a1_api
         build:
@@ -22,10 +20,10 @@ services:
         external_links:
             - mysqldb:mysqldb
         restart: unless-stopped
-
+        
     mysqldb:
         container_name: mysqldb
-        image: mysql:5.7
+        image: mariadb:10.6.3
         ports:
           - "3307:3307"
         volumes:
