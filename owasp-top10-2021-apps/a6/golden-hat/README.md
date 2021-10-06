@@ -60,7 +60,7 @@ Once we try reaching the `/golden.secret` we can see interesting headers:
     <img src="https://raw.githubusercontent.com/chinchila/secDevLabs/lab-smuggling/owasp-top10-2021-apps/a6/golden-hat/images/attack1.png"/>
 </p>
 
-As we can see this `Via: mitmproxy/5.3.0` helps us with the recon. Now that we know the vulnerability we can search for CVEs on this version of mitmproxy. Once we found the CVE-2021-39214, we can make a 1-day exploit to this vulnerability.
+As we can see this `Via: mitmproxy/5.3.0` helps us with the recon. Now that we know what is running on the server we can search for CVEs on this version of mitmproxy. Once we found the CVE-2021-39214, we can make an exploit to this vulnerability.
 
 Let's take a look on the mitmproxy source code, [TAG 5.3.0](https://github.com/mitmproxy/mitmproxy/tree/v5.3.0) at file [/mitmproxy/net/http/http1/read.py:L209](https://github.com/mitmproxy/mitmproxy/blob/a738b335a36b58f2b30741d76d9fe41866309299/mitmproxy/net/http/http1/read.py#L209):
 
