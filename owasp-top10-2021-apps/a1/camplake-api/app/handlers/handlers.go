@@ -10,6 +10,7 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/labstack/echo"
+	log "github.com/sirupsen/logrus"
 )
 
 func HealthCheck(c echo.Context) error {
@@ -27,6 +28,11 @@ func WriteCookie(c echo.Context, jwt string) error {
 func ReadCookie(c echo.Context) error {
 	cookie, err := c.Cookie("sessionIDa5")
 	if err != nil {
+		log.WithFields(
+			log.Fields{
+				"method": "ReadCookie",
+				"error":  err,
+			}).Error()
 		return err
 	}
 	fmt.Println(cookie.Name)
@@ -38,7 +44,12 @@ func NewUser(c echo.Context) error {
 	userData := types.UserData{}
 	err := c.Bind(&userData)
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error user data1."})
+		log.WithFields(
+			log.Fields{
+				"method": "NewUserData",
+				"error":  err,
+			}).Error()
+		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error user data."})
 	}
 
 	newGUID := uuid.Must(uuid.NewRandom())
@@ -46,9 +57,13 @@ func NewUser(c echo.Context) error {
 
 	err = db.RegisterUser(userData)
 	if err != nil {
+		log.WithFields(
+			log.Fields{
+				"method": "NewUserRegisterUser",
+				"error":  err,
+			}).Error()
 		errorString := fmt.Sprintf("%s", err)
 		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": errorString})
-
 	}
 
 	return c.String(http.StatusCreated, "Register: success!\n")
@@ -58,22 +73,37 @@ func Login(c echo.Context) error {
 	loginAttempt := types.LoginAttempt{}
 	err := c.Bind(&loginAttempt)
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error login1."})
+		log.WithFields(
+			log.Fields{
+				"method": "LoginLoginAttempt",
+				"error":  err,
+			}).Error()
+		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Incorrect username or password."})
 	}
 
 	userDataQuery := map[string]interface{}{"username": loginAttempt.Username}
 	userDataResult, err := db.GetUserData(userDataQuery)
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error login3."})
+		log.WithFields(
+			log.Fields{
+				"method": "LoginUserDataQuery",
+				"error":  err,
+			}).Error()
+		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Incorrect username or password."})
 	}
 
 	passOK := crypto.CheckPasswordHash(loginAttempt.Password, userDataResult.HashedPassword)
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error login2."})
+		log.WithFields(
+			log.Fields{
+				"method": "LoginCheckPasswordHash",
+				"error":  err,
+			}).Error()
+		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Incorrect username or password."})
 	}
 
 	if !passOK {
-		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error login4."})
+		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Incorrect username or password."})
 	}
 
 	creds := types.Credentials{
@@ -82,12 +112,22 @@ func Login(c echo.Context) error {
 	// Create token
 	token, err := CreateToken(creds)
 	if err != nil {
+		log.WithFields(
+			log.Fields{
+				"method": "LoginCreateToken",
+				"error":  err,
+			}).Error()
 		return err
 	}
 
 	err = WriteCookie(c, token)
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error login5."})
+		log.WithFields(
+			log.Fields{
+				"method": "LoginWriteCookie",
+				"error":  err,
+			}).Error()
+		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Incorrect username or password"})
 	}
 
 	messageLogon := fmt.Sprintf("Hello, %s! This is your token: %s\n", userDataResult.Username, token)
@@ -97,6 +137,11 @@ func Login(c echo.Context) error {
 func NewPost(c echo.Context) error {
 	var td *types.Post
 	if err := c.Bind(&td); err != nil {
+		log.WithFields(
+			log.Fields{
+				"method": "NewPost",
+				"error":  err,
+			}).Error()
 		return c.JSON(http.StatusUnprocessableEntity, "invalid json")
 	}
 

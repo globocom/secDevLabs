@@ -41,41 +41,6 @@ func ExtractToken(r *http.Request) string {
 	return ""
 }
 
-// func TokenValid(r *http.Request) error {
-// 	token := ExtractToken(r)
-// 	t := strings.Split(token, ".")
-
-// 	header := types.Header{}
-// 	claims := types.Claims{}
-
-// 	h, err := base64.StdEncoding.WithPadding(base64.NoPadding).DecodeString(t[0])
-// 	if err != nil {
-// 		return err
-// 	}
-
-// 	err = json.Unmarshal(h, &header)
-// 	if err != nil {
-// 		log.Fatalln("Error in JSON unmarshalling from json marshalled object:", err)
-// 		return err
-// 	}
-// 	if header.Typ != "JWT" {
-// 		log.Fatalln("Error on JWT")
-// 	}
-
-// 	c, err := base64.StdEncoding.WithPadding(base64.NoPadding).DecodeString(t[1])
-// 	if err != nil {
-// 		return err
-// 	}
-
-// 	err = json.Unmarshal(c, &claims)
-// 	if err != nil {
-// 		log.Fatalln("Error in JSON unmarshalling from json marshalled object:", err)
-// 		return err
-// 	}
-
-// 	return nil
-// }
-
 func TokenValid(r *http.Request) (types.Claims, error) {
 	header := types.Header{}
 	claims := types.Claims{}

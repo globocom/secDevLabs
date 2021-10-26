@@ -95,10 +95,6 @@ func main() {
 	echoInstance := echo.New()
 	echoInstance.HideBanner = true
 
-	// echoInstance.Use(middleware.Logger())
-	// echoInstance.Use(middleware.Recover())
-	// echoInstance.Use(middleware.RequestID())
-
 	fakeUser, _ := CreateFakeToken()
 	log.Printf("Fake Token %s", fakeUser)
 

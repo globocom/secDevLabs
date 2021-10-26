@@ -66,7 +66,7 @@ curl -s -H "Content-Type: application/json" -d '{"username":"campLakeAdmin","pas
 With the created user, we will login to the application with their credentials to get the JWT token. As it is a test application, the JWT token is returned to the user as soon as he is logged in.
 
 ```sh
-curl -s -H "Content-Type: application/json" -d '{"username":"campLakeAdmin","password":"campLake2021"}' http://localhost:10007/login
+curl -s -H "Content-Type: application/json" -d '{"username":"campLakeAdmin","password":"campLake2021"}' http://localhost:20001/login
 ```
 
 <p align="center">
@@ -92,7 +92,7 @@ curl -s -H 'Content-Type: application/json' -H 'Authorization: Bearer eyJhbGciOi
 However, the API does not verify the signature used by the JWT token, any malicious user can create a fake token, as shown by the image:
 
 <p align="center">
-    <img src="images/attack_6.png"/>
+    <img src="images/attack_5.png"/>
 </p>
 
 ```sh
@@ -100,14 +100,16 @@ curl -s -H 'Content-Type: application/json' -H 'Authorization: Bearer eyJhbGciOi
 ```
 
 <p align="center">
-    <img src="images/attack_5.png"/>
+    <img src="images/attack_6.png"/>
 </p>
+
 
 ## Secure this app
 
 How would you mitigate this vulnerability? After your changes, an attacker should not be able to:
 
-* Check and validate JWT Token signature.
+* Use fake tokens without a valid signature.
+* Impersonate other users through manipulation of the JWT.
 
 ## PR solutions
 
