@@ -62,7 +62,7 @@ We can see two patches were released and are available to download. If we see an
     <img src="images/attack1.png"/>
 </p>
 
-As both files have the same 33 first bits, this can be some sort of signature that is being used reusing nonces. Since people that make video games like a lot of DSA based schemes (ref. PS3), then we can try a nonce reuse exploit with those files.
+As both files have the same 33 first bits, this can be some sort of signature that is reusing nonces. Since people that make video games like a lot of DSA based schemes (ref. PlayStation 3), then we can try a nonce reuse exploit with this signature scheme.
 
 On file `exploit.py` we can see a full exploit to this failure. The explanation is that if we reuse a nonce `k` with the same private key, we will produce, for two messages `z1` and `z2` two signatures `sig(z1) = (r, s1)` and `sig(z2) = (r, s2)` and then we can do some math tricks to recover the secret from the private key. Where n is the order of the elliptic curve:
 
