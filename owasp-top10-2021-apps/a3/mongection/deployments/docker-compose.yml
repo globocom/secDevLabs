@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+
+    server:
+        container_name: a1_mongection
+        build:
+            context: ../
+            dockerfile: deployments/mongection.Dockerfile
+        environment:
+            DBUSER: mongection
+            DBPASS: mongection
+        ports:
+            - "10001:10001"
+        networks:
+            - a1net
+        depends_on:
+            - mongo
+        external_links:
+            - mongo:mongo
+        restart: always
+
+    mongo:
+        container_name: mongo
+        build:
+            context: ../
+            dockerfile: deployments/mongo.Dockerfile
+        ports:
+          - "27017:27017"
+        networks:
+            - a1net
+
+networks:
+    a1net:

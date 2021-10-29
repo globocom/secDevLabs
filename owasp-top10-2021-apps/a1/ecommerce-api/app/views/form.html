@@ -1,0 +1,168 @@
+{{define "title"}}
+  CopyNPaste | {{index . "name"}}
+{{end}}
+
+{{define "body"}}
+    <div class="container">
+        <h2 id="page-title">{{index . "name"}}</h2>
+    </div>
+
+    <div class="container" id="container-form">
+        <div class="card">
+            <div class="card-tabs">
+                <ul class="tabs tabs-fixed-width">
+                <li class="tab"><a href="#register">Register</a></li>
+                <li class="tab"><a class="active" href="#login">Login</a></li>
+                </ul>
+            </div>
+            <div class="card-content grey lighten-4">
+                <div id="login">
+                    <!-- Login form -->
+                    <form class="col s12" id="login">
+                            <div class="row">
+                                <div class="input-field col s6 offset-s3">
+                                    <i class="material-icons prefix">account_circle</i>
+                                    <input id="user_login" name="username" type="text">
+                                    <label for="user_login">user</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s6 offset-s3">
+                                    <i class="material-icons prefix">vpn_key</i>
+                                    <input id="pass_login" name="password" type="password">
+                                    <label for="pass_login">Password</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <button class="btn waves-effect waves-light col s4 offset-s4" type="submit">Login
+                                    <i class="material-icons right">send</i>
+                                </button>
+                            </div>
+                    </form>
+                </div>
+                <div id="register">
+                        <!-- Register form -->
+                        <form class="col s12" id="register">
+                                <div class="row">
+                                    <div class="input-field col s6 offset-s3">
+                                        <i class="material-icons prefix">account_circle</i>
+                                        <input id="user_register" name="username" type="text">
+                                        <label for="user_register">User</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s6 offset-s3">
+                                        <i class="material-icons prefix">vpn_key</i>
+                                        <input id="pass_register" name="password" type="password">
+                                        <label for="pass_register">New Password</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <button class="btn waves-effect waves-light col s4 offset-s4" type="submit">Register
+                                        <i class="material-icons right">send</i>
+                                    </button>
+                                </div>
+                        </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+document.getElementById('login').addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+    const data = Array.from(formData.entries()).reduce((memo, pair) => ({
+        ...memo,
+        [pair[0]]: pair[1],
+    }), {});
+    var json;
+    json = JSON.stringify(data);
+
+    // Set up our request
+    var XHR = new XMLHttpRequest();
+
+    // Define what happens on after data submission
+    XHR.onreadystatechange = function (event) {
+        if (XHR.readyState == 4) {
+            if (XHR.status == 200) {
+                document.getElementById('page-title').innerHTML = "Your orders"
+                var jsonResponse = JSON.parse(XHR.responseText);
+
+                // get ticket's user
+                var XHRticket = new XMLHttpRequest();
+                XHRticket.onreadystatechange = function (eventTicket) {
+                    if (XHRticket.readyState == 4) {
+                        if (XHRticket.status == 200) {
+                            var jsonTicket = JSON.parse(XHRticket.responseText);
+
+                            document.getElementById('container-form').innerHTML = `
+                            <div class="row">
+                                <div class="col s3 m3">
+                                    <div class="card blue darken-1">
+                                    <div class="card-content white-text">
+                                        <span class="card-title">Last ticket for "`+jsonResponse["username"]+`"</span>
+                                        <p>Ticket ID: `+jsonTicket["ticket"]+`</p>
+                                        <p></p>
+                                    </div>
+                                    <div class="card-action">
+                                        <a href="#">More about this ticket</a>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                            `;
+
+
+                        } else {
+                            // Define what happens in case of error
+                            alert('Response: '+event.target.responseText);
+                        }
+                        
+                    }
+                };
+                XHRticket.open('GET', '//localhost:10005/ticket/'+jsonResponse["user_id"]+'?format=json');
+                XHRticket.setRequestHeader('Content-Type','application/json' );
+                XHRticket.send();
+            } else {
+                // Define what happens in case of error
+                alert('Response: '+event.target.responseText);
+            }
+            
+        }
+    };
+
+    XHR.open('POST', '//localhost:10005/login?format=json');
+    XHR.setRequestHeader('Content-Type','application/json' );
+
+    // The data sent is what the user provided in the form
+    XHR.send(json);
+});
+document.getElementById('register').addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+    const data = Array.from(formData.entries()).reduce((memo, pair) => ({
+        ...memo,
+        [pair[0]]: pair[1],
+    }), {});
+    var json;
+    json = JSON.stringify(data);
+
+    // Set up our request
+    var XHR = new XMLHttpRequest();
+
+    // Define what happens on after data submission
+    XHR.addEventListener('load', function(event) {
+        alert('Response: '+event.target.responseText);
+    });
+
+    XHR.open('POST', '//localhost:10005/register');
+    XHR.setRequestHeader('Content-Type','application/json' );
+
+    // The data sent is what the user provided in the form
+    XHR.send(json);
+});
+</script>
+{{end}}

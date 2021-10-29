@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+
+    api:
+        container_name: a5_tictactoe
+        build:
+            context: ../
+            dockerfile: deployments/Dockerfile
+        ports:
+            - "10005:10005"
+        networks:
+            - a5net
+        env_file:
+            - .dockers.env
+        depends_on:
+            - mysqldb
+        external_links:
+            - mysqldb:mysqldb
+        restart: always
+
+    mysqldb:
+        container_name: mysqldb
+        image: mysql:5.7
+        ports:
+          - "3307:3306"
+        volumes:
+            - db_data:/var/lib/mysql
+        env_file:
+            - .dockers.env
+        networks:
+            - a5net
+
+networks:
+    a5net:
+
+volumes:
+    db_data:

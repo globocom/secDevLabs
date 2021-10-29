@@ -1,0 +1,93 @@
+@font-face {
+    font-family: 'Oswald';
+    src: url('../fonts/Oswald-Regular.ttf') format('truetype');
+}
+
+* {
+    font-family: 'Oswald', sans-serif;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    background-image: url("../img/benderFull.png");
+    background-size:     cover;                      /* <------ */
+    background-repeat:   no-repeat;
+    background-position: center center; 
+    margin: 0;
+    color: #fff;
+    height: 100%;
+}
+
+.ticTacTitle {
+    margin-top: 2%;
+    margin-left: 2%;
+    font-size: 36px;
+    color: white;
+    font-weight: bold;
+}
+
+.login {
+    display: grid;
+    grid-template-columns: 60% 40%;
+
+}
+
+.loginTitle {
+    text-align: center;
+    font-size: 36px;
+    font-weight: bold;
+    color: cornflowerblue;
+}
+.loginBox {
+    border: 2px solid white;
+    padding: 0px 20px ;
+    border-radius: 40px 20px;
+    background-color: azure;
+    color: black;
+    height: 100%;
+    margin-top: 10%;
+    margin-right: 10%;
+}
+
+.messageBox {
+    border: 1px solid black;
+    padding: 5px;
+    margin-bottom: 10px;
+    background-color: lightpink;
+    border-radius: 10px 10px;
+}
+
+input[type=text] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=submit] {
+    width: 100%;
+    background-color: cornflowerblue; 
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+

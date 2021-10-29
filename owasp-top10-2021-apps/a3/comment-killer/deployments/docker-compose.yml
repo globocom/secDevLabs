@@ -1,0 +1,27 @@
+version: "3.7"
+
+networks:
+    a7_net:
+
+services:
+    app:
+        container_name: app-a7
+        build:
+            context: ../
+            dockerfile: deployments/app.Dockerfile
+        ports:
+            - "10007:3000"
+        stdin_open: true
+        networks:
+            - a7_net
+
+    api:
+        container_name: api-a7
+        build:
+            context: ../
+            dockerfile: deployments/api.Dockerfile
+        ports:
+            - "10017:10017"
+        command: "go run main.go"
+        networks:
+            - a7_net

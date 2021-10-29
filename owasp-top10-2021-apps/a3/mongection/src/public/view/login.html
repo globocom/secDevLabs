@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Mongection</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="icon" href="../images/favicon.png">
+    <style>
+    body {
+            background-image: url('../images/bg.jpg')
+        }
+
+        p {
+            text-align: center;
+            color: white;
+        }
+
+        div {
+            text-align: center;
+            color: white;
+        }
+    </style>
+    <script>
+        const sendRequest = async () => {
+            var email = await document.getElementById("email").value;
+            var password = await document.getElementById("password").value;
+            
+            const request = new XMLHttpRequest();
+            request.open("POST", "http://localhost:10001/login");
+            request.setRequestHeader("Content-Type", "application/json");
+
+            request.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var div = document.getElementById('data').innerHTML = this.responseText;
+                }
+            };
+
+            const payload = {
+                email: email,
+                password: password
+            }
+
+            const payloadJSON = JSON.stringify(payload);
+
+            payloadJSON.email = email;
+            payloadJSON.password = password
+
+            request.send(payloadJSON);
+        }
+    </script>
+</head>
+<body>
+    <div id="data">
+        <p>Email: <input type="text" name="email" id="email" value="" alt="Email"></p>
+        <p>Password: <input type="password" name="password" id="password" value="" alt="Password"></p>
+        <p><input type="button" value="Enviar" onclick="sendRequest()"></p>
+    </div>
+</body>
+</html>

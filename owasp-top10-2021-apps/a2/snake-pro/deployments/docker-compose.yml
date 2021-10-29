@@ -1,0 +1,38 @@
+version: '3'
+
+networks:
+    insecure_net:
+
+volumes:
+    mongo_vol:
+
+services:
+    api:
+        container_name: snake_pro_a3
+        build:
+            context: ../
+            dockerfile: deployments/api.Dockerfile
+        ports:
+            - "10003:10003"
+        environment:
+          SECRET_KEY: secret-key
+        networks:
+            - insecure_net
+        command: "go run main.go"
+        depends_on:
+            - mongodb
+        external_links:
+            - mongodb:mongodb
+
+    mongodb:
+        container_name: mongodb
+        build:
+            context: ../
+            dockerfile: deployments/mongo.Dockerfile
+        ports:
+          - "27017:27017"
+          - "27018:27018"
+        volumes:
+            - mongo_vol:/data/db
+        networks:
+            - insecure_net

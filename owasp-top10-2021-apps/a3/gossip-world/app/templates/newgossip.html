@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Gossip World - {{title}}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css')}}">
+
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/blog-post.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/newpost.css')}}">
+
+
+  </head>
+
+  <body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="/gossip">Gossip World</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/gossip">Home</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="/newgossip">New gossip
+                 <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+
+       <br>
+       <br>
+       <div class="div-post-size">
+       	<div class="panel panel-default">
+       		<div class="panel-body">
+                <br>
+                <br>
+
+                <center><h4>New gossip</h4></center>
+                <div class="container">
+                  {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                  	{% for category, message in messages %}
+                  	{% set class = "alert alert-" + category|string %}
+                  	<div class="{{ class }}">
+                  		<button type="button" class="close" data-dismiss="alert">&times;</button>
+                  		{{ message }}
+                  	</div>
+                  	{% endfor %}
+                    {% endif %}
+                  {% endwith %}
+               </div>
+       			<form action="/newgossip" name="newgossip" method="POST" >
+       				<center><input type="text" class="input-login" value="{{title}}" name= "title" aria-describedby="sizing-addon1"  maxlength="100" placeholder="Title"></center>
+       				<br>
+                  <center><input type="text" class="input-login" value="{{subtitle}}" name= "subtitle" aria-describedby="sizing-addon1"  maxlength="200" placeholder="Subtitle"></center>
+       				<br>
+                  <center><textarea class="input-login" value="{{text | safe}}" name= "text" aria-describedby="sizing-addon1"  maxlength="2000" rows="10" placeholder="Text"></textarea></center>
+       				<br>
+       				<input name="_csrf_token" type="hidden" value="{{ csrf_token() }}">
+       				<button type="submit" class="btn full-width" style="width: 100%; ">GO!</button>
+       			</form>
+       		</div>
+       	</div>
+       </div>
+       </br>
+       </br>
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Gossip World 2018</p>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  </body>
+
+</html>

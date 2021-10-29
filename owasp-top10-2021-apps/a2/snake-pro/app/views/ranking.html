@@ -1,0 +1,95 @@
+{{define "title"}}
+  SnakePro | {{index . "name"}}
+{{end}}
+
+{{define "body"}}
+<style>
+table.a {
+  table-layout: fixed;
+  width: 50%;
+}
+</style>
+    <div class="container">
+        <h2>{{index . "name"}}</h2>
+    </div>
+
+    <div class="container" id="container-form">
+        <div class="card">
+
+            <div class="card-content grey lighten-4">
+
+              <center>
+                <h3>Ranking</h3>
+              <table class="a">
+                <tr>
+                  <th style = "text-align: right;">User</th>
+                  <th style = "text-align: left;">Score</th>
+                </tr>
+                <tr>
+                  <td style = "text-align: right;">Vitória</td>
+                  <td style = "text-align: left;">19230</td>
+                </tr>
+                <tr>
+                  <td style = "text-align: right;">Rafael</td>
+                  <td style = "text-align: left;">18132</td>
+                </tr>
+                <tr>
+                  <td style = "text-align: right;">Manoel</td>
+                  <td style = "text-align: left;">10023</td>
+                </tr>
+                <tr>
+                  <td style = "text-align: right;">Carlos</td>
+                  <td style = "text-align: left;">9394</td>
+                </tr>
+                <tr>
+                  <td style = "text-align: right;">Daniel</td>
+                  <td style = "text-align: left;">9350</td>
+                </tr>
+                <tr>
+                  <td style = "text-align: right;">Raquel</td>
+                  <td style = "text-align: left;">9300</td>
+                </tr>
+                <tr>
+                  <td style = "text-align: right;">Claudio</td>
+                  <td style = "text-align: left;">9100</td>
+                </tr>
+                <tr>
+                  <td style = "text-align: right;">Felipe</td>
+                  <td style = "text-align: left;">9000</td>
+                </tr>
+                <tr>
+                  <td style = "text-align: right;">Silvia</td>
+                  <td style = "text-align: left;">8999</td>
+                </tr>
+                <tr>
+                  <td style = "text-align: right;">Rodrigo</td>
+                  <td style = "text-align: left;">8569</td>
+                </tr>
+                <tr>
+                  <td style = "text-align: right;">Diego</td>
+                  <td style = "text-align: left;">5003</td>
+                </tr>
+                <tr>
+                  <td style = "text-align: right;">Vicente</td>
+                  <td style = "text-align: left;">3690</td>
+                </tr>
+                <tr>
+                  <td style = "text-align: right;">Fred</td>
+                  <td style = "text-align: left;">2784</td>
+                </tr>
+                <tr>
+                  <td style = "text-align: right;">Pio</td>
+                  <td style = "text-align: left;">2780</td>
+                </tr>
+                <tr>
+                  <td style = "text-align: right;">Henrique</td>
+                  <td style = "text-align: left;">2749</td>
+                </tr>
+              </table>
+              <br/>
+              <a class="btn waves-effect waves-light col s4 offset-s4" href="/game/play">PLAY!</a>
+            </center>
+            </div>
+        </div>
+    </div>
+{{end}}

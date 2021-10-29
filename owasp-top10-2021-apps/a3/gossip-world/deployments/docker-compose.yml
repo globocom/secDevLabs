@@ -1,0 +1,45 @@
+version: "3.4"
+services:
+  app:
+    container_name: app-a7 
+    build:
+      context: ../
+      dockerfile: deployments/Dockerfile
+    ports:
+      - "10007:10007"
+    volumes:
+      - "../app/:/app"
+    environment:
+      SECRET_KEY: secretkey
+      MYSQL_ENDPOINT: mysqldb-a7
+      MYSQL_PASSWORD: pass
+      MYSQL_USER: user
+      MYSQL_DB: a7db
+    networks: 
+      - a7_net
+    depends_on:
+      - mysqldb-a7
+    external_links:
+      - mysqldb-a7:mysqldb-a7
+    restart: always
+    
+  mysqldb-a7:
+    container_name: mysqldb-a7
+    image: mariadb:10.6.3
+    ports:
+      - "3307:3307"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: a7db 
+      MYSQL_USER: user
+      MYSQL_PASSWORD: pass
+    networks:
+      - a7_net
+    volumes:
+      - storage-a7-database:/var/lib/mysql
+
+volumes:
+  storage-a7-database:
+
+networks:
+  a7_net:

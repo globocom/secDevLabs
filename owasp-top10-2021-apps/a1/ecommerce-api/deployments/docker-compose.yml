@@ -1,0 +1,49 @@
+version: '3'
+services:
+
+    a5api:
+        container_name: a5api
+        environment:
+            GOPATH: /go/
+            API_PORT: 10005
+            MONGO_HOST: mongodb
+            MONGO_DATABASE_NAME: DB
+            MONGO_PORT: 27017
+            MONGO_TIMEOUT: 60
+            MONGO_PORT: 27017
+            MONGO_TIMEOUT: 60
+        env_file:
+            - dockers.env
+        build:
+            context: ../
+            dockerfile: deployments/api.Dockerfile
+        command: "go run server.go"
+        volumes:
+            - docker_vol:/var/lib/docker
+        ports:
+          - "10005:10005"
+        networks:
+            - a5_net
+        depends_on:
+            - mongodb
+
+    mongodb:
+        container_name: mongodb
+        build:
+            context: ../
+            dockerfile: deployments/mongo.Dockerfile
+        env_file:
+            - dockers.env
+        ports:
+          - "27017:27017"
+          - "27018:27018"
+        volumes:
+            - mongo_vol:/data/db
+        networks:
+            - a5_net
+networks:
+    a5_net:
+
+volumes:
+    docker_vol:
+    mongo_vol:

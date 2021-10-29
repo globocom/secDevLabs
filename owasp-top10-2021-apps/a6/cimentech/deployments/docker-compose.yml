@@ -1,0 +1,36 @@
+version: '3.3'
+
+services:
+  drupal:
+    image: drupal:7.57
+    container_name: drupal
+    environment:
+      POSTGRES_PASSWORD: example
+    
+    ports:
+      - 80:80
+    volumes:
+      - ../app/html/sites/:/var/www/html/sites
+      - ../app/html/themes:/var/www/html/themes
+    restart: always
+    networks: 
+      - a9_net
+
+  db:
+    image: postgres:latest
+    container_name: a9db
+    environment:
+      POSTGRES_PASSWORD: example
+    ports:
+      - 5432:5432
+    networks: 
+      - a9_net
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ../app/dump.db:/docker-entrypoint-initdb.d/dump.sql
+
+volumes:
+  db_data:
+
+networks: 
+  a9_net:

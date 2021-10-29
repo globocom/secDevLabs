@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Gossip World - {{title}}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css')}}">
+
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/blog-post.css')}}">
+
+
+  </head>
+
+  <body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="/gossip">Gossip World</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/gossip">Home
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/newgossip">New gossip</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+
+    <!-- Page Content -->
+    <div class="container">
+
+      <div class="row">
+
+        <!-- Post Content Column -->
+        <div class="col-md-8">
+
+          <!-- Title -->
+          <h1 class="mt-4">{{post[3]}}</h1>
+
+          <!-- Author -->
+          <p class="lead">
+            by
+            <a href="#">{{post[2]}}</a>
+          </p>
+
+          <hr>
+
+          <!-- Date/Time -->
+          <p>Posted on {{post[5]}}</p>
+
+          <hr>
+
+          <!-- Post Content -->
+          <p class="lead">{{post[4]}}</p>
+
+          <p>{{post[1] | safe}}</p>
+
+          <hr>
+
+          <!-- Comments Form -->
+          <div class="card my-4">
+            <h5 class="card-header">Leave a comment:</h5>
+            <div class="container">
+            </br>
+              {% with messages = get_flashed_messages(with_categories=true) %}
+                 {% if messages %}
+                  {% for category, message in messages %}
+                  {% set class = "alert alert-" + category|string %}
+                  <div class="{{ class }}">
+                     <button type="button" class="close" data-dismiss="alert">&times;</button>
+                     {{ message }}
+                  </div>
+                  {% endfor %}
+                 {% endif %}
+              {% endwith %}
+            </div>
+            <div class="card-body">
+               <form action="/gossip/{{id}}" name="comment-form" method="POST">
+                <div class="form-group">
+                  <textarea class="form-control" name = "comment" rows="3"></textarea>
+                </div>
+                <input name="_csrf_token" type="hidden" value="{{ csrf_token() }}">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Single Comment -->
+          {% for comment in comments %}
+          <div class="media mb-4">
+            <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+            <div class="media-body">
+              <h5 class="mt-0">{{comment[0]}}</h5>
+              {{comment[1] | safe}}
+            </div>
+          </div>
+          {% endfor %}
+      </div>
+
+
+      <!-- Sidebar Widgets Column -->
+      <div class="col-md-4">
+
+        <!-- Search Widget -->
+        <form action="/gossip" name="search" method="GET">
+
+        <div class="card my-4">
+          <h5 class="card-header">Search</h5>
+          <div class="card-body">
+            <div class="input-group">
+              <input type="text" name="search" class="form-control" placeholder="Search...">
+              <span class="input-group-btn">
+                  <button class="btn btn-secondary" type="submit">Go!</button>
+              </span>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      </form>
+
+
+      </div>
+      <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Gossip World 2018</p>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  </body>
+
+</html>

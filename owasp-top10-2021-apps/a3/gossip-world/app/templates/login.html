@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Gossip World</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css')}}">
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css')}}">
+
+
+  </head>
+
+  <body>
+
+   <br>
+   <br>
+   <div class="div-size">
+   	<div class="panel panel-default">
+   		<div class="panel-body">
+   			<center><h2 class="login-font">Gossip World!</h2></center>
+            <br>
+            <br>
+
+            <center><h4>Login</h4></center>
+            <div class="container">
+               {% with messages = get_flashed_messages(with_categories=true) %}
+                 {% if messages %}
+               	{% for category, message in messages %}
+               	{% set class = "alert alert-" + category|string %}
+               	<div class="{{ class }}">
+               		<button type="button" class="close" data-dismiss="alert">&times;</button>
+               		{{ message }}
+               	</div>
+               	{% endfor %}
+                 {% endif %}
+               {% endwith %}
+            </div>
+
+
+   			<form action="/login" name="login" method="POST" >
+   				<input name="_csrf_token" type="hidden" value="{{ csrf_token() }}">
+   				<p class="text-danger">{{message}}</p>
+   				<center><input type="text" class="input-login" name= "username" aria-describedby="sizing-addon1"  maxlength="100" placeholder="Username"></center>
+   				<br>
+   				<center><input type="password" class="input-login" name= "password" aria-describedby="sizing-addon1"  maxlength="200" placeholder="Password"></center>
+   				<br>
+               <center><a href="/register">Create a new free account!</a></p></center>
+   				<input name="_csrf_token" type="hidden" value="{{ csrf_token() }}">
+   				<button type="submit" class="btn full-width" style="width: 100%; ">GO!</button>
+   			</form>
+   		</div>
+   	</div>
+   </div>
+   </br>
+   </br>
+</body>

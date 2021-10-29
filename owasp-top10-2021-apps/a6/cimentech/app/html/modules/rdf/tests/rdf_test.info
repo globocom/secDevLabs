@@ -1,0 +1,13 @@
+name = "RDF module tests"
+description = "Support module for RDF module testing."
+package = Testing
+version = VERSION
+core = 7.x
+hidden = TRUE
+dependencies[] = blog
+
+; Information added by Drupal.org packaging script on 2018-02-21
+version = "7.57"
+project = "drupal"
+datestamp = "1519235152"
+
