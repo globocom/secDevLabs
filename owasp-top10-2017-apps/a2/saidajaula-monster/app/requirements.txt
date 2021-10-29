@@ -6,7 +6,7 @@ Flask-Cors==3.0.7
 itsdangerous==1.1.0
 Jinja2==2.10
 MarkupSafe==1.1.0
-mysqlclient==1.3.13
+mysqlclient==2.0.3
 six==1.11.0
 visitor==0.1.3
 Werkzeug==0.14.1
