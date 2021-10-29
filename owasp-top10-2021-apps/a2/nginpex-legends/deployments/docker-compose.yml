@@ -1,0 +1,13 @@
+version: "3"
+services:
+  app:
+    platform: linux/x86_64
+    container_name: app-a2
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "10002:10002"
+    volumes:
+      - "../app/:/app"
+    restart: always
