@@ -2,7 +2,7 @@
 # Golden hat society
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/chinchila/secDevLabs/lab-smuggling/owasp-top10-2021-apps/a6/golden-hat/images/img1.png"/>
+    <img src="images/img1.png"/>
 </p>
 
 Golden hat society is an application made with python that has a reverse proxy, mitmproxy, blocking the route `/golden.secret` that must be accessed only by whom is inside the docker VPN.
@@ -51,13 +51,13 @@ Now that you know the purpose of this app, what could possibly go wrong? The fol
 First time acessing the app on port 10006:
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/chinchila/secDevLabs/lab-smuggling/owasp-top10-2021-apps/a6/golden-hat/images/img1.png"/>
+    <img src="images/img1.png"/>
 </p>
 
 Once we try reaching the `/golden.secret` we can see interesting headers:
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/chinchila/secDevLabs/lab-smuggling/owasp-top10-2021-apps/a6/golden-hat/images/attack1.png"/>
+    <img src="images/attack1.png"/>
 </p>
 
 As we can see this `Via: mitmproxy/5.3.0` helps us with the recon. Now that we know what is running on the server we can search for CVEs on this version of mitmproxy. Once we found the CVE-2021-39214, we can make an exploit to this vulnerability.
@@ -69,7 +69,7 @@ if "chunked" in headers.get("transfer-encoding", "").lower():
     return None
 ```
 
-As we can see this piece of code is responsible for the vulnerability. Now that we know that the proxy proccess any request as chunked that contains the chunked keyword, we can craft an request that the proxy will understand as `Transfer-Encoding` chunked and the gunicorn backend will understand as `Content-Length`.
+As we can see this piece of code is responsible for the vulnerability. Now that we know that the proxy proccess any request as chunked that contains the chunked keyword, we can craft an request that the proxy will understand as `Transfer-Encoding` chunked and the gunicorn backend will understand as `Content-Length`. This request can be sent on burp repeater (you must disable the option `update content-length`), telnet, netcat or any type of connection that allow to send texts over sockets.
 
 ```
 GET /w HTTP/1.1
@@ -96,14 +96,14 @@ After running this payload as a request we can see the secret page:
 
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/chinchila/secDevLabs/lab-smuggling/owasp-top10-2021-apps/a6/golden-hat/images/attack2.png"/>
+    <img src="images/attack2.png"/>
 </p>
 
 This vulnerability is interesting because you can poison other clients requests and smug them to do what you want!
 
 ## Secure this app
 
-How would you migitate this vulnerability? After your changes, an attacker should not be able to:
+How would you mitigate this vulnerability? After your changes, an attacker should not be able to:
 
 - Bypass proxy rules.
 
