@@ -1,5 +1,0 @@
-app/backend/.classpath
-app/backend/target/**
-app/backend/.settings/**
-app/backend/.project
-app/backend/src/main/resources/application.properties
