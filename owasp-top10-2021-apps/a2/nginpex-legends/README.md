@@ -2,7 +2,7 @@
 # Nginpex Legends
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/chinchila/secDevLabs/lab-smuggling/owasp-top10-2021-apps/a6/golden-hat/images/img1.png"/>
+    <img src="images/img1.png"/>
 </p>
 
 This app is about a new game that has came out this year! On the website page you can download the game updates but only administrators can upload a new patch.
@@ -39,73 +39,59 @@ make install
 To properly understand how this application works, you can follow these simple steps:
 
 * Visit the homepage.
+* Some links to download game patches are available.
+* You can also upload a patch to see if it is valid.
 
 ## Attack narrative
 
-Now that you know the purpose of this app, what could possibly go wrong? The following section describes how an attacker could identify and eventually find sensitive information about the app or it's users. We encourage you to follow these steps and try to reproduce them on your own to better understand the attack vector! 😜
+Now that you know the purpose of this app, what could possibly go wrong? The following section describes how an attacker could execute arbitrary commands on the server. We encourage you to follow these steps and try to reproduce them on your own to better understand the attack vector! 😜
 
 ### 👀
 
-#### Use of vulnerable mitmproxy version allows HTTP desync attacks
+#### Use of wrong cryptographic primitives allow malicious files to be uploaded
 
-First time acessing the app on port 10006:
-
-<p align="center">
-    <img src="https://raw.githubusercontent.com/chinchila/secDevLabs/lab-smuggling/owasp-top10-2021-apps/a6/golden-hat/images/img1.png"/>
-</p>
-
-Once we try reaching the `/golden.secret` we can see interesting headers:
+First time acessing the app on port 10002:
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/chinchila/secDevLabs/lab-smuggling/owasp-top10-2021-apps/a6/golden-hat/images/attack1.png"/>
+    <img src="images/img1.png"/>
 </p>
 
-As we can see this `Via: mitmproxy/5.3.0` helps us with the recon. Now that we know what is running on the server we can search for CVEs on this version of mitmproxy. Once we found the CVE-2021-39214, we can make an exploit to this vulnerability.
-
-Let's take a look on the mitmproxy source code, [TAG 5.3.0](https://github.com/mitmproxy/mitmproxy/tree/v5.3.0) at file [/mitmproxy/net/http/http1/read.py:L209](https://github.com/mitmproxy/mitmproxy/blob/a738b335a36b58f2b30741d76d9fe41866309299/mitmproxy/net/http/http1/read.py#L209):
-
-```python
-if "chunked" in headers.get("transfer-encoding", "").lower():
-    return None
-```
-
-As we can see this piece of code is responsible for the vulnerability. Now that we know that the proxy proccess any request as chunked that contains the chunked keyword, we can craft an request that the proxy will understand as `Transfer-Encoding` chunked and the gunicorn backend will understand as `Content-Length`.
-
-```
-GET /w HTTP/1.1
-Host: 127.0.0.1:10006
-Transfer-Encoding: chunkedasd
-Content-Length: 4
-
-35
-GET /golden.secret HTTP/1.1
-Host: 127.0.0.1:8000
-
-
-0
-
-GET / HTTP/1.1
-Host: 127.0.0.1:10006
-
-
-```
-
-The first request forces a 404 error. The frontend(proxy) will parse the request as a normal request with body until the 0. The backend will process the first request until 35 and then will parse the request to `/golden.secret` poisoning the next socket. Then we just put a new alignment request at the end to poison a socket that we control.
-
-After running this payload as a request we can see the secret page:
-
+We can see two patches were released and are available to download. If we see any patch structure with hexdump and binwalk we are able to notice that it is 66 bytes of something and then a zip file.
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/chinchila/secDevLabs/lab-smuggling/owasp-top10-2021-apps/a6/golden-hat/images/attack2.png"/>
+    <img src="images/attack1.png"/>
 </p>
 
-This vulnerability is interesting because you can poison other clients requests and smug them to do what you want!
+As both files have the same 33 first bits, this can be some sort of signature that is being used reusing nonces. Since people that make video games like a lot of DSA based schemes (ref. PS3), then we can try a nonce reuse exploit with those files.
+
+On file `exploit.py` we can see a full exploit to this failure. The explanation is that if we reuse a nonce `k` with the same private key, we will produce, for two messages `z1` and `z2` two signatures `sig(z1) = (r, s1)` and `sig(z2) = (r, s2)` and then we can do some math tricks to recover the secret from the private key. Where n is the order of the elliptic curve:
+
+```
+s1 = k^-1 (z1+r*secret) mod n
+s2 = k^-1 (z2+r*secret) mod n
+
+s1*k = z1+r*secret mod n
+s2*k = z2+r*secret mod n
+
+# subtracting the equations
+
+k*(s1 - s2) = z1+r*secret - (z2+r*secret) mod n
+k = (z1-z2)/(s1-s2) mod n
+
+# Recovering private key
+
+secret = (s1*k-z1)/k mod n
+```
+
+This secret we discovered is the secret multiplier from the private key!
+
+Since we know that the signature is 32 bytes, the elliptic curve modulus is 256 bits, since we don't know much elliptic curves considered safe with this number of bits, it is crucial to try NIST-P256 as our curve. Trying this we can build the file `exploit/exploit.py`, paste both patches on the same directory, create a file named `exec.py` and zip this to `malware.zip`. Then we run the exploit and we can upload a file that will execute `exec.py` on the server!
 
 ## Secure this app
 
 How would you migitate this vulnerability? After your changes, an attacker should not be able to:
 
-- Bypass proxy rules.
+- Upload malicious patches
 
 ## PR solutions
 
