@@ -4,26 +4,26 @@
     <img src="images/gamesirados-banner.png"/>
 </p>
 
-Games Irados is a simple Python web application that contains an example of an Insufficient Logging & Monitoring vulnerability and, its main goal is to demonstrate how important it is to properly log all requests made to the application and how easily malicious requests could go unnoticed.
+Games Irados is a simple Python web application that contains an example of a Security Logging and Monitoring Failure vulnerability and, its main goal is to demonstrate how important it is to properly log all requests made to the application and how easily malicious requests could go unnoticed.
 
 ## Index
 
-- [Definition](#what-is-insufficient-logging-&-monitoring)
+- [Definition](#what-is-security-logging-&-monitoring-failure)
 - [Setup](#setup)
 - [Attack narrative](#attack-narrative)
 - [Objectives](#secure-this-app)
 - [Solutions](#pr-solutions)
 - [Contributing](#contributing)
 
-## What is Insufficient Logging & Monitoring?
+## What is Security Logging and Monitoring Failure?
 
-Insufficient logging and monitoring, coupled with missing or ineffective integration with incident response, allows attackers to further attack systems, maintain persistence, pivot to more systems, and tamper, extract, or destroy data. Most breach studies show time to detect a breach is over 200 days, typically detected by external parties rather than internal processes or monitoring.
+Security Logging and Monitoring failure, coupled with missing or ineffective integration with incident response, allows attackers to further attack systems, maintain persistence, pivot to more systems, and tamper, extract, or destroy data. Most breach studies show time to detect a breach is over 200 days, typically detected by external parties rather than internal processes or monitoring.
 
-The main goal of this app is to discuss how **Insufficient Logging & Monitoring** can be exploited and to encourage developers to send secDevLabs Pull Requests on how they would mitigate these flaws.
+The main goal of this app is to discuss how **Security Logging and Monitoring Failure** can be exploited and to encourage developers to send secDevLabs Pull Requests on how they would mitigate these flaws.
 
 ## Setup
 
-To start this intentionally **insecure application**, you will need [Docker][Docker Install] and [Docker Compose][Docker Compose Install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
+To start this intentionally **insecure application**, you will need [Docker][docker install] and [Docker Compose][docker compose install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
 
 ```sh
 cd secDevLabs/owasp-top10-2017-apps/a10/games-irados
@@ -33,7 +33,7 @@ cd secDevLabs/owasp-top10-2017-apps/a10/games-irados
 make install
 ```
 
-Then simply visit [localhost:10010][App] ! 😆
+Then simply visit [localhost:10010][app] ! 😆
 
 ## Get to know the app 🎮
 
@@ -52,8 +52,9 @@ Now that you know the purpose of this app, what could go wrong? The following se
 #### Poor application log might mask malicious requests made to the server
 
 To verify how an application handles events that are considered malicious, two attacks will be done to test it:
-* Brute forcing the login screen
-* Brute forcing the coupon validation screen
+
+- Brute forcing the login screen
+- Brute forcing the coupon validation screen
 
 Initially, we begin the first attack by sending an intentionally wrong login attempt, as shown by the image below:
 
@@ -102,7 +103,7 @@ Before executing the attack, you can open a new tab in your terminal and type th
 docker logs app-a10 -f
 ```
 
-In the `Payloads` tab, simply choose the wordlist from `Load...` option and then the attack may be performed via the `Start attack` button. 
+In the `Payloads` tab, simply choose the wordlist from `Load...` option and then the attack may be performed via the `Start attack` button.
 
 <p align="center">
     <img src="images/attack11.png"/>
@@ -152,12 +153,12 @@ However, we can also confirm that little information is being logged at the serv
 
 ## Secure this app
 
-How would you mitigate this vulnerability? After your changes, the new log system must give us: 
+How would you mitigate this vulnerability? After your changes, the new log system must give us:
 
-* Who did the request
-* What happened
-* When did it happen
-* Where did it happen
+- Who did the request
+- What happened
+- When did it happen
+- Where did it happen
 
 ## PR solutions
 
@@ -167,9 +168,9 @@ How would you mitigate this vulnerability? After your changes, the new log syste
 
 We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](../../../docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉
 
-[Docker Install]:  https://docs.docker.com/install/
-[Docker Compose Install]: https://docs.docker.com/compose/install/
-[App]: http://localhost:10010
-[secDevLabs]: https://github.com/globocom/secDevLabs
-[2]:https://github.com/globocom/secDevLabs/tree/master/owasp-top10-2017-apps/a10/games-irados
-[Burp Suite]: https://portswigger.net/burp
+[docker install]: https://docs.docker.com/install/
+[docker compose install]: https://docs.docker.com/compose/install/
+[app]: http://localhost:10010
+[secdevlabs]: https://github.com/globocom/secDevLabs
+[2]: https://github.com/globocom/secDevLabs/tree/master/owasp-top10-2017-apps/a10/games-irados
+[burp suite]: https://portswigger.net/burp

@@ -4,26 +4,26 @@
     <img src="images/img1.png"/>
 </p>
 
-Saidajaula Monstro Fit is a Flask API built to demonstrate how a malicious user could exploit a Broken Authentication vulnerability and escalate his privileges.
+Saidajaula Monstro Fit is a Flask API built to demonstrate how a malicious user could exploit an Identity and Authentication Failure vulnerability and escalate his privileges.
 
 ## Index
 
-- [Definition](#what-is-broken-authentication?)
+- [Definition](#what-is-identity-&-authentication-failure?)
 - [Setup](#setup)
 - [Attack narrative](#attack-narrative)
 - [Objectives](#secure-this-app)
 - [Solutions](#pr-solutions)
 - [Contributing](#contributing)
 
-## What is Broken Authentication?
+## What is Identity and Authentication Failure?
 
 Application functions related to authentication and session management are often implemented incorrectly, allowing attackers to compromise passwords, keys, or session tokens, or to exploit other implementation flaws to assume other users’ identities temporarily or permanently.
 
-The main goal of this app is to discuss how **Broken Authentication** vulnerabilities can be exploited and to encourage developers to send secDevLabs Pull Requests on how they would mitigate these flaws.
+The main goal of this app is to discuss how **Identity and Authentication Failure** vulnerabilities can be exploited and to encourage developers to send secDevLabs Pull Requests on how they would mitigate these flaws.
 
 ## Setup
 
-To start this intentionally **insecure application**, you will need [Docker][Docker Install] and [Docker Compose][Docker Compose Install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
+To start this intentionally **insecure application**, you will need [Docker][docker install] and [Docker Compose][docker compose install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
 
 ```sh
 cd secDevLabs/owasp-top10-2017-apps/a2/saidajaula-monster
@@ -33,7 +33,7 @@ cd secDevLabs/owasp-top10-2017-apps/a2/saidajaula-monster
 make install
 ```
 
-Then simply visit [localhost:10002][App] ! 😆
+Then simply visit [localhost:10002][app] ! 😆
 
 ## Get to know the app 🏋️‍
 
@@ -92,7 +92,7 @@ Knowing how the cookie is being generated, a malicious user could create his own
     <img src="images/attack5.png"/>
 </p>
 
-It is also possible to generate this cookie from terminal using `shasum` command: 
+It is also possible to generate this cookie from terminal using `shasum` command:
 
 ```sh
 echo -n '{"permissao": 1, "username": "daniel"}' | shasum -a 256
@@ -128,7 +128,7 @@ curl -v --cookie "sessionId=eyJwZXJtaXNzYW8iOiAxLCAidXNlcm5hbWUiOiAiZGFuaWVsIn0u
 
 How would you mitigate this vulnerability? After your changes, an attacker should not be able to:
 
-* Log in as admin or any other user, rather than himself, by modifying the session cookie.
+- Log in as admin or any other user, rather than himself, by modifying the session cookie.
 
 ## PR solutions
 
@@ -138,7 +138,7 @@ How would you mitigate this vulnerability? After your changes, an attacker shoul
 
 We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](../../../docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉
 
-[Docker Install]:  https://docs.docker.com/install/
-[Docker Compose Install]: https://docs.docker.com/compose/install/
-[App]: http://localhost:10002
-[Dirb]: https://tools.kali.org/web-applications/dirb
+[docker install]: https://docs.docker.com/install/
+[docker compose install]: https://docs.docker.com/compose/install/
+[app]: http://localhost:10002
+[dirb]: https://tools.kali.org/web-applications/dirb

@@ -4,26 +4,26 @@
     <img src="images/Amarelo-Designs.png"/>
 </p>
 
-This is a simple web application built with Flask that contains an example of an Insecure Deserialization vulnerability and, its main goal is to describe how a malicious user could exploit a vulnerability, intentionally installed on Amarelo Designs from secDevLabs, to obtain blind remote code execution.
+This is a simple web application built with Flask that contains an example of an Software and Data Integrity Failure vulnerability and, its main goal is to describe how a malicious user could exploit a vulnerability, intentionally installed on Amarelo Designs from secDevLabs, to obtain blind remote code execution.
 
 ## Index
 
-- [Definition](#what-is-insecure-deserialization)
+- [Definition](#what-is-software-&-data-integrity-failure)
 - [Setup](#setup)
 - [Attack narrative](#attack-narrative)
 - [Objectives](#secure-this-app)
 - [Solutions](#pr-solutions)
 - [Contributing](#contributing)
 
-## What is Insecure Deserialization?
+## What is Software and Data Integrity Failure?
 
 Serialization is the process of translating data structures or object state, into a format that can be stored or transmitted and reconstructed later. Insecure deserialization often leads to remote code execution. Even if deserialization flaws do not result in remote code execution, they can be used to perform attacks, including replay attacks, injection attacks, and privilege escalation attacks.
 
-The main goal of this app is to discuss how **Insecure Deserialization** vulnerabilities can be exploited and to encourage developers to send secDevLabs Pull Requests on how they would mitigate these flaws.
+The main goal of this app is to discuss how **Software and Data Integrity Failure** vulnerabilities can be exploited and to encourage developers to send secDevLabs Pull Requests on how they would mitigate these flaws.
 
 ## Setup
 
-To start this intentionally **insecure application**, you will need [Docker][Docker Install] and [Docker Compose][Docker Compose Install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
+To start this intentionally **insecure application**, you will need [Docker][docker install] and [Docker Compose][docker compose install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
 
 ```sh
 cd secDevLabs/owasp-top10-2017-apps/a8/amarelo-designs
@@ -33,7 +33,7 @@ cd secDevLabs/owasp-top10-2017-apps/a8/amarelo-designs
 make install
 ```
 
-Then simply visit [localhost:10008][App] ! 😆
+Then simply visit [localhost:10008][app] ! 😆
 
 ## Get to know the app 🎨
 
@@ -71,7 +71,7 @@ When accessed, the `/admin` page exposes an authentication screen, as depicted b
 </p>
 
 ### 🔥
- 
+
 A quick test utilizing `admin` as the credentials for the `Username` and `Password` fields, gives us acess to an Admin Dashboard, as shown below:
 
 <img src="images/attack4.png" align="center"/>
@@ -85,7 +85,6 @@ After decoding the cookie, which is in base64, the following structure was found
 <img src="images/attack6.png" align="center"/>
 
 The structure found is very similar to the ones created with the [Pickle] function. We can be certain of that by having a look at the app's [code][3]. The hint is now confirmed, the app uses Pickle, as we can see from the image below:
-
 
 <img src="images/attack7.png" align="center"/>
 
@@ -152,7 +151,7 @@ $ nc localhost 9051
 
 How would you mitigate this vulnerability? After your changes, an attacker should not be able to:
 
-* Execute code remotely through a serialization vulnerability
+- Execute code remotely through a serialization vulnerability
 
 ## PR solutions
 
@@ -162,15 +161,15 @@ How would you mitigate this vulnerability? After your changes, an attacker shoul
 
 We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](../../../docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉
 
-[Docker Install]:  https://docs.docker.com/install/
-[Docker Compose Install]: https://docs.docker.com/compose/install/
-[App]: http://localhost:10008
-[secDevLabs]: https://github.com/globocom/secDevLabs
+[docker install]: https://docs.docker.com/install/
+[docker compose install]: https://docs.docker.com/compose/install/
+[app]: http://localhost:10008
+[secdevlabs]: https://github.com/globocom/secDevLabs
 [2]: https://github.com/globocom/secDevLabs/tree/master/owasp-top10-2017-apps/a8/amarelo-designs
-[Dirb]: https://tools.kali.org/web-applications/dirb
-[Burp Suite]: https://en.wikipedia.org/wiki/Burp_suite
+[dirb]: https://tools.kali.org/web-applications/dirb
+[burp suite]: https://en.wikipedia.org/wiki/Burp_suite
 [3]: https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2017-apps/a8/amarelo-designs/app/app.py
-[Pickle]: https://docs.python.org/2/library/pickle.html
+[pickle]: https://docs.python.org/2/library/pickle.html
 [netcat]: https://en.wikipedia.org/wiki/Netcat
 [4]: https://github.com/globocom/secDevLabs/blob/master/docs/Dirb.md
 [wordlist]: https://github.com/danielmiessler/SecLists/blob/master/Discovery/Web-Content/common.txt

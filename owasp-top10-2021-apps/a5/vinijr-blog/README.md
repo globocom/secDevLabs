@@ -4,7 +4,7 @@
     <img src="images/blog-fe.png"/>
 </p>
 
-This is a simple PHP web application that contains an example of an XML External Entity (XXE) vulnerability and the main goal of this app is to describe how a malicious user could exploit it.
+This is a simple PHP web application that contains an example of a Security Misconfiguration (XXE) vulnerability and the main goal of this app is to describe how a malicious user could exploit it.
 
 ## Index
 
@@ -23,7 +23,7 @@ The main goal of this app is to discuss how **XXE** vulnerabilities can be explo
 
 ## Setup
 
-To start this intentionally **insecure application**, you will need [Docker][Docker Install] and [Docker Compose][Docker Compose Install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
+To start this intentionally **insecure application**, you will need [Docker][docker install] and [Docker Compose][docker compose install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
 
 ```sh
 cd secDevLabs/owasp-top10-2017-apps/a4/vinijr-blog
@@ -33,7 +33,7 @@ cd secDevLabs/owasp-top10-2017-apps/a4/vinijr-blog
 make install
 ```
 
-Then simply visit [localhost:10004][App] ! 😆
+Then simply visit [localhost:10004][app] ! 😆
 
 ## Get to know the app ⚽️
 
@@ -57,8 +57,6 @@ After reviewing the inputs from the app, it is possible to identify that the sec
 Using [Burp Suite](https://portswigger.net/burp) proxy to intercept this request (POST to contact.php) reveals that the message is being built using an XML (if you need any help setting up your proxy you should check this [guide](https://support.portswigger.net/customer/portal/articles/1783066-configuring-firefox-to-work-with-burp)):
 
 <img src="images/attack-2.png" align="center"/>
-
-
 
 To replicate this POST using [curl](https://curl.haxx.se/), create the following file `payload.xml`:
 
@@ -107,12 +105,11 @@ curl -d @evilxml.xml localhost:10004/contact.php ; echo
 
 <img src="images/attack-4.png" align="center"/>
 
-
 ## Secure this app
 
 How would you mitigate this vulnerability? After your changes, an attacker should not be able to:
 
-* Extract data from the server through the method showed above.
+- Extract data from the server through the method showed above.
 
 ## PR solutions
 
@@ -122,6 +119,6 @@ How would you mitigate this vulnerability? After your changes, an attacker shoul
 
 We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](../../../docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉
 
-[Docker Install]:  https://docs.docker.com/install/
-[Docker Compose Install]: https://docs.docker.com/compose/install/
-[App]: http://localhost:10004
+[docker install]: https://docs.docker.com/install/
+[docker compose install]: https://docs.docker.com/compose/install/
+[app]: http://localhost:10004

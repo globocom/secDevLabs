@@ -4,7 +4,7 @@
     <img src="images/img1.png"/>
 </p>
 
-Comment-killer is a simple ReactJS app, which has Cross-Site Scripting vulnerability and its main goal is to describe how a malicious user could exploit it on this purposefully vulnerable app.
+Comment-killer is a simple ReactJS app, which has a Injection (XSS) vulnerability and its main goal is to describe how a malicious user could exploit it on this purposefully vulnerable app.
 
 # Index
 
@@ -63,6 +63,7 @@ After inspecting the application, it is possible to identify that the comment en
 ```
 
 Adding a new comment to a post:
+
 <p align="center">
     <img src="images/img2.png"/>
 </p>
@@ -139,7 +140,7 @@ Meanwhile, with the API up and running, we're able to receive the user's email, 
 
 How would you mitigate this vulnerability? After your changes, an attacker should not be able to:
 
--   Execute scripts through input fields
+- Execute scripts through input fields
 
 <a name="Sol"></a>
 

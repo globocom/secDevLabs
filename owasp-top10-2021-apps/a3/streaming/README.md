@@ -1,10 +1,10 @@
- # Streaming
+# Streaming
 
 <p align="center">
     <img src="images/banner.png"/>
 </p>
 
-Streaming is a Angular/Spring Boot app that contains an example of multiple Cross-Site Scripting vulnerabilities and its main goal is to describe how a malicious user could exploit them on this purposefully vulnerable app.
+Streaming is a Angular/Spring Boot app that contains an example of multiple Injection (XSS) vulnerabilities and its main goal is to describe how a malicious user could exploit them on this purposefully vulnerable app.
 
 ## Index
 
@@ -23,7 +23,7 @@ The main goal of this app is to discuss how **Cross-Site Scripting** vulnerabili
 
 ## Setup
 
-To start this intentionally **insecure application**, you will need [Docker][Docker Install] and [Docker Compose][Docker Compose Install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
+To start this intentionally **insecure application**, you will need [Docker][docker install] and [Docker Compose][docker compose install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
 
 ```sh
 cd secDevLabs/owasp-top10-2017-apps/a7/streaming
@@ -33,7 +33,7 @@ cd secDevLabs/owasp-top10-2017-apps/a7/streaming
 make install
 ```
 
-Then simply visit [localhost:10007][App] ! 😆
+Then simply visit [localhost:10007][app] ! 😆
 
 ## Get to know the app
 
@@ -45,19 +45,20 @@ Now that you know the purpose of this app, what could go wrong? The following se
 
 #### Non-sanitization of user input allows for cross-site scripting
 
-After reviewing `buildLiveHTMLMessage(message)` from [`play.component.ts`]((https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2017-apps/a7/streaming/app/frontend/src/app/lives/play/play.component.ts#)) file, it was possible to identify that loaded messages and username are not sanitized and can be executed on a web browser (as shown in the message bellow).
+After reviewing `buildLiveHTMLMessage(message)` from [`play.component.ts`](<(https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2017-apps/a7/streaming/app/frontend/src/app/lives/play/play.component.ts#)>) file, it was possible to identify that loaded messages and username are not sanitized and can be executed on a web browser (as shown in the message bellow).
 
 <p align="center">
     <img src="images/vulnerable-function.png"/>
 </p>
 
-The following images show this behavior when the following text  is used as an input on these fields:
+The following images show this behavior when the following text is used as an input on these fields:
 
 ```
 <b><i>Hi</i></b>
 ```
 
 Adding a new message on chat:
+
    <p align="center">
      <img src="images/attack-1.png"/>
    </p>
@@ -65,7 +66,7 @@ Adding a new message on chat:
    <p align="center">
      <img src="images/attack-2.png"/>
    </p>
-   
+
 
 The missing message validation (that will be loaded by another users) allows a malicious user to insert some scripts that will persist in the server and be executed on the victims' browser every time they access the routes that contain these scripts.
 
@@ -74,12 +75,15 @@ The missing message validation (that will be loaded by another users) allows a m
 An attacker may abuse these flaws by generating a malicious HTML/JS code and sending it to other users. To demonstrate this, the following code example will redirect all users that are watching the channel to another channel.
 
 ```html
-<img src="wrongImage.png" onError="window.location.href='http://localhost:10007/play/@mr.robot'"/>
+<img
+  src="wrongImage.png"
+  onError="window.location.href='http://localhost:10007/play/@mr.robot'"
+/>
 ```
 
 This code redirect all users to another page, in this case is to **/play/@mr.robot** route.
 
-When the message is loaded by the victim, the browser will read it and try to load the image, however, the path is invalid. Subsequently, the JavaScript function ```window.location.href``` will be executed.
+When the message is loaded by the victim, the browser will read it and try to load the image, however, the path is invalid. Subsequently, the JavaScript function `window.location.href` will be executed.
 
 The following gif shows the attacker sending the malicious code to redirect victims (that are watching **@matthewpets** live) to **/play/@mr.robot** route:
 
@@ -91,7 +95,7 @@ The following gif shows the attacker sending the malicious code to redirect vict
 
 How would you mitigate this vulnerability? After your changes, an attacker should not be able to:
 
-* Execute scripts through input fields
+- Execute scripts through input fields
 
 ## PR solutions
 
@@ -101,6 +105,6 @@ How would you mitigate this vulnerability? After your changes, an attacker shoul
 
 We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](../../../docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉
 
-[Docker Install]:  https://docs.docker.com/install/
-[Docker Compose Install]: https://docs.docker.com/compose/install/
-[App]: http://localhost:10007
+[docker install]: https://docs.docker.com/install/
+[docker compose install]: https://docs.docker.com/compose/install/
+[app]: http://localhost:10007

