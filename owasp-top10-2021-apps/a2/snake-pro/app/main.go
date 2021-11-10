@@ -8,9 +8,9 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a3/snake-pro/app/api"
-	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a3/snake-pro/app/config"
-	db "github.com/globocom/secDevLabs/owasp-top10-2017-apps/a3/snake-pro/app/db/mongo"
+	"github.com/globocom/secDevLabs/owasp-top10-2021-apps/a2/snake-pro/app/api"
+	"github.com/globocom/secDevLabs/owasp-top10-2021-apps/a2/snake-pro/app/config"
+	db "github.com/globocom/secDevLabs/owasp-top10-2021-apps/a2/snake-pro/app/db/mongo"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	"github.com/spf13/viper"

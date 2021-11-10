@@ -26,7 +26,7 @@ The main goal of this app is to discuss how **Cryptographic Failure** vulnerabil
 To start this intentionally **insecure application**, you will need [Docker][docker install] and [Docker Compose][docker compose install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
 
 ```sh
-cd secDevLabs/owasp-top10-2017-apps/a3/snake-pro
+cd secDevLabs/owasp-top10-2021-apps/a2/snake-pro
 ```
 
 ```sh

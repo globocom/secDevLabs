@@ -7,9 +7,9 @@ import (
 	"time"
 
 	jwt "github.com/dgrijalva/jwt-go"
-	db "github.com/globocom/secDevLabs/owasp-top10-2017-apps/a3/snake-pro/app/db/mongo"
-	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a3/snake-pro/app/pass"
-	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a3/snake-pro/app/types"
+	db "github.com/globocom/secDevLabs/owasp-top10-2021-apps/a2/snake-pro/app/db/mongo"
+	"github.com/globocom/secDevLabs/owasp-top10-2021-apps/a2/snake-pro/app/pass"
+	"github.com/globocom/secDevLabs/owasp-top10-2021-apps/a2/snake-pro/app/types"
 	"github.com/google/uuid"
 	"github.com/labstack/echo"
 )
