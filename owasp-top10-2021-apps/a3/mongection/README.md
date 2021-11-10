@@ -1,4 +1,3 @@
-
 # Mongection
 
 <p align="center"><img  src="images/a1-banner.png"/></p>
@@ -22,17 +21,17 @@ The main goal of this project is to discuss how **NoSQL Injection** vulnerabilit
 
 ## Setup
 
-To start this intentionally **insecure application**, you will need [Docker][Docker Install] and [Docker Compose][Docker Compose Install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
+To start this intentionally **insecure application**, you will need [Docker][docker install] and [Docker Compose][docker compose install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
 
 ```sh
-cd secDevLabs/owasp-top10-2017-apps/a1/mongection
+cd secDevLabs/owasp-top10-2021-apps/a3/mongection
 ```
 
 ```sh
 make install
 ```
 
-Then simply visit [localhost:10001][App], as exemplified below:
+Then simply visit [localhost:10001][app], as exemplified below:
 
 <img src="images/attack0.png" align="center"/>
 
@@ -42,11 +41,15 @@ To properly understand how this application works, you can follow these simple s
 
 - Register a new user via front-end.
 - Login as this user via front-end.
+
 * Register another user now using command line:
+
 ```sh
 curl -X POST http://localhost:10001/register -H "Content-Type: application/json" --data '{"name":"bob", "email":"bob@example.com", "password":"bobisboss"}'
 ```
-* Login as this second user now using command line:
+
+- Login as this second user now using command line:
+
 ```sh
 curl -X POST http://localhost:10001/login -H "Content-Type: application/json" --data '{"email":"bob@example.com", "password":"bobisboss"}'
 ```
@@ -59,21 +62,23 @@ Now that you know the purpose of this app, what could go wrong? The following se
 
 #### Lack of input validation allows injection of NoSQL queries
 
-After reviewing [db.js](https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2017-apps/a1/mongection/src/db.js) file, it was possible to see that some input from users is concatenated with NoSQL queries, as shown in the following code snippets:
+After reviewing [db.js](https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2021-apps/a3/mongection/src/db.js) file, it was possible to see that some input from users is concatenated with NoSQL queries, as shown in the following code snippets:
 
 ```js
-const existUser = await User.findOne({email: email});
+const existUser = await User.findOne({ email: email });
 ```
 
 ```js
-const existsUser = await User.find({$and: [ { email: email}, { password: password} ]});
+const existsUser = await User.find({
+  $and: [{ email: email }, { password: password }],
+});
 ```
 
-As no validation is being made on these variables, injected queries may be successfully executed in MongoDB. Some directives like `$ne` or `$gt`, if successfully injected, could bypass API authentication. 
+As no validation is being made on these variables, injected queries may be successfully executed in MongoDB. Some directives like `$ne` or `$gt`, if successfully injected, could bypass API authentication.
 
 #### 🔥
 
-An attacker could create a malicious query such as `{"$ne":""}` and pass it to email and password fields. Since `$ne` is the not equals condition in MongoDB, this is querying all the entries in the logins collection where both `username` and `password` are not equal to "" (empty). 
+An attacker could create a malicious query such as `{"$ne":""}` and pass it to email and password fields. Since `$ne` is the not equals condition in MongoDB, this is querying all the entries in the logins collection where both `username` and `password` are not equal to "" (empty).
 
 Using `curl` on CLI interface, the malicious payload could be sent as shown bellow:
 
@@ -90,6 +95,7 @@ The same result could be reached if the attacker sent a payload using `$gt` (gre
 ```sh
 curl -X 'POST' 'http://localhost:10001/login' -H "Content-Type: application/json" --data '{"email": {"$gt": ""}, "password": {"$gt": ""}}'
 ```
+
 <p  align="center"><img  src="images/attack2.png"/></p>
 
 Another possible malicious payload could use `$in` directive. The following query will iterate through every element of the given array and try each value listed for the `username` field. Also, `{"$gt":""}` will guarantee the `password` field is not evaluated.
@@ -104,7 +110,7 @@ curl -X 'POST' 'http://localhost:10001/login' -H "Content-Type: application/json
 
 How could you now mitigate this vulnerability? After your code modification, an attacker should not be able to:
 
-* Run NoSQL queries in the database.
+- Run NoSQL queries in the database.
 
 ## PR Solutions
 
@@ -114,6 +120,6 @@ How could you now mitigate this vulnerability? After your code modification, an 
 
 We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](../../../docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉
 
-[Docker Install]:  https://docs.docker.com/install/
-[Docker Compose Install]: https://docs.docker.com/compose/install/
-[App]: http://localhost:10001
+[docker install]: https://docs.docker.com/install/
+[docker compose install]: https://docs.docker.com/compose/install/
+[app]: http://localhost:10001

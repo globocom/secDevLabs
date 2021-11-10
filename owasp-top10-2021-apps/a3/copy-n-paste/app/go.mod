@@ -1,4 +1,4 @@
-module github.com/globocom/secDevLabs/owasp-top10-2017-apps/a1/copy-n-paste/app
+module github.com/globocom/secDevLabs/owasp-top10-2021-apps/a3/copy-n-paste/app
 
 go 1.14
 

@@ -21,17 +21,17 @@ The main goal of this project is to discuss how **SQL Injection** vulnerabilitie
 
 ## Setup
 
-To start this intentionally **insecure application**, you will need [Docker][Docker Install] and [Docker Compose][Docker Compose Install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
+To start this intentionally **insecure application**, you will need [Docker][docker install] and [Docker Compose][docker compose install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
 
 ```sh
-cd secDevLabs/owasp-top10-2017-apps/a1/copy-n-paste
+cd secDevLabs/owasp-top10-2021-apps/a3/copy-n-paste
 ```
 
 ```sh
 make install
 ```
 
-Then simply visit [localhost:10001][App], as exemplified below:
+Then simply visit [localhost:10001][app], as exemplified below:
 
 <img src="images/CopyNPaste.png" align="center"/>
 
@@ -41,11 +41,15 @@ To properly understand how this application works, you can follow these simple s
 
 - Register a new user via front-end.
 - Login as this user via front-end.
+
 * Register another user now using command line:
+
 ```sh
 curl -s -H "Content-Type: application/json" -d '{"user":"bob", "pass":"password", "passcheck":"password"}' http://localhost:10001/register
 ```
-* Login as this second user now using command line:
+
+- Login as this second user now using command line:
+
 ```sh
 curl -s -H "Content-Type: application/json" -d '{"user":"bob", "pass":"password"}' http://localhost:10001/login
 
@@ -59,7 +63,7 @@ Now that you know the purpose of this app, what could go wrong? The following se
 
 #### Lack of input validation allows injection of SQL queries
 
-After reviewing `NewUser()` , `CheckIfUserExists()` and `AuthenticateUser()` from [`db.go`]((https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2017-apps/a1/copy-n-paste/app/util/db.go#)) file, it was possible to see that some input from users are concatenated with SQL queries, as shown in the following code snippets:
+After reviewing `NewUser()` , `CheckIfUserExists()` and `AuthenticateUser()` from [`db.go`](<(https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2021-apps/a3/copy-n-paste/app/util/db.go#)>) file, it was possible to see that some input from users are concatenated with SQL queries, as shown in the following code snippets:
 
 ```go
 query := fmt.Sprint("select * from Users where username = '" + user + "'")
@@ -155,7 +159,7 @@ sqlmap -r postRequest.txt -D a1db -T Users --dump
 
 How could you now mitigate this vulnerability? After your code modification, an attacker should not be able to:
 
-* Run SQL queries in the database.
+- Run SQL queries in the database.
 
 ## PR solutions
 
@@ -165,6 +169,6 @@ How could you now mitigate this vulnerability? After your code modification, an 
 
 We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](../../../docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉
 
-[Docker Install]:  https://docs.docker.com/install/
-[Docker Compose Install]: https://docs.docker.com/compose/install/
-[App]: http://localhost:10001
+[docker install]: https://docs.docker.com/install/
+[docker compose install]: https://docs.docker.com/compose/install/
+[app]: http://localhost:10001

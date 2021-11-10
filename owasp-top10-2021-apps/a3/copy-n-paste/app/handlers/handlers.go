@@ -6,8 +6,8 @@ import (
 
 	"github.com/labstack/echo"
 
-	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a1/copy-n-paste/app/types"
-	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a1/copy-n-paste/app/util"
+	"github.com/globocom/secDevLabs/owasp-top10-2021-apps/a3/copy-n-paste/app/types"
+	"github.com/globocom/secDevLabs/owasp-top10-2021-apps/a3/copy-n-paste/app/util"
 )
 
 //HealthCheck is de health check function

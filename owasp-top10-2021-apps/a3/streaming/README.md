@@ -26,7 +26,7 @@ The main goal of this app is to discuss how **Cross-Site Scripting** vulnerabili
 To start this intentionally **insecure application**, you will need [Docker][docker install] and [Docker Compose][docker compose install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
 
 ```sh
-cd secDevLabs/owasp-top10-2017-apps/a7/streaming
+cd secDevLabs/owasp-top10-2021-apps/a3/streaming
 ```
 
 ```sh
@@ -45,7 +45,7 @@ Now that you know the purpose of this app, what could go wrong? The following se
 
 #### Non-sanitization of user input allows for cross-site scripting
 
-After reviewing `buildLiveHTMLMessage(message)` from [`play.component.ts`](<(https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2017-apps/a7/streaming/app/frontend/src/app/lives/play/play.component.ts#)>) file, it was possible to identify that loaded messages and username are not sanitized and can be executed on a web browser (as shown in the message bellow).
+After reviewing `buildLiveHTMLMessage(message)` from [`play.component.ts`](<(https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2021-apps/a3/streaming/app/frontend/src/app/lives/play/play.component.ts#)>) file, it was possible to identify that loaded messages and username are not sanitized and can be executed on a web browser (as shown in the message bellow).
 
 <p align="center">
     <img src="images/vulnerable-function.png"/>
@@ -66,7 +66,6 @@ Adding a new message on chat:
    <p align="center">
      <img src="images/attack-2.png"/>
    </p>
-
 
 The missing message validation (that will be loaded by another users) allows a malicious user to insert some scripts that will persist in the server and be executed on the victims' browser every time they access the routes that contain these scripts.
 

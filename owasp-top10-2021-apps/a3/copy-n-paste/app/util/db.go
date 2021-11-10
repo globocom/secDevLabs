@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a1/copy-n-paste/app/hash"
-	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a1/copy-n-paste/app/types"
+	"github.com/globocom/secDevLabs/owasp-top10-2021-apps/a3/copy-n-paste/app/hash"
+	"github.com/globocom/secDevLabs/owasp-top10-2021-apps/a3/copy-n-paste/app/types"
 
 	"github.com/spf13/viper"
 
