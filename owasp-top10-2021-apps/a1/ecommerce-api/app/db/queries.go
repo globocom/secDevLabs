@@ -3,8 +3,8 @@ package db
 import (
 	"errors"
 
-	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a5/ecommerce-api/app/pass"
-	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a5/ecommerce-api/app/types"
+	"github.com/globocom/secDevLabs/owasp-top10-2021-apps/a1/ecommerce-api/app/pass"
+	"github.com/globocom/secDevLabs/owasp-top10-2021-apps/a1/ecommerce-api/app/types"
 	mgo "gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )

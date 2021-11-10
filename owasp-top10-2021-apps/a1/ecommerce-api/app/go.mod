@@ -1,4 +1,4 @@
-module github.com/globocom/secDevLabs/owasp-top10-2017-apps/a5/ecommerce-api/app
+module github.com/globocom/secDevLabs/owasp-top10-2021-apps/a1/ecommerce-api/app
 
 go 1.14
 

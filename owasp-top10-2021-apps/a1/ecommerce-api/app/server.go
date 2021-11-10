@@ -7,9 +7,9 @@ import (
 	"io"
 	"os"
 
-	apiContext "github.com/globocom/secDevLabs/owasp-top10-2017-apps/a5/ecommerce-api/app/context"
-	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a5/ecommerce-api/app/db"
-	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a5/ecommerce-api/app/handlers"
+	apiContext "github.com/globocom/secDevLabs/owasp-top10-2021-apps/a1/ecommerce-api/app/context"
+	"github.com/globocom/secDevLabs/owasp-top10-2021-apps/a1/ecommerce-api/app/db"
+	"github.com/globocom/secDevLabs/owasp-top10-2021-apps/a1/ecommerce-api/app/handlers"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 )

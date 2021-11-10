@@ -23,17 +23,17 @@ The main goal of this app is to discuss how **Broken Access Control** vulnerabil
 
 ## Setup
 
-To start this intentionally **insecure application**, you will need [Docker][Docker Install] and [Docker Compose][Docker Compose Install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
+To start this intentionally **insecure application**, you will need [Docker][docker install] and [Docker Compose][docker compose install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
 
 ```sh
-cd secDevLabs/owasp-top10-2017-apps/a5/ecommerce-api
+cd secDevLabs/owasp-top10-2021-apps/a1/ecommerce-api
 ```
 
 ```sh
 make install
 ```
 
-Then simply visit [localhost:10005][App] ! 😆
+Then simply visit [localhost:10005][app] ! 😆
 
 ## Get to know the app 💵
 
@@ -49,11 +49,12 @@ Now that you know the purpose of this app, what could go wrong? The following se
 
 #### Lack of userID validation allows for an attacker to get other users' tickets
 
-In order to better understand how this API works, two users, `user1` and `user2`, were created as shown below: 
+In order to better understand how this API works, two users, `user1` and `user2`, were created as shown below:
 
 ```sh
-curl -s -H "Content-Type: application/json" -d '{"username":"user1","password":"pass"}' http://localhost:10005/register  
+curl -s -H "Content-Type: application/json" -d '{"username":"user1","password":"pass"}' http://localhost:10005/register
 ```
+
 ```sh
 curl -s -H "Content-Type: application/json" -d '{"username":"user2","password":"pass"}' http://localhost:10005/register
 ```
@@ -62,19 +63,18 @@ curl -s -H "Content-Type: application/json" -d '{"username":"user2","password":"
     <img src="images/attack0.png"/>
 </p>
 
-
 Or using web interface:
 
 <p align="center">
     <img src="images/attack1.png"/>
 </p>
 
-
 The users created above are registered on MongoDB and we can get their `userID` through the following curl commands:
 
 ```sh
 curl -s -H "Content-Type: application/json" -d '{"username":"user1","password":"pass"}' http://localhost:10005/login
 ```
+
 ```sh
 curl -s -H "Content-Type: application/json" -d '{"username":"user2","password":"pass"}' http://localhost:10005/login
 ```
@@ -105,7 +105,7 @@ curl -vvv http://localhost:10005/ticket/GUID
 
 How would you mitigate this vulnerability? After your changes, an attacker should not be able to:
 
-* Access other users' tickets.
+- Access other users' tickets.
 
 ## PR solutions
 
@@ -115,8 +115,8 @@ How would you mitigate this vulnerability? After your changes, an attacker shoul
 
 We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](../../../docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉
 
-[Docker Install]:  https://docs.docker.com/install/
-[Docker Compose Install]: https://docs.docker.com/compose/install/
-[App]: http://localhost:10005
-[secDevLabs]: https://github.com/globocom/secDevLabs
-[2]:https://github.com/globocom/secDevLabs/tree/master/owasp-top10-2017-apps/a5/ecommerce-api
+[docker install]: https://docs.docker.com/install/
+[docker compose install]: https://docs.docker.com/compose/install/
+[app]: http://localhost:10005
+[secdevlabs]: https://github.com/globocom/secDevLabs
+[2]: https://github.com/globocom/secDevLabs/tree/master/owasp-top10-2017-apps/a5/ecommerce-api
