@@ -5,9 +5,9 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a2/insecure-go-project/app/api"
-	"github.com/globocom/secDevLabs/owasp-top10-2017-apps/a2/insecure-go-project/app/config"
-	db "github.com/globocom/secDevLabs/owasp-top10-2017-apps/a2/insecure-go-project/app/db/mongo"
+	"github.com/globocom/secDevLabs/owasp-top10-2021-apps/a7/insecure-go-project/app/api"
+	"github.com/globocom/secDevLabs/owasp-top10-2021-apps/a7/insecure-go-project/app/config"
+	db "github.com/globocom/secDevLabs/owasp-top10-2021-apps/a7/insecure-go-project/app/db/mongo"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	"github.com/spf13/viper"

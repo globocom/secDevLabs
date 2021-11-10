@@ -1,4 +1,4 @@
-module github.com/globocom/secDevLabs/owasp-top10-2017-apps/a2/insecure-go-project/app
+module github.com/globocom/secDevLabs/owasp-top10-2021-apps/a7/insecure-go-project/app
 
 go 1.14
 
