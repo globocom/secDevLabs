@@ -26,7 +26,7 @@ The main goal of this app is to discuss how **Security Logging and Monitoring Fa
 To start this intentionally **insecure application**, you will need [Docker][docker install] and [Docker Compose][docker compose install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
 
 ```sh
-cd secDevLabs/owasp-top10-2017-apps/a10/games-irados
+cd secDevLabs/owasp-top10-2021-apps/a9/games-irados
 ```
 
 ```sh
@@ -172,5 +172,5 @@ We encourage you to contribute to SecDevLabs! Please check out the [Contributing
 [docker compose install]: https://docs.docker.com/compose/install/
 [app]: http://localhost:10010
 [secdevlabs]: https://github.com/globocom/secDevLabs
-[2]: https://github.com/globocom/secDevLabs/tree/master/owasp-top10-2017-apps/a10/games-irados
+[2]: https://github.com/globocom/secDevLabs/tree/master/owasp-top10-2021-apps/a9/games-irados
 [burp suite]: https://portswigger.net/burp
