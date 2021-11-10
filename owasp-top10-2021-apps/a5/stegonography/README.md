@@ -23,17 +23,17 @@ The main goal of this app is to discuss how **Security Misconfiguration** vulner
 
 ## Setup
 
-To start this intentionally **insecure application**, you will need [Docker][Docker Install] and [Docker Compose][Docker Compose Install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
+To start this intentionally **insecure application**, you will need [Docker][docker install] and [Docker Compose][docker compose install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
 
 ```sh
-cd secDevLabs/owasp-top10-2017-apps/a6/stegonography
+cd secDevLabs/owasp-top10-2021-apps/a5/stegonography
 ```
 
 ```sh
 make install
 ```
 
-Then simply visit [localhost:10006][App] ! 😆
+Then simply visit [localhost:10006][app] ! 😆
 
 ## Get to know the app 🦕
 
@@ -123,9 +123,9 @@ Even though we still don't know which NodeJS version is currently running, we've
 
 How would you mitigate this vulnerability? After your changes, an attacker should not be able to:
 
-* See error stack traces
-* Sign in with default credentials
-* See verbose token names
+- See error stack traces
+- Sign in with default credentials
+- See verbose token names
 
 ## PR solutions
 
@@ -135,7 +135,7 @@ How would you mitigate this vulnerability? After your changes, an attacker shoul
 
 We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](../../../docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉
 
-[Docker Install]:  https://docs.docker.com/install/
-[Docker Compose Install]: https://docs.docker.com/compose/install/
-[App]: http://localhost:10006
-[Dirb]: https://tools.kali.org/web-applications/dirb
+[docker install]: https://docs.docker.com/install/
+[docker compose install]: https://docs.docker.com/compose/install/
+[app]: http://localhost:10006
+[dirb]: https://tools.kali.org/web-applications/dirb

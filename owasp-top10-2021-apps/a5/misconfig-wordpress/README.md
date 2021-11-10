@@ -23,17 +23,17 @@ The main goal of this app is to discuss how **Security Misconfiguration** vulner
 
 ## Setup
 
-To start this intentionally **insecure application**, you will need [Docker][Docker Install] and [Docker Compose][Docker Compose Install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
+To start this intentionally **insecure application**, you will need [Docker][docker install] and [Docker Compose][docker compose install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
 
 ```sh
-cd secDevLabs/owasp-top10-2017-apps/a6/misconfig-wordpress
+cd secDevLabs/owasp-top10-2021-apps/a5/misconfig-wordpress
 ```
 
 ```sh
 make install
 ```
 
-Then simply visit [localhost:8000][App] ! 😆
+Then simply visit [localhost:8000][app] ! 😆
 
 ## Get to know the app 📄
 
@@ -105,7 +105,7 @@ The suspicion was confirmed when trying to log in with these credentials. As sho
     <img src="images/attack3.1.png"/>
 </p>
 
------
+---
 
 ### 👀
 
@@ -144,11 +144,12 @@ Then simply search for the version of the CMS found:
 ```sh
 searchsploit wordpress 4.9.6
 ```
+
  <p align="center">
     <img src="images/attack5.png"/>
 </p>
 
-----
+---
 
 ## 👀
 
@@ -168,7 +169,7 @@ We can confirm that the directory is browseable by accessing it through a web br
     <img src="images/attack7.png"/>
 </p>
 
-----
+---
 
 ## 👀
 
@@ -198,16 +199,16 @@ Now, by doing the following curl command to check the HTTP headers of the applic
     <img src="images/attack9.png"/>
 </p>
 
-----
+---
 
 ## Secure this app
 
 How would you mitigate this vulnerability? After your changes, an attacker should not be able to:
 
-* See verbose error messages
-* Sign in with default credentials
-* See verbose tokens
-* Find an outdated CMS version
+- See verbose error messages
+- Sign in with default credentials
+- See verbose tokens
+- Find an outdated CMS version
 
 Note: In this particular app, due to how it works, you can simply write down the changes you would make to mitigate those vulnerabilities and submit it as a pull request.
 
@@ -219,11 +220,11 @@ Note: In this particular app, due to how it works, you can simply write down the
 
 We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](../../../docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉
 
-[Docker Install]:  https://docs.docker.com/install/
-[Docker Compose Install]: https://docs.docker.com/compose/install/
-[App]: http://localhost:8000
+[docker install]: https://docs.docker.com/install/
+[docker compose install]: https://docs.docker.com/compose/install/
+[app]: http://localhost:8000
 [wordlist]: https://github.com/danielmiessler/SecLists/blob/master/Passwords/UserPassCombo-Jay.txt
-[wpscan]:https://wpscan.org/
+[wpscan]: https://wpscan.org/
 [malicious code]: https://www.exploit-db.com/exploits/44949
 [nikto]: https://cirt.net/Nikto2
 [searchsploit]: https://www.exploit-db.com/searchsploit
