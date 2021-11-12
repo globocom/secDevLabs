@@ -36,6 +36,7 @@ Disclaimer: You are about to install vulnerable apps in your machine! 🔥
 | --------------------------------------------- | -------------- | ------------------------------------------------------------------------------ |
 | A1 - Broken Access Control                    | Golang         | [Vulnerable Ecommerce API](owasp-top10-2021-apps/a1/ecommerce-api)             |
 | A1 - Broken Access Control                    | NodeJS         | [Tic-Tac-Toe](owasp-top10-2021-apps/a1/tictactoe)                              |
+| A1 - Broken Access Control                    | Golang         | [Camplake-API](owasp-top10-2021-apps/a1/camplake-api)                          |
 | A2 - Cryptographic Failures                   | Golang         | [SnakePro](owasp-top10-2021-apps/a2/snake-pro)                                 |
 | A3 - Injection                                | Golang         | [CopyNPaste API](owasp-top10-2021-apps/a3/copy-n-paste)                        |
 | A3 - Injection                                | NodeJS         | [Mongection](owasp-top10-2021-apps/a3/mongection)                              |
