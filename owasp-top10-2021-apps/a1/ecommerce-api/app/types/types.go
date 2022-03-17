@@ -1,4 +1,7 @@
 package types
+import(
+	jwt "github.com/dgrijalva/jwt-go"
+)
 
 // LoginAttempt is the struct that stores all data from a login attempt.
 type LoginAttempt struct {
@@ -13,4 +16,9 @@ type UserData struct {
 	HashedPassword string `json:"hashedPassword" bson:"hashedPassword"`
 	UserID         string `bson:"userID"`
 	Ticket         string `json:"ticket"`
+}
+
+type Claims struct {
+	Username string `json:"name"`
+	jwt.StandardClaims
 }
