@@ -119,7 +119,7 @@ export class PlayComponent implements OnInit {
     contentMessage.style.borderRadius="5px";
 
     newMessageBox.appendChild(labelUserMessage);
-
+    console.log(message.content);
     contentMessage.innerHTML = message.content;
     newMessageBox.appendChild(contentMessage);
 
