@@ -73,11 +73,11 @@
                   {% endwith %}
                </div>
        			<form action="/newgossip" name="newgossip" method="POST" >
-       				<center><input type="text" class="input-login" value="{{title}}" name= "title" aria-describedby="sizing-addon1"  maxlength="100" placeholder="Title"></center>
+       				<center><input type="text" class="input-login" name= "title" aria-describedby="sizing-addon1"  maxlength="100" placeholder="Title"></center>
        				<br>
-                  <center><input type="text" class="input-login" value="{{subtitle}}" name= "subtitle" aria-describedby="sizing-addon1"  maxlength="200" placeholder="Subtitle"></center>
+                  <center><input type="text" class="input-login" name= "subtitle" aria-describedby="sizing-addon1"  maxlength="200" placeholder="Subtitle"></center>
        				<br>
-                  <center><textarea class="input-login" value="{{text | safe}}" name= "text" aria-describedby="sizing-addon1"  maxlength="2000" rows="10" placeholder="Text"></textarea></center>
+                  <center><textarea class="input-login" name= "text" aria-describedby="sizing-addon1"  maxlength="2000" rows="10" placeholder="Text"></textarea></center>
        				<br>
        				<input name="_csrf_token" type="hidden" value="{{ csrf_token() }}">
        				<button type="submit" class="btn full-width" style="width: 100%; ">GO!</button>
