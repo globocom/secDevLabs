@@ -119,8 +119,7 @@ export class PlayComponent implements OnInit {
     contentMessage.style.borderRadius="5px";
 
     newMessageBox.appendChild(labelUserMessage);
-
-    contentMessage.innerHTML = message.content;
+    contentMessage.textContent = message.content;
     newMessageBox.appendChild(contentMessage);
 
     return newMessageBox;
