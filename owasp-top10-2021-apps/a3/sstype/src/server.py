@@ -9,10 +9,13 @@ tmpl = ''
 for t in TEMPLATE:
     	tmpl += t
 
+def escape(string):
+    return ''.join(a for a in string if a.isalpha())
+
 class MainHandler(tornado.web.RequestHandler):
 
     def get(self):
-        name = self.get_argument('name', '')
+        name = escape(self.get_argument('name', ''))
         template_data = tmpl.replace("NAMEHERE",name)
         t = tornado.template.Template(template_data)
         self.write(t.generate(name=name))
