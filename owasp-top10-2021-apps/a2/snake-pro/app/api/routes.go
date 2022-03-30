@@ -58,6 +58,10 @@ func Register(c echo.Context) error {
 	newGUID1 := uuid.Must(uuid.NewRandom())
 	userData.UserID = newGUID1.String()
 	userData.HighestScore = 0
+	userData.Password, err = pass.GenerateFromPassword(userData.Password)
+	if err != nil {
+		return c.JSON(http.StatusForbidden, map[string]string{"result": "error", "details": "Error."})
+	}
 
 	err = db.RegisterUser(userData)
 	if err != nil {
@@ -86,10 +90,13 @@ func Login(c echo.Context) error {
 		return c.JSON(http.StatusForbidden, map[string]string{"result": "error", "details": "Error login."})
 	}
 
-	validPass := pass.CheckPass(userDataResult.Password, loginAttempt.Password)
+	validPass, err := pass.CheckPass(userDataResult.Password, loginAttempt.Password)
 	if !validPass {
 		// wrong password
 		return c.JSON(http.StatusForbidden, map[string]string{"result": "error", "details": "Error login."})
+	}
+	if err != nil {
+		return c.JSON(http.StatusForbidden, map[string]string{"result": "error", "details": "Error."})
 	}
 
 	// Create token
