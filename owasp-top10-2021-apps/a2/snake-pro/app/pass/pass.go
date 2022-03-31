@@ -26,6 +26,7 @@ func CheckPass(encodedHash, attemptPassword string) (bool, error) {
 	return false, nil
 }
 
+// Argon2id implementation based on: https://gist.github.com/alexedwards/34277fae0f48abe36822b375f0f6a621
 var (
 	ErrInvalidHash         = errors.New("the encoded hash is not in the correct format")
 	ErrIncompatibleVersion = errors.New("incompatible version of argon2")
@@ -73,8 +74,6 @@ func generateRandomBytes(n uint32) ([]byte, error) {
 	return b, nil
 }
 
-// Based on: https://gist.github.com/alexedwards/34277fae0f48abe36822b375f0f6a621
-// By: alexedwards
 func decodeHash(encodedHash string) (p *params, salt, hash []byte, err error) {
 	vals := strings.Split(encodedHash, "$")
 	if len(vals) != 6 {
