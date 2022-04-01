@@ -123,7 +123,6 @@ document.getElementById('login').addEventListener('submit', (e) => {
                     }
                 };
                 XHRticket.open('GET', '//localhost:10005/ticket?format=json');
-                //XHRticket.setRequestHeader('Content-Type','application/json' );
                 XHRticket.send();
             } else {
                 // Define what happens in case of error
