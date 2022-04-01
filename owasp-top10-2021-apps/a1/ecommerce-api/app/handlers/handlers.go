@@ -18,16 +18,9 @@ func HealthCheck(c echo.Context) error {
 
 // GetTicket returns the userID ticket.
 func GetTicket(c echo.Context) error {
-	id := c.Param("id")
 	cookie, err := c.Cookie("sessionIDa5")
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Cookie Error."})
-	}
-	userDataQuery := map[string]interface{}{"userID": id}
-	userDataResult, err := db.GetUserData(userDataQuery)
-	if err != nil {
-		// could not find this user in MongoDB (or MongoDB err connection)
-		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error finding this UserID."})
 	}
 
 	claims := &types.Claims{}
@@ -36,16 +29,19 @@ func GetTicket(c echo.Context) error {
 	})
 	if err != nil {
 		if err == jwt.ErrSignatureInvalid {
-			return c.JSON(http.StatusUnauthorized, map[string]string{"result": "error", "details": "Error StatusUnauthorized."})
+			return c.JSON(http.StatusUnauthorized, map[string]string{"result": "error", "details": "Invalid signature error."})
 		}
-		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error StatusBadRequest."})
+		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error parsing token."})
 	}
 	if !tkn.Valid {
-		return c.JSON(http.StatusUnauthorized, map[string]string{"result": "error", "details": "Error StatusUnauthorized."})
+		return c.JSON(http.StatusUnauthorized, map[string]string{"result": "error", "details": "Invalid token."})
 	}
 
-	if claims.Username != userDataResult.Username {
-		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Access denied."})
+	userDataQuery := map[string]interface{}{"username": claims.Username}
+	userDataResult, err := db.GetUserData(userDataQuery)
+	if err != nil {
+		// could not find this user in MongoDB (or MongoDB err connection)
+		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error finding this UserID."})
 	}
 
 	format := c.QueryParam("format")
