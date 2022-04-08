@@ -84,6 +84,7 @@ def login():
             app.logger.info("Unsuccessful login attempt. Username: {}; Database success: {};".format(username, success))
             return render_template('login.html')
         session['username'] = username
+        app.logger.info("Successful login attempt. Username: {};".format(username))
         return redirect('/home')
     else:
         return render_template('login.html')
