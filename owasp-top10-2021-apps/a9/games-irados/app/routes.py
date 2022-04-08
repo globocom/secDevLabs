@@ -19,7 +19,6 @@ from model.password import Password
 from model.db import DataBase
 import logging
 import os
-import sys
 
 from flask_cors import CORS, cross_origin
 from model.db import DataBase
