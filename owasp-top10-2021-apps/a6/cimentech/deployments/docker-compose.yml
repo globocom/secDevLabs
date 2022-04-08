@@ -17,7 +17,7 @@ services:
       - a9_net
 
   db:
-    image: postgres:latest
+    image: postgres:10.5
     container_name: a9db
     environment:
       POSTGRES_PASSWORD: example
