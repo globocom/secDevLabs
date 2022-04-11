@@ -27,8 +27,7 @@ app = Flask(__name__)
 bootstrap = Bootstrap(app)
 
 app.config.from_pyfile('config.py')
-logging.basicConfig(filename='log.log', level=logging.DEBUG, format=f'%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s')
-#logging.basicConfig(level=logging.DEBUG, format=f'%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s', handlers=[logging.FileHandler("ola_povo.log"),logging.StreamHandler()])
+
 
 def generate_csrf_token():
     '''
@@ -57,7 +56,6 @@ def login_required(f):
     def decorated_function(*args, **kwargs):
         if 'username' not in session:
             flash('oops, session expired', "danger")
-            app.logger.info('Session expired.')
             return redirect('/login')
         return f(*args, **kwargs)
     return decorated_function
@@ -80,10 +78,8 @@ def login():
         user_password, success = database.get_user_password(username)
         if not success or user_password == None or not psw.validate_password(str(user_password[0])):
             flash("Usuario ou senha incorretos", "danger")
-            app.logger.info("Unsuccessful login attempt. Username: {}; Database success: {};".format(username, success))
             return render_template('login.html')
         session['username'] = username
-        app.logger.info("Successful login attempt. Username: {};".format(username))
         return redirect('/home')
     else:
         return render_template('login.html')
@@ -101,15 +97,12 @@ def newuser():
             message, success = database.insert_user(username, hashed_psw)
             if success == 1:
                 flash("Novo usuario adicionado!", "primary")
-                app.logger.info("New user added: {}".format(username))
                 return redirect('/login')
             else:
                 flash(message, "danger")
-                app.logger.info("Unsuccessful insert_user attempt. Username: {}; Database message: {};".format(username, message))
                 return redirect('/register')
 
         flash("Passwords must be the same!", "danger")
-        app.logger.info('Different passwords.')
         return redirect('/register')
     else:
         return render_template('register.html')
@@ -127,11 +120,12 @@ def cupom():
         rows, success = database.get_game_coupon(coupon, session.get('username'))
         if not success or rows == None or rows == 0:
             flash("Cupom invalido", "danger")
-            app.logger.info("Invalid coupon: {}".format(coupon))
             return render_template('coupon.html')
         game, success = database.get_game(coupon, session.get('username'))
+        if not success or game == None:
+            flash("Cupom invalido", "danger")
+            return render_template('coupon.html')
         flash("Voce ganhou {}".format(game[0]), "primary")
-        app.logger.info("Valid coupon used: {}; Game: {};".format(coupon, game[0]))
         return render_template('coupon.html')
     else:
         return render_template('coupon.html')
