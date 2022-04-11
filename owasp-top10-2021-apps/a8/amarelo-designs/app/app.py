@@ -1,11 +1,15 @@
 # coding: utf-8
 
-from flask import Flask, request, make_response, render_template, redirect, flash
+from flask import Flask, request, make_response, render_template, redirect, session
 import uuid
-import pickle
-import base64
-app = Flask(__name__)
+import os
+from datetime import timedelta
 
+app = Flask(__name__)
+app.config['SECRET_KEY'] = os.environ.get("SECRET")
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=5)
+
+admin_token = []
 
 @app.route("/")
 def ola():
@@ -19,12 +23,9 @@ def login():
     
         if username == "admin" and password == "admin":
             token = str(uuid.uuid4().hex)
-            cookie = { "username":username, "admin":True, "sessionId":token }
-            pickle_resultado = pickle.dumps(cookie)
-            encodedSessionCookie = base64.b64encode(pickle_resultado)
-            resp = make_response(redirect("/user"))
-            resp.set_cookie("sessionId", encodedSessionCookie)
-            return resp
+            admin_token.append(token)
+            session['sessionID'] = token
+            return redirect('/user')
 
         else:
             return redirect("/admin")
@@ -34,15 +35,12 @@ def login():
 
 @app.route("/user", methods=['GET'])
 def userInfo():
-    cookie = request.cookies.get("sessionId")
+    cookie = session['sessionID']
     if cookie == None:
-        return "Não Autorizado!"
-    cookie = pickle.loads(base64.b64decode(cookie))
-
-    return render_template('user.html')
-    
-
-
+        return render_template('admin.html')
+    if cookie in admin_token:
+        return render_template('user.html')
+    return render_template('admin.html')
 
 if __name__ == '__main__':
     app.run(debug=True,host='0.0.0.0')

@@ -2,6 +2,8 @@ version: "2"
 services:
   app:
     container_name: app-a8 
+    env_file:
+            - ../app/.env
     build:
       context: ../
       dockerfile: deployments/Dockerfile
