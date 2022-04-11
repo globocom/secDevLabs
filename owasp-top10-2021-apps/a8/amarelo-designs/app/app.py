@@ -35,12 +35,10 @@ def login():
 
 @app.route("/user", methods=['GET'])
 def userInfo():
-    cookie = session['sessionID']
-    if cookie == None:
-        return render_template('admin.html')
-    if cookie in admin_token:
-        return render_template('user.html')
-    return render_template('admin.html')
+    if 'sessionID' in session:
+        if session['sessionID'] in admin_token:
+            return render_template('user.html')
+    return redirect("/admin")
 
 if __name__ == '__main__':
     app.run(debug=True,host='0.0.0.0')
