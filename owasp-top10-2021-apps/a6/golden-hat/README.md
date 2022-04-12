@@ -27,12 +27,17 @@ The main goal of this app is to discuss how using vulnerable and outdated compon
 
 ## Setup
 
-To run the app:
+To start this application:
 
-```
+```sh
 cd secDevLabs/owasp-top10-2021-apps/a6/golden-hat
+```
+
+```sh
 make install
 ```
+
+Then simply visit [localhost:10006][app] ! :ghost:
 
 ## Get to know the app ⚜️
 
@@ -48,7 +53,7 @@ Now that you know the purpose of this app, what could possibly go wrong? The fol
 
 #### Use of vulnerable mitmproxy version allows HTTP desync attacks
 
-First time acessing the app on port 10006:
+First time acessing the app:
 
 <p align="center">
     <img src="images/img1.png"/>
@@ -109,10 +114,11 @@ How would you mitigate this vulnerability? After your changes, an attacker shoul
 
 ## PR solutions
 
-[Spoiler alert 🚨 ] To understand how this vulnerability can be mitigated, check out [these pull requests]!
+[Spoiler alert 🚨 ] To understand how this vulnerability can be mitigated, check out [these pull requests](https://github.com/globocom/secDevLabs/pulls?q=is%3Aclosed+is%3Apr+label%3A%22mitigation+solution+%F0%9F%94%92%22+label%3A%22Golden+Hat+Society%22)!
 
 ## Contributing
 
 We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](../../../docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉
 
 [secDevLabs]: https://github.com/globocom/secDevLabs
+[app]: http://localhost:10006
