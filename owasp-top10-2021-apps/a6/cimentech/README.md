@@ -82,7 +82,7 @@ searchsploit drupal 7.
 If you are using OSX, this command will help you to copy the exploit to your `/tmp` folder:
 
 ```
-cp /usr/local/opt/exploitdb/share/exploit-database/exploits/php/webapps/44449.rb /tmp
+cp /usr/local/opt/exploitdb/share/exploitdb/exploits/php/webapps/44449.rb /tmp
 ```
 
 ## 🔥
