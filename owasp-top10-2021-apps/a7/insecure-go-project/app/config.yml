@@ -1,5 +1,5 @@
 mongoConf:
-  mongoPassword: {MONGO_PASS_y}
-  mongoUser:  {MONGO_USER_y}
-  mongoDBName: {MONGO_BASE_y}
+  mongoPassword: {MONGO_INITDB_ROOT_PASSWORD}
+  mongoUser:  {MONGO_INITDB_ROOT_USERNAME}
+  mongoDBName: {MONGO_INITDB_DATABASE}
   mongoHost: mongodb
