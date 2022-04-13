@@ -21,15 +21,19 @@ services:
             - mongodb
         external_links:
             - mongodb:mongodb
-
     mongodb:
         container_name: mongodb
+        environment:
+            MONGO_USER_y: ${MONGO_USER}
+            MONGO_PASS_y: ${MONGO_PASS}
+            MONGO_BASE_y: ${MONGO_BASE}
+            MONGO_HOST_y: ${MONGO_HOST}
         build:
             context: ../
             dockerfile: deployments/mongo.Dockerfile
         ports:
-          - "27017:27017"
-          - "27018:27018"
+            - "27017:27017"
+            - "27018:27018"
         volumes:
             - mongo_vol:/data/db
         networks:
