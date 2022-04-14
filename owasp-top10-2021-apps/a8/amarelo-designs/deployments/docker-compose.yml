@@ -9,12 +9,32 @@ services:
       dockerfile: deployments/Dockerfile
     volumes:
       - "../app/:/app"
+    links:
+      - db:db
+    depends_on:
+      - db
     ports:
       - "10008:5000"
       - "9051:9051"
     networks: 
       - a8_net
     restart: always
+
+  db:
+    container_name: db-a8
+    image: mariadb:10.6.3
+    ports:
+      - "3307:3307"
+    env_file:
+            - ../app/.env
+    networks:
+      - a8_net
+    volumes:
+      - storage-a8-database:/var/lib/mysql
+      - ../db:/docker-entrypoint-initdb.d
+
+volumes:
+  storage-a8-database:
 
 networks:
   a8_net:

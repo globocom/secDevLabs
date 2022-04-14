@@ -1,15 +1,22 @@
 # coding: utf-8
 
-from flask import Flask, request, make_response, render_template, redirect, session
+from flask import Flask, request, render_template, redirect, session
+from model.db import DataBase
 import uuid
 import os
+import logging
 from datetime import timedelta
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get("SECRET")
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=5)
 
-admin_token = []
+logging.basicConfig(filename='log.log', level=logging.DEBUG, format=f'%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s')
+
+database = DataBase(os.environ.get('A8_DATABASE_HOST'),
+                    os.environ.get('A8_DATABASE_USER'),
+                    os.environ.get('A8_DATABASE_PASSWORD'),
+                    os.environ.get('A8_DATABASE_NAME'))
 
 @app.route("/")
 def ola():
@@ -21,9 +28,13 @@ def login():
         username = request.values.get('username')
         password = request.values.get('password')
     
-        if username == "admin" and password == "admin":
+        if username == os.environ.get("APP_USER") and password == os.environ.get("APP_PASS"):
             token = str(uuid.uuid4().hex)
-            admin_token.append(token)
+            #admin_token.append(token)
+            message, success = database.insert_token(token)
+            if not success:
+                app.logger.info("Database error: {}".format(message))
+                return "Database error."
             session['sessionID'] = token
             return redirect('/user')
 
@@ -36,7 +47,9 @@ def login():
 @app.route("/user", methods=['GET'])
 def userInfo():
     if 'sessionID' in session:
-        if session['sessionID'] in admin_token:
+        message, success = database.get_token_id(session['sessionID'])
+        if success:
+            app.logger.info("Token id used: {}".format(message))
             return render_template('user.html')
     return redirect("/admin")
 

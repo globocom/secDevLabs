@@ -5,6 +5,13 @@ name = "pypi"
 
 [packages]
 flask = "*"
+flask-sqlalchemy = "*"
+MySQL-python = "*"
+ipdb = "*"
+mysql-connector-python-rf = "*"
+mysql-connector-repackaged = "*"
+flask-mysql = "*"
+mysql-connector-python = "*"
 
 [dev-packages]
 
