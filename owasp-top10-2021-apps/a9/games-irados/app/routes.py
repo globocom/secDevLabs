@@ -118,11 +118,11 @@ def login():
     if request.method == 'POST':
         username = request.form.get('username').encode('utf-8')
         psw = Password(request.form.get('password').encode('utf-8'))
-        user_password, success = database.get_user_password(username)
+        user_password, message, success = database.get_user_password(username)
         if not success:
-            if isinstance(user_password, str):
+            if message:
                 flash("Database error", "danger")
-                logfile.info("Unsuccessful login attempt (database error) - Username: {} - Database message: {} - IP: {}".format(username, user_password, request.remote_addr))
+                logfile.info("Unsuccessful login attempt (database error) - Username: {} - Database message: {} - IP: {}".format(username, message, request.remote_addr))
             else:
                 flash("Usuario ou senha incorretos", "danger")
                 logfile.info("Unsuccessful login attempt (invalid username) - Username: {} - IP: {}".format(username, request.remote_addr))

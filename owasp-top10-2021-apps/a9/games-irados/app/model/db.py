@@ -85,12 +85,12 @@ class DataBase:
         except MySQLdb.Error as e:
             try:
                 message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
-                return message , 0
+                return None, message, 0
             except IndexError:
                 message = "MySQL Error: %s" % str(e)
-                return message , 0
+                return None, message, 0
 
-        return user_password, bool(user_password)
+        return user_password, None, bool(user_password)
 
     def init_table_user(self):
         try:
