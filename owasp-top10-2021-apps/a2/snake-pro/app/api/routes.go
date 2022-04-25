@@ -6,9 +6,10 @@ import (
 	"os"
 	"time"
 
+	"golang.org/x/crypto/bcrypt"
+
 	jwt "github.com/dgrijalva/jwt-go"
 	db "github.com/globocom/secDevLabs/owasp-top10-2021-apps/a2/snake-pro/app/db/mongo"
-	"github.com/globocom/secDevLabs/owasp-top10-2021-apps/a2/snake-pro/app/pass"
 	"github.com/globocom/secDevLabs/owasp-top10-2021-apps/a2/snake-pro/app/types"
 	"github.com/google/uuid"
 	"github.com/labstack/echo"
@@ -21,6 +22,28 @@ func HealthCheck(c echo.Context) error {
 
 func Root(c echo.Context) error {
 	return c.Redirect(302, "/login")
+}
+
+// https://cs.opensource.google/go/x/crypto/+/2cf3adec:bcrypt/bcrypt.go;l=99
+// PassHash hash password
+func PassHash(password string) (string, error) {
+	hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	if err != nil {
+		return "", err
+	}
+	return string(hash), nil
+}
+
+// https://cs.opensource.google/go/x/crypto/+/2cf3adec:bcrypt/bcrypt.go;l=99
+// CheckPassHash check if hashed password get matched
+func CheckPassHash(password, hash string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
+
+	if err == nil {
+		return true
+	} else {
+		return false
+	}
 }
 
 // WriteCookie writes a cookie into echo Context
@@ -58,6 +81,7 @@ func Register(c echo.Context) error {
 	newGUID1 := uuid.Must(uuid.NewRandom())
 	userData.UserID = newGUID1.String()
 	userData.HighestScore = 0
+	userData.Password, _ = PassHash(userData.Password)
 
 	err = db.RegisterUser(userData)
 	if err != nil {
@@ -86,7 +110,7 @@ func Login(c echo.Context) error {
 		return c.JSON(http.StatusForbidden, map[string]string{"result": "error", "details": "Error login."})
 	}
 
-	validPass := pass.CheckPass(userDataResult.Password, loginAttempt.Password)
+	validPass := CheckPassHash(loginAttempt.Password, userDataResult.Password)
 	if !validPass {
 		// wrong password
 		return c.JSON(http.StatusForbidden, map[string]string{"result": "error", "details": "Error login."})

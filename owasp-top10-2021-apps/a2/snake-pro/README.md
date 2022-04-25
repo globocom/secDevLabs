@@ -15,6 +15,20 @@ Snake Pro is a simple Golang Web App that contains an example of a Cryptographic
 - [Solutions](#pr-solutions)
 - [Contributing](#contributing)
 
+# ALERT: TO RUN THIS APLICATION WITH HTTPS WAY, YOU WILL NEED TO CREATE THE CERTIFICATE AND THE KEY BEFORE.
+
+To create certificate and the key, you need to run this commands in terminal.
+```
+openssl req -x509 \
+-nodes \
+-days 365 \
+-newkey rsa:2048 \
+-keyout app/key.pem \
+-out app/cert.pem \
+-subj "/CN=localhost"
+```
+Then, put the codes in "cert.pem" and "key.pem" before run the make install.
+
 ## What is Cryptographic Failure?
 
 Many web applications and APIs do not properly protect sensitive data, such as financial, healthcare, and PII. Attackers may steal or modify such weakly protected data to conduct credit card fraud, identity theft, or other crimes. Sensitive data may be compromised without extra protection, such as encryption at rest or in transit, and requires special precautions when exchanged with the browser.

@@ -14,3 +14,4 @@ type UserData struct {
 	UserID         string `bson:"userID"`
 	HighestScore   int    `bson:"highest-score"`
 }
+
