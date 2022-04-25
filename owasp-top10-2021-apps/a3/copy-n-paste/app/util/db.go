@@ -87,7 +87,7 @@ func NewUser(user string, pass string, passcheck string) (bool, error) {
 	}
 	defer dbConn.Close()
 
-	rows, err := dbConn.Query("insert into Users (username, password) values ?,?", user, passHash)
+	rows, err := dbConn.Query("insert into Users (username, password) values (?,?)", user, passHash)
 
 	if err != nil {
 		return false, err
