@@ -1,8 +1,6 @@
 package handlers
 
 import (
-	"encoding/base64"
-	"encoding/json"
 	"log"
 	"net/http"
 	"strings"
@@ -42,7 +40,6 @@ func ExtractToken(r *http.Request) string {
 }
 
 func TokenValid(r *http.Request) (types.Claims, error) {
-	header := types.Header{}
 	claims := types.Claims{}
 
 	token := ExtractToken(r)
@@ -50,30 +47,12 @@ func TokenValid(r *http.Request) (types.Claims, error) {
 		log.Println("No token!")
 		return claims, nil
 	}
-	t := strings.Split(token, ".")
 
-	h, err := base64.StdEncoding.WithPadding(base64.NoPadding).DecodeString(t[0])
+	_, err := jwt.ParseWithClaims(token, &claims, func(token *jwt.Token) (interface{}, error) {
+		return jwtKey, nil
+	})
 	if err != nil {
-		return claims, err
-	}
-
-	err = json.Unmarshal(h, &header)
-	if err != nil {
-		log.Fatalln("Error in JSON unmarshalling from json marshalled object:", err)
-		return claims, err
-	}
-	if header.Typ != "JWT" {
-		log.Fatalln("Error on JWT")
-	}
-
-	c, err := base64.StdEncoding.WithPadding(base64.NoPadding).DecodeString(t[1])
-	if err != nil {
-		return claims, err
-	}
-
-	err = json.Unmarshal(c, &claims)
-	if err != nil {
-		log.Fatalln("Error in JSON unmarshalling from json marshalled object:", err)
+		log.Println("Error parsing token!")
 		return claims, err
 	}
 
