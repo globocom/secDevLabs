@@ -31,7 +31,7 @@ LOGGING_CONFIG = {
     },
     'handlers': { 
         'consolehandler': { 
-            'level': 'DEBUG',
+            'level': 'INFO',
             'formatter': 'standard',
             'class': 'logging.StreamHandler',
             'stream': 'ext://sys.stdout',
@@ -56,7 +56,7 @@ LOGGING_CONFIG = {
         },
         'console': {
             'handlers': ['consolehandler'],
-            'level': 'DEBUG',
+            'level': 'INFO',
             'propagate': False
         },
     } 
@@ -66,7 +66,7 @@ logging.config.dictConfig(LOGGING_CONFIG)
 app = Flask(__name__)
 bootstrap = Bootstrap(app)
 app.config.from_pyfile('config.py')
-logfile = logging.getLogger('file')
+logfile = logging.getLogger('console')
 
 def generate_csrf_token():
     '''
