@@ -3,6 +3,7 @@ package handlers
 import (
 	"fmt"
 	"net/http"
+	"os"
 	"time"
 
 	jwt "github.com/dgrijalva/jwt-go"
@@ -61,16 +62,19 @@ func Login(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error login4."})
 	}
 
-	// Create token
-	token := jwt.New(jwt.SigningMethodHS256)
-
 	// Set claims
-	claims := token.Claims.(jwt.MapClaims)
-	claims["name"] = userDataResult.Username
-	claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
+	claims := &types.JwtCustomClaims{
+		UserID: userDataResult.UserID,
+		StandardClaims: jwt.StandardClaims{
+			ExpiresAt: time.Now().Add(time.Hour * 72).Unix(),
+		},
+	}
+
+	// Create token
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
 	// Generate encoded token and send it as response.
-	t, err := token.SignedString([]byte("secret"))
+	t, err := token.SignedString([]byte(os.Getenv("SECRET")))
 	if err != nil {
 		return err
 	}

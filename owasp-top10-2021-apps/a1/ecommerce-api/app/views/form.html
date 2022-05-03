@@ -92,6 +92,7 @@ document.getElementById('login').addEventListener('submit', (e) => {
 
                 // get ticket's user
                 var XHRticket = new XMLHttpRequest();
+                XHRticket.withCredentials = true;
                 XHRticket.onreadystatechange = function (eventTicket) {
                     if (XHRticket.readyState == 4) {
                         if (XHRticket.status == 200) {
@@ -117,17 +118,18 @@ document.getElementById('login').addEventListener('submit', (e) => {
 
                         } else {
                             // Define what happens in case of error
-                            alert('Response: '+event.target.responseText);
+                            alert('Response 2: '+event.target.responseText);
                         }
                         
                     }
                 };
-                XHRticket.open('GET', '//localhost:10005/ticket/'+jsonResponse["user_id"]+'?format=json');
+                XHRticket.open('GET', '//localhost:10005/ticket?format=json');
                 XHRticket.setRequestHeader('Content-Type','application/json' );
+                XHRticket.setRequestHeader('Authorization', 'Bearer ' + document.cookie.match(new RegExp('(^| )' + 'sessionIDa5' + '=([^;]+)'))[2]);
                 XHRticket.send();
             } else {
                 // Define what happens in case of error
-                alert('Response: '+event.target.responseText);
+                alert('Response 1: '+event.target.responseText);
             }
             
         }

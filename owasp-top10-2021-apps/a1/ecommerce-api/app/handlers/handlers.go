@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"net/http"
 
+	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/globocom/secDevLabs/owasp-top10-2021-apps/a1/ecommerce-api/app/db"
+	"github.com/globocom/secDevLabs/owasp-top10-2021-apps/a1/ecommerce-api/app/types"
 	"github.com/labstack/echo"
 )
 
@@ -15,12 +17,13 @@ func HealthCheck(c echo.Context) error {
 
 // GetTicket returns the userID ticket.
 func GetTicket(c echo.Context) error {
-	id := c.Param("id")
-	userDataQuery := map[string]interface{}{"userID": id}
+	user := c.Get("user").(*jwt.Token)
+	claims := user.Claims.(*types.JwtCustomClaims)
+	userDataQuery := map[string]interface{}{"userID": claims.UserID}
 	userDataResult, err := db.GetUserData(userDataQuery)
 	if err != nil {
 		// could not find this user in MongoDB (or MongoDB err connection)
-		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error finding this UserID."})
+		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": fmt.Sprintf("Error finding this UserID=%v.", claims.UserID)})
 	}
 
 	format := c.QueryParam("format")

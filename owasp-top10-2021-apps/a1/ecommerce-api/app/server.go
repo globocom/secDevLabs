@@ -10,6 +10,7 @@ import (
 	apiContext "github.com/globocom/secDevLabs/owasp-top10-2021-apps/a1/ecommerce-api/app/context"
 	"github.com/globocom/secDevLabs/owasp-top10-2021-apps/a1/ecommerce-api/app/db"
 	"github.com/globocom/secDevLabs/owasp-top10-2021-apps/a1/ecommerce-api/app/handlers"
+	"github.com/globocom/secDevLabs/owasp-top10-2021-apps/a1/ecommerce-api/app/types"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 )
@@ -57,9 +58,21 @@ func main() {
 
 	echoInstance.GET("/", handlers.FormPage)
 	echoInstance.GET("/healthcheck", handlers.HealthCheck)
-	echoInstance.GET("/ticket/:id", handlers.GetTicket)
 	echoInstance.POST("/register", handlers.RegisterUser)
 	echoInstance.POST("/login", handlers.Login)
+
+	// Restricted group
+	r := echoInstance.Group("/ticket")
+
+	// Configure middleware with the custom claims
+	config := middleware.JWTConfig{
+		Claims:     &types.JwtCustomClaims{},
+		SigningKey: []byte(os.Getenv("SECRET")),
+	}
+	r.Use(middleware.JWTWithConfig(config))
+	r.GET("", handlers.GetTicket)
+
+	//
 
 	APIport := fmt.Sprintf(":%d", configAPI.APIPort)
 	echoInstance.Logger.Fatal(echoInstance.Start(APIport))
