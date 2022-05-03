@@ -3,6 +3,7 @@ package handlers
 import (
 	"log"
 	"net/http"
+	"os"
 	"strings"
 	"time"
 
@@ -11,7 +12,8 @@ import (
 	"github.com/dgrijalva/jwt-go"
 )
 
-var jwtKey = []byte("my_secret_key")
+var jwtKey = []byte(os.Getenv("JWT_SECRET"))
+
 
 func CreateToken(creds types.Credentials) (string, error) {
 	expirationTime := time.Now().Add(5 * time.Minute)
