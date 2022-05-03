@@ -19,10 +19,10 @@ type MongoConfig struct {
 
 // APIConfig represents API configuration.
 type APIConfig struct {
-	MongoDBConfig 	*MongoConfig
-	APIPort       	int
-	DebugMode 		bool
-	Domain 			string
+	MongoDBConfig *MongoConfig
+	APIPort	      int
+	DebugMode     bool
+	Domain        string
 }
 
 var apiConfig *APIConfig
@@ -32,10 +32,10 @@ var onceConfig sync.Once
 func GetAPIConfig() *APIConfig {
 	onceConfig.Do(func() {
 		apiConfig = &APIConfig{
-			MongoDBConfig: 	getMongoConfig(),
-			APIPort:       	getAPIPort(),
-			DebugMode:    	getDebugMode(),
-			Domain:       	getDomain(),
+			MongoDBConfig: getMongoConfig(),
+			APIPort:       getAPIPort(),
+			DebugMode:     getDebugMode(),
+			Domain:        getDomain(),
 		}
 	})
 	return apiConfig
