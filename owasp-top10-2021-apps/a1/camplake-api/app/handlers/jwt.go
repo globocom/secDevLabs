@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"errors"
 	"log"
 	"net/http"
 	"os"
@@ -14,7 +15,6 @@ import (
 
 var jwtKey = []byte(os.Getenv("JWT_SECRET"))
 
-
 func CreateToken(creds types.Credentials) (string, error) {
 	expirationTime := time.Now().Add(5 * time.Minute)
 	claims := &types.Claims{
@@ -26,7 +26,8 @@ func CreateToken(creds types.Credentials) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	tokenString, err := token.SignedString(jwtKey)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("Error creating token!")
+		return "", errors.New("Error creating token!")
 	}
 	return tokenString, nil
 }
@@ -55,7 +56,7 @@ func TokenValid(r *http.Request) (types.Claims, error) {
 	})
 	if err != nil {
 		log.Println("Error parsing token!")
-		return claims, err
+		return claims, errors.New("Error parsing token!")
 	}
 
 	return claims, nil

@@ -3,6 +3,8 @@ package handlers
 import (
 	"fmt"
 	"net/http"
+	"os"
+	"time"
 
 	"camp-lake-api/crypto"
 	"camp-lake-api/db"
@@ -13,6 +15,21 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+var debugMode = false
+var domain = "localhost"
+
+func init() {
+	debug := os.Getenv("DEBUG")
+	if debug == "true" {
+		debugMode = true
+	}
+
+	domain_env := os.Getenv("DOMAIN")
+	if domain_env != "" {
+		domain = domain_env
+	}
+}
+
 func HealthCheck(c echo.Context) error {
 	return c.String(http.StatusOK, "WORKING\n")
 }
@@ -21,6 +38,11 @@ func WriteCookie(c echo.Context, jwt string) error {
 	cookie := new(http.Cookie)
 	cookie.Name = "sessionIDa5"
 	cookie.Value = jwt
+	cookie.Path = "/"
+	cookie.Domain = domain
+	cookie.Expires = time.Now().Add(time.Hour * 24 * 7)
+	cookie.HttpOnly = true
+	cookie.Secure = !debugMode
 	c.SetCookie(cookie)
 	return c.String(http.StatusOK, "")
 }
@@ -36,7 +58,6 @@ func ReadCookie(c echo.Context) error {
 		return err
 	}
 	fmt.Println(cookie.Name)
-	fmt.Println(cookie.Value)
 	return c.String(http.StatusOK, "")
 }
 
@@ -62,8 +83,7 @@ func NewUser(c echo.Context) error {
 				"method": "NewUserRegisterUser",
 				"error":  err,
 			}).Error()
-		errorString := fmt.Sprintf("%s", err)
-		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": errorString})
+		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error registering user."})
 	}
 
 	return c.String(http.StatusCreated, "Register: success!\n")
@@ -117,7 +137,7 @@ func Login(c echo.Context) error {
 				"method": "LoginCreateToken",
 				"error":  err,
 			}).Error()
-		return err
+		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error creating token."})
 	}
 
 	err = WriteCookie(c, token)
