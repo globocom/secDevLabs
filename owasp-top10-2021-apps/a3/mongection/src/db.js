@@ -1,3 +1,4 @@
+const sanitize = require('mongo-sanitize');
 const User = require('./models/user');
 
 const register = async (user) => {
@@ -5,14 +6,20 @@ const register = async (user) => {
     try { 
         const { name, email, password } = user;
 
-        const existUser = await User.findOne({email: email});
+       const sanitized_user = {
+              name: sanitize(name),
+                email: sanitize(email),
+                password: sanitize(password)
+        }
+
+        const existUser = await User.findOne({email: sanitized_user.email});
 
         if(existUser) { return null }
 
         const newUser = new User({
-            name: name,
-            email: email,
-            password: password
+            name: sanitized_user.name,
+            email: sanitized_user.email,
+            password: sanitized_user.password
         });
 
         await newUser.save();
@@ -29,7 +36,12 @@ const login = async (credentials) => {
     try {
         const { email, password } = credentials;
 
-        const existsUser = await User.find({$and: [ { email: email}, { password: password} ]});
+        const sanitized_credentials = {
+            email: sanitize(email),
+            password: sanitize(password)
+        };
+
+        const existsUser = await User.find({$and: [ { email: sanitized_credentials.email}, { password: sanitized_credentials.password} ]});
 
         if(!existsUser) { return null;}
 
