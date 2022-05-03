@@ -3,9 +3,9 @@ package handlers
 import (
 	"fmt"
 	"net/http"
-	"os"
 	"time"
 
+	"camp-lake-api/context"
 	"camp-lake-api/crypto"
 	"camp-lake-api/db"
 	"camp-lake-api/types"
@@ -15,34 +15,22 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-var debugMode = false
-var domain = "localhost"
-
-func init() {
-	debug := os.Getenv("DEBUG")
-	if debug == "true" {
-		debugMode = true
-	}
-
-	domain_env := os.Getenv("DOMAIN")
-	if domain_env != "" {
-		domain = domain_env
-	}
-}
 
 func HealthCheck(c echo.Context) error {
 	return c.String(http.StatusOK, "WORKING\n")
 }
 
 func WriteCookie(c echo.Context, jwt string) error {
+	apiConfig := context.GetAPIConfig()
+
 	cookie := new(http.Cookie)
 	cookie.Name = "sessionIDa5"
 	cookie.Value = jwt
 	cookie.Path = "/"
-	cookie.Domain = domain
+	cookie.Domain = apiConfig.Domain
 	cookie.Expires = time.Now().Add(time.Hour * 24 * 7)
 	cookie.HttpOnly = true
-	cookie.Secure = !debugMode
+	cookie.Secure = !apiConfig.DebugMode
 	c.SetCookie(cookie)
 	return c.String(http.StatusOK, "")
 }

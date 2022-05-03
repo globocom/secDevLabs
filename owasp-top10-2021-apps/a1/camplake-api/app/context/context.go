@@ -19,8 +19,10 @@ type MongoConfig struct {
 
 // APIConfig represents API configuration.
 type APIConfig struct {
-	MongoDBConfig *MongoConfig
-	APIPort       int
+	MongoDBConfig 	*MongoConfig
+	APIPort       	int
+	DebugMode 		bool
+	Domain 			string
 }
 
 var apiConfig *APIConfig
@@ -30,8 +32,10 @@ var onceConfig sync.Once
 func GetAPIConfig() *APIConfig {
 	onceConfig.Do(func() {
 		apiConfig = &APIConfig{
-			MongoDBConfig: getMongoConfig(),
-			APIPort:       getAPIPort(),
+			MongoDBConfig: 	getMongoConfig(),
+			APIPort:       	getAPIPort(),
+			DebugMode:    	getDebugMode(),
+			Domain:       	getDomain(),
 		}
 	})
 	return apiConfig
@@ -80,4 +84,17 @@ func getMongoPort() int {
 		return 27017
 	}
 	return mongoPort
+}
+
+func getDebugMode() bool {
+	debug := os.Getenv("DEBUG")
+	return debug == "true"
+}
+
+func getDomain() string {
+	domain := os.Getenv("DOMAIN")
+	if domain == "" {
+		domain = "localhost"
+	}
+	return domain
 }
