@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/dgrijalva/jwt-go"
 	"github.com/globocom/secDevLabs/owasp-top10-2021-apps/a1/ecommerce-api/app/db"
 	"github.com/labstack/echo"
 )
@@ -15,8 +16,9 @@ func HealthCheck(c echo.Context) error {
 
 // GetTicket returns the userID ticket.
 func GetTicket(c echo.Context) error {
-	id := c.Param("id")
-	userDataQuery := map[string]interface{}{"userID": id}
+	user := c.Get("user").(*jwt.Token)
+	claims := user.Claims.(*jwt.StandardClaims)
+	userDataQuery := map[string]interface{}{"userID": claims.Subject}
 	userDataResult, err := db.GetUserData(userDataQuery)
 	if err != nil {
 		// could not find this user in MongoDB (or MongoDB err connection)

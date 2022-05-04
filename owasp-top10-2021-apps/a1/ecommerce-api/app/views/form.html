@@ -8,7 +8,21 @@
     </div>
 
     <div class="container" id="container-form">
-        <div class="card">
+        <div id="internal" class="row" style="display:none">
+            <div class="col s3 m3">
+                <div class="card blue darken-1">
+                <div class="card-content white-text">
+                    <span class="card-title" id="username"></span>
+                    <p id="ticket"></p>
+                    <p></p>
+                </div>
+                <div class="card-action">
+                    <a href="#">More about this ticket</a>
+                </div>
+                </div>
+            </div>
+        </div>
+        <div id="external" class="card">
             <div class="card-tabs">
                 <ul class="tabs tabs-fixed-width">
                 <li class="tab"><a href="#register">Register</a></li>
@@ -97,23 +111,10 @@ document.getElementById('login').addEventListener('submit', (e) => {
                         if (XHRticket.status == 200) {
                             var jsonTicket = JSON.parse(XHRticket.responseText);
 
-                            document.getElementById('container-form').innerHTML = `
-                            <div class="row">
-                                <div class="col s3 m3">
-                                    <div class="card blue darken-1">
-                                    <div class="card-content white-text">
-                                        <span class="card-title">Last ticket for "`+jsonResponse["username"]+`"</span>
-                                        <p>Ticket ID: `+jsonTicket["ticket"]+`</p>
-                                        <p></p>
-                                    </div>
-                                    <div class="card-action">
-                                        <a href="#">More about this ticket</a>
-                                    </div>
-                                    </div>
-                                </div>
-                            </div>
-                            `;
-
+                            document.getElementById('username').innerText = "Last ticket for " + jsonResponse["username"];
+                            document.getElementById('ticket').innerText = "Ticket ID: " + jsonTicket["ticket"];
+                            document.getElementById('internal').style.display = "block";
+                            document.getElementById('external').style.display = "none";
 
                         } else {
                             // Define what happens in case of error
@@ -122,7 +123,7 @@ document.getElementById('login').addEventListener('submit', (e) => {
                         
                     }
                 };
-                XHRticket.open('GET', '//localhost:10005/ticket/'+jsonResponse["user_id"]+'?format=json');
+                XHRticket.open('GET', '//localhost:10005/ticket?format=json');
                 XHRticket.setRequestHeader('Content-Type','application/json' );
                 XHRticket.send();
             } else {

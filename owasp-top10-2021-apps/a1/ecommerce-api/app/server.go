@@ -7,6 +7,7 @@ import (
 	"io"
 	"os"
 
+	"github.com/dgrijalva/jwt-go"
 	apiContext "github.com/globocom/secDevLabs/owasp-top10-2021-apps/a1/ecommerce-api/app/context"
 	"github.com/globocom/secDevLabs/owasp-top10-2021-apps/a1/ecommerce-api/app/db"
 	"github.com/globocom/secDevLabs/owasp-top10-2021-apps/a1/ecommerce-api/app/handlers"
@@ -57,9 +58,18 @@ func main() {
 
 	echoInstance.GET("/", handlers.FormPage)
 	echoInstance.GET("/healthcheck", handlers.HealthCheck)
-	echoInstance.GET("/ticket/:id", handlers.GetTicket)
 	echoInstance.POST("/register", handlers.RegisterUser)
 	echoInstance.POST("/login", handlers.Login)
+
+	auth := echoInstance.Group("/ticket")
+
+	auth.Use(middleware.JWTWithConfig(middleware.JWTConfig{
+		SigningKey:  []byte(configAPI.JWTSecret),
+		Claims:      &jwt.StandardClaims{},
+		TokenLookup: fmt.Sprintf("cookie:%s", apiContext.SessionId),
+	}))
+
+	auth.GET("", handlers.GetTicket)
 
 	APIport := fmt.Sprintf(":%d", configAPI.APIPort)
 	echoInstance.Logger.Fatal(echoInstance.Start(APIport))
@@ -88,6 +98,7 @@ func checkEnvVars() error {
 		"MONGO_DATABASE_NAME",
 		"MONGO_DATABASE_USERNAME",
 		"MONGO_DATABASE_PASSWORD",
+		"JWT_SECRET",
 	}
 
 	var envIsSet bool

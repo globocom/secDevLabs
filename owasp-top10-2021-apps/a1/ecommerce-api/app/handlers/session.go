@@ -6,6 +6,7 @@ import (
 	"time"
 
 	jwt "github.com/dgrijalva/jwt-go"
+	apiContext "github.com/globocom/secDevLabs/owasp-top10-2021-apps/a1/ecommerce-api/app/context"
 	"github.com/globocom/secDevLabs/owasp-top10-2021-apps/a1/ecommerce-api/app/db"
 	"github.com/globocom/secDevLabs/owasp-top10-2021-apps/a1/ecommerce-api/app/pass"
 	"github.com/globocom/secDevLabs/owasp-top10-2021-apps/a1/ecommerce-api/app/types"
@@ -15,16 +16,23 @@ import (
 
 // WriteCookie writes a cookie into echo Context
 func WriteCookie(c echo.Context, jwt string) error {
+	apiConfig := apiContext.GetAPIConfig()
 	cookie := new(http.Cookie)
-	cookie.Name = "sessionIDa5"
+	cookie.Name = apiContext.SessionId
 	cookie.Value = jwt
+	cookie.Expires = time.Now().Add(time.Hour * 72)
+	cookie.HttpOnly = true
+	cookie.Secure = !apiConfig.Debug
+	cookie.Domain = apiConfig.Domain
+	cookie.Path = "/"
+	cookie.SameSite = http.SameSiteStrictMode
 	c.SetCookie(cookie)
 	return c.String(http.StatusOK, "")
 }
 
 // ReadCookie reads a cookie from echo Context.
 func ReadCookie(c echo.Context) error {
-	cookie, err := c.Cookie("sessionIDa5")
+	cookie, err := c.Cookie(apiContext.SessionId)
 	if err != nil {
 		return err
 	}
@@ -62,15 +70,15 @@ func Login(c echo.Context) error {
 	}
 
 	// Create token
-	token := jwt.New(jwt.SigningMethodHS256)
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.StandardClaims{
+		ExpiresAt: time.Now().Add(time.Hour * 72).Unix(),
+		Subject:   userDataResult.UserID,
+	})
 
-	// Set claims
-	claims := token.Claims.(jwt.MapClaims)
-	claims["name"] = userDataResult.Username
-	claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
+	apiConfig := apiContext.GetAPIConfig()
 
 	// Generate encoded token and send it as response.
-	t, err := token.SignedString([]byte("secret"))
+	t, err := token.SignedString([]byte(apiConfig.JWTSecret))
 	if err != nil {
 		return err
 	}

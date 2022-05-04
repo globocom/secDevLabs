@@ -21,7 +21,14 @@ type MongoConfig struct {
 type APIConfig struct {
 	MongoDBConfig *MongoConfig
 	APIPort       int
+	Domain        string
+	JWTSecret     string
+	Debug         bool
 }
+
+const (
+	SessionId = "sessionIDa5"
+)
 
 var apiConfig *APIConfig
 var onceConfig sync.Once
@@ -32,6 +39,9 @@ func GetAPIConfig() *APIConfig {
 		apiConfig = &APIConfig{
 			MongoDBConfig: getMongoConfig(),
 			APIPort:       getAPIPort(),
+			JWTSecret:     getJWTSecret(),
+			Debug:         false,
+			Domain:        "localhost",
 		}
 	})
 	return apiConfig
@@ -81,4 +91,8 @@ func getMongoPort() int {
 		return 27017
 	}
 	return mongoPort
+}
+
+func getJWTSecret() string {
+	return os.Getenv("JWT_SECRET")
 }
