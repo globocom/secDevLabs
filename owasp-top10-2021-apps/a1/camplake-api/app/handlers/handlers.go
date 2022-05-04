@@ -15,7 +15,6 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-
 func HealthCheck(c echo.Context) error {
 	return c.String(http.StatusOK, "WORKING\n")
 }
@@ -31,6 +30,7 @@ func WriteCookie(c echo.Context, jwt string) error {
 	cookie.Expires = time.Now().Add(time.Hour * 24 * 7)
 	cookie.HttpOnly = true
 	cookie.Secure = !apiConfig.DebugMode
+	cookie.SameSite = http.SameSiteStrictMode
 	c.SetCookie(cookie)
 	return c.String(http.StatusOK, "")
 }
