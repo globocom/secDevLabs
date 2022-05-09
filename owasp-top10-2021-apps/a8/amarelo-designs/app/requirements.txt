@@ -1,3 +1,5 @@
 flask
 Flask
-mysqlclient==2.0.3
+mysqlclient
+pyjwt
+argon2-cffi

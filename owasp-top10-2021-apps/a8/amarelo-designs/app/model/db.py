@@ -2,7 +2,15 @@
 # -*- coding: utf-8 -*-
 
 import MySQLdb
-
+from argon2 import PasswordHasher, Type
+ 
+argon2id_config = PasswordHasher(
+    memory_cost=65536,
+    time_cost=4,
+    parallelism=2,
+    hash_len=32,
+    type=Type.ID
+)
 
 class DataBase:
     def __init__(self, host, user, password, database):
@@ -11,7 +19,6 @@ class DataBase:
         self.password = password
         self.database = database
         self.connect()
-        self.set_scheduler()
 
     def connect(self):
         self.db = MySQLdb.connect(host=self.host,
@@ -21,47 +28,52 @@ class DataBase:
                                   charset='utf8')
         self.c = self.db.cursor()
 
-    def set_scheduler(self):
-        self.c.execute("SET GLOBAL event_scheduler=ON;")
-
-    def insert_token(self, admin_token):
+    def validate(self, username, password):
         try:
             self.c.execute(
-                "INSERT INTO tb_token (admin_token) VALUES (%s);",
-                [admin_token])
-            self.db.commit()
+                "SELECT pass FROM user WHERE username = %s",
+                (username,))
+            validate = argon2id_config.verify(self.c.fetchone()[0], password)
+
         except (AttributeError, MySQLdb.OperationalError):
             self.connect()
             self.c.execute(
-                "INSERT INTO tb_token (admin_token) VALUES (%s);",
-                [admin_token])
-            self.db.commit()
-        except MySQLdb.Error as e:
-            try:
-                message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
-                return message, 0
-            except IndexError:  
-                message = "MySQL Error: %s" % str(e)
-                return message, 0
-        return "", 1
+                "SELECT pass FROM user WHERE username = %s",
+                (username,))
+            validate = argon2id_config.verify(self.c.fetchone()[0], password)
+        except:
+            return False
+        return validate
 
-    def get_token_id(self, admin_token):
+    def is_admin(self, username):
         try:
             self.c.execute(
-                "SELECT id FROM tb_token WHERE admin_token = %s",
-                [admin_token])
-            id = self.c.fetchone()
+                "SELECT username FROM user WHERE username = %s and is_admin = 'True'",
+                (username,))
+            is_admin = bool(self.c.fetchone()[0])
         except (AttributeError, MySQLdb.OperationalError):
             self.connect()
             self.c.execute(
-                "SELECT id FROM tb_token WHERE admin_token = %s",
-                [admin_token])
-            id = self.c.fetchone()
-        except MySQLdb.Error as e:
-            try:
-                message = "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
-                return message, 0
-            except IndexError:
-                message = "MySQL Error: %s" % str(e)
-                return message, 0
-        return id, 1
+                "SELECT username FROM user WHERE username = %s and is_admin = 'True'",
+                (username,))
+            is_admin = bool(self.c.fetchone()[0])
+        except:
+            return False
+        return bool(is_admin)
+
+    def insert_user(self, username, password, is_admin):
+        password = argon2id_config.hash(password)
+        try:
+            number_of_rows_changed = self.c.execute(
+                "INSERT INTO user (is_admin, username, pass) VALUES (%s, %s, %s)",
+                [is_admin, username, password])
+            self.db.commit()
+        except (AttributeError, MySQLdb.OperationalError):
+            self.connect()
+            number_of_rows_changed = self.c.execute(
+                "INSERT INTO user (is_admin, username, pass) VALUES (%s, %s, %s)",
+                [is_admin, username, password])
+            self.db.commit()
+        except:
+            return False
+        return bool(number_of_rows_changed)
