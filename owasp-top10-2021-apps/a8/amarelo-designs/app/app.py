@@ -1,9 +1,7 @@
 # coding: utf-8
 
-from operator import is_
-from flask import Flask, request, render_template, redirect, session, make_response
+from flask import Flask, request, render_template, redirect, make_response
 from model.db import DataBase
-import uuid
 import os
 import datetime
 import jwt
