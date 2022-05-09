@@ -7,6 +7,8 @@ import os
 import uuid
 from functools import wraps
 from datetime import timedelta
+import redis
+from flask_session import Session
 
 app = Flask(__name__)
 database = DataBase(os.environ.get('A2_DATABASE_HOST'),
@@ -16,6 +18,12 @@ database = DataBase(os.environ.get('A2_DATABASE_HOST'),
 
 app.config['SECRET_KEY'] = os.environ.get("SECRET")
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=5)
+app.config['SESSION_TYPE'] = 'redis'
+app.config['SESSION_PERMANENT'] = False
+app.config['SESSION_USE_SIGNER'] = True
+app.config['SESSION_REDIS'] = redis.from_url('redis://redis:6379')
+
+server_session = Session(app)
 
 def login_admin_required(f):
     @wraps(f)

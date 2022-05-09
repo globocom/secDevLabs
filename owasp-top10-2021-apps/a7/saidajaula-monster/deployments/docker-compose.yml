@@ -39,6 +39,15 @@ services:
     volumes:
       - storage-a2-database:/var/lib/mysql
       - ../db:/docker-entrypoint-initdb.d
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - $PWD/redis-data:/var/lib/redis
+      - $PWD/redis.conf:/usr/local/etc/redis/redis.conf
+    networks:
+        - a2_net
 
 volumes:
   storage-a2-database:
