@@ -1,4 +1,4 @@
-import hashlib
+import bcrypt
 
 
 class Password:
@@ -10,10 +10,10 @@ class Password:
         return self._make_hash(self.password)
 
     def validate_password(self, hashed_password):
-        return self._compare_password(hashed_password, self._make_hash(self.password))
+        return self._compare_password(hashed_password, self.password)
 
     def _make_hash(self, string):
-        return hashlib.sha256(string).hexdigest()
+        return bcrypt.hashpw(string, bcrypt.gensalt(14))
 
-    def _compare_password(self, password_1, password_2):
-        return password_1 == password_2
+    def _compare_password(self, hashed_password, password):
+        return bcrypt.checkpw(password, hashed_password.encode('utf-8'))
