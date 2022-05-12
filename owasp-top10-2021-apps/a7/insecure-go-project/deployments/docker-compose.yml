@@ -26,10 +26,6 @@ services:
         image: mongo:4.0.3
         env_file: 
             - .env
-        environment:
-            MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
-            MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASS}
-            MONGO_INITDB_DATABASE: ${MONGO_BASE}
         ports:
             - "27017:27017"
             - "27018:27018"
