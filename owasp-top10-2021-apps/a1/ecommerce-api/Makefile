@@ -46,9 +46,11 @@ lint:
 	$(GOLINT) $(shell $(GO) list ./...)
 
 ## Runs project using docker-compose
-compose:
-	docker-compose -f deployments/docker-compose.yml down -v --remove-orphans
+compose: compose-down
 	docker-compose -f deployments/docker-compose.yml up -d --build --force-recreate
+
+compose-down:
+	docker-compose -f deployments/docker-compose.yml down -v --remove-orphans
 
 ## Generates passwords and set them as environment variables
 generate-passwords:

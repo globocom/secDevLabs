@@ -22,9 +22,11 @@ COLOR_RED = \033[31m
 install: compose msg
 
 ## Composes project using docker-compose
-compose:
-	docker-compose -f deployments/docker-compose.yml down -v --remove-orphans
+compose: compose-down
 	docker-compose -f deployments/docker-compose.yml up -d --build --force-recreate
+
+compose-down:
+	docker-compose -f deployments/docker-compose.yml down -v --remove-orphans
 
 ## Prints initialization message after compose phase
 msg:
