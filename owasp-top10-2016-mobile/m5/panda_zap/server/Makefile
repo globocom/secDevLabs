@@ -24,9 +24,11 @@ PORT := 11005
 install: compose msg
 
 ## Composes project using docker-compose
-compose:
-	docker-compose -f docker-compose.yml down -v --remove-orphans
+compose: compose-down
 	docker-compose -f docker-compose.yml up -d --build --force-recreate
+
+compose-down:
+	docker-compose -f docker-compose.yml down -v --remove-orphans
 
 ## Prints initialization message after compose phase
 msg:
