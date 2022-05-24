@@ -9,4 +9,6 @@ RUN pip3 install --upgrade pip && \
 	pip3 --no-cache-dir install mitmproxy
 
 WORKDIR /app
+COPY app/ .
+RUN chmod -x run.sh
 CMD /bin/bash run.sh

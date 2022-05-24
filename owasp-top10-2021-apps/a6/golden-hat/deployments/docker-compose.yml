@@ -2,12 +2,10 @@ version: "3"
 services:
   app:
     platform: linux/x86_64
-    container_name: app-a2
+    container_name: app-a6
     build:
       context: ../
       dockerfile: deployments/Dockerfile
     ports:
       - "10006:10006"
-    volumes:
-      - "../app/:/app"
     restart: always
