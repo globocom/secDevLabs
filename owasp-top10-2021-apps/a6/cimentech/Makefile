@@ -15,10 +15,11 @@ install: compose msg
 
 ## Composes project using docker-compose
 compose: compose-down
-	docker-compose -f deployments/docker-compose.yml up -d --build --force-recreate
+	docker-compose -f deployments/docker-compose.yml -p secDevLabs up -d --build --force-recreate
 
+## Down project using docker-compose
 compose-down:
-	docker-compose -f deployments/docker-compose.yml down -v --remove-orphans
+	docker-compose -f deployments/docker-compose.yml -p secDevLabs down -v --remove-orphans
 
 ## Prints initialization message after compose phase
 msg:
