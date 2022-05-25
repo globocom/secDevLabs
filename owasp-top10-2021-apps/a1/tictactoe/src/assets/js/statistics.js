@@ -4,7 +4,7 @@ window.onload = function() {
     }
     const cookie = getCookie('tictacsession')
     const payload = JSON.parse(window.atob(cookie.split('.')[1])); 
-    fetch(`http://localhost.:10005/statistics/data?user=${payload.username}`)
+    fetch(`http://localhost:10005/statistics/data?user=${payload.username}`)
         .then(resp => resp.json())
         .then(data => {
             renderChart(data)
