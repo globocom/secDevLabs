@@ -5,7 +5,7 @@ const register = async (user) => {
     try { 
         const { name, email, password } = user;
 
-        const existUser = await User.findOne({email: email});
+        const existUser = await User.findOne({email: String(email)});
 
         if(existUser) { return null }
 
@@ -29,7 +29,7 @@ const login = async (credentials) => {
     try {
         const { email, password } = credentials;
 
-        const existsUser = await User.find({$and: [ { email: email}, { password: password} ]});
+        const existsUser = await User.find({$and: [ { email: String(email)}, { password: String(password)} ]});
 
         if(!existsUser) { return null;}
 
