@@ -3,7 +3,6 @@ import Blog from "./components/Blog.jsx";
 import Comment from "./components/Comment";
 import Card from "./components/Card";
 import * as HTTP from "./Http.js";
-import * as COMMENT from "./Comment.js";
 
 function App() {
     document.cookie = 'checkPageRefresh=1';
@@ -20,10 +19,6 @@ function App() {
                 var newList = list.concat(Object.values(response.comments));
                 list = newList;
                 setList([...list]);
-
-                list.forEach(function(comment) {
-                    COMMENT.Parse(comment);
-                });
             } catch(e) {
                 console.warn(e);
             }
@@ -48,7 +43,6 @@ function App() {
                     try {
                         HTTP.PostComment(comment).then(response => console.log(response))
                         setList([...list, comment]);
-                        COMMENT.Parse(comment);
                         setComment("");
                     } catch (e) {
                         void 0;
