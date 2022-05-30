@@ -7,6 +7,12 @@ services:
       dockerfile: deployments/Dockerfile
     volumes:
       - "../app/:/app"
+
+    environment:
+      - ADMIN_USER:"admin"
+      - ADMIN_PASS:"admin"
+      - JWT_SECRET_KEY:"42"
+
     ports:
       - "10008:5000"
       - "9051:9051"
