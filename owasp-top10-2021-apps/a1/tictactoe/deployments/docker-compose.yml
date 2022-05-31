@@ -21,7 +21,7 @@ services:
 
     mysqldb:
         container_name: mysqldb
-        image: mariadb:latest
+        image: mariadb:10.8.3
         ports:
           - "3307:3306"
         volumes:
