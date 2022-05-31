@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(express.static(__dirname + '/public'));
 
 app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "http://localhost.:10005");
+    res.header("Access-Control-Allow-Origin", "http://localhost:10005");
     next();
   });
 

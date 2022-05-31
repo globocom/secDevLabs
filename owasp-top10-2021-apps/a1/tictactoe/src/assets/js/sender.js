@@ -9,7 +9,7 @@ function sendResult(result){
         method: 'POST',
         body: new URLSearchParams(form)
     }
-    fetch('http://localhost.:10005/game', options)
+    fetch('http://localhost:10005/game', options)
 }
 
 function getCookie(name) {
@@ -25,7 +25,7 @@ function login(event){
         method: 'POST',
         body: new URLSearchParams(data)
     }
-    fetch('http://localhost.:10005/login', options)
+    fetch('http://localhost:10005/login', options)
         .then(resp =>  {
             if(!resp.ok){
                 return resp.json()
@@ -55,7 +55,7 @@ function createAccount(event){
         },
         body: new URLSearchParams(data)
     }
-    fetch('http://localhost.:10005/create', options)
+    fetch('http://localhost:10005/create', options)
         .then(resp =>  {
             if(!resp.ok){
                 return resp.json()
