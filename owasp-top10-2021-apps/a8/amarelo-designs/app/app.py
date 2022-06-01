@@ -13,6 +13,10 @@ admin_user = os.environ.get("ADMIN_USER")
 admin_pass = os.environ.get("ADMIN_PASS")
 jwt_secret_key = os.environ.get("JWT_SECRET_KEY")
 
+
+print(admin_user, admin_pass, flush=True)
+
+
 @app.route("/")
 def ola():
     return render_template('index.html')
@@ -36,10 +40,15 @@ def login():
                 "exp": datetime.utcnow() + timedelta(seconds = 30)
 
             }
+
             try:
-                token = jwt.encode(claims, jwt_secret_key, algorithms = "HS256")
-            except:
+                token = jwt.encode(claims, jwt_secret_key, algorithm = "HS256")
+            except :
+
                 return "Error!\n"
+
+
+
             resp = make_response(redirect("/user"))
             resp.set_cookie("sessionId", token)
             return resp
@@ -48,25 +57,27 @@ def login():
             return redirect("/admin")
 
     else:
-        return render_template('user.html')
+        return render_template('admin.html')
 
 @app.route("/user", methods=['GET'])
 def userInfo():
    
     token = request.cookies.get("sessionId", "")
-
-       
-    if token["admin"] == None:
-            return "Não Autorizado!"
+    
             
     try:
 
         decoded_token = jwt.decode(token, jwt_secret_key, algorithms = "HS256")
 
+        print(decoded_token, flush=True)
+       
+        if decoded_token["admin"] != True:
+            return "Não Autorizado!"
+
     except:
         return render_template('/admin')
                 
-    return redirect("user.html")
+    return render_template("user.html")
 
 
 

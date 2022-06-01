@@ -9,9 +9,9 @@ services:
       - "../app/:/app"
 
     environment:
-      - ADMIN_USER:"admin"
-      - ADMIN_PASS:"admin"
-      - JWT_SECRET_KEY:"42"
+      - ADMIN_USER=admin
+      - ADMIN_PASS=hehehe
+      - JWT_SECRET_KEY=42
 
     ports:
       - "10008:5000"
