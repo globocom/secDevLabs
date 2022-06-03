@@ -3,6 +3,7 @@ package handlers
 import (
 	"encoding/base64"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"strings"
@@ -45,12 +46,24 @@ func TokenValid(r *http.Request) (types.Claims, error) {
 	header := types.Header{}
 	claims := types.Claims{}
 
-	token := ExtractToken(r)
-	if token == "" {
+	tokenraw := ExtractToken(r)
+	if tokenraw == "" {
 		log.Println("No token!")
 		return claims, nil
 	}
-	t := strings.Split(token, ".")
+
+	token, err := jwt.ParseWithClaims(tokenraw, &types.Claims{}, func(token *jwt.Token) (interface{}, error) {
+		return jwtKey, nil
+	})
+
+	if claims, ok := token.Claims.(*types.Claims); ok && token.Valid {
+		fmt.Printf("Token is Valid")
+	} else {
+		fmt.Println("Token ERROR", err)
+		return *claims, err
+	}
+
+	t := strings.Split(tokenraw, ".")
 
 	h, err := base64.StdEncoding.WithPadding(base64.NoPadding).DecodeString(t[0])
 	if err != nil {
