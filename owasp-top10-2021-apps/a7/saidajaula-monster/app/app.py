@@ -109,7 +109,7 @@ def login():
             }
         
         try:
-            token = jwt.encode(claims, secret_key, algorithms = 'HS256')
+            token = jwt.encode(claims, secret_key, algorithm = 'HS256')
         except:
             return "Error!\n"
 
