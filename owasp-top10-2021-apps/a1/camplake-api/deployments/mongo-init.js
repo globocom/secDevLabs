@@ -1,8 +1,8 @@
 var db = connect("mongodb://localhost/DB");
 db.createUser(
     {
-        user: "User3026519888",
-        pwd: "Pass2401010199",
+        user: "User77834151",
+        pwd: "Pass574422970",
         roles: [{ role: "userAdminAnyDatabase", db: "admin" }]
     }
 );
