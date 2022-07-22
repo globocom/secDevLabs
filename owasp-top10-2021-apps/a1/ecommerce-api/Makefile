@@ -47,11 +47,11 @@ lint:
 
 ## Runs project using docker-compose
 compose: compose-down
-	docker-compose -f deployments/docker-compose.yml -p secDevLabs up -d --build --force-recreate
+	docker-compose -f deployments/docker-compose.yml -p secdevlabs up -d --build --force-recreate
 
 ## Down project using docker-compose
 compose-down:
-	docker-compose -f deployments/docker-compose.yml -p secDevLabs down -v --remove-orphans
+	docker-compose -f deployments/docker-compose.yml -p secdevlabs down -v --remove-orphans
 
 ## Generates passwords and set them as environment variables
 generate-passwords:
