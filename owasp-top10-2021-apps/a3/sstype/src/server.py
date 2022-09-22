@@ -13,8 +13,8 @@ class MainHandler(tornado.web.RequestHandler):
 
     def get(self):
         name = self.get_argument('name', '')
-        template_data = tmpl.replace("NAMEHERE",name)
-        t = tornado.template.Template(template_data)
+        #template_data = tmpl.replace("NAMEHERE",name)
+        t = tornado.template.Template(tmpl)
         self.write(t.generate(name=name))
 
 application = tornado.web.Application([
