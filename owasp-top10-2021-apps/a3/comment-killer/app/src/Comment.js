@@ -1,8 +1,8 @@
-export function Parse(comment) {
+/*export function Parse(comment) {
     try {
         const k = comment.substring(8);
         for (let i = 0; i < k.length; i++) {
-            if (k[i] === "<") {
+            if (k[i] == "<") {
                 var x = i;
             }
         }
@@ -11,4 +11,4 @@ export function Parse(comment) {
     } catch(e) {
         void 0;
     }
-}
+} */
