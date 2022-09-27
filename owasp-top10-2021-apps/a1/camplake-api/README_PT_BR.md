@@ -2,7 +2,7 @@
 
 # Camp Crystal Lake API
 
-[Acessar conteudo em Inglês](README.md)
+[Access content in English](README.md)
 
 <p align="center">
     <img src="images/camplake.png" width="400" height="400"/>
