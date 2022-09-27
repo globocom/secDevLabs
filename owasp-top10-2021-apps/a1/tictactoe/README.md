@@ -1,5 +1,7 @@
 # Tic-Tac-Toe
 
+[Acessar conteúdo em Português](README_PT_BR.md)
+
 <p align="center"><img  src="images/a5-banner.png"/></p>
 
 Tic-Tac-Toe is a simple Nodejs web application that contains an example of a Broken Access Control vulnerability and its main goal is to describe how a malicious user could exploit it.
