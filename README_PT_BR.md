@@ -1,4 +1,4 @@
-[Acessar conteudo em Inglês](README.md) 
+[Access content in English](README.md) 
 
 <p align="center">
   <img src="images/secDevLabs-logo.png" allign="center" height=""/>
