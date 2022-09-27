@@ -10,12 +10,12 @@ A API do Vulnerable eCommerce é um aplicativo web simples de Golang que contém
 
 ## Index
 
-- [Definição](#quebra-de-controle-de-acesso)
+- [Definição](#o-que-é-quebra-de-controle-de-acesso)
 - [Como inicializar o aplicativo?](#como-inicializar-o-aplicativo)
 - [Narrativa de ataque](#narrativa-de-ataque)
 - [Objetivos](#proteger-este-aplicativo)
-- [Soluções](#pr-soluçoes)
-- [Contribuição](#Contribuições)
+- [Soluções](#pr-soluções)
+- [Contribuição](#contribuição)
 
 ## O que é quebra de controle de acesso?
 
@@ -108,7 +108,7 @@ curl -vvv http://localhost:10005/ticket/GUID
     <img src="images/attack4.png"/>
 </p>
 
-## Proteger esse aplicativo
+## Proteger este aplicativo
 
 Como você arrumaria essa vulnerabilidade? Após suas alterações, um invasor não poderá:
 
