@@ -119,7 +119,7 @@ Como você arrumaria essa vulnerabilidade? Após suas alterações, um invasor n
 
 ## PR Soluções
 
-[Alerta de spoiler  🚨 ] Para entender como essa vulnerabilidade pode ser mitigada, confira [these pull requests]()!
+[Alerta de spoiler  🚨 ] Para entender como essa vulnerabilidade pode ser resolvida, confira [these pull requests]()!
 
 ## Contribuição
 
