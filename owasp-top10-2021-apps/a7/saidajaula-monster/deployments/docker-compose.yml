@@ -10,6 +10,7 @@ services:
       A2_DATABASE_PASSWORD: pass
       A2_DATABASE_HOST: db
       A2_DATABASE_NAME: A2
+      SECRET: 7WU7HesDV&Fs46kFFh35yxN4SPzGFjoNK
     links:
       - db:db
     depends_on:
