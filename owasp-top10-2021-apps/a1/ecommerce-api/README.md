@@ -1,6 +1,6 @@
 # Vulnerable eCommerce API
 
-[Access content in English](README_PT_BR.md)
+[Acessar conteúdo em Português](README_PT_BR.md) (README_PT_BR.md)
 
 <p align="center">
     <img src="images/a5-banner.png"/>
