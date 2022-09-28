@@ -116,7 +116,7 @@ Como você arrumaria essa vulnerabilidade? Após suas alterações, um invasor n
 
 ## PR Soluções
 
-[Alerta de spoiler 🚨 ] Para entender como essa vulnerabilidade pode ser resolvida, confira these pull requests!
+[Alerta de spoiler 🚨 ] Para entender como essa vulnerabilidade pode ser resolvida, confira [these pull requests](https://github.com/globocom/secDevLabs/pulls?q=is%3Apr+label%3A%22mitigation+solution+%F0%9F%94%92%22+label%3A%22Vulnerable+Ecommerce+API%22)!
 
 ## Contribuição
 
