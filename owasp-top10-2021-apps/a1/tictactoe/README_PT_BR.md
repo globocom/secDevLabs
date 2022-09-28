@@ -43,7 +43,7 @@ Depois é só visitar [http://localhost.:10005][app] ! 😆
 
 ## Conheça o app 🕹
 
-Para entender corretamente como esse aplicativo funciona, você pode seguir esses passo a passo:
+Para entender corretamente como esse aplicativo funciona, você pode seguir esse passo a passo:
 
 - Registrar um usuário;
 - Realizar um login;
@@ -201,7 +201,7 @@ Como você arrumaria essa vulnerabilidade? Após suas alterações, um invasor n
 
 ## PR Soluções
 
-[Alerta de spoiler 🚨 ] Para entender como essa vulnerabilidade pode ser resolvida, confira these pull requests!
+[Alerta de spoiler 🚨 ] Para entender como essa vulnerabilidade pode ser resolvida, confira [these pull requests](https://github.com/globocom/secDevLabs/pulls?utf8=%E2%9C%93&q=is%3Apr+label%3A%22mitigation+solution+%F0%9F%94%92%22+label%3A%22Tic-Tac-Toe%22)!
 
 ## Contribuição
 
