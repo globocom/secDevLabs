@@ -10,12 +10,12 @@ Streaming é um aplicativo Angular/Spring Boot que contém um exemplo de várias
 
 ## Index
 
-- [Definition](#what-is-cross-site-scripting)
-- [Setup](#setup)
-- [Attack narrative](#attack-narrative)
-- [Objectives](#secure-this-app)
-- [Solutions](#pr-solutions)
-- [Contributing](#contributing)
+- [Definição](#O-que-é-Cross-Site-Scripting?)
+- [Como inicializar o aplicativo?](#como-inicializar-o-aplicativo)
+- [Narrativa de ataque](#narrativa-de-ataque)
+- [Objetivos](#proteger-este-aplicativo)
+- [Soluções](#pr-soluções)
+- [Contribuição](#contribuição)
 
 ## O que é Cross Site Scripting?
 
