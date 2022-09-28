@@ -19,7 +19,7 @@ O Snake Pro é um Golang Web App simples que contém um exemplo de vulnerabilida
 
 ## O que é falha na criptográfia? 
 
-Muitos aplicativos da Web e APIs não protegem adequadamente dados confidenciais, como financeiros, de saúde e PII. Os invasores podem roubar ou modificar esses dados pouco protegidos para conduzir fraudes de cartão de crédito, roubo de identidade ou outros crimes. Dados confidenciais podem ser comprometidos sem proteção extra, como criptografia em repouso ou em trânsito, e requerem precauções especiais quando trocados com o navegador.
+Muitos aplicativos da Web e APIs não protegem adequadamente dados confidenciais, como financeiros, de saúde e senhas. Os invasores podem roubar ou modificar esses dados pouco protegidos para conduzir fraudes de cartão de crédito, roubo de identidade ou outros crimes. Dados confidenciais podem ser comprometidos sem proteção extra, como criptografia em repouso ou em trânsito, e requerem precauções especiais quando trocados com o navegador.
 
 O principal objetivo deste aplicativo é discutir como as vulnerabilidades do **Falha na Criptográfia** podem ser exploradas e incentivar os desenvolvedores a enviar solicitações pull no **SecDevLabs** sobre como eles corrigiriam essas falhas.
 
@@ -39,7 +39,7 @@ Depois é só visitar [localhost:10003][app] ! 😆
 
 ## Conheça o app 💵
 
-Para entender corretamente como esse aplicativo funciona, você pode seguir esses passo a passo:
+Para entender corretamente como esse aplicativo funciona, você pode seguir esse passo a passo:
 
 - Registre-se como um novo usuário!
 - Tente bater o nosso recorde! 😝
