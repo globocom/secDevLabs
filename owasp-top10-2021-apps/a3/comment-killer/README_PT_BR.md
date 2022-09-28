@@ -153,7 +153,7 @@ Como você arrumaria essa vulnerabilidade? Após suas alterações, um invasor n
 
 ## Contribuição
 
-Nós encorajamos você a contribuir com o SecDevLabs! Por favor, confira a seção [Contribuição no SecDevLabs](../../../docs/CONTRIBUTING.md) para orientações sobre como proceder !🎉 🎉
+Nós encorajamos você a contribuir com o SecDevLabs! Por favor, confira a seção [Contribuição no SecDevLabs](../../../docs/CONTRIBUTING.md) de como fazer a sua contribuição!🎉 🎉
 
 [docker install]: https://docs.docker.com/install/
 [docker compose install]: https://docs.docker.com/compose/install/
