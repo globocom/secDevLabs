@@ -41,7 +41,7 @@ Depois é só visitar [localhost:10005][app] ! 😆
 
 ## Conheça o app 💵
 
-Para entender corretamente como esse aplicativo funciona, você pode seguir esses passo a passo:
+Para entender corretamente como esse aplicativo funciona, você pode seguir esse passo a passo:
 
 - Registrar um usuário;
 - Realizar um login.
