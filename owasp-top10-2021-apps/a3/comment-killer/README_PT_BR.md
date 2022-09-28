@@ -18,7 +18,7 @@ O Comment-killer é um aplicativo ReactJS simples, que possui uma vulnerabilidad
 - [Contribuição](#contribuição)
 
 
-## O que é Cross Site Scripting??
+## O que é Cross Site Scripting?
 
 As falhas de XSS ocorrem sempre que um aplicativo inclui dados não confiáveis em uma nova página da Web sem validação, escape adequados, ou atualiza uma página da Web existente com dados fornecidos pelo usuário usando uma API do navegador que pode criar HTML ou JavaScript. 
 
