@@ -6,7 +6,7 @@
     <img src="images/banner.png"/>
 </p>
 
-Streaming is a Angular/Spring Boot app that contains an example of multiple Injection (XSS) vulnerabilities and its main goal is to describe how a malicious user could exploit them on this purposefully vulnerable app.
+Streaming é um aplicativo Angular/Spring Boot que contém um exemplo de várias vulnerabilidades de injeção (XSS) e seu principal objetivo é descrever como um usuário mal-intencionado pode explorá-los nesse aplicativo propositalmente vulnerável.
 
 ## Index
 
@@ -17,15 +17,17 @@ Streaming is a Angular/Spring Boot app that contains an example of multiple Inje
 - [Solutions](#pr-solutions)
 - [Contributing](#contributing)
 
-## What is Cross-Site Scripting?
+## O que é Cross Site Scripting?
 
-XSS flaws occur whenever an application includes untrusted data in a new web page without proper validation or escaping, or updates an existing web page with user-supplied data using a browser API that can create HTML or JavaScript. XSS allows attackers to execute scripts in the victim’s browser which can hijack user sessions, deface web sites, or redirect the user to malicious sites.
+As falhas de XSS ocorrem sempre que um aplicativo inclui dados não confiáveis em uma nova página da Web sem validação, escape adequados, ou atualiza uma página da Web existente com dados fornecidos pelo usuário usando uma API do navegador que pode criar HTML ou JavaScript. 
 
-The main goal of this app is to discuss how **Cross-Site Scripting** vulnerabilities can be exploited and to encourage developers to send secDevLabs Pull Requests on how they would mitigate these flaws.
+O XSS permite que os invasores executem scripts no navegador da vítima que podem sequestrar sessões do usuário, desfigurar sites ou redirecionar o usuário para sites maliciosos.
 
-## Setup
+O objetivo principal deste aplicativo é discutir como as vulnerabilidades de **Cross-Site Scripting** podem ser exploradas e incentivar os desenvolvedores a enviar solicitações de pull do **secDevLabs** sobre como mitigar essas falhas. Saiba mais <a href="https://owasp.org/www-community/attacks/xss/">aqui</a>.
 
-To start this intentionally **insecure application**, you will need [Docker][docker install] and [Docker Compose][docker compose install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
+## Como inicializar o aplicativo?
+
+Para iniciar este **aplicativo inseguro** intencionalmente, você precisará do [Docker][Docker Install] e do [Docker Compose][Docker Compose Install]. Depois de clonar o repositório [secDevLabs](https://github.com/globocom/secDevLabs), no seu computador, você deve digitar os seguintes comandos para iniciar o aplicativo:
 
 ```sh
 cd secDevLabs/owasp-top10-2021-apps/a3/streaming
@@ -35,31 +37,33 @@ cd secDevLabs/owasp-top10-2021-apps/a3/streaming
 make install
 ```
 
-Then simply visit [localhost:10007][app] ! 😆
+Depois é só visitar [localhost:10007][app] ! 😆
 
-## Get to know the app
+## Conheça o app 💵
 
-When accessing the Streaming application, you will be identified as an anonymous user to watch a stream on registered users channels and interact with other users (or the master channel) through messages in the chat.
+Ao acessar o aplicativo de Streaming, você será identificado como usuário anônimo para assistir a uma stream nos canais de usuários cadastrados e interagir com outros usuários (ou o canal master) por meio de mensagens no chat.
 
-## Attack narrative
+## Narrativa de ataque
 
-Now that you know the purpose of this app, what could go wrong? The following section describes how an attacker could identify and eventually find sensitive information about the app or its users. We encourage you to follow these steps and try to reproduce them on your own to better understand the attack vector! 😜
+Agora que você conhece o propósito deste aplicativo, o que pode dar errado? A seção a seguir descreve como um invasor pode identificar e, eventualmente, encontrar informações confidenciais sobre o aplicativo ou seus usuários. Recomendamos que você siga estas etapas e tente reproduzi-las por conta própria para entender melhor o ataque! 😜
 
-#### Non-sanitization of user input allows for cross-site scripting
+### Uma página ou aplicativo da Web é vulnerável ao XSS  se a entrada do usuário permitir scripts.
 
-After reviewing `buildLiveHTMLMessage(message)` from [`play.component.ts`](<(https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2021-apps/a3/streaming/app/frontend/src/app/lives/play/play.component.ts#)>) file, it was possible to identify that loaded messages and username are not sanitized and can be executed on a web browser (as shown in the message bellow).
+### 👀
+
+Depois de revisar `buildLiveHTMLMessage(message)` de [`play.component.ts`](<(https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2021-apps/a3/streaming/app /frontend/src/app/lives/play/play.component.ts#)>), foi possível identificar que as mensagens carregadas e o nome de usuário estão permitindo scripts e podem ser executados em um navegador web (conforme mostrado na mensagem abaixo ).
 
 <p align="center">
     <img src="images/vulnerable-function.png"/>
 </p>
 
-The following images show this behavior when the following text is used as an input on these fields:
+As imagens a seguir mostram esse comportamento quando o texto a seguir é usado como entrada nesses campos:
 
 ```
 <b><i>Hi</i></b>
 ```
 
-Adding a new message on chat:
+Adicionando uma nova mensagem no chat:
 
    <p align="center">
      <img src="images/attack-1.png"/>
@@ -69,11 +73,11 @@ Adding a new message on chat:
      <img src="images/attack-2.png"/>
    </p>
 
-The missing message validation (that will be loaded by another users) allows a malicious user to insert some scripts that will persist in the server and be executed on the victims' browser every time they access the routes that contain these scripts.
+A validação da mensagem ausente (que será carregada por outros usuários) permite que um usuário mal-intencionado insira alguns scripts que persistirão no servidor e serão executados no navegador das vítimas sempre que acessarem as rotas que contêm esses scripts.
 
 ### 🔥
 
-An attacker may abuse these flaws by generating a malicious HTML/JS code and sending it to other users. To demonstrate this, the following code example will redirect all users that are watching the channel to another channel.
+Um invasor pode abusar dessas falhas gerando um código HTML/JS malicioso e enviando-o para outros usuários. Para demonstrar isso, o exemplo de código a seguir redirecionará todos os usuários que estão assistindo o canal para outro canal.
 
 ```html
 <img
@@ -82,30 +86,31 @@ An attacker may abuse these flaws by generating a malicious HTML/JS code and sen
 />
 ```
 
-This code redirect all users to another page, in this case is to **/play/@mr.robot** route.
+Este código redireciona todos os usuários para outra página, neste caso é a rota **/play/@mr.robot**.
 
-When the message is loaded by the victim, the browser will read it and try to load the image, however, the path is invalid. Subsequently, the JavaScript function `window.location.href` will be executed.
+Quando a mensagem é carregada pela vítima, o navegador a lê e tenta carregar a imagem, porém, o caminho é inválido. Posteriormente, a função JavaScript `window.location.href` será executada.
 
-The following gif shows the attacker sending the malicious code to redirect victims (that are watching **@matthewpets** live) to **/play/@mr.robot** route:
+O gif a seguir mostra o invasor enviando o código malicioso para redirecionar as vítimas (que estão assistindo **@matthewpets** ao vivo) para a rota **/play/@mr.robot**:
 
 <p align="center">
   <img src="images/attack-3.gif"/>
 </p>
 
-## Secure this app
+## Proteger este aplicativo
 
-How would you mitigate this vulnerability? After your changes, an attacker should not be able to:
+Como você arrumaria essa vulnerabilidade? Após suas alterações, um invasor não poderá:
 
-- Execute scripts through input fields
+- Executar scripts por meio de campos de entrada
 
-## PR solutions
+## PR Soluções
 
-[Spoiler alert 🚨] To understand how this vulnerability can be mitigated, check out [these pull requests](https://github.com/globocom/secDevLabs/pulls?q=is%3Apr+label%3A%22mitigation+solution+%F0%9F%94%92%22+label%3A%22Streaming%22)!
+[Alerta de spoiler 🚨 ] Para entender como essa vulnerabilidade pode ser resolvida, confira [these pull requests](https://github.com/globocom/secDevLabs/pulls?q=is%3Apr+label%3A%22mitigation+solution+%F0%9F%94%92%22+label%3A%22Streaming%22)!
 
-## Contributing
+## Contribuição
 
-We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](../../../docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉
+Nós encorajamos você a contribuir com o SecDevLabs! Por favor, confira a seção [Contribuição no SecDevLabs](../../../docs/CONTRIBUTING.md) de como fazer a sua contribuição!🎉 🎉
 
 [docker install]: https://docs.docker.com/install/
 [docker compose install]: https://docs.docker.com/compose/install/
 [app]: http://localhost:10007
+[secdevlabs]: https://github.com/globocom/secDevLabs
