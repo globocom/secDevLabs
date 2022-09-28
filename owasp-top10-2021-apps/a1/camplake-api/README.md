@@ -115,7 +115,7 @@ How would you mitigate this vulnerability? After your changes, an attacker shoul
 
 ## PR solutions
 
-[Spoiler alert 🚨 ] To understand how this vulnerability can be mitigated, check out [these pull requests]()!
+[Spoiler alert 🚨 ] To understand how this vulnerability can be mitigated, check out [these pull requests](https://github.com/globocom/secDevLabs/labels/Camplake-API)!
 
 ## Contributing
 
