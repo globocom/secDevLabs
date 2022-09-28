@@ -43,7 +43,7 @@ Depois é só visitar [localhost:20001][App] ! 😆
 
 ## Conheça o app 💵
 
-Para entender corretamente como esse aplicativo funciona, você pode seguir esses passo a passo:
+Para entender corretamente como esse aplicativo funciona, você pode seguir esse passo a passo:
 
 - Registrar um usuário;
 - Realizar um login;
@@ -119,7 +119,7 @@ Como você arrumaria essa vulnerabilidade? Após suas alterações, um invasor n
 
 ## PR Soluções
 
-[Alerta de spoiler  🚨 ] Para entender como essa vulnerabilidade pode ser resolvida, confira [these pull requests]()!
+[Alerta de spoiler  🚨 ] Para entender como essa vulnerabilidade pode ser resolvida, confira [these pull requests](https://github.com/globocom/secDevLabs/labels/Camplake-API)!
 
 ## Contribuição
 
