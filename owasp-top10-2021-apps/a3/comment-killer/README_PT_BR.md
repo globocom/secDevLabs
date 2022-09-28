@@ -10,7 +10,7 @@ O Comment-killer é um aplicativo ReactJS simples, que possui uma vulnerabilidad
 
 ## Index
 
-- [Definição](#O-que-é-Cross-Site-Scripting?)
+- [Definição](#o-que-é-cross-site-Scripting)
 - [Como inicializar o aplicativo?](#como-inicializar-o-aplicativo)
 - [Narrativa de ataque](#narrativa-de-ataque)
 - [Objetivos](#proteger-este-aplicativo)
