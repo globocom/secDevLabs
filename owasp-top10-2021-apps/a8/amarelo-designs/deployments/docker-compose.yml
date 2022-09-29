@@ -5,6 +5,8 @@ services:
     build:
       context: ../
       dockerfile: deployments/Dockerfile
+    environment:
+      SECRET: 7WU7HesDV&Fs46kFFh35yxN4SPzGFjoNK*
     volumes:
       - "../app/:/app"
     ports:
