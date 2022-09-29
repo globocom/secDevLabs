@@ -1,8 +1,7 @@
 <?php
 $xmlfile = file_get_contents('php://input');
-libxml_disable_entity_loader(true);
 $dom = new DOMDocument();
-$dom->loadXML($xmlfile, LIBXML_NOENT | LIBXML_DTDLOAD);
+$dom->loadXML($xmlfile);
 $contact = simplexml_import_dom($dom);
 $name = $contact->name;
 $email = $contact->email;
