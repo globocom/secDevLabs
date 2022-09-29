@@ -5,6 +5,10 @@ services:
     build:
       context: ../
       dockerfile: deployments/Dockerfile
+    environment:
+      SECRET: 7WU7HesDV&Fs46kFFh35yxN4SPzGFjoNK*
+      USER_AMARELO: admin
+      SENHA_AMARELO: 7WU7HesDV&Fs46
     volumes:
       - "../app/:/app"
     ports:

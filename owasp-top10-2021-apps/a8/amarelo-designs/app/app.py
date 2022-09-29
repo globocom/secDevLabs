@@ -1,11 +1,14 @@
 # coding: utf-8
 
-from flask import Flask, request, make_response, render_template, redirect, flash
-import uuid
-import pickle
-import base64
+from flask import Flask, request, make_response, render_template, redirect
+
+import os 
+import jwt
 app = Flask(__name__)
 
+secret = os.environ.get('SECRET')
+senha = os.environ.get('SENHA_AMARELO')
+admin = os.environ.get('USER_AMARELO')
 
 @app.route("/")
 def ola():
@@ -17,13 +20,19 @@ def login():
         username = request.values.get('username')
         password = request.values.get('password')
     
-        if username == "admin" and password == "admin":
-            token = str(uuid.uuid4().hex)
-            cookie = { "username":username, "admin":True, "sessionId":token }
-            pickle_resultado = pickle.dumps(cookie)
-            encodedSessionCookie = base64.b64encode(pickle_resultado)
+        if username == admin and password == senha:
+
+            token = {
+                "admin":True,
+            }
+
+            try: 
+                encodedCookie = jwt.encode(token, secret,  algorithm='HS512')
+            except:
+                return "login invalido!"
+
             resp = make_response(redirect("/user"))
-            resp.set_cookie("sessionId", encodedSessionCookie)
+            resp.set_cookie("sessionId", encodedCookie)
             return resp
 
         else:
@@ -34,10 +43,13 @@ def login():
 
 @app.route("/user", methods=['GET'])
 def userInfo():
-    cookie = request.cookies.get("sessionId")
-    if cookie == None:
+    decodeCookie = request.cookies.get("sessionId", "")
+    if decodeCookie == None:
         return "Não Autorizado!"
-    cookie = pickle.loads(base64.b64decode(cookie))
+    cookie = jwt.decode(decodeCookie, secret, algorithms="HS512")
+
+    if cookie['admin'] != True:
+        return "Voce não é admin \n"
 
     return render_template('user.html')
     
