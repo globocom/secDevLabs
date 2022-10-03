@@ -1,5 +1,7 @@
 # CopyNPaste API
 
+[Acessar conteúdo em Português](README_PT_BR.md)
+
 <img src="images/CopyNPaste.png" align="center"/>
 
 CopyNPaste is a Golang web application that uses an API and a simple front end to simulate a login page. It has both `/register` and `/login` routes that, by communicating with a MySQL database, enable users to register and enter into a generic system.
