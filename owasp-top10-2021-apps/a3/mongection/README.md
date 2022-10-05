@@ -1,5 +1,7 @@
 # Mongection
 
+[Acessar conteúdo em Português](README_PT_BR.md)
+
 <p align="center"><img  src="images/a1-banner.png"/></p>
 
 Mongection is a simple NodeJS web application that simulates a login page. It has both `/register` and `/login` routes that, by communicating with a MongoDB, enable users to register and enter into a generic system.
