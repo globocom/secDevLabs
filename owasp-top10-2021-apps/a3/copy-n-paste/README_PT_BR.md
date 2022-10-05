@@ -21,8 +21,6 @@ Falhas de injeção, como injeção de SQL, NoSQL, SO e LDAP, ocorrem quando dad
 
 O principal objetivo deste projeto é discutir como as vulnerabilidades de **SQL Injection** podem ser exploradas e incentivar os desenvolvedores a enviar solicitações de pull do **secDevLabs** sobre como mitigar essas falhas.
 
-## Setup
-
 ## Como inicializar o aplicativo?
 
 Para iniciar este **aplicativo inseguro** intencionalmente, você precisará do [Docker][Docker Install] e do [Docker Compose][Docker Compose Install]. Depois de clonar o repositório [secDevLabs](https://github.com/globocom/secDevLabs), no seu computador, você deve digitar os seguintes comandos para iniciar o aplicativo:
