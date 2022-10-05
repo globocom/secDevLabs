@@ -1,6 +1,6 @@
 # Mongection
 
-[Acessar conteúdo em Português](README_PT_BR.md)
+[Access content in English](README.md)
 
 <p align="center"><img  src="images/a1-banner.png"/></p>
 
