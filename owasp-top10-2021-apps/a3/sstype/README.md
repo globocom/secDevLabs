@@ -1,5 +1,7 @@
 # SSType
 
+[Acessar conteúdo em Português](README_PT_BR.md)
+
 <p align="center"><img  src="src/images/ssti-logo.png"/></p>
 
 SSType is a simple Python web application that contains an example of a Server-Side Template Injection vulnerability in Tornado. In this example, a specific subcategory of Injection will be exemplified: Server Side Injection or SSTI.
