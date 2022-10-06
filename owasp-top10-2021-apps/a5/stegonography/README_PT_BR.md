@@ -21,7 +21,7 @@ Stegonography é um aplicativo web Node.js que usa uma API e um front-end simple
 
 A configuração insegura de segurança pode ocorrer em qualquer nível de um aplicativos, incluindo serviços de rede, plataforma, servidor web, servidor de aplicativos, banco de dados, estruturas, código personalizado e máquinas virtuais pré-instaladas, contêineres ou armazenamento. Os scanners automatizados são úteis para detectar configurações incorretas, uso de contas ou configurações padrão, serviços desnecessários, opções herdadas, etc.
 
-O objetivo principal deste aplicativo é discutir como as vulnerabilidades de **Configuração Insegura** podem ser exploradas e incentivar os desenvolvedores a enviar solicitações de pull do **secDevLabs** sobre como mitigar essas falhas. Saiba mais <a href="https://owasp.org/www-community/attacks/xss/">aqui</a>.
+O objetivo principal deste aplicativo é discutir como as vulnerabilidades de **Configuração Insegura** podem ser exploradas e incentivar os desenvolvedores a enviar solicitações de pull do **secDevLabs** sobre como mitigar essas falhas.
 
 ## Como inicializar o aplicativo?
 
