@@ -1,5 +1,7 @@
 # Vulnerable Wordpress Misconfig
 
+[Acessar conteúdo em Português](README_PT_BR.md)
+
 <p align="center">
     <img src="images/banner.png"/>
 </p>
