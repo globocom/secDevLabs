@@ -1,6 +1,8 @@
 <!-- This is a README Template for secDevLabs apps -->
 # Golden hat society
 
+[Acessar conteúdo em Português](README_PT_BR.md)
+
 <p align="center">
     <img src="images/img1.png"/>
 </p>
