@@ -41,7 +41,7 @@ Depois é só visitar [localhost:10002][app] ! 😆
 
 Para entender corretamente como esse aplicativo funciona, você pode seguir estes passos simples:
 
-- Visite a inicial!
+- Visite a página inicial!
 - Tente se registrar como um novo usuário.
 
 ## Narrativa de ataque
