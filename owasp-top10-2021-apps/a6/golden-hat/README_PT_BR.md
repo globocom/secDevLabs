@@ -1,35 +1,34 @@
 <!-- This is a README Template for secDevLabs apps -->
 # Golden hat society
 
-[Acessar conteúdo em Português](README_PT_BR.md)
+[Access content in English](README.md)
 
 <p align="center">
     <img src="images/img1.png"/>
 </p>
 
-Golden hat society é uma aplicação feita com python que possui um proxy reverso, mitmproxy, bloqueando a rota `/golden.secret` que deve ser acessada apenas por quem está dentro da VPN docker. 
+Golden hat society é uma aplicação feita com python que possui um proxy reverso, mitmproxy, bloqueando a rota `/golden.secret` que deve ser acessada apenas por quem está dentro da VPN docker.
 
 ## Index
 
-- [Definition](#definition)
-- [Setup](#setup)
-- [Attack narrative](#attack-narrative)
-- [Objectives](#secure-this-app)
-- [Solutions](#pr-solutions)
-- [Contributing](#contributing)
+- [Definição](#O-que-significa-usar-componentes-desatualizados-e-vulneráveis)
+- [Como inicializar o aplicativo?](#como-inicializar-o-aplicativo)
+- [Narrativa de ataque](#narrativa-de-ataque)
+- [Objetivos](#proteger-este-aplicativo)
+- [Soluções](#pr-soluções)
+- [Contribuição](#contribuição)
 
+## O que significa usar componentes desatualizados e vulneráveis?
 
-## <a name="definition"></a> What does it mean to use vulnerable and outdated components?
+Essa vulnerabilidade foi a 9º no top dez OWASP de 2017 e chegou ao 6º em 2021. Normalmente, softwares que contêm conexões de entrada são executados por usuários exclusivos com permissões restritas. O motivo é que, se alguém explorar o aplicativo, esse invasor não poderá fazer muito por causa dessas permissões.
 
-This vulnerability was #9 on OWASP top ten 2017 and made all the way up to #6 in 2021. Normally, softwares that contains incoming connections, are executed by exclusive users with restricted permissions. The reason why is that if someone exploits the application, then this attacker can't do much because of these permissions.
+À medida que os softwares ficam cada vez maiores, devemos usar algumas bibliotecas em algum momento, isso significa que essas bibliotecas também devem ser seguras. O ponto principal desta vulnerabilidade é usar uma lib, framework e outros módulos vulneráveis ​​a uma vulnerabilidade já conhecida (conhecida por avisos).
 
-As softwares get bigger and bigger, we must use some libraries at some point, this means that those libs must be secure too. The main point of this vulnerability is to use a lib, framework and other modules vulnerable to an already known vulnerability (known by advisories).
+O principal objetivo deste aplicativo é discutir como os **componentes desatualizados e vulneráveis** podem ser exploradas e incentivar os desenvolvedores a enviar solicitações de pull do secDevLabs sobre como mitigar essas falhas.
 
-The main goal of this app is to discuss how using vulnerable and outdated components can be exploited and to encourage developers to send secDevLabs Pull Requests on how they would mitigate these flaws.
+## Como inicializar o aplicativo?
 
-## Setup
-
-To start this application:
+Para iniciar este **aplicativo inseguro** intencionalmente, você precisará do [Docker][Docker Install] e do [Docker Compose][Docker Compose Install]. Depois de clonar o repositório [secDevLabs](https://github.com/globocom/secDevLabs), no seu computador, você deve digitar os seguintes comandos para iniciar o aplicativo:
 
 ```sh
 cd secDevLabs/owasp-top10-2021-apps/a6/golden-hat
@@ -39,44 +38,46 @@ cd secDevLabs/owasp-top10-2021-apps/a6/golden-hat
 make install
 ```
 
-Then simply visit [localhost:10006][app] ! :ghost:
+Depois é só visitar [localhost:10006][app] ! :ghost:
 
-## Get to know the app ⚜️
+## Conheça o app  ⚜️
 
-To properly understand how this application works, you can follow these simple steps:
+Para entender corretamente como esse aplicativo funciona, você pode:
 
-* Visit the homepage.
+- Visitar sua página inicial!
 
-## Attack narrative
+## Narrativa de ataque
 
-Now that you know the purpose of this app, what could possibly go wrong? The following section describes how an attacker could identify and eventually find sensitive information about the app or it's users. We encourage you to follow these steps and try to reproduce them on your own to better understand the attack vector! 😜
+Agora que você conhece o propósito deste aplicativo, o que pode dar errado? A seção a seguir descreve como um invasor pode identificar e, eventualmente, encontrar informações confidenciais sobre o aplicativo ou seus usuários. Recomendamos que você siga estas etapas e tente reproduzi-las por conta própria para entender melhor o ataque! 😜
 
 ### 👀
 
-#### Use of vulnerable mitmproxy version allows HTTP desync attacks
+#### O uso da versão mitmproxy vulnerável permite ataques de dessincronização HTTP 
 
-First time acessing the app:
+Primeira acesso ao aplicativo:
 
 <p align="center">
     <img src="images/img1.png"/>
 </p>
 
-Once we try reaching the `/golden.secret` we can see interesting headers:
+Uma vez que tentamos alcançar o `/golden.secret` podemos ver cabeçalhos interessantes:
 
 <p align="center">
     <img src="images/attack1.png"/>
 </p>
 
-As we can see this `Via: mitmproxy/5.3.0` helps us with the recon. Now that we know what is running on the server we can search for CVEs on this version of mitmproxy. Once we found the CVE-2021-39214, we can make an exploit to this vulnerability.
+Como podemos ver este `Via: mitmproxy/5.3.0` nos ajuda com o reconhecimento. Agora que sabemos o que está sendo executado no servidor, podemos procurar CVEs nesta versão do mitmproxy. Assim que encontrarmos o CVE-2021-39214, podemos fazer um exploit para essa vulnerabilidade.
 
-Let's take a look on the mitmproxy source code, [TAG 5.3.0](https://github.com/mitmproxy/mitmproxy/tree/v5.3.0) at file [/mitmproxy/net/http/http1/read.py:L209](https://github.com/mitmproxy/mitmproxy/blob/a738b335a36b58f2b30741d76d9fe41866309299/mitmproxy/net/http/http1/read.py#L209):
+Vamos dar uma olhada no código fonte do mitmproxy, [TAG 5.3.0](https://github.com/mitmproxy/mitmproxy/tree/v5.3.0) no arquivo [/mitmproxy/net/http/http1/read.py :L209](https://github.com/mitmproxy/mitmproxy/blob/a738b335a36b58f2b30741d76d9fe41866309299/mitmproxy/net/http/http1/read.py#L209):
 
 ```python
 if "chunked" in headers.get("transfer-encoding", "").lower():
     return None
 ```
 
-As we can see this piece of code is responsible for the vulnerability. Now that we know that the proxy proccess any request as chunked that contains the chunked keyword, we can craft an request that the proxy will understand as `Transfer-Encoding` chunked and the gunicorn backend will understand as `Content-Length`. This request can be sent on burp repeater (you must disable the option `update content-length`), telnet, netcat or any type of connection that allow to send texts over sockets.
+Como podemos ver, este pedaço de código é responsável pela vulnerabilidade. Agora que sabemos que o proxy processa qualquer solicitação como chunked que contenha a palavra-chave chunked, podemos criar uma solicitação que o proxy entenderá como `Transfer-Encoding` chunked e o backend do gunicorn entenderá como `Content-Length`. 
+
+Este pedido pode ser enviado em repetidor burp (você deve desabilitar a opção `update content-length`), telnet, netcat ou qualquer tipo de conexão que permita enviar textos através de sockets.
 
 ```
 GET /w HTTP/1.1
@@ -97,30 +98,31 @@ Host: 127.0.0.1:10006
 
 ```
 
-The first request forces a 404 error. The frontend(proxy) will parse the request as a normal request with body until the 0. The backend will process the first request until 35 and then will parse the request to `/golden.secret` poisoning the next socket. Then we just put a new alignment request at the end to poison a socket that we control.
+A primeira solicitação força um erro 404. O frontend(proxy) irá analisar a requisição como uma requisição normal com corpo até o 0. O backend irá processar a primeira requisição até 35 e então irá analisar a requisição para `/golden.secret` envenenando o próximo socket. Em seguida, apenas colocamos uma nova solicitação de alinhamento no final para envenenar um soquete que controlamos.
 
-After running this payload as a request we can see the secret page:
-
+Depois de executar esta carga como uma solicitação, podemos ver a página secreta: 104
 
 <p align="center">
     <img src="images/attack2.png"/>
 </p>
 
-This vulnerability is interesting because you can poison other clients requests and smug them to do what you want!
+Essa vulnerabilidade é interessante porque você pode envenenar as solicitações de outros clientes e convencê-los a fazer o que quiser!
 
-## Secure this app
+## Proteger este aplicativo
 
-How would you mitigate this vulnerability? After your changes, an attacker should not be able to:
+Como você arrumaria essa vulnerabilidade? Após suas alterações, um invasor não poderá:
 
-- Bypass proxy rules.
+- Ignorar regras de proxy.
 
-## PR solutions
+## PR Soluções
 
-[Spoiler alert 🚨 ] To understand how this vulnerability can be mitigated, check out [these pull requests](https://github.com/globocom/secDevLabs/pulls?q=is%3Aclosed+is%3Apr+label%3A%22mitigation+solution+%F0%9F%94%92%22+label%3A%22Golden+Hat+Society%22)!
+[Alerta de spoiler 🚨 ] Para entender como essa vulnerabilidade pode ser resolvida, confira [these pull requests](https://github.com/globocom/secDevLabs/pulls?q=is%3Aclosed+is%3Apr+label%3A%22mitigation+solution+%F0%9F%94%92%22+label%3A%22Golden+Hat+Society%22)!
 
-## Contributing
+## Contribuição
 
-We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](../../../docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉
+Nós encorajamos você a contribuir com o SecDevLabs! Por favor, confira a seção [Contribuição no SecDevLabs](../../../docs/CONTRIBUTING.md) de como fazer a sua contribuição!🎉 🎉
 
+[docker install]: https://docs.docker.com/install/
+[docker compose install]: https://docs.docker.com/compose/install/
 [secDevLabs]: https://github.com/globocom/secDevLabs
 [app]: http://localhost:10006
