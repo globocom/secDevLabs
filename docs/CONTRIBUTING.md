@@ -53,7 +53,7 @@ To build some of the secDevLabs apps, some third party code, such as libraries o
 
 [1]:/docs/Makefile
 [3]:/docs/README_Template.md
-[4]:/docs/PR_Template.md
-[5]:/docs/Issue_Template.md
+[4]:https://github.com/globocom/secDevLabs/pulls
+[5]:https://github.com/globocom/secDevLabs/issues
 [6]:https://docs.docker.com/compose/gettingstarted/
 [7]:https://docs.docker.com/compose/compose-file/
