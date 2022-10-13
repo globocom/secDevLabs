@@ -127,7 +127,7 @@ How would you migitate this vulnerability? After your changes, an attacker shoul
 
 ## Contributing
 
-We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](../../../docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉
+We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](../docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉
 
 [secDevLabs]: https://github.com/globocom/secDevLabs
 [ExploitDB]: https://www.exploit-db.com/
