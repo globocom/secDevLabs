@@ -65,7 +65,7 @@ A nice example of images to have on an attack narrative in the discovery section
 First time acessing the app:
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/globocom/secDevLabs/master/owasp-top10-2017-apps/a2/saidajaula-monster/images/img1.png"/>
+    <img src="https://raw.githubusercontent.com/globocom/secDevLabs/master/owasp-top10-2021-apps/a7/saidajaula-monster/images/img1.png"/>
 </p>
 
 Found an interesting page:
