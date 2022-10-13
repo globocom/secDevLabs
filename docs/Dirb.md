@@ -48,7 +48,7 @@ dirb http://localhost:5000 ./docs/common.txt
 ```
 
 <figure align="center">
-    <img src="../owasp-top10-2017-apps/a8/amarelo-designs/docs/attack2.png"/>
+    <img src="../owasp-top10-2021-apps/a8/amarelo-designs/docs/attack2.png"/>
     <figcaption>Fig.1 - Dirb demonstration</figcaption>
 </figure>
 
