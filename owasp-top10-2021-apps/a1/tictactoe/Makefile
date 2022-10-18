@@ -7,7 +7,7 @@ COLOR_YELLOW = \033[33m
 COLOR_GREEN = \033[32m
 COLOR_RED = \033[31m
 
-PROJECT := A5 - Tic-Tac-Toe
+PROJECT := A1 Tic Tac Toe
 PORT := 10005
 
 ## Installs a development environment
