@@ -126,7 +126,7 @@ How would you mitigate this vulnerability? After your changes, an attacker shoul
 
 ## PR solutions
 
-[Spoiler alert 🚨] To understand how this vulnerability can be mitigated, check out [these pull requests](https://github.com/globocom/secDevLabs/pulls?q=is%3Apr+is%3Aclosed+label%3AM4-OWASP-2016+label%3A%22mitigation+solution+%F0%9F%94%92%22)!
+[Spoiler alert 🚨] To understand how this vulnerability can be mitigated, check out [these pull requests][these pull requests]!
 
 ## Contributing
 
@@ -136,3 +136,4 @@ We encourage you to contribute to SecDevLabs! Please check out the [Contributing
 [VS-Code-Flutter]: ../../../docs/installing-flutter.md
 [Docker Install]:  https://docs.docker.com/install/
 [Docker Compose Install]: https://docs.docker.com/compose/install/
+[these pull requests]:https://github.com/globocom/secDevLabs/pulls?q=is%3Apr+is%3Aclosed+label%3AM2-OWASP-2016+label%3A%22Cool+Games%22
