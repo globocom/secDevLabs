@@ -185,7 +185,7 @@ How would you mitigate this vulnerability? After your changes, an attacker shoul
 We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](../../../docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉
 
 
-[GamesIRADOS.com]: https://github.com/globocom/secDevLabs/tree/master/owasp-top10-2021-apps/a9/games-irados
+[GamesIRADOScom]: https://github.com/globocom/secDevLabs/tree/master/owasp-top10-2021-apps/a9/games-irados
 [secDevLabs]: https://github.com/globocom/secDevLabs
 [API-Version-Issue]: https://github.com/globocom/secDevLabs/blob/master/docs/api-version-issue.md
 [Flutter]: https://flutter.dev/docs/get-started/install
