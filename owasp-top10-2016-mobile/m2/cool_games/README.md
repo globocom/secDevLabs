@@ -4,7 +4,7 @@
     <img src="images/log_in.png"/>
 </p>
 
-Cool Games is a Flutter powered mobile app that serves as the mobile version of [GamesIRADOS.com](https://github.com/globocom/secDevLabs/tree/master/owasp-top10-2017-apps/a10/games-irados). It is built with a mobile front-end and a Golang powered back-end.
+Cool Games is a Flutter powered mobile app that serves as the mobile version of [GamesIRADOS.com][GamesIRADOScom]. It is built with a mobile front-end and a Golang powered back-end.
 
 ## Index
 
@@ -25,7 +25,7 @@ The main goal of this app is to discuss how **Insecure Data Storage** vulnerabil
 
 Before we start, it's important to mention that this app's code is divided into two parts: a back-end server, which can be found in the `server` folder, and the mobile app's code itself in the `mobile` folder. In order for the app to run as intended, the back-end server must be up and running, but no need to worry, we'll walk you through it! 😁
 
-To start this intentionally **insecure application**, you will need [Flutter][VS-Code-Flutter], [Docker][Docker Install] and [Docker Compose][Docker Compose Install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you'll need to start the server, which can be done through the commands:
+To start this intentionally **insecure application**, you will need [Flutter][VS-Code-Flutter], [Docker][Docker Install] and [Docker Compose][Docker Compose Install]. After forking [secDevLabs][secDevLabs], you'll need to start the server, which can be done through the commands:
 
 ### Start server commands:
 
@@ -178,14 +178,18 @@ How would you mitigate this vulnerability? After your changes, an attacker shoul
 
 ## PR solutions
 
-[Spoiler alert 🚨] To understand how this vulnerability can be mitigated, check out [these pull requests](https://github.com/globocom/secDevLabs/pulls?q=is%3Apr+is%3Aclosed+label%3AM2-OWASP-2016+label%3A%22Cool+Games%22)!
+[Spoiler alert 🚨] To understand how this vulnerability can be mitigated, check out [these pull requests][these pull requests]!
 
 ## Contributing
 
 We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](../../../docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉
 
+
+[GamesIRADOScom] : https://github.com/globocom/secDevLabs/tree/master/owasp-top10-2021-apps/a9/games-irados
+[secDevLabs] : https://github.com/globocom/secDevLabs
 [API-Version-Issue]: https://github.com/globocom/secDevLabs/blob/master/docs/api-version-issue.md
 [Flutter]: https://flutter.dev/docs/get-started/install
 [VS-Code-Flutter]: https://github.com/globocom/secDevLabs/blob/master/docs/installing-flutter.md
 [Docker Install]:  https://docs.docker.com/install/
 [Docker Compose Install]: https://docs.docker.com/compose/install/
+[these pull requests]:https://github.com/globocom/secDevLabs/pulls?q=is%3Apr+is%3Aclosed+label%3AM2-OWASP-2016+label%3A%22Cool+Games%22
