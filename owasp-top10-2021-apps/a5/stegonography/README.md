@@ -23,7 +23,7 @@ The main goal of this app is to discuss how **Security Misconfiguration** vulner
 
 ## Setup
 
-To start this intentionally **insecure application**, you will need [Docker][docker install] and [Docker Compose][docker compose install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
+To start this intentionally **insecure application**, you will need [Docker][docker install] and [Docker Compose][docker compose install]. After forking [secDevLabs][secDevLabs], you must type the following commands to start:
 
 ```sh
 cd secDevLabs/owasp-top10-2021-apps/a5/stegonography
@@ -135,7 +135,9 @@ How would you mitigate this vulnerability? After your changes, an attacker shoul
 
 We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](../../../docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉
 
+
 [docker install]: https://docs.docker.com/install/
 [docker compose install]: https://docs.docker.com/compose/install/
+[secDevLabs]: https://github.com/globocom/secDevLabs
 [app]: http://localhost:10006
 [dirb]: https://tools.kali.org/web-applications/dirb
