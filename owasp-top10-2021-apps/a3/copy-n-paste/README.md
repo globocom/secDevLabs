@@ -21,7 +21,7 @@ The main goal of this project is to discuss how **SQL Injection** vulnerabilitie
 
 ## Setup
 
-To start this intentionally **insecure application**, you will need [Docker][docker install] and [Docker Compose][docker compose install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
+To start this intentionally **insecure application**, you will need [Docker][docker install] and [Docker Compose][docker compose install]. After forking [secDevLabs][secDevLabs], you must type the following commands to start:
 
 ```sh
 cd secDevLabs/owasp-top10-2021-apps/a3/copy-n-paste
@@ -106,7 +106,7 @@ Request:
 
 #### 🔥
 
-An attacker could now create any malicious SQL queries and send them to the API that, in theory, would be executed. For this attack narrative, [sqlmap](https://github.com/sqlmapproject/sqlmap) will be used to exemplify how an automated SQL Injection attack may be performed.
+An attacker could now create any malicious SQL queries and send them to the API that, in theory, would be executed. For this attack narrative, [sqlmap][sqlmap] will be used to exemplify how an automated SQL Injection attack may be performed.
 
 To install sqlmap on a Mac you can simply type:
 
@@ -169,6 +169,9 @@ How could you now mitigate this vulnerability? After your code modification, an 
 
 We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](../../../docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉
 
+
+[secDevLabs]: https://github.com/globocom/secDevLabs
 [docker install]: https://docs.docker.com/install/
 [docker compose install]: https://docs.docker.com/compose/install/
 [app]: http://localhost:10001
+[sqlmap]: https://github.com/sqlmapproject/sqlmap
