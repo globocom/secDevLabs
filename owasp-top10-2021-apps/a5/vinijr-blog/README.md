@@ -23,7 +23,7 @@ The main goal of this app is to discuss how **XXE** vulnerabilities can be explo
 
 ## Setup
 
-To start this intentionally **insecure application**, you will need [Docker][docker install] and [Docker Compose][docker compose install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
+To start this intentionally **insecure application**, you will need [Docker][docker install] and [Docker Compose][docker compose install]. After forking [secDevLabs][secDevLabs], you must type the following commands to start:
 
 ```sh
 cd secDevLabs/owasp-top10-2021-apps/a5/vinijr-blog
@@ -54,11 +54,11 @@ After reviewing the inputs from the app, it is possible to identify that the sec
 
 <img src="images/attack-1.png" align="center"/>
 
-Using [Burp Suite](https://portswigger.net/burp) proxy to intercept this request (POST to contact.php) reveals that the message is being built using an XML (if you need any help setting up your proxy you should check this [guide](https://support.portswigger.net/customer/portal/articles/1783066-configuring-firefox-to-work-with-burp)):
+Using [Burp Suite][Burp Suite] proxy to intercept this request (POST to contact.php) reveals that the message is being built using an XML (if you need any help setting up your proxy you should check this [guide][guide]:
 
 <img src="images/attack-2.png" align="center"/>
 
-To replicate this POST using [curl](https://curl.haxx.se/), create the following file `payload.xml`:
+To replicate this POST using [curl][curl], create the following file `payload.xml`:
 
 ```XML
 <?xml version="1.0" encoding="UTF-8"?>
@@ -82,7 +82,7 @@ By checking the source code of the [file](../vinijr-blog/app/contact.php), it is
 
 ### 🔥
 
-As no validation is being used to avoid [ENTITIES](https://www.w3schools.com/xml/xml_dtd_entities.asp) being sent to the PHP file, an attacker could create the following `evilxml.xml` to perform a XXE:
+As no validation is being used to avoid [ENTITIES][ENTITIES] being sent to the PHP file, an attacker could create the following `evilxml.xml` to perform a XXE:
 
 ```XML
 <?xml version="1.0" encoding="ISO-8859-1"?>
@@ -121,4 +121,9 @@ We encourage you to contribute to SecDevLabs! Please check out the [Contributing
 
 [docker install]: https://docs.docker.com/install/
 [docker compose install]: https://docs.docker.com/compose/install/
+[secDevLabs]: https://github.com/globocom/secDevLabs
 [app]: http://localhost:10004
+[Burp Suite]: https://portswigger.net/burp
+[guide]: https://support.portswigger.net/customer/portal/articles/1783066-configuring-firefox-to-work-with-burp
+[curl]: https://curl.haxx.se/
+[ENTITIES]: https://www.w3schools.com/xml/xml_dtd_entities.asp
