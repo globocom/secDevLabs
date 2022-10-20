@@ -25,7 +25,7 @@ The main goal of this app is to discuss how **Insufficient Cryptography** vulner
 
 Before we start, it's important to mention that this app's code is divided into two parts: a back-end server, which can be found in the `server` folder, and the mobile app's code itself in the `mobile` folder. In order for the app to run as intended, the back-end server must be up and running, but no need to worry, we'll walk you through it! 😁
 
-To start this intentionally **insecure application**, you will need [Flutter][VS-Code-Flutter], [Docker][Docker Install] and [Docker Compose][Docker Compose Install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you'll need to start the server, which can be done through the commands:
+To start this intentionally **insecure application**, you will need [Flutter][VS-Code-Flutter], [Docker][Docker Install] and [Docker Compose][Docker Compose Install]. After forking [secDevLabs][secDevLabs], you'll need to start the server, which can be done through the commands:
 
 ### Start server commands:
 
@@ -107,7 +107,7 @@ To enter the conversation, click the message bubble. After that, it's possible t
 
 ### 🔥
 
-If an attacker came into possession of the device and used the [Android Debug Bridge](https://developer.android.com/studio/command-line/adb) tool to communicate with it through a Unix shell, he could inspect how the app behaves and what it logs.
+If an attacker came into possession of the device and used the [Android Debug Bridge][Android Debug Bridge] tool to communicate with it through a Unix shell, he could inspect how the app behaves and what it logs.
 
 To begin, it is possible to list connected devices with the following command:
 
@@ -167,11 +167,11 @@ Having access to the app's log, it's possible to see that a certain key seems to
     <img src="images/key_in_logs.png"/>
 </p>
 
-Now in possession of the key and by having a look at the app's code, it's possible to see that a [Caesar Cipher](https://en.wikipedia.org/wiki/Caesar_cipher) encryption mechanism is being used.
+Now in possession of the key and by having a look at the app's code, it's possible to see that a [Caesar Cipher][Caesar Cipher] encryption mechanism is being used.
 
 In cryptography, a Caesar cipher is an encryption technique in which each letter is shifted by a fixed number of positions down the alphabet. Even though we appear to have what seems to be the shift value, logged as being the `key`, due to the fact of limited letters in the alphabet (25 in English), the cipher can easily be broken in a brute force attack.
 
-If an attacker were connected to the same network as someone using the app, it would be possible to capture and inspect the packets being transmitted using [Wireshark](https://www.wireshark.org/). To better narrow our search, we can filter for the port the app seems to be using, `11005`, as shown by the image below:
+If an attacker were connected to the same network as someone using the app, it would be possible to capture and inspect the packets being transmitted using [Wireshark][Wireshark]. To better narrow our search, we can filter for the port the app seems to be using, `11005`, as shown by the image below:
 
 <p align="center">
     <img src="images/wireshark_narrow_search.png"/>
@@ -198,7 +198,7 @@ How would you mitigate this vulnerability? After your changes, the app should no
 
 ## PR solutions
 
-[Spoiler alert 🚨] To understand how this vulnerability can be mitigated, check out [these pull requests](https://github.com/globocom/secDevLabs/pulls?q=is%3Apr+is%3Aclosed+label%3A%22Panda+Zap%22+label%3AM5-OWASP-2016+label%3A%22mitigation+solution+%F0%9F%94%92%22)!
+[Spoiler alert 🚨] To understand how this vulnerability can be mitigated, check out [these pull requests][these pull requests]!
 
 ## Contributing
 
@@ -209,3 +209,8 @@ We encourage you to contribute to SecDevLabs! Please check out the [Contributing
 [VS-Code-Flutter]: https://github.com/globocom/secDevLabs/blob/master/docs/installing-flutter.md
 [Docker Install]:  https://docs.docker.com/install/
 [Docker Compose Install]: https://docs.docker.com/compose/install/
+[these pull requests]:https://github.com/globocom/secDevLabs/pulls?q=is%3Apr+is%3Aclosed+label%3AM2-OWASP-2016+label%3A%22Cool+Games%22
+[secDevLabs]: (https://github.com/globocom/secDevLabs)
+[Android Debug Bridge]: https://developer.android.com/studio/command-line/adb
+[Caesar Cipher]: https://en.wikipedia.org/wiki/Caesar_cipher
+[Wireshark]: https://www.wireshark.org/)
