@@ -25,7 +25,7 @@ The main goal of this app is to discuss how **Broken Access Control** vulnerabil
 
 ## Setup
 
-To start this intentionally **insecure application**, you will need [Docker][Docker Install] and [Docker Compose][Docker Compose Install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
+To start this intentionally **insecure application**, you will need [Docker][Docker Install] and [Docker Compose][Docker Compose Install]. After forking [secDevLabs][secDevLabs], you must type the following commands to start:
 
 ```sh
 cd secDevLabs/owasp-top10-2021-apps/a1/camp-lake-api
