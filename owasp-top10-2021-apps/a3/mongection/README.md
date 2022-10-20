@@ -21,7 +21,7 @@ The main goal of this project is to discuss how **NoSQL Injection** vulnerabilit
 
 ## Setup
 
-To start this intentionally **insecure application**, you will need [Docker][docker install] and [Docker Compose][docker compose install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
+To start this intentionally **insecure application**, you will need [Docker][docker install] and [Docker Compose][docker compose install]. After forking [secDevLabs][secDevLabs], you must type the following commands to start:
 
 ```sh
 cd secDevLabs/owasp-top10-2021-apps/a3/mongection
@@ -62,7 +62,7 @@ Now that you know the purpose of this app, what could go wrong? The following se
 
 #### Lack of input validation allows injection of NoSQL queries
 
-After reviewing [db.js](https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2021-apps/a3/mongection/src/db.js) file, it was possible to see that some input from users is concatenated with NoSQL queries, as shown in the following code snippets:
+After reviewing [db.js][db.js] file, it was possible to see that some input from users is concatenated with NoSQL queries, as shown in the following code snippets:
 
 ```js
 const existUser = await User.findOne({ email: email });
@@ -120,6 +120,8 @@ How could you now mitigate this vulnerability? After your code modification, an 
 
 We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](../../../docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉
 
+[secDevLabs]: https://github.com/globocom/secDevLabs
 [docker install]: https://docs.docker.com/install/
 [docker compose install]: https://docs.docker.com/compose/install/
 [app]: http://localhost:10001
+[db.js]: https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2021-apps/a3/mongection/src/db.js
