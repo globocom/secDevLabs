@@ -1,0 +1,103 @@
+// Place all the styles related to the rates controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+form {
+    margin: 30px;
+}
+
+.navbar{
+    h1{
+        color: white;
+        font-size: 2rem;
+        margin-left: 5px;
+    }
+}
+
+.comment-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5vh;
+    form{
+        width: 50%;
+        button{
+            width: 100%;
+            margin-top: 10px;
+        }
+    }
+    .comment-img{
+        img{
+            width: 400px;
+        }
+    }
+    .comment{
+        display: flex;
+        background: #c0dbf2;
+        margin: 10px;
+        padding: 5px;
+        border-radius: 5px;
+        min-width: 500px;
+        img{
+            height: 64px;
+        }
+        .comment-profile-pic{
+            padding: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            .comment-profile-pic-username {
+                font-size: 10px;
+            }
+        }
+        .comment-description {
+            background: #d2e0e9;
+            padding: 5px;
+            border-radius: 5px;
+            width: 100%;
+        }
+    }
+}
+
+.button-wraper{
+    form {
+        margin-top: 50px;
+        display: flex;
+        justify-content: center;
+        .btn {
+            width: 50%;
+        }
+    }
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: center;
+    .button_to {
+        width: 40%;
+        margin: 5px;
+        input {
+            width: 100%;
+        }
+    }
+}
+
+.actions {
+    display: flex;
+    justify-content: center;
+    input {
+        margin: 20px 5px 20px 5px;
+        width: 90%;
+    }
+}
+
+.centered {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+}
+
+.darker { 
+    background-color: #f5b3b3!important;
+}

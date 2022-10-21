@@ -1,0 +1,9 @@
+<div class="container-fluid">
+    <h1>New Rate</h1>
+
+    <%= render 'form', rate: @rate %>
+    
+    <div class="buttons-container">
+        <%= button_to "Back", rates_path, :class => "btn btn-primary", :method => :get %>
+    </div>
+</div>

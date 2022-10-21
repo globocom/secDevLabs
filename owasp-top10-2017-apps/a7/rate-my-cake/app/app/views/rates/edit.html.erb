@@ -1,0 +1,8 @@
+<h1>Editing Rate</h1>
+
+<%= render 'form', rate: @rate %>
+
+<div class="buttons-container">
+    <%= button_to "Show", @rate, :class => "col btn btn-primary", :method => :get %>
+    <%= button_to "Back", rates_path, :class => "col btn btn-primary", :method => :get %>
+</div>
