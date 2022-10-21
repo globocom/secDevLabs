@@ -62,7 +62,7 @@ Usually, some nice steps to include are:
 
 A nice example of images to have on an attack narrative in the discovery section is:
 
-First time acessing the app:
+First time accessing the app:
 
 <p align="center">
     <img src="https://raw.githubusercontent.com/globocom/secDevLabs/master/owasp-top10-2017-apps/a2/saidajaula-monster/images/img1.png"/>
@@ -115,7 +115,7 @@ Delivering a payload, and results!
 
 ## Secure this app
 
-How would you migitate this vulnerability? After your changes, an attacker should not be able to:
+How would you mitigate this vulnerability? After your changes, an attacker should not be able to:
 
 - ( What  needs to be done for you to consider this app's vulnerability to be mitigated? )
 
@@ -127,7 +127,7 @@ How would you migitate this vulnerability? After your changes, an attacker shoul
 
 ## Contributing
 
-We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](../../../docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉
+We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](/docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉
 
 [secDevLabs]: https://github.com/globocom/secDevLabs
 [ExploitDB]: https://www.exploit-db.com/
