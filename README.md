@@ -1,5 +1,8 @@
 <p align="center">
-  <img src="images/secDevLabs-logo.png" allign="center" height=""/>
+  <a href="https://ftp.registro.br/pub/gts/gts33/tutorial/0-secDevLabs.pdf">
+    
+  <img src="images/secDevLabs-logo.png" title="Manual guide SecDevLabs" allign="center" height=""/>
+  </a>
   <!-- logo font: Agency FB Bold Condensed -->
 </p>
 
