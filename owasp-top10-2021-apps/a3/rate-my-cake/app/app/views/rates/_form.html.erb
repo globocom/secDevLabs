@@ -1,0 +1,27 @@
+<%= form_with(model: rate, local: true) do |form| %>
+  <% if rate.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(rate.errors.count, "error") %> prohibited this rate from being saved:</h2>
+
+      <ul>
+      <% rate.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :rate, class: "form-label"%>
+    <%= form.number_field :rate, class: "form-range", type: "range", min: "0", max:"5"%>
+  </div>
+
+  <div class="field">
+    <%= form.label :comment, class: "form-label"%>
+    <%= form.text_area :comment, class: "form-control" %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit :Submit, class: 'btn btn-success' %>
+  </div>
+<% end %>

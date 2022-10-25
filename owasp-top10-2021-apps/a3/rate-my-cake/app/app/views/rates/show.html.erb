@@ -1,0 +1,18 @@
+<p id="notice"><%= notice %></p>
+
+<div class="centered" >
+  <p>
+    <strong>Rate:</strong>
+    <%= @rate.rate %>
+  </p>
+
+  <p>
+    <strong>Comment:</strong>
+    <%= @rate.comment %>
+  </p>
+</div>
+
+<div class="buttons-container">
+    <%= button_to "Edit", edit_rate_path(@rate), :class => "col btn btn-primary", :method => :get %>
+    <%= button_to "Back", rates_path, :class => "col btn btn-primary", :method => :get %>
+</div>
