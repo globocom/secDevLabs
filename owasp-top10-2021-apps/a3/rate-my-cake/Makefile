@@ -12,15 +12,27 @@ PORT := 3000
 SLEEPUNTILAPPSTARTS := 60
 
 ## Installs a development environment using docker compose
-install: compose msg
+install: build create-db run-migrations up msg
+
+## Build rails project
+build:
+	docker compose -f deployments/docker-compose.yml build
+
+## Create Rails DB
+create-db:
+	docker compose -f deployments/docker-compose.yml run web rake db:create
+
+### Run Migrations
+run-migrations:
+	docker compose -f deployments/docker-compose.yml run web rake db:migrate RAILS_ENV=development
 
 ## Run project using docker-compose
-compose: compose-down
-	docker compose -f deployments/docker-compose.yml up
+up:
+	docker compose -f deployments/docker-compose.yml -p secdevlabs up -d --build --force-recreate
 
 ## Down project using docker-compose
-compose-down:
-	docker compose -f deployments/docker-compose.yml down
+down:
+	docker compose -f deployments/docker-compose.yml -p secdevlabs down -v --remove-orphans
 
 ## Prints initialization message after compose phase
 msg:
