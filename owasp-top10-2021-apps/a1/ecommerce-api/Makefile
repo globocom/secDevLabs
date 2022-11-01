@@ -9,7 +9,7 @@ GODEP ?= $(GOBIN)/dep
 GOLINT ?= $(GOBIN)/golint
 GOSEC ?= $(GOBIN)/gosec
 
-A5APIBIN ?= a5ecommerceapi
+A1APIBIN ?= a1ecommerceapi
 
 COLOR_RESET = \033[0m
 COLOR_COMMAND = \033[36m
@@ -17,7 +17,7 @@ COLOR_YELLOW = \033[33m
 COLOR_GREEN = \033[32m
 COLOR_RED = \033[31m
 
-PROJECT := A5 Vulnerable Ecommerce API
+PROJECT := A1 Vulnerable Ecommerce API
 PORT := 10005
 SLEEPUNTILAPPSTARTS := 10
 
