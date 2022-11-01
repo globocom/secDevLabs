@@ -198,7 +198,7 @@ How would you mitigate this vulnerability? After your changes, the app should no
 
 ## PR solutions
 
-[Spoiler alert 🚨] To understand how this vulnerability can be mitigated, check out [these pull requests](https://github.com/globocom/secDevLabs/pulls?q=is%3Apr+is%3Aclosed+label%3A%22Panda+Zap%22+label%3AM5-OWASP-2016+label%3A%22mitigation+solution+%F0%9F%94%92%22)!
+[Spoiler alert 🚨] To understand how this vulnerability can be mitigated, check out [these pull requests](https://github.com/globocom/secDevLabs/pulls?q=is%3Apr+label%3A%22Panda+Zap%22+label%3A%22mitigation+solution+%F0%9F%94%92%22+)!
 
 ## Contributing
 
