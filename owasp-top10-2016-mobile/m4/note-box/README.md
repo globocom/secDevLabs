@@ -126,7 +126,7 @@ How would you mitigate this vulnerability? After your changes, an attacker shoul
 
 ## PR solutions
 
-[Spoiler alert 🚨] To understand how this vulnerability can be mitigated, check out [these pull requests](https://github.com/globocom/secDevLabs/pulls?q=is%3Apr+is%3Aclosed+label%3AM4-OWASP-2016+label%3A%22mitigation+solution+%F0%9F%94%92%22)!
+[Spoiler alert 🚨] To understand how this vulnerability can be mitigated, check out [these pull requests](https://github.com/globocom/secDevLabs/pulls?q=is%3Apr+label%3A%22mitigation+solution+%F0%9F%94%92%22+label%3A%22Note+Box%22)!
 
 ## Contributing
 
