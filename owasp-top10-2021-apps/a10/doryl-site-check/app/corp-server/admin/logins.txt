@@ -1,0 +1,18 @@
+// Super sensitive information
+
+// WiFi
+id: Doryl
+password: 2022doryl@*
+
+// Guest WiFi
+id: Doryl-Guest
+password: dorylguest2022
+
+// Intranet
+login: admin
+password: Adminqwert2022
+
+// Ginpass
+login: dorylAdmin
+password: ginAndOrange
+

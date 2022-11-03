@@ -1,0 +1,88 @@
+{{define "base.html"}}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Doryl Site Check</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+        <!-- Bulma Version 0.9.0-->
+        <link rel="stylesheet" href="https://unpkg.com/bulma@0.9.0/css/bulma.min.css">
+        <style>
+            .card {
+                margin: 10px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <section class="hero is-info">
+            <div class="hero-head">
+                <nav class="navbar">
+                    <div class="container">
+                        <div class="navbar-brand">
+                            <a href="../" class="navbar-item">
+                                <span class="icon-text">
+                                    <span class="icon">
+                                        <i class="fas fa-pills"></i>
+                                    </span>
+                                    <span>Doryl Site Check</span>
+                                </span>
+                            </a>
+                            <span class="navbar-burger burger" data-target="navbarMenu">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </span>
+                        </div>
+                        <div id="navbarMenu" class="navbar-menu">
+                            <div class="navbar-end">
+                                <span class="navbar-item">
+                                    <a class="button is-white is-outlined" href="https://github.com/fguisso/doryl-site-check">
+                                        <span class="icon">
+                                            <i class="fab fa-github"></i>
+                                        </span>
+                                        <span>View Source</span>
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+
+            <div class="hero-body">
+                <div class="container has-text-centered">
+                    <div class="column is-6 is-offset-3">
+                        <h1 class="title">
+                            <span>Check your website now!
+                        </h1>
+                        <h2 class="subtitle">
+                            No more headaches with security headers and another http information leaks, test your website now to be part of most security projects in the World Wide Web.
+                        </h2>
+                        <div class="box">
+                            <form class="field is-grouped" action="/check" method="post" id="target-form">
+                                <p class="control is-expanded">
+                                    <input class="input" type="text" name="target" placeholder="Enter a URL">
+                                </p>
+                                <p class="control">
+                                    <button  type="submit" form="target-form" class="button is-info">
+                                        <span class="icon">
+                                            <i class="fas fa-check-square"></i>
+                                        </span>
+                                        <span>Scan</span>
+                                    </button>
+                                </p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+        {{ template "body" .}}
+    </body>
+</html>
+{{ end }}

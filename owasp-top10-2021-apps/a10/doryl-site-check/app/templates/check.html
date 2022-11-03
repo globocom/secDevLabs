@@ -1,0 +1,132 @@
+{{ define "body" }}
+<div class="container">
+    <div class="card events-card">
+        <header class="card-header">
+            <p class="card-header-title">
+                Target
+            </p>
+        </header>
+        <div class="card-table">
+            <div class="content">
+                <table class="table is-fullwidth is-striped">
+                    <tbody>
+                        <tr>
+                            <td><b>Site</b></span></td>
+                            <td>{{ index . "domain" }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>IP Address</b></span></td>
+                            <td>{{ index . "ips" }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="card events-card">
+        <header class="card-header">
+            <p class="card-header-title">
+                Missing Headers
+            </p>
+        </header>
+        <div class="card-table">
+            <div class="content">
+                <table class="table is-fullwidth is-striped">
+                    <tbody>
+                        {{ if .secHeaders.ContentSecurityPolicy }}
+                        <tr>
+                            <td><b style="color: red;">Content-Security-Policy</b></span></td>
+                            <td><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP" target="_blank">Content Security Policy</a> is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross-Site Scripting (XSS) and data injection attacks.</td>
+                        </tr>
+                        {{ end }}
+
+                        {{ if .secHeaders.XFrameOptions }}
+                        <tr>
+                            <td><b style="color: red;">X-Frame-Options</b></span></td>
+                            <td>The <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options" target="_blank">X-Frame-Options</a> The X-Frame-Options HTTP response header can be used to indicate whether or not a browser should be allowed to render a page in a <b>frame</b>, <b>iframe</b>, <b>embed</b> or <b>object</b>. Sites can use this to avoid click-jacking attacks, by ensuring that their content is not embedded into other sites.</td>
+                        </tr>
+                        {{ end }}
+                        
+                        {{ if .secHeaders.XContentTypeOptions }}
+                        <tr>
+                            <td><b style="color: red;">X-Content-Type-Options</b></span></td>
+                            <td>The <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options" target="_blank">X-Content-Type-Options</a> response HTTP header is a marker used by the server to indicate that the MIME types advertised in the Content-Type headers should be followed and not be changed. The header allows you to avoid MIME type sniffing by saying that the MIME types are deliberately configured. </td>
+                        </tr>
+                        {{ end }}
+
+                        {{ if .secHeaders.ReferrerPolicy }}
+                        <tr>
+                            <td><b style="color: red;">Referrer-Policy</b></span></td>
+                            <td>The <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy" target="_blank">Referrer-Policy</a> HTTP header controls how much referrer information (sent with the Referer header) should be included with requests. Aside from the HTTP header, you can set this policy in HTML.</td>
+                        </tr>
+                        {{ end }}
+
+                        {{ if .secHeaders.PermissionsPolicy }}
+                        <tr>
+                            <td><b style="color: red;">Permissions-Policy</b></span></td>
+                            <td><a href="https://w3c.github.io/webappsec-permissions-policy/" target="_blank">Permissions-Policy</a> is a new header that allows a site to control which features and APIs can be used in the browser.</td>
+                        </tr>
+                        {{ end }}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="card events-card">
+        <header class="card-header">
+            <p class="card-header-title">
+                Headers
+            </p>
+        </header>
+        <div class="card-table">
+            <div class="content">
+                <table class="table is-fullwidth is-striped">
+                    <tbody>
+                        {{ range $key, $value := .headers }}
+                        <tr>
+                            <td><b>{{ $key }}</b></span></td>
+                            <td>{{ $value}}</td>
+                        </tr>
+                        {{ end }}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="card events-card">
+        <header class="card-header">
+            <p class="card-header-title">
+                Raw Response
+            </p>
+            <button onclick="toggleRaw()" class="card-header-icon" aria-label="more options">
+                <span class="icon">
+                    <i id="arrow" class="fas fa-angle-up" aria-hidden="true"></i>
+                </span>
+            </button>
+        </header>
+        <div class="card-table">
+            <div id="rawResponse" class="content">
+                <pre>
+GET {{ .target }}
+{{ range $key, $value := .headers }}{{ $key }}: {{ $value }} <br>{{ end }}
+{{ .body }}
+                </pre>
+            </div>
+        </div>
+    </div>
+
+</div>
+    <script>
+        const raw = document.getElementById("rawResponse");
+        const arrow = document.getElementById("arrow");
+        raw.hidden = true
+        function toggleRaw() {
+            raw.hidden = !raw.hidden;
+            raw.hidden ? arrow.className = "fas fa-angle-up" : arrow.className = "fas fa-angle-down"
+        }
+    </script>
+{{ end }}
