@@ -13,10 +13,15 @@ import (
 	"github.com/labstack/echo"
 )
 
+var (
+	JWTSecret  []byte = []byte("secret")
+	CookieName string = "sessionIDa5"
+)
+
 // WriteCookie writes a cookie into echo Context
 func WriteCookie(c echo.Context, jwt string) error {
 	cookie := new(http.Cookie)
-	cookie.Name = "sessionIDa5"
+	cookie.Name = CookieName
 	cookie.Value = jwt
 	c.SetCookie(cookie)
 	return c.String(http.StatusOK, "")
@@ -24,7 +29,7 @@ func WriteCookie(c echo.Context, jwt string) error {
 
 // ReadCookie reads a cookie from echo Context.
 func ReadCookie(c echo.Context) error {
-	cookie, err := c.Cookie("sessionIDa5")
+	cookie, err := c.Cookie(CookieName)
 	if err != nil {
 		return err
 	}
@@ -70,7 +75,7 @@ func Login(c echo.Context) error {
 	claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
 
 	// Generate encoded token and send it as response.
-	t, err := token.SignedString([]byte("secret"))
+	t, err := token.SignedString(JWTSecret)
 	if err != nil {
 		return err
 	}

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/dgrijalva/jwt-go"
 	"github.com/globocom/secDevLabs/owasp-top10-2021-apps/a1/ecommerce-api/app/db"
 	"github.com/labstack/echo"
 )
@@ -21,6 +22,12 @@ func GetTicket(c echo.Context) error {
 	if err != nil {
 		// could not find this user in MongoDB (or MongoDB err connection)
 		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error finding this UserID."})
+	}
+
+	jwtUser := c.Get("user").(*jwt.Token)
+	claims := jwtUser.Claims.(jwt.MapClaims)
+	if claims["name"] != userDataResult.Username {
+		return c.JSON(http.StatusUnauthorized, "Not your key, not your ticket")
 	}
 
 	format := c.QueryParam("format")

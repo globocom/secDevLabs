@@ -57,7 +57,11 @@ func main() {
 
 	echoInstance.GET("/", handlers.FormPage)
 	echoInstance.GET("/healthcheck", handlers.HealthCheck)
-	echoInstance.GET("/ticket/:id", handlers.GetTicket)
+
+	echoInstance.GET("/ticket/:id", handlers.GetTicket, middleware.JWTWithConfig(middleware.JWTConfig{
+		TokenLookup: "cookie:" + handlers.CookieName,
+		SigningKey:  handlers.JWTSecret,
+	}))
 	echoInstance.POST("/register", handlers.RegisterUser)
 	echoInstance.POST("/login", handlers.Login)
 
