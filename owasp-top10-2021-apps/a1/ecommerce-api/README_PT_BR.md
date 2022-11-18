@@ -9,15 +9,12 @@ A API do Vulnerable eCommerce é um aplicativo web simples de Golang que contém
 
 ## Index
 
-- [Vulnerable eCommerce API](#vulnerable-ecommerce-api)
+  - [Vulnerable eCommerce API](#vulnerable-ecommerce-api)
   - [Index](#index)
   - [O que é quebra de controle de acesso?](#o-que-é-quebra-de-controle-de-acesso)
   - [Como inicializar o aplicativo?](#como-inicializar-o-aplicativo)
   - [Conheça o app 💵](#conheça-o-app-)
   - [Narrativa de ataque](#narrativa-de-ataque)
-    - [👀](#)
-      - [A falta de validação do ID do usuário permite que um invasor obtenha tickets de outros usuários](#a-falta-de-validação-do-id-do-usuário-permite-que-um-invasor-obtenha-tickets-de-outros-usuários)
-    - [🔥](#-1)
   - [Proteger este aplicativo](#proteger-este-aplicativo)
   - [PR Soluções](#pr-soluções)
   - [Contribuição](#contribuição)
@@ -28,7 +25,7 @@ As restrições sobre o que os usuários autenticados podem fazer geralmente nã
 
 Os invasores podem explorar essas falhas para acessar funcionalidades e/ou dados não autorizados, como acessar a contas de outros usuários, visualizar arquivos confidenciais, modificar dados de outros usuários, alterar direitos de acesso, etc.
 
-O principal objetivo deste aplicativo é discutir como as vulnerabilidades do **Quebra de Controle de Acesso** podem ser exploradas e incentivar os desenvolvedores a enviar solicitações pull no **SecDevLabs** sobre como eles corrigiriam essas falhas.
+O principal objetivo deste aplicativo é discutir como as vulnerabilidades da **Quebra de Controle de Acesso** podem ser exploradas e incentivar os desenvolvedores a enviar Pull Requests ao **SecDevLabs** apresentando como eles corrigiriam essas falhas.
 
 ## Como inicializar o aplicativo?
 
@@ -121,7 +118,7 @@ Como você arrumaria essa vulnerabilidade? Após suas alterações, um invasor n
 
 ## PR Soluções
 
-[Alerta de spoiler 🚨 ] Para entender como essa vulnerabilidade pode ser resolvida, confira [these pull requests](https://github.com/globocom/secDevLabs/pulls?q=is%3Apr+label%3A%22mitigation+solution+%F0%9F%94%92%22+label%3A%22Vulnerable+Ecommerce+API%22)!
+[Alerta de spoiler 🚨 ] Para entender como essa vulnerabilidade pode ser resolvida, confira [esses pull requests](https://github.com/globocom/secDevLabs/pulls?q=is%3Apr+label%3A%22mitigation+solution+%F0%9F%94%92%22+label%3A%22Vulnerable+Ecommerce+API%22)!
 
 ## Contribuição
 
