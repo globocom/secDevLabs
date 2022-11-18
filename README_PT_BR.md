@@ -1,5 +1,3 @@
-[Access content in English](README.md) 
-
 <p align="center">
   <img src="images/secDevLabs-logo.png" allign="center" height=""/>
   <!-- logo font: Agency FB Bold Condensed -->
@@ -10,8 +8,9 @@ Laboratório para aprender desenvolvimento web e mobile seguro de forma prática
 </p>
 
 <p align="center">
-<a href="https://github.com/globocom/secDevLabs/blob/master/docs/CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-Welcome-brightgreen"/></a>
-<a href="https://gitter.im/secDevLabs/community"><img src="https://badges.gitter.im/secDevLabs/community.svg"/></a>
+<a href="https://github.com/globocom/secDevLabs/blob/master/docs/CONTRIBUTING.md"><img height="24" src="https://img.shields.io/badge/PRs-Welcome-brightgreen"/></a>
+<a href="https://gitter.im/secDevLabs/community"><img height="24" src="https://badges.gitter.im/secDevLabs/community.svg"/></a>
+<a href="README.md"><img height="24" title="Access content in English" src="https://img.shields.io/badge/Access%20content%20in-English-blue"/></a>
 </p>
 
 ## Construa seu ambiente 
