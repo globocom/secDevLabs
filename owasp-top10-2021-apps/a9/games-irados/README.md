@@ -9,15 +9,13 @@ Games Irados is a simple Python web application that contains an example of a Se
 
 ## Index
 
-- [Games Irados](#games-irados)
+  - [Games Irados](#games-irados)
   - [Index](#index)
   - [What is Security Logging and Monitoring Failure?](#what-is-security-logging-and-monitoring-failure)
   - [Setup](#setup)
   - [Get to know the app 🎮](#get-to-know-the-app-)
   - [Attack narrative](#attack-narrative)
-    - [👀](#)
-      - [Poor application log might mask malicious requests made to the server](#poor-application-log-might-mask-malicious-requests-made-to-the-server)
-  - [🔥](#-1)
+  - [Poor application log might mask malicious requests made to the server](#poor-application-log-might-mask-malicious-requests-made-to-the-server)
   - [Secure this app](#secure-this-app)
   - [PR solutions](#pr-solutions)
   - [Contributing](#contributing)

@@ -14,9 +14,6 @@ CopyNPaste é uma aplicação web Golang que usa uma API e um front-end simples 
   - [Como inicializar o aplicativo?](#como-inicializar-o-aplicativo)
   - [Conheça o app 💉](#conheça-o-app-)
   - [Narrativa de ataque](#narrativa-de-ataque)
-    - [👀](#)
-      - [A falta de validação de entrada permite a injeção de consultas SQL](#a-falta-de-validação-de-entrada-permite-a-injeção-de-consultas-sql)
-      - [🔥](#-1)
   - [Proteger este aplicativo](#proteger-este-aplicativo)
   - [PR Soluções](#pr-soluções)
   - [Contribuição](#contribuição)
@@ -29,7 +26,7 @@ O principal objetivo deste projeto é discutir como as vulnerabilidades de **SQL
 
 ## Como inicializar o aplicativo?
 
-Para iniciar este **aplicativo inseguro** intencionalmente, você precisará do [Docker][Docker Install] e do [Docker Compose][Docker Compose Install]. Depois de clonar o repositório [secDevLabs](https://github.com/globocom/secDevLabs), no seu computador, você deve digitar os seguintes comandos para iniciar o aplicativo:
+Para iniciar este aplicativo **intencionalmente inseguro**, você precisará do [Docker][Docker Install] e do [Docker Compose][Docker Compose Install]. Depois de clonar o repositório [secDevLabs](https://github.com/globocom/secDevLabs), no seu computador, você deve digitar os seguintes comandos para iniciar o aplicativo:
 
 ```sh
 cd secDevLabs/owasp-top10-2021-apps/a3/copy-n-paste
@@ -172,7 +169,7 @@ Como você arrumaria essa vulnerabilidade? Após suas alterações, um invasor n
 
 ## PR Soluções
 
-[Alerta de spoiler 🚨 ] Para entender como essa vulnerabilidade pode ser resolvida, confira [these pull requests](https://github.com/globocom/secDevLabs/pulls?q=is%3Apr+label%3A%22mitigation+solution+%F0%9F%94%92%22+label%3A%22CopyNPaste+API%22)!
+[Alerta de spoiler 🚨 ] Para entender como essa vulnerabilidade pode ser resolvida, confira [esses pull requests](https://github.com/globocom/secDevLabs/pulls?q=is%3Apr+label%3A%22mitigation+solution+%F0%9F%94%92%22+label%3A%22CopyNPaste+API%22)!
 
 ## Contribuição
 

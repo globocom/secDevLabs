@@ -15,9 +15,6 @@ Cimentech é um aplicativo web simples construído com Drupal que contém um exe
   - [Como inicializar o aplicativo?](#como-inicializar-o-aplicativo)
   - [Conheça o app 🏗](#conheça-o-app-)
   - [Narrativa de ataque](#narrativa-de-ataque)
-    - [👀](#)
-      - [O uso de uma versão vulnerável do Drupal permite a execução remota de código](#o-uso-de-uma-versão-vulnerável-do-drupal-permite-a-execução-remota-de-código)
-  - [🔥](#-1)
   - [Proteger este aplicativo](#proteger-este-aplicativo)
   - [PR Soluções](#pr-soluções)
   - [Contribuição](#contribuição)
@@ -30,7 +27,7 @@ O principal objetivo deste aplicativo é discutir como os **componentes desatual
 
 ## Como inicializar o aplicativo?
 
-Para iniciar este **aplicativo inseguro** intencionalmente, você precisará do [Docker][Docker Install] e do [Docker Compose][Docker Compose Install]. Depois de clonar o repositório [secDevLabs](https://github.com/globocom/secDevLabs), no seu computador, você deve digitar os seguintes comandos para iniciar o aplicativo:
+Para iniciar este aplicativo **intencionalmente inseguro**, você precisará do [Docker][Docker Install] e do [Docker Compose][Docker Compose Install]. Depois de clonar o repositório [secDevLabs](https://github.com/globocom/secDevLabs), no seu computador, você deve digitar os seguintes comandos para iniciar o aplicativo:
 
 ```sh
 cd secDevLabs/owasp-top10-2021-apps/a6/cimentech
@@ -124,7 +121,7 @@ Como você arrumaria essa vulnerabilidade? Após suas alterações, um invasor n
 
 ## PR Soluções
 
-[Alerta de spoiler 🚨 ] Para entender como essa vulnerabilidade pode ser resolvida, confira [these pull requests](https://github.com/globocom/secDevLabs/pulls?q=is%3Apr+label%3A%22mitigation+solution+%F0%9F%94%92%22+label%3ACimentech)!
+[Alerta de spoiler 🚨 ] Para entender como essa vulnerabilidade pode ser resolvida, confira [esses pull requests](https://github.com/globocom/secDevLabs/pulls?q=is%3Apr+label%3A%22mitigation+solution+%F0%9F%94%92%22+label%3ACimentech)!
 
 ## Contribuição
 

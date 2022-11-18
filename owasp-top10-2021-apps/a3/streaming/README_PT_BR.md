@@ -15,9 +15,6 @@ Streaming é um aplicativo Angular/Spring Boot que contém um exemplo de várias
   - [Como inicializar o aplicativo?](#como-inicializar-o-aplicativo)
   - [Conheça o app 💵](#conheça-o-app-)
   - [Narrativa de ataque](#narrativa-de-ataque)
-    - [Uma página ou aplicativo da Web é vulnerável ao XSS  se a entrada do usuário permitir scripts.](#uma-página-ou-aplicativo-da-web-é-vulnerável-ao-xss--se-a-entrada-do-usuário-permitir-scripts)
-    - [👀](#)
-    - [🔥](#-1)
   - [Proteger este aplicativo](#proteger-este-aplicativo)
   - [PR Soluções](#pr-soluções)
   - [Contribuição](#contribuição)
@@ -32,7 +29,7 @@ O objetivo principal deste aplicativo é discutir como as vulnerabilidades de **
 
 ## Como inicializar o aplicativo?
 
-Para iniciar este **aplicativo inseguro** intencionalmente, você precisará do [Docker][Docker Install] e do [Docker Compose][Docker Compose Install]. Depois de clonar o repositório [secDevLabs](https://github.com/globocom/secDevLabs), no seu computador, você deve digitar os seguintes comandos para iniciar o aplicativo:
+Para iniciar este aplicativo **intencionalmente inseguro**, você precisará do [Docker][Docker Install] e do [Docker Compose][Docker Compose Install]. Depois de clonar o repositório [secDevLabs](https://github.com/globocom/secDevLabs), no seu computador, você deve digitar os seguintes comandos para iniciar o aplicativo:
 
 ```sh
 cd secDevLabs/owasp-top10-2021-apps/a3/streaming
@@ -109,7 +106,7 @@ Como você arrumaria essa vulnerabilidade? Após suas alterações, um invasor n
 
 ## PR Soluções
 
-[Alerta de spoiler 🚨 ] Para entender como essa vulnerabilidade pode ser resolvida, confira [these pull requests](https://github.com/globocom/secDevLabs/pulls?q=is%3Apr+label%3A%22mitigation+solution+%F0%9F%94%92%22+label%3A%22Streaming%22)!
+[Alerta de spoiler 🚨 ] Para entender como essa vulnerabilidade pode ser resolvida, confira [esses pull requests](https://github.com/globocom/secDevLabs/pulls?q=is%3Apr+label%3A%22mitigation+solution+%F0%9F%94%92%22+label%3A%22Streaming%22)!
 
 ## Contribuição
 

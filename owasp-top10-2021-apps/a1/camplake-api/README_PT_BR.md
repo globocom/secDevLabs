@@ -7,7 +7,7 @@
     <a href="README.md"><img height="24" title="Access content in English" src="https://img.shields.io/badge/Access%20content%20in-English-blue"/></a>
 </p>
 
-A API do Camp Crystal Lake é um aplicativo web simples de Golang que contém um exemplo de vulnerabilidade de controle de acesso quebrado e seu principal objetivo é descrever como um usuário mal-intencionado pode explorá-lo.
+A API do Camp Crystal Lake é um aplicativo web simples em Golang que contém um exemplo de vulnerabilidade de Quebra de Controle de Acesso e seu principal objetivo é descrever como um usuário mal-intencionado pode explorá-lo.
 
 ## Index
 
@@ -24,11 +24,11 @@ O controle de acesso impõe a política de forma que os usuários não possam ag
 
 Os invasores podem explorar essas falhas para acessar funcionalidades e/ou dados não autorizados, como acesso a contas de outros usuários, visualizar arquivos confidenciais, modificar dados de outros usuários, alterar direitos de acesso, etc.
 
-O principal objetivo deste aplicativo é discutir como as vulnerabilidades do **Quebra de Controle de Acesso** podem ser exploradas e incentivar os desenvolvedores a enviar solicitações pull no **SecDevLabs** sobre como eles corrigiriam essas falhas.
+O principal objetivo deste aplicativo é discutir como as vulnerabilidades da **Quebra de Controle de Acesso** podem ser exploradas e incentivar os desenvolvedores a enviar Pull Requests ao **SecDevLabs** apresentando como eles corrigiriam essas falhas.
 
 ## Como inicializar o aplicativo?
 
-Para iniciar este **aplicativo inseguro** intencionalmente, você precisará do [Docker][Docker Install] e do [Docker Compose][Docker Compose Install]. Depois de clonar o repositório [secDevLabs](https://github.com/globocom/secDevLabs), no seu computador, você deve digitar os seguintes comandos para iniciar o aplicativo:
+Para iniciar este aplicativo **intencionalmente inseguro**, você precisará do [Docker][Docker Install] e do [Docker Compose][Docker Compose Install]. Depois de clonar o repositório [secDevLabs](https://github.com/globocom/secDevLabs), no seu computador, você deve digitar os seguintes comandos para iniciar o aplicativo:
 
 ```sh
 cd secDevLabs/owasp-top10-2021-apps/a1/camp-lake-api
@@ -118,7 +118,7 @@ Como você arrumaria essa vulnerabilidade? Após suas alterações, um invasor n
 
 ## PR Soluções
 
-[Alerta de spoiler  🚨 ] Para entender como essa vulnerabilidade pode ser resolvida, confira [these pull requests](https://github.com/globocom/secDevLabs/labels/Camplake-API)!
+[Alerta de spoiler  🚨 ] Para entender como essa vulnerabilidade pode ser resolvida, confira [esses pull requests](https://github.com/globocom/secDevLabs/labels/Camplake-API)!
 
 ## Contribuição
 
