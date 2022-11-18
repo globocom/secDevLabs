@@ -1,7 +1,8 @@
 # Camp Crystal Lake API
 
 <p align="center">
-    <img src="images/camplake.png" width="400" height="400"/>
+    <img src="images/camplake.png" width="400" height="400"/></br>
+    <a href="README_PT_BR.md"><img height="24" title="Acessar conteúdo em Português" src="https://img.shields.io/badge/Acessar%20conte%C3%BAdo%20em-Portugu%C3%AAs-blue"/></a>
 </p>
 
 Camp Crystal Lake API is a simple Golang web application that contains an example of a Broken Access Control vulnerability and its main goal is to describe how a malicious user could exploit it.
@@ -113,7 +114,7 @@ How would you mitigate this vulnerability? After your changes, an attacker shoul
 
 ## PR solutions
 
-[Spoiler alert 🚨 ] To understand how this vulnerability can be mitigated, check out [these pull requests]()!
+[Spoiler alert 🚨 ] To understand how this vulnerability can be mitigated, check out [these pull requests](https://github.com/globocom/secDevLabs/labels/Camplake-API)!
 
 ## Contributing
 

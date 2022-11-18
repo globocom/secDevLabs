@@ -1,19 +1,24 @@
 # Insecure Go Project
 
 <p align="center">
-    <img src="images/banner.png"/>
+    <img src="images/banner.png"/></br>
+    <a href="README_PT_BR.md"><img height="24" title="Acessar conteúdo em Português" src="https://img.shields.io/badge/Acessar%20conte%C3%BAdo%20em-Portugu%C3%AAs-blue"/></a>
 </p>
 
 Insecure Go Project is a simple Golang API that contains an example of an Identity and Authentication Failure vulnerability.
 
 ## Index
 
-- [Definition](#what-is-identity-&-authentication-failure)
-- [Setup](#setup)
-- [Attack narrative](#attack-narrative)
-- [Objectives](#secure-this-app)
-- [Solutions](#pr-solutions)
-- [Contributing](#contributing)
+- [Insecure Go Project](#insecure-go-project)
+  - [Index](#index)
+  - [What is Identity and Authentication Failure?](#what-is-identity-and-authentication-failure)
+  - [Setup](#setup)
+  - [Get to know the app 🐼](#get-to-know-the-app-)
+  - [Attack narrative](#attack-narrative)
+  - [Sensitive hardcoded credentials allow an attacker access to the database](#sensitive-hardcoded-credentials-allow-an-attacker-access-to-the-database)
+  - [Secure this app](#secure-this-app)
+  - [PR solutions](#pr-solutions)
+  - [Contributing](#contributing)
 
 ## What is Identity and Authentication Failure?
 

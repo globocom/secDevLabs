@@ -1,17 +1,22 @@
 # SSType
 
-<p align="center"><img  src="src/images/ssti-logo.png"/></p>
+<p align="center"><img  src="src/images/ssti-logo.png"/></br>
+    <a href="README_PT_BR.md"><img height="24" title="Acessar conteúdo em Português" src="https://img.shields.io/badge/Acessar%20conte%C3%BAdo%20em-Portugu%C3%AAs-blue"/></a></p>
 
 SSType is a simple Python web application that contains an example of a Server-Side Template Injection vulnerability in Tornado. In this example, a specific subcategory of Injection will be exemplified: Server Side Injection or SSTI.
 
 ## Index
 
-- [Definition](#what-is-injection)
-- [Setup](#setup)
-- [Attack narrative](#attack-narrative)
-- [Objectives](#secure-this-app)
-- [Solutions](#pr-solutions)
-- [Contributing](#contributing)
+- [SSType](#sstype)
+  - [Index](#index)
+  - [What is Injection?](#what-is-injection)
+  - [Setup](#setup)
+  - [Get to know the app 💉](#get-to-know-the-app-)
+  - [Attack Narrative](#attack-narrative)
+  - [Lack of input validation allows injection of OS commands](#lack-of-input-validation-allows-injection-of-os-commands)
+  - [Secure this app](#secure-this-app)
+  - [PR solutions](#pr-solutions)
+  - [Contributing](#contributing)
 
 ## What is Injection?
 

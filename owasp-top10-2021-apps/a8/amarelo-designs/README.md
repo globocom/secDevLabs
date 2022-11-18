@@ -1,19 +1,24 @@
 # Amarelo Designs
 
 <p align="center">
-    <img src="images/Amarelo-Designs.png"/>
+    <img src="images/Amarelo-Designs.png"/></br>
+    <a href="README_PT_BR.md"><img height="24" title="Acessar conteúdo em Português" src="https://img.shields.io/badge/Acessar%20conte%C3%BAdo%20em-Portugu%C3%AAs-blue"/></a>
 </p>
 
 This is a simple web application built with Flask that contains an example of an Software and Data Integrity Failure vulnerability and, its main goal is to describe how a malicious user could exploit a vulnerability, intentionally installed on Amarelo Designs from secDevLabs, to obtain blind remote code execution.
 
 ## Index
 
-- [Definition](#what-is-software-&-data-integrity-failure)
-- [Setup](#setup)
-- [Attack narrative](#attack-narrative)
-- [Objectives](#secure-this-app)
-- [Solutions](#pr-solutions)
-- [Contributing](#contributing)
+- [Amarelo Designs](#amarelo-designs)
+  - [Index](#index)
+  - [What is Software and Data Integrity Failure?](#what-is-software-and-data-integrity-failure)
+  - [Setup](#setup)
+  - [Get to know the app 🎨](#get-to-know-the-app-)
+  - [Attack narrative](#attack-narrative)
+  - [Use of an insecure deserialization function allows for remote code execution](#use-of-an-insecure-deserialization-function-allows-for-remote-code-execution)
+  - [Secure this app](#secure-this-app)
+  - [PR solutions](#pr-solutions)
+  - [Contributing](#contributing)
 
 ## What is Software and Data Integrity Failure?
 

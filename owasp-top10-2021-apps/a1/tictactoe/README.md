@@ -1,6 +1,7 @@
 # Tic-Tac-Toe
 
-<p align="center"><img  src="images/a5-banner.png"/></p>
+<p align="center"><img  src="images/a5-banner.png"/></br>
+    <a href="README_PT_BR.md"><img height="24" title="Acessar conteúdo em Português" src="https://img.shields.io/badge/Acessar%20conte%C3%BAdo%20em-Portugu%C3%AAs-blue"/></a></p>
 
 Tic-Tac-Toe is a simple Nodejs web application that contains an example of a Broken Access Control vulnerability and its main goal is to describe how a malicious user could exploit it.
 

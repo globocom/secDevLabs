@@ -8,8 +8,9 @@ A laboratory for learning secure web and mobile development in a practical manne
 </p>
 
 <p align="center">
-<a href="https://github.com/globocom/secDevLabs/blob/master/docs/CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-Welcome-brightgreen"/></a>
-<a href="https://gitter.im/secDevLabs/community"><img src="https://badges.gitter.im/secDevLabs/community.svg"/></a>
+<a href="https://github.com/globocom/secDevLabs/blob/master/docs/CONTRIBUTING.md"><img height="24" src="https://img.shields.io/badge/PRs-Welcome-brightgreen"/></a>
+<a href="https://gitter.im/secDevLabs/community"><img height="24" src="https://badges.gitter.im/secDevLabs/community.svg"/></a>
+<a href="README_PT_BR.md"><img height="24" title="Acessar conteúdo em Português" src="https://img.shields.io/badge/Acessar%20conte%C3%BAdo%20em-Portugu%C3%AAs-blue"/></a>
 </p>
 
 ## Build your lab

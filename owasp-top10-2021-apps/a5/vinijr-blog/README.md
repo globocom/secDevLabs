@@ -1,19 +1,24 @@
 # ViniJR Blog
 
 <p align="center">
-    <img src="images/blog-fe.png"/>
+    <img src="images/blog-fe.png"/></br>
+    <a href="README_PT_BR.md"><img height="24" title="Acessar conteúdo em Português" src="https://img.shields.io/badge/Acessar%20conte%C3%BAdo%20em-Portugu%C3%AAs-blue"/></a>
 </p>
 
 This is a simple PHP web application that contains an example of a Security Misconfiguration (XXE) vulnerability and the main goal of this app is to describe how a malicious user could exploit it.
 
 ## Index
 
-- [Definition](#what-is-xxe)
-- [Setup](#setup)
-- [Attack narrative](#attack-narrative)
-- [Objectives](#secure-this-app)
-- [Solutions](#pr-solutions)
-- [Contributing](#contributing)
+- [ViniJR Blog](#vinijr-blog)
+  - [Index](#index)
+  - [What is XXE?](#what-is-xxe)
+  - [Setup](#setup)
+  - [Get to know the app ⚽️](#get-to-know-the-app-️)
+  - [Attack narrative](#attack-narrative)
+  - [Non sanitized input field allows for an attacker to retrieve sensitive information](#non-sanitized-input-field-allows-for-an-attacker-to-retrieve-sensitive-information)
+  - [Secure this app](#secure-this-app)
+  - [PR solutions](#pr-solutions)
+  - [Contributing](#contributing)
 
 ## What is XXE?
 

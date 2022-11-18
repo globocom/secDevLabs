@@ -1,19 +1,23 @@
 # Snake Pro
 
 <p align="center">
-    <img src="images/banner.png"/>
+    <img src="images/banner.png"/></br>
+    <a href="README_PT_BR.md"><img height="24" title="Acessar conteúdo em Português" src="https://img.shields.io/badge/Acessar%20conte%C3%BAdo%20em-Portugu%C3%AAs-blue"/></a>
 </p>
 
 Snake Pro is a simple Golang Web App that contains an example of a Cryptographic Failure vulnerability, and its main goal is to illustrate how an attacker could explore it.
 
 ## Index
 
-- [Definition](#what-is-cryptographic-failure)
-- [Setup](#setup)
-- [Attack narrative](#attack-narrative)
-- [Objectives](#secure-this-app)
-- [Solutions](#pr-solutions)
-- [Contributing](#contributing)
+- [Snake Pro](#snake-pro)
+  - [Index](#index)
+  - [What is Cryptographic Failure?](#what-is-cryptographic-failure)
+  - [Setup](#setup)
+  - [Get to know the app 🐍](#get-to-know-the-app-)
+  - [Attack narrative](#attack-narrative)
+  - [Secure this app](#secure-this-app)
+  - [PR solutions](#pr-solutions)
+  - [Contributing](#contributing)
 
 ## What is Cryptographic Failure?
 

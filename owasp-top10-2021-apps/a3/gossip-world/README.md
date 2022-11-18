@@ -1,7 +1,7 @@
 # Gossip World
 
 <p align="center">
-    <img src="images/banner.png"/>
+    <img src="images/banner.png"/><a href="README_PT_BR.md"><img height="24" title="Acessar conteúdo em Português" src="https://img.shields.io/badge/Acessar%20conte%C3%BAdo%20em-Portugu%C3%AAs-blue"/></a>
 </p>
 
 Gossip World is a simple Flask app that contains an example of multiple Injection (XSS) vulnerabilities and its main goal is to describe how a malicious user could exploit them on this purposefully vulnerable app.

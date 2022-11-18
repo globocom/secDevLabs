@@ -1,19 +1,24 @@
 # Games Irados
 
 <p align="center">
-    <img src="images/gamesirados-banner.png"/>
+    <img src="images/gamesirados-banner.png"/></br>
+    <a href="README_PT_BR.md"><img height="24" title="Acessar conteúdo em Português" src="https://img.shields.io/badge/Acessar%20conte%C3%BAdo%20em-Portugu%C3%AAs-blue"/></a>
 </p>
 
 Games Irados is a simple Python web application that contains an example of a Security Logging and Monitoring Failure vulnerability and, its main goal is to demonstrate how important it is to properly log all requests made to the application and how easily malicious requests could go unnoticed.
 
 ## Index
 
-- [Definition](#what-is-security-logging-&-monitoring-failure)
-- [Setup](#setup)
-- [Attack narrative](#attack-narrative)
-- [Objectives](#secure-this-app)
-- [Solutions](#pr-solutions)
-- [Contributing](#contributing)
+  - [Games Irados](#games-irados)
+  - [Index](#index)
+  - [What is Security Logging and Monitoring Failure?](#what-is-security-logging-and-monitoring-failure)
+  - [Setup](#setup)
+  - [Get to know the app 🎮](#get-to-know-the-app-)
+  - [Attack narrative](#attack-narrative)
+  - [Poor application log might mask malicious requests made to the server](#poor-application-log-might-mask-malicious-requests-made-to-the-server)
+  - [Secure this app](#secure-this-app)
+  - [PR solutions](#pr-solutions)
+  - [Contributing](#contributing)
 
 ## What is Security Logging and Monitoring Failure?
 

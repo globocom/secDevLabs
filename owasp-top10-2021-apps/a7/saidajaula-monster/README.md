@@ -2,18 +2,23 @@
 
 <p align="center">
     <img src="images/img1.png"/>
+    <a href="README_PT_BR.md"><img height="24" title="Acessar conteúdo em Português" src="https://img.shields.io/badge/Acessar%20conte%C3%BAdo%20em-Portugu%C3%AAs-blue"/></a>
 </p>
 
 Saidajaula Monstro Fit is a Flask API built to demonstrate how a malicious user could exploit an Identity and Authentication Failure vulnerability and escalate his privileges.
 
 ## Index
 
-- [Definition](#what-is-identity-&-authentication-failure?)
-- [Setup](#setup)
-- [Attack narrative](#attack-narrative)
-- [Objectives](#secure-this-app)
-- [Solutions](#pr-solutions)
-- [Contributing](#contributing)
+- [Saidajaula Monster Fit](#saidajaula-monster-fit)
+  - [Index](#index)
+  - [What is Identity and Authentication Failure?](#what-is-identity-and-authentication-failure)
+  - [Setup](#setup)
+  - [Get to know the app 🏋️‍](#get-to-know-the-app-️)
+  - [Attack narrative](#attack-narrative)
+  - [Insecure session cookie validation allows for privilege escalation](#insecure-session-cookie-validation-allows-for-privilege-escalation)
+  - [Secure this app](#secure-this-app)
+  - [PR solutions](#pr-solutions)
+  - [Contributing](#contributing)
 
 ## What is Identity and Authentication Failure?
 
