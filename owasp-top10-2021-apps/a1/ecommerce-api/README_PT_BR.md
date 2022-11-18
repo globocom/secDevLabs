@@ -32,7 +32,7 @@ O principal objetivo deste aplicativo é discutir como as vulnerabilidades do **
 
 ## Como inicializar o aplicativo?
 
-Para iniciar este **aplicativo inseguro** intencionalmente, você precisará do [Docker][Docker Install] e do [Docker Compose][Docker Compose Install]. Depois de clonar o repositório [secDevLabs](https://github.com/globocom/secDevLabs), no seu computador, você deve digitar os seguintes comandos para iniciar o aplicativo:
+Para iniciar este aplicativo **intencionalmente inseguro**, você precisará do [Docker][Docker Install] e do [Docker Compose][Docker Compose Install]. Depois de clonar o repositório [secDevLabs](https://github.com/globocom/secDevLabs), no seu computador, você deve digitar os seguintes comandos para iniciar o aplicativo:
 
 ```sh
 cd secDevLabs/owasp-top10-2021-apps/a1/ecommerce-api
