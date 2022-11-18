@@ -1,21 +1,26 @@
 # Saidajaula Monster Fit
 
-[Access content in English](README.md)
-
 <p align="center">
     <img src="images/img1.png"/>
+    <a href="README.md"><img height="24" title="Access content in English" src="https://img.shields.io/badge/Access%20content%20in-English-blue"/></a>
 </p>
 
 Saidajaula Monstro Fit é uma API Flask criada para demonstrar como um usuário mal-intencionado pode explorar uma vulnerabilidade de falha de identidade e autenticação e aumentar seus privilégios. 
 
 ## Index
 
-- [Definição](#O-que-é-falha-de-identidade-e-autenticação)
-- [Como inicializar o aplicativo?](#como-inicializar-o-aplicativo)
-- [Narrativa de ataque](#narrativa-de-ataque)
-- [Objetivos](#proteger-este-aplicativo)
-- [Soluções](#pr-soluções)
-- [Contribuição](#contribuição)
+- [Saidajaula Monster Fit](#saidajaula-monster-fit)
+  - [Index](#index)
+  - [O que é falha de identidade e autenticação?](#o-que-é-falha-de-identidade-e-autenticação)
+  - [Como inicializar o aplicativo?](#como-inicializar-o-aplicativo)
+  - [Conheça o app 🏋️‍](#conheça-o-app-️)
+  - [Narrativa de ataque](#narrativa-de-ataque)
+    - [👀](#)
+      - [A validação de cookie de sessão insegura permite o escalonamento de privilégios](#a-validação-de-cookie-de-sessão-insegura-permite-o-escalonamento-de-privilégios)
+    - [🔥](#-1)
+  - [Proteger este aplicativo](#proteger-este-aplicativo)
+  - [PR Soluções](#pr-soluções)
+  - [Contribuição](#contribuição)
 
 ## O que é falha de identidade e autenticação?
 

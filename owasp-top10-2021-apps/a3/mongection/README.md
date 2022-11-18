@@ -1,19 +1,23 @@
 # Mongection
 
-[Acessar conteúdo em Português](README_PT_BR.md)
-
-<p align="center"><img  src="images/a1-banner.png"/></p>
+<p align="center"><img  src="images/a1-banner.png"/></br><a href="README_PT_BR.md"><img height="24" title="Acessar conteúdo em Português" src="https://img.shields.io/badge/Acessar%20conte%C3%BAdo%20em-Portugu%C3%AAs-blue"/></a></p>
 
 Mongection is a simple NodeJS web application that simulates a login page. It has both `/register` and `/login` routes that, by communicating with a MongoDB, enable users to register and enter into a generic system.
 
 ## Index
 
-- [Definition](#what-is-injection)
-- [Setup](#setup)
-- [Attack narrative](#attack-narrative)
-- [Objectives](#secure-this-app)
-- [Solutions](#pr-solutions)
-- [Contributing](#contributing)
+- [Mongection](#mongection)
+  - [Index](#index)
+  - [What is Injection?](#what-is-injection)
+  - [Setup](#setup)
+  - [Get to know the app 💉](#get-to-know-the-app-)
+  - [Attack Narrative](#attack-narrative)
+    - [👀](#)
+      - [Lack of input validation allows injection of NoSQL queries](#lack-of-input-validation-allows-injection-of-nosql-queries)
+      - [🔥](#-1)
+  - [Secure this app](#secure-this-app)
+  - [PR Solutions](#pr-solutions)
+  - [Contributing](#contributing)
 
 ## What is Injection?
 

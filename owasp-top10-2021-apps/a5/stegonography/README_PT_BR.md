@@ -1,9 +1,8 @@
 # Stegonography
 
-[Acessar conteúdo em Português](README_PT_BR.md)
-
 <p align="center">
-    <img src="images/stegonography.png"/>
+    <img src="images/stegonography.png"/></br>
+    <a href="README.md"><img height="24" title="Access content in English" src="https://img.shields.io/badge/Access%20content%20in-English-blue"/></a>
 </p>
 
 Stegonography é um aplicativo web Node.js que usa uma API e um front-end simples para simular um aplicativo de esteganografia real. Ele é construído com duas rotas principais, é home( `/` ) e (`/login`), onde o administrador realizar login para fazer alterações na página. 

@@ -1,9 +1,8 @@
 # Vulnerable Wordpress Misconfig
 
-[Access content in English](README.md)
-
 <p align="center">
     <img src="images/banner.png"/>
+    <a href="README.md"><img height="24" title="Access content in English" src="https://img.shields.io/badge/Access%20content%20in-English-blue"/></a>
 </p>
 
 Este é um aplicativo web simples do Wordpress que contém um exemplo de uma vulnerabilidade de configuração incorreta de segurança. Seu principal objetivo é descrever como um usuário mal-intencionado pode explorar várias vulnerabilidades de configuração instaladas intencionalmente no SecWeb.

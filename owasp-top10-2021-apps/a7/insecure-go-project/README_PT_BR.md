@@ -1,21 +1,26 @@
 # Insecure Go Project
 
-[Access content in English](README.md)
-
 <p align="center">
-    <img src="images/banner.png"/>
+    <img src="images/banner.png"/></br>
+    <a href="README.md"><img height="24" title="Access content in English" src="https://img.shields.io/badge/Access%20content%20in-English-blue"/></a>
 </p>
 
 O Insecure Go Project é uma API Golang simples que contém um exemplo de uma vulnerabilidade de falha de identidade e autenticação.
 
 ## Index
 
-- [Definição](#O-que-é-falha-de-identidade-e-autenticação)
-- [Como inicializar o aplicativo?](#como-inicializar-o-aplicativo)
-- [Narrativa de ataque](#narrativa-de-ataque)
-- [Objetivos](#proteger-este-aplicativo)
-- [Soluções](#pr-soluções)
-- [Contribuição](#contribuição)
+- [Insecure Go Project](#insecure-go-project)
+  - [Index](#index)
+  - [O que é falha de identidade e autenticação?](#o-que-é-falha-de-identidade-e-autenticação)
+  - [Como inicializar o aplicativo?](#como-inicializar-o-aplicativo)
+  - [Conheça o app ⚽️](#conheça-o-app-️)
+  - [Narrativa de ataque](#narrativa-de-ataque)
+    - [👀](#)
+      - [Credenciais codificadas confidenciais permitem que um invasor acesse o banco de dados](#credenciais-codificadas-confidenciais-permitem-que-um-invasor-acesse-o-banco-de-dados)
+    - [🔥](#-1)
+  - [Proteger este aplicativo](#proteger-este-aplicativo)
+  - [PR Soluções](#pr-soluções)
+  - [Contribuição](#contribuição)
 
 ## O que é falha de identidade e autenticação?
 

@@ -2,10 +2,9 @@
 
 # Camp Crystal Lake API
 
-[Access content in English](README.md)
-
 <p align="center">
-    <img src="images/camplake.png" width="400" height="400"/>
+    <img src="images/camplake.png" width="400" height="400"/></br>
+    <a href="README.md"><img height="24" title="Access content in English" src="https://img.shields.io/badge/Access%20content%20in-English-blue"/></a>
 </p>
 
 A API do Camp Crystal Lake é um aplicativo web simples de Golang que contém um exemplo de vulnerabilidade de controle de acesso quebrado e seu principal objetivo é descrever como um usuário mal-intencionado pode explorá-lo.

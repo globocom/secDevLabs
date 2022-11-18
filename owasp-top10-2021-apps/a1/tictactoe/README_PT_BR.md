@@ -1,8 +1,7 @@
 # Tic-Tac-Toe
 
-[Access content in English](README.md)
-
-<p align="center"><img  src="images/a5-banner.png"/></p>
+<p align="center"><img  src="images/a5-banner.png"/></br>
+    <a href="README.md"><img height="24" title="Access content in English" src="https://img.shields.io/badge/Access%20content%20in-English-blue"/></a></p>
 
 Tic-Tac-Toe é um aplicativo web simples do Nodejs que contém um exemplo de uma vulnerabilidade de controle de acesso quebrado e seu principal objetivo é descrever como um usuário mal-intencionado pode explorá-lo.
 

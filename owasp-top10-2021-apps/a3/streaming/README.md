@@ -1,21 +1,25 @@
 # Streaming
 
-[Acessar conteúdo em Português](README_PT_BR.md)
-
 <p align="center">
-    <img src="images/banner.png"/>
+    <img src="images/banner.png"/></br>
+    <a href="README_PT_BR.md"><img height="24" title="Acessar conteúdo em Português" src="https://img.shields.io/badge/Acessar%20conte%C3%BAdo%20em-Portugu%C3%AAs-blue"/></a>
 </p>
 
 Streaming is a Angular/Spring Boot app that contains an example of multiple Injection (XSS) vulnerabilities and its main goal is to describe how a malicious user could exploit them on this purposefully vulnerable app.
 
 ## Index
 
-- [Definition](#what-is-cross-site-scripting)
-- [Setup](#setup)
-- [Attack narrative](#attack-narrative)
-- [Objectives](#secure-this-app)
-- [Solutions](#pr-solutions)
-- [Contributing](#contributing)
+- [Streaming](#streaming)
+  - [Index](#index)
+  - [What is Cross-Site Scripting?](#what-is-cross-site-scripting)
+  - [Setup](#setup)
+  - [Get to know the app](#get-to-know-the-app)
+  - [Attack narrative](#attack-narrative)
+      - [Non-sanitization of user input allows for cross-site scripting](#non-sanitization-of-user-input-allows-for-cross-site-scripting)
+    - [🔥](#)
+  - [Secure this app](#secure-this-app)
+  - [PR solutions](#pr-solutions)
+  - [Contributing](#contributing)
 
 ## What is Cross-Site Scripting?
 

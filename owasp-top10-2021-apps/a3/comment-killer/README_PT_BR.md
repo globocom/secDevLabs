@@ -1,21 +1,27 @@
 # Comment-killer
 
-[Access content in English](README.md)
-
 <p align="center">
-    <img src="images/img1.png"/>
+    <img src="images/img1.png"/></br>
+    <a href="README.md"><img height="24" title="Access content in English" src="https://img.shields.io/badge/Access%20content%20in-English-blue"/></a>
 </p>
 
 O Comment-killer é um aplicativo ReactJS simples, que possui uma vulnerabilidade de injeção (XSS) e seu principal objetivo é descrever como um usuário mal-intencionado poderia explorá-lo.
 
 ## Index
 
-- [Definição](#o-que-é-cross-site-Scripting)
-- [Como inicializar o aplicativo?](#como-inicializar-o-aplicativo)
-- [Narrativa de ataque](#narrativa-de-ataque)
-- [Objetivos](#proteger-este-aplicativo)
-- [Soluções](#pr-soluções)
-- [Contribuição](#contribuição)
+- [Comment-killer](#comment-killer)
+  - [Index](#index)
+  - [O que é Cross Site Scripting?](#o-que-é-cross-site-scripting)
+  - [Como inicializar o aplicativo?](#como-inicializar-o-aplicativo)
+  - [Conheça o app 💵](#conheça-o-app-)
+  - [Narrativa de ataque](#narrativa-de-ataque)
+    - [Nota: Esta narrativa de ataque funciona melhor no Mozilla Firefox.](#nota-esta-narrativa-de-ataque-funciona-melhor-no-mozilla-firefox)
+    - [👀](#)
+    - [Uma página ou aplicativo da Web é vulnerável ao XSS  se a entrada do usuário permitir scripts.](#uma-página-ou-aplicativo-da-web-é-vulnerável-ao-xss--se-a-entrada-do-usuário-permitir-scripts)
+      - [🔥](#-1)
+  - [Proteger este aplicativo](#proteger-este-aplicativo)
+  - [PR Soluções](#pr-soluções)
+  - [Contribuição](#contribuição)
 
 
 ## O que é Cross Site Scripting?

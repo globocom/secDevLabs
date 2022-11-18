@@ -1,21 +1,26 @@
 # Games Irados
 
-[Access content in English](README.md)
-
 <p align="center">
-    <img src="images/gamesirados-banner.png"/>
+    <img src="images/gamesirados-banner.png"/></br>
+    <a href="README.md"><img height="24" title="Access content in English" src="https://img.shields.io/badge/Access%20content%20in-English-blue"/></a>
 </p>
 
 Games Irados é uma aplicação web simples em Python que contém um exemplo de vulnerabilidade de falha de registro e monitoramento de segurança e, seu principal objetivo é demonstrar o quão importante é registrar corretamente todas as solicitações feitas ao aplicativo e com que facilidade solicitações maliciosas podem passar despercebidas. 
 
 ## Index
 
-- [Definição](#O-que-é-falha-de-registro-e-monitoramento-de-segurança)
-- [Como inicializar o aplicativo?](#como-inicializar-o-aplicativo)
-- [Narrativa de ataque](#narrativa-de-ataque)
-- [Objetivos](#proteger-este-aplicativo)
-- [Soluções](#pr-soluções)
-- [Contribuição](#contribuição)
+- [Games Irados](#games-irados)
+  - [Index](#index)
+  - [O que é falha de registro e monitoramento de segurança?](#o-que-é-falha-de-registro-e-monitoramento-de-segurança)
+  - [Como inicializar o aplicativo?](#como-inicializar-o-aplicativo)
+  - [Conheça o app 🎮](#conheça-o-app-)
+  - [Narrativa de ataque](#narrativa-de-ataque)
+    - [👀](#)
+      - [Um log de aplicativo ruim pode mascarar solicitações maliciosas feitas ao servidor](#um-log-de-aplicativo-ruim-pode-mascarar-solicitações-maliciosas-feitas-ao-servidor)
+  - [🔥](#-1)
+  - [Proteger este aplicativo](#proteger-este-aplicativo)
+  - [PR Soluções](#pr-soluções)
+  - [Contribuição](#contribuição)
 
 
 ## O que é falha de registro e monitoramento de segurança?

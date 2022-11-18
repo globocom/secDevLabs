@@ -1,21 +1,26 @@
 # Amarelo Designs
 
-[Access content in English](README.md)
-
 <p align="center">
-    <img src="images/Amarelo-Designs.png"/>
+    <img src="images/Amarelo-Designs.png"/></br>
+    <a href="README.md"><img height="24" title="Access content in English" src="https://img.shields.io/badge/Access%20content%20in-English-blue"/></a>
 </p>
 
 Esta é uma aplicação web simples construída com Flask que contém um exemplo de vulnerabilidade de falha de integridade de software e dados e, seu principal objetivo é descrever como um usuário malicioso poderia explorar uma vulnerabilidade, instalada intencionalmente no Amarelo Designs do secDevLabs, para obter dados remotos cegos execução do código. 
 
 ## Index
 
-- [Definição](#O-que-é-falha-de-integridade-de-software-e-dados)
-- [Como inicializar o aplicativo?](#como-inicializar-o-aplicativo)
-- [Narrativa de ataque](#narrativa-de-ataque)
-- [Objetivos](#proteger-este-aplicativo)
-- [Soluções](#pr-soluções)
-- [Contribuição](#contribuição)
+- [Amarelo Designs](#amarelo-designs)
+  - [Index](#index)
+  - [O que é falha de integridade de software e dados?](#o-que-é-falha-de-integridade-de-software-e-dados)
+  - [Como inicializar o aplicativo?](#como-inicializar-o-aplicativo)
+  - [Conheça o app 🎨](#conheça-o-app-)
+  - [Narrativa de ataque](#narrativa-de-ataque)
+    - [👀](#)
+      - [O uso de uma função de desserialização insegura permite a execução remota de código](#o-uso-de-uma-função-de-desserialização-insegura-permite-a-execução-remota-de-código)
+    - [🔥](#-1)
+  - [Proteger este aplicativo](#proteger-este-aplicativo)
+  - [PR Soluções](#pr-soluções)
+  - [Contribuição](#contribuição)
 
 ## O que é falha de integridade de software e dados?
 

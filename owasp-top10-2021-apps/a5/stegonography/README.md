@@ -1,9 +1,8 @@
 # Stegonography
 
-[Acessar conteúdo em Português](README_PT_BR.md)
-
 <p align="center">
-    <img src="images/stegonography.png"/>
+    <img src="images/stegonography.png"/></br>
+    <a href="README_PT_BR.md"><img height="24" title="Acessar conteúdo em Português" src="https://img.shields.io/badge/Acessar%20conte%C3%BAdo%20em-Portugu%C3%AAs-blue"/></a>
 </p>
 
 Stegonography is a Node.js web application that uses an API and a simple front end to simulate a real steganography application. It is built with two main routes, it's home( `/` ) and (`/login`), where the admin can log in to make changes to the page.

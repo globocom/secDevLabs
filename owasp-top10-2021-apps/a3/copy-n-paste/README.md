@@ -1,19 +1,25 @@
 # CopyNPaste API
 
-[Acessar conteúdo em Português](README_PT_BR.md)
-
-<img src="images/CopyNPaste.png" align="center"/>
+<p align="center">
+<img src="images/CopyNPaste.png"/><a href="README_PT_BR.md"><img height="24" title="Acessar conteúdo em Português" src="https://img.shields.io/badge/Acessar%20conte%C3%BAdo%20em-Portugu%C3%AAs-blue"/></a>
+</p>
 
 CopyNPaste is a Golang web application that uses an API and a simple front end to simulate a login page. It has both `/register` and `/login` routes that, by communicating with a MySQL database, enable users to register and enter into a generic system.
 
 ## Index
 
-- [Definition](#what-is-injection)
-- [Setup](#setup)
-- [Attack narrative](#attack-narrative)
-- [Objectives](#secure-this-app)
-- [Solutions](#pr-solutions)
-- [Contributing](#contributing)
+- [CopyNPaste API](#copynpaste-api)
+  - [Index](#index)
+  - [What is Injection?](#what-is-injection)
+  - [Setup](#setup)
+  - [Get to know the app 💉](#get-to-know-the-app-)
+  - [Attack narrative](#attack-narrative)
+    - [👀](#)
+      - [Lack of input validation allows injection of SQL queries](#lack-of-input-validation-allows-injection-of-sql-queries)
+      - [🔥](#-1)
+  - [Secure this app](#secure-this-app)
+  - [PR solutions](#pr-solutions)
+  - [Contributing](#contributing)
 
 ## What is Injection?
 

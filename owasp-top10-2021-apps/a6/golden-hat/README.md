@@ -1,10 +1,9 @@
 <!-- This is a README Template for secDevLabs apps -->
 # Golden hat society
 
-[Acessar conteúdo em Português](README_PT_BR.md)
-
 <p align="center">
-    <img src="images/img1.png"/>
+    <img src="images/img1.png"/></br>
+    <a href="README_PT_BR.md"><img height="24" title="Acessar conteúdo em Português" src="https://img.shields.io/badge/Acessar%20conte%C3%BAdo%20em-Portugu%C3%AAs-blue"/></a>
 </p>
 
 Golden hat society is an application made with python that has a reverse proxy, mitmproxy, blocking the route `/golden.secret` that must be accessed only by whom is inside the docker VPN.

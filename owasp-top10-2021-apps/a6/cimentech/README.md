@@ -1,21 +1,26 @@
 # Cimentech
 
-[Acessar conteúdo em Português](README_PT_BR.md)
-
 <p align="center">
-    <img src="images/attack1.png"/>
+    <img src="images/attack1.png"/></br>
+    <a href="README_PT_BR.md"><img height="24" title="Acessar conteúdo em Português" src="https://img.shields.io/badge/Acessar%20conte%C3%BAdo%20em-Portugu%C3%AAs-blue"/></a>
 </p>
 
 Cimentech is a simple web application built with Drupal that contains an example of a component with a known vulnerability and its main goal is to demonstrate how an attacker could exploit it.
 
 ## Index
 
-- [Definition](#what-does-it-mean-to-use-a-component-with-known-vulnerabilities)
-- [Setup](#setup)
-- [Attack narrative](#attack-narrative)
-- [Objectives](#secure-this-app)
-- [Solutions](#pr-solutions)
-- [Contributing](#contributing)
+- [Cimentech](#cimentech)
+  - [Index](#index)
+  - [What does it mean to use a component with known vulnerabilities?](#what-does-it-mean-to-use-a-component-with-known-vulnerabilities)
+  - [Setup](#setup)
+  - [Get to know the app 🏗](#get-to-know-the-app-)
+  - [Attack narrative](#attack-narrative)
+    - [👀](#)
+      - [Use of a vulnerable Drupal version allows for remote code execution](#use-of-a-vulnerable-drupal-version-allows-for-remote-code-execution)
+  - [🔥](#-1)
+  - [Secure this app](#secure-this-app)
+  - [PR solutions](#pr-solutions)
+  - [Contributing](#contributing)
 
 ## What does it mean to use a component with known vulnerabilities?
 

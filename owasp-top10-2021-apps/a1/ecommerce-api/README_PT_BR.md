@@ -1,21 +1,26 @@
 # Vulnerable eCommerce API
 
-[Access content in English](README.md)
-
 <p align="center">
-    <img src="images/a5-banner.png"/>
+    <img src="images/a5-banner.png"/></br>
+    <a href="README.md"><img height="24" title="Access content in English" src="https://img.shields.io/badge/Access%20content%20in-English-blue"/></a>
 </p>
 
 A API do Vulnerable eCommerce é um aplicativo web simples de Golang que contém um exemplo de vulnerabilidade de controle de acesso quebrado e seu principal objetivo é descrever como um usuário mal-intencionado pode explorá-lo.
 
 ## Index
 
-- [Definição](#o-que-é-quebra-de-controle-de-acesso)
-- [Como inicializar o aplicativo?](#como-inicializar-o-aplicativo)
-- [Narrativa de ataque](#narrativa-de-ataque)
-- [Objetivos](#proteger-este-aplicativo)
-- [Soluções](#pr-soluções)
-- [Contribuição](#contribuição)
+- [Vulnerable eCommerce API](#vulnerable-ecommerce-api)
+  - [Index](#index)
+  - [O que é quebra de controle de acesso?](#o-que-é-quebra-de-controle-de-acesso)
+  - [Como inicializar o aplicativo?](#como-inicializar-o-aplicativo)
+  - [Conheça o app 💵](#conheça-o-app-)
+  - [Narrativa de ataque](#narrativa-de-ataque)
+    - [👀](#)
+      - [A falta de validação do ID do usuário permite que um invasor obtenha tickets de outros usuários](#a-falta-de-validação-do-id-do-usuário-permite-que-um-invasor-obtenha-tickets-de-outros-usuários)
+    - [🔥](#-1)
+  - [Proteger este aplicativo](#proteger-este-aplicativo)
+  - [PR Soluções](#pr-soluções)
+  - [Contribuição](#contribuição)
 
 ## O que é quebra de controle de acesso?
 

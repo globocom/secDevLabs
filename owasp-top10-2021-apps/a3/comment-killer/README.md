@@ -1,9 +1,8 @@
 # Comment-killer
 
-[Acessar conteúdo em Português](README_PT_BR.md)
-
 <p align="center">
-    <img src="images/img1.png"/>
+    <img src="images/img1.png"/></br>
+    <a href="README_PT_BR.md"><img height="24" title="Acessar conteúdo em Português" src="https://img.shields.io/badge/Acessar%20conte%C3%BAdo%20em-Portugu%C3%AAs-blue"/></a>
 </p>
 
 Comment-killer is a simple ReactJS app, which has a Injection (XSS) vulnerability and its main goal is to describe how a malicious user could exploit it on this purposefully vulnerable app.

@@ -1,19 +1,24 @@
 # SSType
 
-[Access content in English](README.md)
-
-<p align="center"><img  src="src/images/ssti-logo.png"/></p>
+<p align="center"><img  src="src/images/ssti-logo.png"/></br>
+    <a href="README.md"><img height="24" title="Access content in English" src="https://img.shields.io/badge/Access%20content%20in-English-blue"/></a></p>
 
 SSType é um aplicativo web Python simples que contém um exemplo de uma vulnerabilidade de injeção de modelo do lado do servidor no Tornado. Neste exemplo, uma subcategoria específica de Injeção será exemplificada: Server Side Injection ou SSTI.
 
 ## Index
 
-- [Definição](#o-que-é-injeção)
-- [Como inicializar o aplicativo?](#como-inicializar-o-aplicativo)
-- [Narrativa de ataque](#narrativa-de-ataque)
-- [Objetivos](#proteger-este-aplicativo)
-- [Soluções](#pr-soluções)
-- [Contribuição](#contribuição)
+- [SSType](#sstype)
+  - [Index](#index)
+  - [O que é injeção?](#o-que-é-injeção)
+  - [Como inicializar o aplicativo?](#como-inicializar-o-aplicativo)
+  - [Conheça o app 💉](#conheça-o-app-)
+  - [Narrativa de ataque](#narrativa-de-ataque)
+    - [👀](#)
+      - [Lack of input validation allows injection of OS commands](#lack-of-input-validation-allows-injection-of-os-commands)
+    - [🔥](#-1)
+  - [Proteger este aplicativo](#proteger-este-aplicativo)
+  - [PR Soluções](#pr-soluções)
+  - [Contribuição](#contribuição)
 
 ## O que é injeção?
 

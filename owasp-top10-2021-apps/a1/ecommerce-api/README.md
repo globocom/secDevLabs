@@ -1,21 +1,26 @@
 # Vulnerable eCommerce API
 
-[Acessar conteúdo em Português](README_PT_BR.md)
-
 <p align="center">
-    <img src="images/a5-banner.png"/>
+    <img src="images/a5-banner.png"/></br>
+    <a href="README_PT_BR.md"><img height="24" title="Acessar conteúdo em Português" src="https://img.shields.io/badge/Acessar%20conte%C3%BAdo%20em-Portugu%C3%AAs-blue"/></a>
 </p>
 
 Vulnerable eCommerce API is a simple Golang web application that contains an example of a Broken Access Control vulnerability and its main goal is to describe how a malicious user could exploit it.
 
 ## Index
 
-- [Definition](#what-is-broken-access-control)
-- [Setup](#setup)
-- [Attack narrative](#attack-narrative)
-- [Objectives](#secure-this-app)
-- [Solutions](#pr-solutions)
-- [Contributing](#contributing)
+- [Vulnerable eCommerce API](#vulnerable-ecommerce-api)
+  - [Index](#index)
+  - [What is Broken Access Control?](#what-is-broken-access-control)
+  - [Setup](#setup)
+  - [Get to know the app 💵](#get-to-know-the-app-)
+  - [Attack narrative](#attack-narrative)
+    - [👀](#)
+      - [Lack of userID validation allows for an attacker to get other users' tickets](#lack-of-userid-validation-allows-for-an-attacker-to-get-other-users-tickets)
+    - [🔥](#-1)
+  - [Secure this app](#secure-this-app)
+  - [PR solutions](#pr-solutions)
+  - [Contributing](#contributing)
 
 ## What is Broken Access Control?
 

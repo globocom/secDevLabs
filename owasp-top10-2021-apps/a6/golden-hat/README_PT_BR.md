@@ -1,22 +1,26 @@
 <!-- This is a README Template for secDevLabs apps -->
 # Golden hat society
 
-[Access content in English](README.md)
-
 <p align="center">
-    <img src="images/img1.png"/>
+    <img src="images/img1.png"/></br>
+    <a href="README.md"><img height="24" title="Access content in English" src="https://img.shields.io/badge/Access%20content%20in-English-blue"/></a>
 </p>
 
 Golden hat society é uma aplicação feita com python que possui um proxy reverso, mitmproxy, bloqueando a rota `/golden.secret` que deve ser acessada apenas por quem está dentro da VPN docker.
 
 ## Index
 
-- [Definição](#O-que-significa-usar-componentes-desatualizados-e-vulneráveis)
-- [Como inicializar o aplicativo?](#como-inicializar-o-aplicativo)
-- [Narrativa de ataque](#narrativa-de-ataque)
-- [Objetivos](#proteger-este-aplicativo)
-- [Soluções](#pr-soluções)
-- [Contribuição](#contribuição)
+- [Golden hat society](#golden-hat-society)
+  - [Index](#index)
+  - [O que significa usar componentes desatualizados e vulneráveis?](#o-que-significa-usar-componentes-desatualizados-e-vulneráveis)
+  - [Como inicializar o aplicativo?](#como-inicializar-o-aplicativo)
+  - [Conheça o app  ⚜️](#conheça-o-app--️)
+  - [Narrativa de ataque](#narrativa-de-ataque)
+    - [👀](#)
+      - [O uso da versão mitmproxy vulnerável permite ataques de dessincronização HTTP](#o-uso-da-versão-mitmproxy-vulnerável-permite-ataques-de-dessincronização-http)
+  - [Proteger este aplicativo](#proteger-este-aplicativo)
+  - [PR Soluções](#pr-soluções)
+  - [Contribuição](#contribuição)
 
 ## O que significa usar componentes desatualizados e vulneráveis?
 

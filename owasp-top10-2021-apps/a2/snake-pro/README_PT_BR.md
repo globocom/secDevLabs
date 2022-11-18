@@ -1,21 +1,26 @@
 # Snake Pro
 
-[Access content in English](README.md)
-
 <p align="center">
-    <img src="images/banner.png"/>
+    <img src="images/banner.png"/></br>
+    <a href="README.md"><img height="24" title="Access content in English" src="https://img.shields.io/badge/Access%20content%20in-English-blue"/></a>
 </p>
 
 O Snake Pro é um Golang Web App simples que contém um exemplo de vulnerabilidade de falha criptográfica e seu principal objetivo é descrever como um usuário mal-intencionado pode explorá-lo.
 
 ## Index
 
-- [Definição](#o-que-é-falha-na-criptográfia)
-- [Como inicializar o aplicativo?](#como-inicializar-o-aplicativo)
-- [Narrativa de ataque](#narrativa-de-ataque)
-- [Objetivos](#proteger-este-aplicativo)
-- [Soluções](#pr-soluções)
-- [Contribuição](#contribuição)
+- [Snake Pro](#snake-pro)
+  - [Index](#index)
+  - [O que é falha na criptográfia?](#o-que-é-falha-na-criptográfia)
+  - [Como inicializar o aplicativo?](#como-inicializar-o-aplicativo)
+  - [Conheça o app 💵](#conheça-o-app-)
+  - [Narrativa de ataque](#narrativa-de-ataque)
+    - [👀](#)
+      - [A falta de criptografia ao transmitir senhas de texto simples permite um ataque man-in-the-middle](#a-falta-de-criptografia-ao-transmitir-senhas-de-texto-simples-permite-um-ataque-man-in-the-middle)
+    - [🔥](#-1)
+  - [Proteger este aplicativo](#proteger-este-aplicativo)
+  - [PR Soluções](#pr-soluções)
+  - [Contribuição](#contribuição)
 
 ## O que é falha na criptográfia? 
 

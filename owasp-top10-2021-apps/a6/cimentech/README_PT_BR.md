@@ -1,21 +1,26 @@
 # Cimentech
 
-[Access content in English](README.md)
-
 <p align="center">
-    <img src="images/attack1.png"/>
+    <img src="images/attack1.png"/></br>
+    <a href="README.md"><img height="24" title="Access content in English" src="https://img.shields.io/badge/Access%20content%20in-English-blue"/></a>
 </p>
 
 Cimentech é um aplicativo web simples construído com Drupal que contém um exemplo de um componente com uma vulnerabilidade conhecida e seu principal objetivo é demonstrar como um invasor pode explorá-lo.
 
 ## Index
 
-- [Definição](#O-que-significa-usar-componentes-desatualizados-e-vulneráveis)
-- [Como inicializar o aplicativo?](#como-inicializar-o-aplicativo)
-- [Narrativa de ataque](#narrativa-de-ataque)
-- [Objetivos](#proteger-este-aplicativo)
-- [Soluções](#pr-soluções)
-- [Contribuição](#contribuição)
+- [Cimentech](#cimentech)
+  - [Index](#index)
+  - [O que significa usar componentes desatualizados e vulneráveis?](#o-que-significa-usar-componentes-desatualizados-e-vulneráveis)
+  - [Como inicializar o aplicativo?](#como-inicializar-o-aplicativo)
+  - [Conheça o app 🏗](#conheça-o-app-)
+  - [Narrativa de ataque](#narrativa-de-ataque)
+    - [👀](#)
+      - [O uso de uma versão vulnerável do Drupal permite a execução remota de código](#o-uso-de-uma-versão-vulnerável-do-drupal-permite-a-execução-remota-de-código)
+  - [🔥](#-1)
+  - [Proteger este aplicativo](#proteger-este-aplicativo)
+  - [PR Soluções](#pr-soluções)
+  - [Contribuição](#contribuição)
 
 ## O que significa usar componentes desatualizados e vulneráveis?
 

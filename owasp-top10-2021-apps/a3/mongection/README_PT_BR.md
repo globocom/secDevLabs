@@ -1,20 +1,25 @@
 # Mongection
 
-[Access content in English](README.md)
-
-<p align="center"><img  src="images/a1-banner.png"/></p>
+<p align="center"><img  src="images/a1-banner.png"/></br>
+    <a href="README.md"><img height="24" title="Access content in English" src="https://img.shields.io/badge/Access%20content%20in-English-blue"/></a></p>
 
 Mongection é uma aplicação web NodeJS que usa uma API e um front-end simples para simular uma página de login. Possui rotas `/register` e `/login` que, ao se comunicar com um banco de dados MySQL, permitem que os usuários se registrem e entrem em um sistema genérico. 
 
 
 ## Index
 
-- [Definição](#o-que-é-injeção)
-- [Como inicializar o aplicativo?](#como-inicializar-o-aplicativo)
-- [Narrativa de ataque](#narrativa-de-ataque)
-- [Objetivos](#proteger-este-aplicativo)
-- [Soluções](#pr-soluções)
-- [Contribuição](#contribuição)
+- [Mongection](#mongection)
+  - [Index](#index)
+  - [O que é injeção?](#o-que-é-injeção)
+  - [Como inicializar o aplicativo?](#como-inicializar-o-aplicativo)
+  - [Conheça o app 💉](#conheça-o-app-)
+  - [Narrativa de ataque](#narrativa-de-ataque)
+    - [👀](#)
+      - [A falta de validação de entrada permite a injeção de consultas NoSQL](#a-falta-de-validação-de-entrada-permite-a-injeção-de-consultas-nosql)
+      - [🔥](#-1)
+  - [Proteger este aplicativo](#proteger-este-aplicativo)
+  - [PR Soluções](#pr-soluções)
+  - [Contribuição](#contribuição)
 
 ## O que é injeção?
 
