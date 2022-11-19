@@ -7,7 +7,7 @@ COLOR_YELLOW = \033[33m
 COLOR_GREEN = \033[32m
 COLOR_RED = \033[31m
 
-PROJECT := A6 - Stegonography
+PROJECT := A5 Stegonography
 PORT := 10006
 
 ## Installs a development environment
