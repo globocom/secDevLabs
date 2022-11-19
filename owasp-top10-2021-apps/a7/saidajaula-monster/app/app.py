@@ -70,7 +70,7 @@ def register():
             message, success = database.insert_user(guid, form_username, hashed_password)
             if success:
                 return render_template('login.html')
-            return "Error: account creation failed; Database_message: {}\n".format(message)
+            return "Error: account creation failed; \n"
         return "User already exist."
 
 @app.route("/login", methods=['GET', 'POST'])
