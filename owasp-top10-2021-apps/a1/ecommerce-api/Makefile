@@ -9,7 +9,7 @@ GODEP ?= $(GOBIN)/dep
 GOLINT ?= $(GOBIN)/golint
 GOSEC ?= $(GOBIN)/gosec
 
-A5APIBIN ?= a5ecommerceapi
+A1APIBIN ?= a1ecommerceapi
 
 COLOR_RESET = \033[0m
 COLOR_COMMAND = \033[36m
