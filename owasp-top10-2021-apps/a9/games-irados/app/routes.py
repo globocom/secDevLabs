@@ -122,7 +122,7 @@ def login():
         if not success:
             if message:
                 flash("Database error", "danger")
-                logfile.info("Unsuccessful login attempt (database error) - Username: {} - Database message: {} - IP: {}".format(username, message, request.remote_addr))
+                logfile.info("Unsuccessful login attempt (database error) - Username: {} - IP: {}".format(username, request.remote_addr))
             else:
                 flash("Usuario ou senha incorretos", "danger")
                 logfile.info("Unsuccessful login attempt (invalid username) - Username: {} - IP: {}".format(username, request.remote_addr))
