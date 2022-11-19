@@ -1,0 +1,25 @@
+version: '3'
+
+networks:
+    doryl_corp_net:
+
+services:
+    doryl:
+        container_name: doryl-site-check
+        build:
+            context: ../
+            dockerfile: deployments/doryl.Dockerfile
+        environment:
+            PORT: "10010"
+        ports:
+            - "10010:10010"
+        networks:
+            - doryl_corp_net
+
+    corp_server:
+        container_name: corp-server
+        build: 
+            context: ../
+            dockerfile: deployments/corp-server.Dockerfile
+        networks:
+            - doryl_corp_net

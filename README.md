@@ -53,6 +53,7 @@ Disclaimer: You are about to install vulnerable apps in your machine! 🔥
 | A7 - Identity and Authentication Failures     | Golang         | [Insecure go project](owasp-top10-2021-apps/a7/insecure-go-project)            |
 | A8 - Software and Data Integrity Failures     | Python         | [Amarelo Designs](owasp-top10-2021-apps/a8/amarelo-designs)                    |
 | A9 - Security Logging and Monitoring Failures | Python         | [GamesIrados.com](owasp-top10-2021-apps/a9/games-irados)                       |
+| A10 - Server-Side Request Forgery             | Go             | [Doryl Site Check](owasp-top10-2021-apps/a10/doryl-site-check)                 |
 
 ## OWASP Top 10 (2016) Mobile apps: 📲
 
