@@ -87,7 +87,7 @@ func main() {
 	r.GET("/ranking", api.PageRanking)
 
 	APIport := fmt.Sprintf(":%d", getAPIPort())
-	echoInstance.Logger.Fatal(echoInstance.Start(APIport))
+	echoInstance.Logger.Fatal(echoInstance.StartTLS(APIport, "cert/certificate.crt", "cert/certificate.key"))
 }
 
 func errorAPI(err error) {
@@ -99,7 +99,7 @@ func errorAPI(err error) {
 func getAPIPort() int {
 	apiPort, err := strconv.Atoi(os.Getenv("API_PORT"))
 	if err != nil {
-		apiPort = 10003
+		apiPort = 443
 	}
 	return apiPort
 }
