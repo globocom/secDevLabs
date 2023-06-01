@@ -46,26 +46,27 @@ func AuthenticateUser(user string, pass string) (bool, error) {
 	}
 	defer dbConn.Close()
 
-	query := `
-  SELECT * 
-  FROM Users 
-  WHERE username = $1`
+	query := "SELECT * FROM Users WHERE username = ?"
 
 	rows, err := dbConn.Query(query, user)
 	if err != nil {
 		return false, err
 	}
 	defer rows.Close()
+
 	loginAttempt := types.LoginAttempt{}
+
 	for rows.Next() {
 		err := rows.Scan(&loginAttempt.ID, &loginAttempt.User, &loginAttempt.Pass)
 		if err != nil {
 			return false, err
 		}
 	}
+
 	if hash.CheckPasswordHash(pass, loginAttempt.Pass) {
 		return true, nil
 	}
+
 	return false, nil
 }
 
@@ -74,13 +75,17 @@ func NewUser(user string, pass string, passcheck string) (bool, error) {
 	if user == "" || pass == "" || passcheck == "" {
 		return false, errors.New("All fields are required")
 	}
+
 	userExists, err := CheckIfUserExists(user)
+
 	if userExists {
 		return false, err //user already exists
 	}
+
 	if pass != passcheck {
 		return false, err //passwords different
 	}
+
 	passHash, err := hash.HashPassword(pass)
 	if err != nil {
 		return false, err
@@ -92,9 +97,7 @@ func NewUser(user string, pass string, passcheck string) (bool, error) {
 	}
 	defer dbConn.Close()
 
-	query := `
-  INSERT INTO Users (username, password)
-  VALUES ($1, $2)`
+	query := "INSERT INTO Users (username, password) VALUES (?, ?)"
 
 	rows, err := dbConn.Query(query, user, passHash)
 	if err != nil {
@@ -115,10 +118,7 @@ func CheckIfUserExists(username string) (bool, error) {
 	}
 	defer dbConn.Close()
 
-	query := `
-  SELECT username 
-  FROM Users 
-  WHERE username = $1`
+	query := "SELECT username FROM Users WHERE username = ?"
 
 	rows, err := dbConn.Query(query, username)
 	if err != nil {
