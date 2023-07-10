@@ -1,0 +1,58 @@
+version: '3'
+
+networks:
+  default:
+    name: insecure_net
+
+volumes:
+    storage-a4-database:
+
+services:
+    app:
+        container_name: a4-insecure-design-app
+        build:
+            context: ../
+            dockerfile: deployments/app.Dockerfile
+        ports:
+            - "40001:40001"
+        environment:
+            PORT: 40001
+            REACT_APP_API_ENDPOINT: http://localhost:3000
+        stdin_open: true
+
+    api:
+        container_name: a4-insecure-design-api
+        build:
+            context: ../
+            dockerfile: deployments/api.Dockerfile
+        ports:
+            - "3000:3000"
+        environment:
+            JWT_SECRET: secret-key
+            MYSQL_HOST: db
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: A4
+            MYSQL_USER: user
+            MYSQL_PASSWORD: pass
+            MYSQL_PORT: 3306
+        command: "go run server.go"
+        depends_on:
+            - db
+        external_links:
+            - db:db
+
+    db:
+        container_name: a4-insecure-design-db
+        image: mariadb:10.6.3
+        ports:
+            - "3306:3306"
+        environment:
+            MYSQL_HOST: db
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: A4
+            MYSQL_USER: user
+            MYSQL_PASSWORD: pass
+            MYSQL_PORT: 3306
+        volumes:
+            - storage-a4-database:/var/lib/mysql
+            - ../db:/docker-entrypoint-initdb.d

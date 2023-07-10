@@ -32,27 +32,28 @@ After mitigating a vulnerability, you can send a Pull Request to gently ask the 
 
 Disclaimer: You are about to install vulnerable apps in your machine! 🔥
 
-| Vulnerability                                 | Language       | Application                                                                    |
-| --------------------------------------------- | -------------- | ------------------------------------------------------------------------------ |
-| A1 - Broken Access Control                    | Golang         | [Vulnerable Ecommerce API](owasp-top10-2021-apps/a1/ecommerce-api)             |
-| A1 - Broken Access Control                    | NodeJS         | [Tic-Tac-Toe](owasp-top10-2021-apps/a1/tictactoe)                              |
-| A1 - Broken Access Control                    | Golang         | [Camplake-API](owasp-top10-2021-apps/a1/camplake-api)                          |
-| A2 - Cryptographic Failures                   | Golang         | [SnakePro](owasp-top10-2021-apps/a2/snake-pro)                                 |
-| A3 - Injection                                | Golang         | [CopyNPaste API](owasp-top10-2021-apps/a3/copy-n-paste)                        |
-| A3 - Injection                                | NodeJS         | [Mongection](owasp-top10-2021-apps/a3/mongection)                              |
-| A3 - Injection                                | Python         | [SSType](owasp-top10-2021-apps/a3/sstype)                                      |
-| A3 - Injection (XSS)                          | Python         | [Gossip World](owasp-top10-2021-apps/a3/gossip-world)                          |
-| A3 - Injection (XSS)                          | React          | [Comment Killer](owasp-top10-2021-apps/a3/comment-killer)                      |
-| A3 - Injection (XSS)                          | Angular/Spring | [Streaming](owasp-top10-2021-apps/a3/streaming)                                |
-| A5 - Security Misconfiguration (XXE)          | PHP            | [ViniJr Blog](owasp-top10-2021-apps/a5/vinijr-blog)                            |
-| A5 - Security Misconfiguration                | PHP            | [Vulnerable Wordpress Misconfig](owasp-top10-2021-apps/a5/misconfig-wordpress) |
-| A5 - Security Misconfiguration                | NodeJS         | [Stegonography](owasp-top10-2021-apps/a5/stegonography)                        |
-| A6 - Vulnerable and Outdated Components       | PHP            | [Cimentech](owasp-top10-2021-apps/a6/cimentech)                                |
-| A6 - Vulnerable and Outdated Components       | Python         | [Golden Hat Society](owasp-top10-2021-apps/a6/golden-hat)                      |
-| A7 - Identity and Authentication Failures     | Python         | [Saidajaula Monster Fit](owasp-top10-2021-apps/a7/saidajaula-monster)          |
-| A7 - Identity and Authentication Failures     | Golang         | [Insecure go project](owasp-top10-2021-apps/a7/insecure-go-project)            |
-| A8 - Software and Data Integrity Failures     | Python         | [Amarelo Designs](owasp-top10-2021-apps/a8/amarelo-designs)                    |
-| A9 - Security Logging and Monitoring Failures | Python         | [GamesIrados.com](owasp-top10-2021-apps/a9/games-irados)                       |
+| Vulnerability                                 | Language       | Application                                                                     |
+| --------------------------------------------- | -------------- | ------------------------------------------------------------------------------- |
+| A1 - Broken Access Control                    | Golang         | [Vulnerable Ecommerce API](owasp-top10-2021-apps/a1/ecommerce-api)              |
+| A1 - Broken Access Control                    | NodeJS         | [Tic-Tac-Toe](owasp-top10-2021-apps/a1/tictactoe)                               |
+| A1 - Broken Access Control                    | Golang         | [Camplake-API](owasp-top10-2021-apps/a1/camplake-api)                           |
+| A2 - Cryptographic Failures                   | Golang         | [SnakePro](owasp-top10-2021-apps/a2/snake-pro)                                  |
+| A3 - Injection                                | Golang         | [CopyNPaste API](owasp-top10-2021-apps/a3/copy-n-paste)                         |
+| A3 - Injection                                | NodeJS         | [Mongection](owasp-top10-2021-apps/a3/mongection)                               |
+| A3 - Injection                                | Python         | [SSType](owasp-top10-2021-apps/a3/sstype)                                       |
+| A3 - Injection (XSS)                          | Python         | [Gossip World](owasp-top10-2021-apps/a3/gossip-world)                           |
+| A3 - Injection (XSS)                          | React          | [Comment Killer](owasp-top10-2021-apps/a3/comment-killer)                       |
+| A3 - Injection (XSS)                          | Angular/Spring | [Streaming](owasp-top10-2021-apps/a3/streaming)                                 |
+| A4 - Insecure Design                          | React/Go       | [Super Recovery Password App](owasp-top10-2021-apps/a4/super-recovery-password) |
+| A5 - Security Misconfiguration (XXE)          | PHP            | [ViniJr Blog](owasp-top10-2021-apps/a5/vinijr-blog)                             |
+| A5 - Security Misconfiguration                | PHP            | [Vulnerable Wordpress Misconfig](owasp-top10-2021-apps/a5/misconfig-wordpress)  |
+| A5 - Security Misconfiguration                | NodeJS         | [Stegonography](owasp-top10-2021-apps/a5/stegonography)                         |
+| A6 - Vulnerable and Outdated Components       | PHP            | [Cimentech](owasp-top10-2021-apps/a6/cimentech)                                 |
+| A6 - Vulnerable and Outdated Components       | Python         | [Golden Hat Society](owasp-top10-2021-apps/a6/golden-hat)                       |
+| A7 - Identity and Authentication Failures     | Python         | [Saidajaula Monster Fit](owasp-top10-2021-apps/a7/saidajaula-monster)           |
+| A7 - Identity and Authentication Failures     | Golang         | [Insecure go project](owasp-top10-2021-apps/a7/insecure-go-project)             |
+| A8 - Software and Data Integrity Failures     | Python         | [Amarelo Designs](owasp-top10-2021-apps/a8/amarelo-designs)                     |
+| A9 - Security Logging and Monitoring Failures | Python         | [GamesIrados.com](owasp-top10-2021-apps/a9/games-irados)                        |
 
 ## OWASP Top 10 (2016) Mobile apps: 📲
 
