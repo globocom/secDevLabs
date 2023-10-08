@@ -7,7 +7,7 @@ COLOR_YELLOW = \033[33m
 COLOR_GREEN = \033[32m
 COLOR_RED = \033[31m
 
-PROJECT := A2 - Saidajaula Monster Fit
+PROJECT := A7 Saidajaula Monster Fit
 PORT := 10002
 SLEEPUNTILAPPSTARTS := 45
 

@@ -129,7 +129,7 @@ How would you mitigate this vulnerability? After your changes, an attacker shoul
 
 ## PR solutions
 
-[Spoiler alert 🚨] To understand how this vulnerability can be mitigated, check out [these pull requests](https://github.com/globocom/secDevLabs/pulls?utf8=%E2%9C%93&q=is%3Aclosed+is%3Apr+label%3AA6-OWASP-2017+label%3AStegonography)!
+[Spoiler alert 🚨] To understand how this vulnerability can be mitigated, check out [these pull requests](https://github.com/globocom/secDevLabs/pulls?q=is%3Apr+label%3AStegonography+label%3A%22mitigation+solution+%F0%9F%94%92%22+)!
 
 ## Contributing
 

@@ -9,7 +9,7 @@ GODEP ?= $(GOBIN)/dep
 GOLINT ?= $(GOBIN)/golint
 GOSEC ?= $(GOBIN)/gosec
 
-INSECUREBIN ?= snakeProA3
+INSECUREBIN ?= A2 snakeProA2
 
 COLOR_RESET = \033[0m
 COLOR_COMMAND = \033[36m

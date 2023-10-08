@@ -1,8 +1,8 @@
 version: '3'
 services:
 
-    a5api:
-        container_name: a5api
+    a1api:
+        container_name: a1api
         environment:
             GOPATH: /go/
             API_PORT: 10005
@@ -21,7 +21,7 @@ services:
         ports:
           - "10005:10005"
         networks:
-            - a5_net
+            - a1_net
         depends_on:
             - mongodb
 
@@ -38,9 +38,9 @@ services:
         volumes:
             - mongo_vol:/data/db
         networks:
-            - a5_net
+            - a1_net
 networks:
-    a5_net:
+    a1_net:
 
 volumes:
     docker_vol:

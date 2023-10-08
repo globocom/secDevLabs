@@ -1,0 +1,15 @@
+version: '3'
+
+networks:
+  default:
+    name: insecure_net
+    external: true
+
+services:
+    bf:
+      build:
+          context: ../
+          dockerfile: ./brute-force/bf.Dockerfile
+      image: brute-force:latest
+      external_links:
+        - api:api

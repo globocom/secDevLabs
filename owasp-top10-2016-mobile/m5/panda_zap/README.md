@@ -200,6 +200,7 @@ How would you mitigate this vulnerability? After your changes, the app should no
 
 [Spoiler alert 🚨] To understand how this vulnerability can be mitigated, check out [these pull requests][these pull requests]!
 
+
 ## Contributing
 
 We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](../../../docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉
