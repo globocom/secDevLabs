@@ -1,0 +1,8 @@
+POST /login HTTP/1.1
+Host: 127.0.0.1:10001
+User-Agent: curl/7.54.0
+Accept: */*
+Content-Type: application/json
+Content-Length: 31
+
+{"user":"user", "pass":"password"}

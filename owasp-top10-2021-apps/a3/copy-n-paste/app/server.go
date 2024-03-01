@@ -9,6 +9,7 @@ import (
 	"os"
 	"time"
 
+
 	"github.com/globocom/secDevLabs/owasp-top10-2021-apps/a3/copy-n-paste/app/handlers"
 	"github.com/globocom/secDevLabs/owasp-top10-2021-apps/a3/copy-n-paste/app/util"
 
@@ -105,10 +106,10 @@ func initDB() error {
 			return errors.New("Error InitDB: timed out")
 		case <-retryTick:
 			err := util.InitDatabase()
-			if err != nil {
-				fmt.Println("Error InitDB: not ready yet")
-			} else {
-				return nil
+            if err != nil {
+                fmt.Println("Error InitDB: not ready yet")
+            } else {
+                return nil
 			}
 		}
 	}
