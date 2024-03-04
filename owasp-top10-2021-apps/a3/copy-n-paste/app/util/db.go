@@ -1,19 +1,19 @@
 package util
 
 import (
-    "database/sql"
-    "errors"
-    "fmt"
-    "os"
+        "database/sql"
+        "errors"
+        "fmt"
+        "os"
 
 
-    "github.com/globocom/secDevLabs/owasp-top10-2021-apps/a3/copy-n-paste/app/hash"
-    "github.com/globocom/secDevLabs/owasp-top10-2021-apps/a3/copy-n-paste/app/types"
+        "github.com/globocom/secDevLabs/owasp-top10-2021-apps/a3/copy-n-paste/app/hash"
+        "github.com/globocom/secDevLabs/owasp-top10-2021-apps/a3/copy-n-paste/app/types"
 
-    "github.com/spf13/viper"
+        "github.com/spf13/viper"
 
-    //setting mysql server for sql.Open function
-    _ "github.com/go-sql-driver/mysql"
+        //setting mysql server for sql.Open function
+      _ "github.com/go-sql-driver/mysql"
 )
 
 
