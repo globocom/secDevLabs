@@ -8,6 +8,7 @@ import (
 	"github.com/globocom/secDevLabs/owasp-top10-2021-apps/a2/snake-pro/app/types"
 	mgo "gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
+	"golang.org/x/crypto/bcrypt"
 )
 
 // Collections names used in MongoDB.
@@ -25,7 +26,7 @@ type mongoConfig struct {
 	Address      string
 	DatabaseName string
 	UserName     string
-	Password     string
+	HashedPassword     string
 }
 
 // Database is the interface's database.
@@ -183,10 +184,16 @@ func RegisterUser(userData types.UserData) error {
 	if err != nil {
 		return err
 	}
+    
+// Gerar o hash da senha usando bcrypt
+    hashedPassword, err := bcrypt.GenerateFromPassword([]byte(userData.RepeatPassword), bcrypt.DefaultCost)
+    if err != nil {
+        return err
+    }
 
 	newUserData := bson.M{
 		"username": userData.Username,
-		"password": userData.Password,
+		"hashedPassword": string(hashedPassword),
 		"userID":   userData.UserID,
 	}
 	err = session.Insert(newUserData, UserCollection)

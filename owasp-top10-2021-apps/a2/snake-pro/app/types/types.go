@@ -9,7 +9,7 @@ type LoginAttempt struct {
 // UserData is the strucht that holds all data from user from MongoDB.
 type UserData struct {
 	Username       string `json:"user" bson:"username"`
-	Password       string `json:"pass" bson:"password"`
+	HashedPassword string `json:"pass" bson:"hashedPassword"`
 	RepeatPassword string `json:"passcheck"`
 	UserID         string `bson:"userID"`
 	HighestScore   int    `bson:"highest-score"`

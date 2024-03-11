@@ -7,6 +7,7 @@ import (
 	"time"
 
 	jwt "github.com/dgrijalva/jwt-go"
+	"golang.org/x/crypto/bcrypt"
 	db "github.com/globocom/secDevLabs/owasp-top10-2021-apps/a2/snake-pro/app/db/mongo"
 	"github.com/globocom/secDevLabs/owasp-top10-2021-apps/a2/snake-pro/app/pass"
 	"github.com/globocom/secDevLabs/owasp-top10-2021-apps/a2/snake-pro/app/types"
@@ -86,11 +87,11 @@ func Login(c echo.Context) error {
 		return c.JSON(http.StatusForbidden, map[string]string{"result": "error", "details": "Error login."})
 	}
 
-	validPass := pass.CheckPass(userDataResult.Password, loginAttempt.Password)
-	if !validPass {
-		// wrong password
-		return c.JSON(http.StatusForbidden, map[string]string{"result": "error", "details": "Error login."})
-	}
+	validPass := bcrypt.CompareHashAndPassword([]byte(userDataResult.HashedPassword), []byte(loginAttempt.Password))
+    if validPass != nil {
+        // wrong password
+        return c.JSON(http.StatusForbidden, map[string]string{"result": "error", "details": "Error login."})
+    }
 
 	// Create token
 	token := jwt.New(jwt.SigningMethodHS256)
