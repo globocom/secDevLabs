@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/tls"
 	"errors"
 	"fmt"
 	"html/template"
@@ -88,6 +89,27 @@ func main() {
 
 	APIport := fmt.Sprintf(":%d", getAPIPort())
 	echoInstance.Logger.Fatal(echoInstance.Start(APIport))
+
+
+// Configuração para certificado autoassinado
+certFile := "cert.pem"
+keyFile := "key.pem"
+cert, err := tls.LoadX509KeyPair(certFile, keyFile)
+if err != nil {
+	fmt.Println("Error loading certificate:", err)
+	os.Exit(1)
+}
+
+tlsConfig := &tls.Config{Certificates: []tls.Certificate{cert}}
+echoInstance.Listener = tls.NewListener(echoInstance.Listener, tlsConfig)
+
+echoInstance.Pre(middleware.HTTPSRedirect())
+
+err = echoInstance.Start(APIport)
+if err != nil {
+	fmt.Println("Error starting the server:", err)
+}
+
 }
 
 func errorAPI(err error) {

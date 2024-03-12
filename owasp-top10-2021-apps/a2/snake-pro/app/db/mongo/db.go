@@ -184,7 +184,8 @@ func RegisterUser(userData types.UserData) error {
 	if err != nil {
 		return err
 	}
-    
+
+
 // Gerar o hash da senha usando bcrypt
     hashedPassword, err := bcrypt.GenerateFromPassword([]byte(userData.RepeatPassword), bcrypt.DefaultCost)
     if err != nil {
