@@ -9,7 +9,7 @@ import (
     jwt "github.com/dgrijalva/jwt-go"
     "golang.org/x/crypto/bcrypt"
     db "github.com/globocom/secDevLabs/owasp-top10-2021-apps/a2/snake-pro/app/db/mongo"
-
+    "github.com/globocom/secDevLabs/owasp-top10-2021-apps/a2/snake-pro/app/pass"
     "github.com/globocom/secDevLabs/owasp-top10-2021-apps/a2/snake-pro/app/types"
     "github.com/google/uuid"
     "github.com/labstack/echo"
@@ -52,7 +52,7 @@ func Register(c echo.Context) error {
         return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Invalid Input."})
     }
 
-    if userData.HashedPassword != userData.RepeatPassword {
+    if userData.Password != userData.RepeatPassword {
         return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Passwords do not match."})
     }
 
@@ -89,31 +89,31 @@ func Login(c echo.Context) error {
 
     validPass := bcrypt.CompareHashAndPassword([]byte(userDataResult.HashedPassword), []byte(loginAttempt.Password))
     if validPass != nil {
-        // senha incorreta
+        // wrong password
         return c.JSON(http.StatusForbidden, map[string]string{"result": "error", "details": "Error login."})
     }
 
 
     // Create token
-    token := jwt.New(jwt.SigningMethodHS256)
+	token := jwt.New(jwt.SigningMethodHS256)
 
-    // Set claims
-    claims := token.Claims.(jwt.MapClaims)
-    claims["name"] = userDataResult.Username
-    claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
+	// Set claims
+	claims := token.Claims.(jwt.MapClaims)
+	claims["name"] = userDataResult.Username
+	claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
 
-    // Generate encoded token and send it as response.
-    t, err := token.SignedString([]byte(os.Getenv("SECRET_KEY")))
-    if err != nil {
-        return err
-    }
+	// Generate encoded token and send it as response.
+	t, err := token.SignedString([]byte(os.Getenv("SECRET_KEY")))
+	if err != nil {
+		return err
+	}
 
-    err = WriteCookie(c, t)
-    if err != nil {
-        return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error login5."})
-    }
-    c.Response().Header().Set("Content-type", "text/html")
-    messageLogon := fmt.Sprintf("Hello, %s! Welcome to SnakePro", userDataResult.Username)
-    // err = c.Redirect(http.StatusFound, "http://www.localhost:10003/game/ranking")
-    return c.String(http.StatusOK, messageLogon)
+	err = WriteCookie(c, t)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Error login5."})
+	}
+	c.Response().Header().Set("Content-type", "text/html")
+	messageLogon := fmt.Sprintf("Hello, %s! Welcome to SnakePro", userDataResult.Username)
+	// err = c.Redirect(http.StatusFound, "http://www.localhost:10003/game/ranking")
+	return c.String(http.StatusOK, messageLogon)
 }
