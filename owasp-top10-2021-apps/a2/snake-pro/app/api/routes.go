@@ -9,7 +9,7 @@ import (
     jwt "github.com/dgrijalva/jwt-go"
     "golang.org/x/crypto/bcrypt"
     db "github.com/globocom/secDevLabs/owasp-top10-2021-apps/a2/snake-pro/app/db/mongo"
-    "github.com/globocom/secDevLabs/owasp-top10-2021-apps/a2/snake-pro/app/pass"
+   
     "github.com/globocom/secDevLabs/owasp-top10-2021-apps/a2/snake-pro/app/types"
     "github.com/google/uuid"
     "github.com/labstack/echo"
@@ -52,7 +52,7 @@ func Register(c echo.Context) error {
         return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Invalid Input."})
     }
 
-    if userData.Password != userData.RepeatPassword {
+    if userData.HashedPassword != userData.RepeatPassword {
         return c.JSON(http.StatusBadRequest, map[string]string{"result": "error", "details": "Passwords do not match."})
     }
 
