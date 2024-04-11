@@ -1,5 +1,5 @@
 mongoConf:
-  mongoPassword: svGX8SViufvYYNu6m3Kv
-  mongoUser: u_insecure_go_project
+  mongoPassword: {MONGO_PASSWORD}
+  mongoUser: {MONGO_USERNAME}
   mongoDBName: insecure_go_project
   mongoHost: mongodb

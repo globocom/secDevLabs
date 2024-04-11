@@ -27,6 +27,12 @@ services:
         build:
             context: ../
             dockerfile: deployments/mongo.Dockerfile
+        env_file: 
+            - .env
+        environment:
+            MONGO_USERNAME: ${MONGO_USER}
+            MONGO_PASSWORD: ${MONGO_PASSWORD}
+                
         ports:
           - "27017:27017"
           - "27018:27018"
