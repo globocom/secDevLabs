@@ -1,0 +1,52 @@
+GENDICT - DICTIONARY GENERATOR
+##############################
+
+What is GENDICT?
+----------------
+
+GENDICT is an alphanumeric dictionary generator. It generates an incremental
+wordlist from the specified pattern.
+
+The pattern is an ascii string with a wildcard "X" repeated the desired 
+number of times. This wildcard will be replaced with the corresponding type
+of character.
+
+
+Usage
+-----
+
+./gendict -type pattern
+
+  type: -n numeric [0-9]
+        -c character [a-z]
+        -h hexa [0-f]
+        -a alfanumeric [0-9a-z]
+
+  pattern: Must be an ascii string in which every 'X' character wildcard
+           will be replaced with the incremental value.
+
+
+Example
+-------
+
+./gendict -n thisword_X
+
+  thisword_0
+  thisword_1
+  thisword_2
+  thisword_3
+  thisword_4
+  thisword_5
+  thisword_6
+  thisword_7
+  thisword_8
+  thisword_9
+  
+./gendict -c thisword_XX
+
+  thisword_aa
+  thisword_ab
+  thisword_ac
+  thisword_ad
+  [...]
+  thisword_zz

@@ -1,29 +1,27 @@
 # coding: utf-8
 
 from flask import Flask, request, make_response, render_template, redirect, flash
-import uuid
-import pickle
-import base64
+import jwt
+
 app = Flask(__name__)
+app.secret_key = 'secret_key' 
 
 
 @app.route("/")
 def ola():
     return render_template('index.html')
 
-@app.route("/admin", methods=['GET','POST'])
+
+@app.route("/admin", methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         username = request.values.get('username')
         password = request.values.get('password')
-    
+
         if username == "admin" and password == "admin":
-            token = str(uuid.uuid4().hex)
-            cookie = { "username":username, "admin":True, "sessionId":token }
-            pickle_resultado = pickle.dumps(cookie)
-            encodedSessionCookie = base64.b64encode(pickle_resultado)
+            token = jwt.encode({'username': username, 'admin': True}, app.secret_key, algorithm='HS256')
             resp = make_response(redirect("/user"))
-            resp.set_cookie("sessionId", encodedSessionCookie)
+            resp.set_cookie("token", token)
             return resp
 
         else:
@@ -32,17 +30,23 @@ def login():
     else:
         return render_template('admin.html')
 
+
 @app.route("/user", methods=['GET'])
 def userInfo():
-    cookie = request.cookies.get("sessionId")
-    if cookie == None:
+    token = request.cookies.get("token")
+    if not token:
         return "Não Autorizado!"
-    cookie = pickle.loads(base64.b64decode(cookie))
 
-    return render_template('user.html')
-    
-
+    try:
+        payload = jwt.decode(token, app.secret_key, algorithms=['HS256'])
+        username = payload['username']
+        return render_template('user.html', username=username)
+    except jwt.ExpiredSignatureError:
+        return "Token expirado. Por favor, faça login novamente."
+    except jwt.InvalidTokenError:
+        return "Token inválido. Por favor, faça login novamente."
 
 
 if __name__ == '__main__':
-    app.run(debug=True,host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0')
+
