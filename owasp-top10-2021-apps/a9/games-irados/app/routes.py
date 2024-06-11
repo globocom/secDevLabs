@@ -1,15 +1,11 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-from functools import wraps
 import uuid
-import datetime
+from functools import wraps
 from flask import (
     Flask,
     render_template,
     request,
     redirect,
     flash,
-    make_response,
     session
 )
 from util.init_db import init_db
@@ -20,14 +16,38 @@ from model.db import DataBase
 import logging
 import os
 
+
 from flask_cors import CORS, cross_origin
-from model.db import DataBase
 
 app = Flask(__name__)
 bootstrap = Bootstrap(app)
 
 app.config.from_pyfile('config.py')
 
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+
+logger.removeHandler(default_handler)
+
+
+formatter = logging.Formatter('%(levelname)s: %(message)s')
+new_handler = logging.StreamHandler()
+new_handler.setFormatter(formatter)
+logger.addHandler(new_handler)
+
+# Configure werkzeug logging
+werkzeug_logger = logging.getLogger('werkzeug')
+werkzeug_logger.setLevel(logging.INFO)
+
+werkzeug_handler = logging.StreamHandler()
+werkzeug_formatter = logging.Formatter('%(message)s')
+werkzeug_handler.setFormatter(werkzeug_formatter)
+werkzeug_logger.addHandler(werkzeug_handler)
+
+# Remove the default werkzeug handler to avoid duplicate logs
+werkzeug_logger.removeHandler(logging.getLogger('werkzeug').handlers[0])
 
 def generate_csrf_token():
     '''
@@ -36,7 +56,6 @@ def generate_csrf_token():
     if '_csrf_token' not in session:
         session['_csrf_token'] = str(uuid.uuid4())
     return session.get('_csrf_token')
-
 
 app.jinja_env.globals['csrf_token'] = generate_csrf_token
 
@@ -55,7 +74,7 @@ def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if 'username' not in session:
-            flash('oops, session expired', "danger")
+            flash('Oops, session expired', "danger")
             return redirect('/login')
         return f(*args, **kwargs)
     return decorated_function
@@ -76,10 +95,12 @@ def login():
         username = request.form.get('username').encode('utf-8')
         psw = Password(request.form.get('password').encode('utf-8'))
         user_password, success = database.get_user_password(username)
-        if not success or user_password == None or not psw.validate_password(str(user_password[0])):
-            flash("Usuario ou senha incorretos", "danger")
+        if not success or user_password is None or not psw.validate_password(str(user_password[0])):
+            logger.info("login inválido!")  # Adicionando comentário para login inválido
+            flash("Usuário ou senha incorretos", "danger")
             return render_template('login.html')
         session['username'] = username
+        logger.info("login efetuado com sucesso!")  # Adicionando comentário para login efetuado com sucesso
         return redirect('/home')
     else:
         return render_template('login.html')
@@ -96,13 +117,13 @@ def newuser():
             hashed_psw = psw.get_hashed_password()
             message, success = database.insert_user(username, hashed_psw)
             if success == 1:
-                flash("Novo usuario adicionado!", "primary")
+                flash("Novo usuário adicionado!", "primary")
                 return redirect('/login')
             else:
                 flash(message, "danger")
                 return redirect('/register')
 
-        flash("Passwords must be the same!", "danger")
+        flash("As senhas devem ser iguais!", "danger")
         return redirect('/register')
     else:
         return render_template('register.html')
@@ -117,15 +138,24 @@ def home():
 def cupom():
     if request.method == 'POST':
         coupon = request.form.get('coupon')
-        rows, success = database.get_game_coupon(coupon, session.get('username'))
-        if not success or rows == None or rows == 0:
-            flash("Cupom invalido", "danger")
+        username = session.get('username')
+        if coupon:
+            coupon_display = '****'  # Oculta o valor do cupom
+        else:
+            coupon_display = coupon
+        
+        logger.info(f'User: "id do usuário" attempted to redeem coupon: {coupon_display} - Result: Invalid')
+        
+        rows, success = database.get_game_coupon(coupon, username)
+        if not success or rows is None or rows == 0:
+            flash("Cupom inválido", "danger")
             return render_template('coupon.html')
-        game, success = database.get_game(coupon, session.get('username'))
-        if not success or game == None:
-            flash("Cupom invalido", "danger")
+        game, success = database.get_game(coupon, username)
+        if not success or game is None:
+            flash("Cupom inválido", "danger")
             return render_template('coupon.html')
-        flash("Voce ganhou {}".format(game[0]), "primary")
+        logger.info(f'User: "id do usuário" redeemed coupon: {coupon_display} - Result: Valid')
+        flash("Você ganhou {}".format(game[0]), "primary")
         return render_template('coupon.html')
     else:
         return render_template('coupon.html')
@@ -137,4 +167,4 @@ if __name__ == '__main__':
     dbName = os.environ.get('MYSQL_DB')
     database = DataBase(dbEndpoint, dbUser, dbPassword, dbName)
     init_db(database)
-    app.run(host='0.0.0.0',port=10010, debug=True)
+    app.run(host='0.0.0.0', port=10010, debug=True)
