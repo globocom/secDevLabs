@@ -15,7 +15,7 @@ from model.password import Password
 from model.db import DataBase
 import logging
 import os
-
+from datetime import datetime
 
 from flask_cors import CORS, cross_origin
 
@@ -24,35 +24,45 @@ bootstrap = Bootstrap(app)
 
 app.config.from_pyfile('config.py')
 
+# Remove default logging configuration
+logging.getLogger().setLevel(logging.NOTSET)
+app.logger.handlers = []
 
-logging.basicConfig(level=logging.INFO)
+# Configure logger for __main__
 logger = logging.getLogger(__name__)
-
-
-logger.removeHandler(default_handler)
-
-
 formatter = logging.Formatter('%(levelname)s: %(message)s')
-new_handler = logging.StreamHandler()
-new_handler.setFormatter(formatter)
-logger.addHandler(new_handler)
+stream_handler = logging.StreamHandler()
+stream_handler.setFormatter(formatter)
+logger.addHandler(stream_handler)
+logger.setLevel(logging.INFO)
 
-# Configure werkzeug logging
+# Configure werkzeug logger
 werkzeug_logger = logging.getLogger('werkzeug')
 werkzeug_logger.setLevel(logging.INFO)
-
 werkzeug_handler = logging.StreamHandler()
 werkzeug_formatter = logging.Formatter('%(message)s')
 werkzeug_handler.setFormatter(werkzeug_formatter)
 werkzeug_logger.addHandler(werkzeug_handler)
 
-# Remove the default werkzeug handler to avoid duplicate logs
-werkzeug_logger.removeHandler(logging.getLogger('werkzeug').handlers[0])
+# Remove default werkzeug logger handler
+if werkzeug_logger.hasHandlers():
+    werkzeug_logger.handlers.clear()
+
+# Custom Request Logger
+class RequestLogger(logging.LoggerAdapter):
+    def process(self, msg, kwargs):
+        request_info = request
+        ip = request_info.remote_addr
+        timestamp = datetime.now().strftime('%d/%b/%Y %H:%M:%S')
+        method = request_info.method
+        path = request_info.path
+        status_code = kwargs.pop('status_code', '-')
+        msg += f' - {ip} - - [{timestamp}] "{method} {path} HTTP/1.1" {status_code} -'
+        return msg, kwargs
+
+request_logger = RequestLogger(logger, {})
 
 def generate_csrf_token():
-    '''
-        Generate csrf token and store it in session
-    '''
     if '_csrf_token' not in session:
         session['_csrf_token'] = str(uuid.uuid4())
     return session.get('_csrf_token')
@@ -61,9 +71,6 @@ app.jinja_env.globals['csrf_token'] = generate_csrf_token
 
 @app.before_request
 def csrf_protect():
-    '''
-        CSRF PROTECION
-    '''
     if request.method == "POST":
         token_csrf = session.get('_csrf_token')
         form_token = request.form.get('_csrf_token')
@@ -96,11 +103,11 @@ def login():
         psw = Password(request.form.get('password').encode('utf-8'))
         user_password, success = database.get_user_password(username)
         if not success or user_password is None or not psw.validate_password(str(user_password[0])):
-            logger.info("login inválido!")  # Adicionando comentário para login inválido
+            request_logger.info("login inválido!", extra={'status_code': 200})
             flash("Usuário ou senha incorretos", "danger")
             return render_template('login.html')
         session['username'] = username
-        logger.info("login efetuado com sucesso!")  # Adicionando comentário para login efetuado com sucesso
+        request_logger.info("login efetuado com sucesso!", extra={'status_code': 302})
         return redirect('/home')
     else:
         return render_template('login.html')
@@ -144,7 +151,7 @@ def cupom():
         else:
             coupon_display = coupon
         
-        logger.info(f'User: "id do usuário" attempted to redeem coupon: {coupon_display} - Result: Invalid')
+        request_logger.info(f'User: "id do usuário" attempted to redeem coupon: {coupon_display} - Result: Invalid', extra={'status_code': 200})
         
         rows, success = database.get_game_coupon(coupon, username)
         if not success or rows is None or rows == 0:
@@ -154,7 +161,7 @@ def cupom():
         if not success or game is None:
             flash("Cupom inválido", "danger")
             return render_template('coupon.html')
-        logger.info(f'User: "id do usuário" redeemed coupon: {coupon_display} - Result: Valid')
+        request_logger.info(f'User: "id do usuário" redeemed coupon: {coupon_display} - Result: Valid', extra={'status_code': 200})
         flash("Você ganhou {}".format(game[0]), "primary")
         return render_template('coupon.html')
     else:
