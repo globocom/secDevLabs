@@ -1,0 +1,10 @@
+admin
+password
+123
+qweasd
+1qaz
+123456789
+flamengo
+zxc
+asd123qwe
+YOURVALIDPASSWORD
