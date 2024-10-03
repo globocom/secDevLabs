@@ -19,8 +19,6 @@ services:
       - a7_net
     depends_on:
       - mysqldb-a7
-    external_links:
-      - mysqldb-a7:mysqldb-a7
     restart: always
     
   mysqldb-a7:
