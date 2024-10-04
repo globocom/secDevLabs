@@ -21,7 +21,7 @@ The main goal of this app is to discuss how **Broken Access Control** vulnerabil
 
 ## Setup
 
-To start this intentionally **insecure application**, you will need [Docker][docker install] and [Docker Compose][docker compose install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
+To start this intentionally **insecure application**, you will need [Docker][docker install] and [Docker Compose][docker compose install]. After forking [secDevLabs][secDevLabs], you must type the following commands to start:
 
 ```sh
 
@@ -207,4 +207,5 @@ We encourage you to contribute to SecDevLabs! Please check out the [Contributing
 [docker compose install]: https://docs.docker.com/compose/install/
 [app]: http://localhost.:10005
 [secdevlabs]: https://github.com/globocom/secDevLabs
+[secDevLabs]: https://github.com/globocom/secDevLabs
 [2]: https://github.com/globocom/secDevLabs/tree/master/owasp-top10-2021-apps/a1/tictactoe

@@ -27,7 +27,7 @@ The main goal of this app is to discuss how **Cross-Site Scripting** vulnerabili
 
 ## Setup
 
-To start this intentionally **insecure application**, you will need [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/). After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
+To start this intentionally **insecure application**, you will need [Docker][Docker] and [Docker Compose][Docker Compose]. After forking [secDevLabs][secDevLabs], you must type the following commands to start:
 
 ```bash
 cd secDevLabs/owasp-top10-2021-apps/a3/comment-killer
@@ -96,7 +96,7 @@ func handler(c echo.Context) error {
 }
 ```
 
-In order to start the API, the following command can be used (you should check this [guide](https://golang.org/doc/install) if you need any help with Golang):
+In order to start the API, the following command can be used (you should check this [guide][guide] if you need any help with Golang):
 
 ```sh
 go run main.go
@@ -157,3 +157,7 @@ We encourage you to contribute to SecDevLabs! Please check out the [Contributing
 [docker install]: https://docs.docker.com/install/
 [docker compose install]: https://docs.docker.com/compose/install/
 [app]: http://localhost:10007
+[Docker]: https://docs.docker.com/get-docker/
+[Docker Compose]: https://docs.docker.com/compose/install/
+[guide]: https://golang.org/doc/install
+[secDevLabs]: https://github.com/globocom/secDevLabs

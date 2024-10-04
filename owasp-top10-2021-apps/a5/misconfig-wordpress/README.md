@@ -23,7 +23,7 @@ The main goal of this app is to discuss how **Security Misconfiguration** vulner
 
 ## Setup
 
-To start this intentionally **insecure application**, you will need [Docker][docker install] and [Docker Compose][docker compose install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
+To start this intentionally **insecure application**, you will need [Docker][docker install] and [Docker Compose][docker compose install]. After forking [secDevLabs][secDevLabs], you must type the following commands to start:
 
 ```sh
 cd secDevLabs/owasp-top10-2021-apps/a5/misconfig-wordpress
@@ -69,7 +69,7 @@ An attacker could try to log in with the username: `admin` and realize, through 
 
 ### 🔥
 
-At this moment, an attacker could use [Burp Suite](https://portswigger.net/burp) to perform a brute force attack using this [wordlist] (if you need any help setting up your proxy you should check this [guide](https://support.portswigger.net/customer/portal/articles/1783066-configuring-firefox-to-work-with-burp)). To do so, after finding the login POST request, right click and send to Intruder, as shown below:
+At this moment, an attacker could use [Burp Suite][Burp Suite] to perform a brute force attack using this [wordlist] (if you need any help setting up your proxy you should check this [guide][guide]). To do so, after finding the login POST request, right click and send to Intruder, as shown below:
 
  <p align="center">
     <img src="images/attack10.png"/>
@@ -222,9 +222,12 @@ We encourage you to contribute to SecDevLabs! Please check out the [Contributing
 
 [docker install]: https://docs.docker.com/install/
 [docker compose install]: https://docs.docker.com/compose/install/
+[secDevLabs]: https://github.com/globocom/secDevLabs
 [app]: http://localhost:8000
 [wordlist]: https://github.com/danielmiessler/SecLists/blob/master/Passwords/UserPassCombo-Jay.txt
 [wpscan]: https://wpscan.org/
 [malicious code]: https://www.exploit-db.com/exploits/44949
 [nikto]: https://cirt.net/Nikto2
 [searchsploit]: https://www.exploit-db.com/searchsploit
+[Burp Suite]: https://portswigger.net/burp
+[guide]: https://support.portswigger.net/customer/portal/articles/1783066-configuring-firefox-to-work-with-burp

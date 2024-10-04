@@ -23,7 +23,7 @@ The main goal of this app is to discuss how **Security Logging and Monitoring Fa
 
 ## Setup
 
-To start this intentionally **insecure application**, you will need [Docker][docker install] and [Docker Compose][docker compose install]. After forking [secDevLabs](https://github.com/globocom/secDevLabs), you must type the following commands to start:
+To start this intentionally **insecure application**, you will need [Docker][docker install] and [Docker Compose][docker compose install]. After forking [secDevLabs][secDevLabs], you must type the following commands to start:
 
 ```sh
 cd secDevLabs/owasp-top10-2021-apps/a9/games-irados
@@ -64,7 +64,7 @@ Initially, we begin the first attack by sending an intentionally wrong login att
 
 ## 🔥
 
-After that, an attacker could use [Burp Suite] as a proxy to send as many requests as needed until a valid password is found (if you need any help setting up your proxy, you should check this [guide](https://support.portswigger.net/customer/portal/articles/1783066-configuring-firefox-to-work-with-burp)). To do so, after finding the login POST request, right click and send to `Intruder`, as shown below:
+After that, an attacker could use [Burp Suite] as a proxy to send as many requests as needed until a valid password is found (if you need any help setting up your proxy, you should check this [guide][guide]). To do so, after finding the login POST request, right click and send to `Intruder`, as shown below:
 
 <p align="center">
     <img src="images/attack9.png"/>
@@ -170,7 +170,10 @@ We encourage you to contribute to SecDevLabs! Please check out the [Contributing
 
 [docker install]: https://docs.docker.com/install/
 [docker compose install]: https://docs.docker.com/compose/install/
+[secDevLabs]: https://github.com/globocom/secDevLabs
 [app]: http://localhost:10010
 [secdevlabs]: https://github.com/globocom/secDevLabs
 [2]: https://github.com/globocom/secDevLabs/tree/master/owasp-top10-2021-apps/a9/games-irados
 [burp suite]: https://portswigger.net/burp
+[guide]: https://support.portswigger.net/customer/portal/articles/1783066-configuring-firefox-to-work-with-burp
+

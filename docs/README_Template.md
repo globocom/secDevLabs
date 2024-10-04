@@ -5,7 +5,7 @@
 
 ( Be sure to add a banner image of your app here! )
 <p align="center">
-    <img src="https://raw.githubusercontent.com/globocom/secDevLabs/master/owasp-top10-2017-apps/a2/saidajaula-monster/images/img1.png"/>
+    <img src="https://raw.githubusercontent.com/globocom/secDevLabs/master/owasp-top10-2021-apps/a7/saidajaula-monster/images/img1.png"/>
 </p>
 
 ( Here's a short description of your app! )
@@ -65,25 +65,25 @@ A nice example of images to have on an attack narrative in the discovery section
 First time acessing the app:
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/globocom/secDevLabs/master/owasp-top10-2017-apps/a2/saidajaula-monster/images/img1.png"/>
+    <img src="https://raw.githubusercontent.com/globocom/secDevLabs/master/owasp-top10-2021-apps/a7/saidajaula-monster/images/img1.png"/>
 </p>
 
 Found an interesting page:
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/globocom/secDevLabs/master/owasp-top10-2017-apps/a2/saidajaula-monster/images/attack1.png"/>
+    <img src="https://raw.githubusercontent.com/globocom/secDevLabs/master/owasp-top10-2021-apps/a7/saidajaula-monster/images/attack1.png"/>
 </p>
 
 Started the analysis on how the app handles cookies:
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/globocom/secDevLabs/master/owasp-top10-2017-apps/a2/saidajaula-monster/images/attack3.png"/>
+    <img src="https://raw.githubusercontent.com/globocom/secDevLabs/master/owasp-top10-2021-apps/a7/saidajaula-monster/images/attack3.png"/>
 </p>
 
 Confirmed the suspicion by having a look at the code!
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/globocom/secDevLabs/master/owasp-top10-2017-apps/a2/saidajaula-monster/images/attack4.png"/>
+    <img src="https://raw.githubusercontent.com/globocom/secDevLabs/master/owasp-top10-2021-apps/a7/saidajaula-monster/images/attack4.png"/>
 </p>
 
 Add as many images as you can! A picture is worth more than a thousand words!
@@ -104,13 +104,13 @@ Some good examples of images are as follows:
 Creating a payload:
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/globocom/secDevLabs/master/owasp-top10-2017-apps/a2/saidajaula-monster/images/attack7.png"/>
+    <img src="https://raw.githubusercontent.com/globocom/secDevLabs/master/owasp-top10-2021-apps/a7/saidajaula-monster/images/attack7.png"/>
 </p>
 
 Delivering a payload, and results!
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/globocom/secDevLabs/master/owasp-top10-2017-apps/a2/saidajaula-monster/images/attack8.png"/>
+    <img src="https://raw.githubusercontent.com/globocom/secDevLabs/master/owasp-top10-2021-apps/a7/saidajaula-monster/images/attack8.png"/>
 </p>
 
 ## Secure this app
@@ -127,7 +127,7 @@ How would you migitate this vulnerability? After your changes, an attacker shoul
 
 ## Contributing
 
-We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](../../../docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉
+We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](../docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉
 
 [secDevLabs]: https://github.com/globocom/secDevLabs
 [ExploitDB]: https://www.exploit-db.com/
