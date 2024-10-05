@@ -1,21 +1,14 @@
-import tornado.template
-import tornado.ioloop
-import tornado.web
 import os
+import tornado
 
-TEMPLATE = open(os.path.join(os.path.dirname(__file__)) + "/public/index.html", 'r').readlines()
-
-tmpl = ''
-for t in TEMPLATE:
-    	tmpl += t
 
 class MainHandler(tornado.web.RequestHandler):
 
     def get(self):
         name = self.get_argument('name', '')
-        template_data = tmpl.replace("NAMEHERE",name)
-        t = tornado.template.Template(template_data)
-        self.write(t.generate(name=name))
+        escaped_name = tornado.escape.xhtml_escape(name)
+        context = {"name": escaped_name}
+        self.render("public/index.html", **context)
 
 application = tornado.web.Application([
     (r"/", MainHandler),
