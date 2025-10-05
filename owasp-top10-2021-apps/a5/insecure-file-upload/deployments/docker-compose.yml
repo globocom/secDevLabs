@@ -1,0 +1,11 @@
+services:
+  php-insecure-file-upload:
+    build:
+      context: ..
+      dockerfile: ./deployments/Dockerfile
+
+    ports:
+      - "8080:80"
+
+    # volumes:
+    #   - ../app/public:/var/www/html/public

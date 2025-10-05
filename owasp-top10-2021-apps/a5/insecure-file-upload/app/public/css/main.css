@@ -1,0 +1,211 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+html, :root {
+
+    --background-color: #F3F4FF;
+    --white-color: #fff;
+
+    --purple-400: #4D44B5;
+
+    --red-400: #d82424;
+    --red-900: #830606;
+
+    --green-400: #57d824;
+    --green-900: #108306;
+
+    --gray-300: #dadada;
+    --gray-400: #313131;
+
+    --blue-900: #303972;
+
+}
+
+
+.app {
+    width: 100vw;
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 30px;
+
+    background-color: var(--background-color);
+}
+
+.alert {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 10px;
+    margin-bottom: 15px;
+
+    font-family: Roboto, Arial;
+    font-weight: 600;
+
+    border-radius: 10px;
+    border: 3px solid ;
+}
+
+.alert.error {
+    background-color: var(--red-400);
+    border-color: var(--red-900);
+}
+
+.alert.success {
+    background-color: var(--green-400);
+    border-color: var(--green-900);
+}
+
+.container-uploads {
+    width: 100%;
+    max-width: 600px;
+
+    padding: 20px;
+    border-radius: 20px;
+
+    box-shadow: 0 0 10px var(--gray-300);
+
+    background-color: var(--white-color);
+}
+
+.upload-section {
+    flex: 1;
+}
+
+.sections-container {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+@media screen and (min-width: 1024px) {
+    .sections-container {
+        flex-direction: row;
+    }
+}
+
+.hidden {
+    display: none;
+}
+
+.title-form {
+    margin-bottom: 50px;
+
+    color: var(--blue-900);
+    font-size: 18px;
+    font-family: Roboto, Arial;
+}
+
+.files-uploaded {
+    list-style-type: none;
+
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.file-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    font-family: Roboto, Arial;
+}
+
+.file-item svg {
+    width: 40px;
+    height: 40px;
+}
+
+.file-item div {
+    flex: 1;
+}
+
+.file-item .file-title {
+    font-weight: bold;
+}
+
+.file-item .file-size {
+    font-weight: normal;
+    font-size: 12px;
+
+    color: var(--gray-400);
+}
+
+.upload-area {
+    width: 100%;
+    min-height: 150px;
+
+    border-radius: 16px;
+    padding: 20px;
+    border: 2px dashed var(--purple-400);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 20px;
+
+    font-family: Roboto, Arial;
+    text-align: center;
+}
+
+.upload-area svg {
+    width: 50px;
+    height: 50px;
+}
+
+.file-header {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.view-image svg {
+    width: 20px;
+    height: 20px;
+}
+
+.button-container {
+    margin-top: 20px;
+}
+
+.button-submit {
+    display: block;
+    margin: auto;
+
+    width: 150px;
+    height: 40px;
+
+    border: none;
+    border-radius: 10px;
+
+    font-family: Roboto, Arial;
+    font-weight: bold;
+
+    color: var(--white-color);
+    background-color: var(--purple-400);
+}
+
+.empty-uploads {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    font-family: Roboto, Arial;
+    color: var(--gray-400);
+}
