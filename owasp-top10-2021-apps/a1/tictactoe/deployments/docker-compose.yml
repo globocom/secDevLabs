@@ -3,14 +3,14 @@ version: '3'
 services:
 
     api:
-        container_name: a5_tictactoe
+        container_name: a1_tictactoe
         build:
             context: ../
             dockerfile: deployments/Dockerfile
         ports:
             - "10005:10005"
         networks:
-            - a5net
+            - a1net
         env_file:
             - .dockers.env
         depends_on:
@@ -29,10 +29,10 @@ services:
         env_file:
             - .dockers.env
         networks:
-            - a5net
+            - a1net
 
 networks:
-    a5net:
+    a1net:
 
 volumes:
     db_data:

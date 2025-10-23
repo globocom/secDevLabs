@@ -49,11 +49,11 @@ Now that you know the purpose of this app, what could go wrong? The following se
 
 #### Sensitive hardcoded credentials allow an attacker access to the database
 
-After inspecting the application source code, it is possible to identify that some sensitive data from MongoDB are hardcoded on the [`config.yml`](../app/config.yml), as shown on the picture below:
+After inspecting the application source code, it is possible to identify that some sensitive data from MongoDB are hardcoded on the [`config.yml`](app/config.yml), as shown on the picture below:
 
 <img src="images/attack-1.png" align="center"/>
 
-This issue can also be found on [`mongo-init.js`](../deployments/mongo-init.js) file, as shown bellow:
+This issue can also be found on [`mongo-init.js`](deployments/mongo-init.js) file, as shown bellow:
 
 <img src="images/attack-2.png" align="center"/>
 
