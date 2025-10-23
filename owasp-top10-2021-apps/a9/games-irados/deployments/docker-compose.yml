@@ -1,7 +1,7 @@
 version: "3.4"
 services:
    app:
-      container_name: app-a10
+      container_name: app-a9
       build:
          context: ../
          dockerfile: deployments/Dockerfile
@@ -9,38 +9,39 @@ services:
          - "10010:10010"
       environment:
          SECRET_KEY: secretkey
-         MYSQL_ENDPOINT: mysqldb-a10
+         MYSQL_ENDPOINT: mysqldb-a9
          MYSQL_PASSWORD: pass
          MYSQL_USER: user
-         MYSQL_DB: A10
+         MYSQL_DB: A9
       networks:
-         - a10_net
+         - a9_net
       depends_on:
-         - mysqldb-a10
+         - mysqldb-a9
       external_links:
-         - mysqldb-a10:mysqldb-10
+         - mysqldb-a9:mysqldb-a9
       volumes:
          - "../app/:/app"
       restart: always
 
-   mysqldb-a10:
-      container_name: mysqldb-a10
+   mysqldb-a9:
+      container_name: mysqldb-a9
       image: mariadb:10.6.3
       ports:
          - "3307:3307"
       environment:
          MYSQL_ROOT_PASSWORD: root
-         MYSQL_DATABASE: A10
+         MYSQL_DATABASE: A9
          MYSQL_USER: user
          MYSQL_PASSWORD: pass
       networks:
-         - a10_net
+         - a9_net
       volumes:
-         - storage-a10-database:/var/lib/mysql
+         - storage-a9-database:/var/lib/mysql
       restart: unless-stopped
 
 volumes:
-   storage-a10-database:
+   storage-a9-database:
 
 networks:
-   a10_net:
+   a9_net:
+

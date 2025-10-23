@@ -11,7 +11,7 @@ services:
     ports:
       - 10006:10006
     networks:
-      - a6_net
+      - a5_net
     restart: always
 
   db:
@@ -23,7 +23,7 @@ services:
       - 27017:27017
       - 27018:27018
     networks:
-      - a6_net
+      - a5_net
 
 networks:
-    a6_net:
+    a5_net:

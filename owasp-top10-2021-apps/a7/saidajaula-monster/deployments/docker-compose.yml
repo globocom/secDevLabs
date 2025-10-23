@@ -1,15 +1,15 @@
 version: "3.4"
 services:
   app:
-    container_name: app-a2
+    container_name: app-a7
     build:
       context: ../
       dockerfile: deployments/Dockerfile
     environment:
-      A2_DATABASE_USER: user
-      A2_DATABASE_PASSWORD: pass
-      A2_DATABASE_HOST: db
-      A2_DATABASE_NAME: A2
+      A7_DATABASE_USER: user
+      A7_DATABASE_PASSWORD: pass
+      A7_DATABASE_HOST: db
+      A7_DATABASE_NAME: A7
     links:
       - db:db
     depends_on:
@@ -17,29 +17,30 @@ services:
     ports:
       - "10002:10002"
     networks:
-      - a2_net
+      - a7_net
     volumes:
       - "../app/:/app"
     restart: always
 
   db:
-    container_name: db-a2
+    container_name: db-a7
     image: mariadb:10.6.3
     ports:
       - "3307:3307"
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: A2
+      MYSQL_DATABASE: A7
       MYSQL_USER: user
       MYSQL_PASSWORD: pass
     networks:
-      - a2_net
+      - a7_net
     volumes:
-      - storage-a2-database:/var/lib/mysql
+      - storage-a7-database:/var/lib/mysql
       - ../db:/docker-entrypoint-initdb.d
 
 volumes:
-  storage-a2-database:
+  storage-a7-database:
 
 networks:
-  a2_net:
+  a7_net:
+

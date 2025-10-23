@@ -3,15 +3,15 @@ version: '3'
 services:
 
     server:
-        container_name: a1_sstype
+        container_name: a3_sstype
         build:
             context: ../
             dockerfile: deployments/sstype.Dockerfile
         ports:
             - "10001:10001"
         networks:
-            - a1net
+            - a3net
         restart: always
 
 networks:
-    a1net:
+    a3net:

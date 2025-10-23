@@ -1,20 +1,20 @@
 version: '3.4'
 services:
     api:
-        container_name: a1_api
+        container_name: a3_api
         build:
             context: ../
-            dockerfile: deployments/a1inj.Dockerfile
+            dockerfile: deployments/a3inj.Dockerfile
         ports:
             - "10001:10001"
         networks:
-            - a1net
+            - a3net
         command: "go run server.go"
         environment:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_USER: user
             MYSQL_PASSWORD: pass
-            MYSQL_DATABASE: a1db
+            MYSQL_DATABASE: a3db
         depends_on:
             - mysqldb
         external_links:
@@ -32,12 +32,12 @@ services:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_USER: user
             MYSQL_PASSWORD: pass
-            MYSQL_DATABASE: a1db
+            MYSQL_DATABASE: a3db
         networks:
-            - a1net
+            - a3net
 
 networks:
-    a1net:
+    a3net:
 
 volumes:
     db_data:

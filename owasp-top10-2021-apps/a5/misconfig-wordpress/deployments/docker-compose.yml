@@ -1,7 +1,7 @@
 version: '3.4'
 services:
    db:
-    container_name: a6db
+    container_name: a5db
     image: mariadb:10.6.3
     restart: always
     environment:
@@ -11,10 +11,10 @@ services:
       MYSQL_PASSWORD: wordpress
 
    wordpress:
-    container_name: a6-wordpress
+    container_name: a5-wordpress
     depends_on:
       - db
-    image: secdevlabs/a6-the-mistery:wp-version-2
+    image: secdevlabs/a5-the-mistery:wp-version-2
     ports:
       - "8000:80"
     restart: always

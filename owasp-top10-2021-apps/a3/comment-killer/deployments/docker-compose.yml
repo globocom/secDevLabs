@@ -1,11 +1,11 @@
 version: "3.7"
 
 networks:
-    a7_net:
+    a3_net:
 
 services:
     app:
-        container_name: app-a7
+        container_name: app-a3
         build:
             context: ../
             dockerfile: deployments/app.Dockerfile
@@ -13,10 +13,10 @@ services:
             - "10007:3000"
         stdin_open: true
         networks:
-            - a7_net
+            - a3_net
 
     api:
-        container_name: api-a7
+        container_name: api-a3
         build:
             context: ../
             dockerfile: deployments/api.Dockerfile
@@ -24,4 +24,4 @@ services:
             - "10017:10017"
         command: "go run main.go"
         networks:
-            - a7_net
+            - a3_net

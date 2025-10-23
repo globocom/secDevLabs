@@ -63,7 +63,7 @@ Now that you know the purpose of this app, what could go wrong? The following se
 
 #### Lack of input validation allows injection of SQL queries
 
-After reviewing `NewUser()` , `CheckIfUserExists()` and `AuthenticateUser()` from [`db.go`](<(https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2021-apps/a3/copy-n-paste/app/util/db.go#)>) file, it was possible to see that some input from users are concatenated with SQL queries, as shown in the following code snippets:
+After reviewing `NewUser()` , `CheckIfUserExists()` and `AuthenticateUser()` from [`db.go`](https://github.com/globocom/secDevLabs/blob/master/owasp-top10-2021-apps/a3/copy-n-paste/app/util/db.go) file, it was possible to see that some input from users are concatenated with SQL queries, as shown in the following code snippets:
 
 ```go
 query := fmt.Sprint("select * from Users where username = '" + user + "'")

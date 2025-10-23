@@ -67,7 +67,7 @@ Disclaimer: You are about to install vulnerable mobile apps in your machine! �
 
 ## Contributing
 
-We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](/docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉
+We encourage you to contribute to SecDevLabs! Please check out the [Contributing to SecDevLabs](docs/CONTRIBUTING.md) section for guidelines on how to proceed! 🎉
 
 ## License
 

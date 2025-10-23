@@ -12,10 +12,10 @@ from functools import wraps
 
 
 app = Flask(__name__)
-database = DataBase(os.environ.get('A2_DATABASE_HOST'),
-                    os.environ.get('A2_DATABASE_USER'),
-                    os.environ.get('A2_DATABASE_PASSWORD'),
-                    os.environ.get('A2_DATABASE_NAME'))
+database = DataBase(os.environ.get('A7_DATABASE_HOST'),
+                    os.environ.get('A7_DATABASE_USER'),
+                    os.environ.get('A7_DATABASE_PASSWORD'),
+                    os.environ.get('A7_DATABASE_NAME'))
 
 
 def login_admin_required(f):
