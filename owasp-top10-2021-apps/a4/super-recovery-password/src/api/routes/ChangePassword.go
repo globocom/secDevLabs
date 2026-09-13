@@ -14,7 +14,7 @@ import (
 func ChangePassword(c echo.Context) (err error) {
 	user := c.Get("user").(*jwt.Token)
 	claims := user.Claims.(*services.JwtCustomClaims)
-	if claims.Recovery != true {
+	if claims.Recovery == true {
 		return c.JSON(http.StatusOK, echo.Map{
 			"message": "invalid token",
 		})
