@@ -32,10 +32,8 @@ func main() {
 	}))
 
 	e.GET("/healthcheck", routes.Healthcheck)
-	e.POST("/userinfo", routes.UserInfo)
 	e.POST("/register", routes.Register)
 	e.POST("/login", routes.Login)
-	e.POST("/recovery", routes.RecoveryPassword)
 
 	r := e.Group("/reset")
 	config := middleware.JWTConfig{
