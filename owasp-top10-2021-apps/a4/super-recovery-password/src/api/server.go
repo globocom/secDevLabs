@@ -9,6 +9,8 @@ import (
 	"net/http"
 	"os"
 	"time"
+	"sync"
+
 
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
@@ -32,10 +34,9 @@ func main() {
 	}))
 
 	e.GET("/healthcheck", routes.Healthcheck)
-	e.POST("/userinfo", routes.UserInfo)
-	e.POST("/register", routes.Register)
-	e.POST("/login", routes.Login)
-	e.POST("/recovery", routes.RecoveryPassword)
+	e.POST("/register", routes.Register, newRateLimiter(5, time.Minute))
+	e.POST("/login", routes.Login, newRateLimiter(5, time.Minute))
+	e.POST("/recovery", routes.RecoveryPassword, newRateLimiter(5, time.Minute))
 
 	r := e.Group("/reset")
 	config := middleware.JWTConfig{
@@ -48,6 +49,37 @@ func main() {
 	r.POST("", routes.ChangePassword)
 
 	e.Logger.Fatal(e.Start(":3000"))
+}
+
+
+func newRateLimiter(maxRequests int, window time.Duration) echo.MiddlewareFunc {
+	var mu sync.Mutex
+	hits := make(map[string][]time.Time)
+
+	return func(next echo.HandlerFunc) echo.HandlerFunc {
+		return func(c echo.Context) error {
+			ip := c.RealIP()
+			now := time.Now()
+
+			mu.Lock()
+			defer mu.Unlock()
+
+			var recent []time.Time
+			for _, t := range hits[ip] {
+				if now.Sub(t) < window {
+					recent = append(recent, t)
+				}
+			}
+			if len(recent) >= maxRequests {
+				return c.JSON(http.StatusTooManyRequests, echo.Map{
+					"message": "too many requests, try again later",
+				})
+			}
+			hits[ip] = append(recent, now)
+
+			return next(c)
+		}
+	}
 }
 
 func checkAPIrequirements() error {
