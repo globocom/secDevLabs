@@ -120,3 +120,34 @@ func RegisterUser(c echo.Context) error {
 
 	return c.String(http.StatusCreated, "Register: success!\n")
 }
+
+
+func TokenValid(c echo.Context) (jwt.MapClaims, error) {
+	cookie, err := c.Cookie("sessionIDa5")
+	if err != nil {
+		return nil, err
+	}
+
+	token, err := jwt.Parse(cookie.Value, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
+		}
+
+		return []byte("secret"), nil
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	if !token.Valid {
+		return nil, fmt.Errorf("invalid token")
+	}
+
+	claims, ok := token.Claims.(jwt.MapClaims)
+	if !ok {
+		return nil, fmt.Errorf("invalid token claims")
+	}
+
+	return claims, nil
+}
