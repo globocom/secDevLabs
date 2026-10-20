@@ -1,6 +1,7 @@
 package db
 
 import (
+	"golang.org/x/crypto/bcrypt"
 	"fmt"
 	"time"
 
@@ -177,8 +178,17 @@ func GetUserData(mapParams map[string]interface{}) (types.UserData, error) {
 	return userDataResponse, err
 }
 
-// RegisterUser regisiter into MongoDB a new user and returns an error.
+
+
 func RegisterUser(userData types.UserData) error {
+	hashedPassword, err := bcrypt.GenerateFromPassword(
+		[]byte(userData.Password),
+		bcrypt.DefaultCost,
+	)
+	if err != nil {
+		return err
+	}
+
 	session, err := Connect()
 	if err != nil {
 		return err
@@ -186,10 +196,9 @@ func RegisterUser(userData types.UserData) error {
 
 	newUserData := bson.M{
 		"username": userData.Username,
-		"password": userData.Password,
+		"password": string(hashedPassword),
 		"userID":   userData.UserID,
 	}
-	err = session.Insert(newUserData, UserCollection)
-	return err
 
+	return session.Insert(newUserData, UserCollection)
 }
