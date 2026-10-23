@@ -22,8 +22,12 @@ COLOR_RED = \033[31m
 install: compose msg
 
 ## Composes project using docker-compose
-compose: compose-down
+compose: generate-certs compose-down
 	docker-compose -f deployments/docker-compose.yml -p secdevlabs up -d --build --force-recreate
+	
+## Generates local TLS certificate and private key before starting the application
+generate-certs:
+	docker run --rm -v "$(CURDIR):/workspace" -w /workspace golang:1.27 go run ./deployments/generate-certs.go
 
 ## Down project using docker-compose
 compose-down:
