@@ -1,6 +1,6 @@
-FROM node:8.15.1-alpine
+FROM node:22-bookworm-slim
 WORKDIR /app
 ADD app/ /app
-RUN apk update && \
-    npm  install package.json
+RUN apt-get update && \
+    npm install package.json
 CMD node index.js

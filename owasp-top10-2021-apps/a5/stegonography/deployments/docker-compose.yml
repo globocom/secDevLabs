@@ -1,3 +1,4 @@
+
 version: '3.3'
 
 services:
@@ -19,6 +20,7 @@ services:
     container_name: Stegonography_db
     env_file:
       - .dockers.env
+    command: ["mongod", "--auth", "--bind_ip_all"]
     ports:
       - 27017:27017
       - 27018:27018
@@ -26,4 +28,4 @@ services:
       - a6_net
 
 networks:
-    a6_net:
+  a6_net:
