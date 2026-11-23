@@ -1,0 +1,5 @@
+
+Flask
+gunicorn[gevent]
+requests
+mitmproxy==12.3.1

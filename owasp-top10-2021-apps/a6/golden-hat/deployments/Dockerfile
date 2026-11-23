@@ -1,14 +1,22 @@
-FROM ubuntu:18.04
+
+FROM python:3.12-slim
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends curl python3-pip python3-wheel python3-dev libffi-dev libssl-dev \
-    && pip3 install -U pip setuptools \
-    && pip install flask gunicorn[gevent] requests
-
-RUN pip3 install --upgrade pip && \
-	pip3 --no-cache-dir install mitmproxy
+    && apt-get install -y --no-install-recommends \
+        curl \
+        python3-dev \
+        python3-wheel \
+        libffi-dev \
+        libssl-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
+
+COPY requirements.txt .
+
+RUN pip install --no-cache-dir --upgrade pip setuptools \
+    && pip install --no-cache-dir -r requirements.txt
+
 COPY app/ .
 RUN chmod -x run.sh
-CMD /bin/bash run.sh
+CMD ["/bin/bash", "run.sh"]
